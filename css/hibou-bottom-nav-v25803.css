@@ -1,0 +1,98 @@
+/* Maître Hibou V25.8.03 — 8 vraies icônes + popups cohérentes */
+
+/* Porte-icône du bandeau : même emplacement pour matières et utilitaires. */
+body.v21-final .subjects-bar .hibou-real-icon-btn .hibou-real-icon-holder,
+.subjects-bar .hibou-real-icon-btn .hibou-real-icon-holder{
+  width:42px !important;
+  height:42px !important;
+  min-width:42px !important;
+  min-height:42px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:0 !important;
+  margin:0 auto 3px !important;
+  border-radius:11px !important;
+  overflow:hidden !important;
+  background:#fff !important;
+  box-shadow:0 2px 7px rgba(18,31,68,.18) !important;
+  font-size:0 !important;
+  line-height:0 !important;
+}
+
+body.v21-final .subjects-bar .hibou-real-icon-btn .hibou-real-icon-holder img,
+.subjects-bar .hibou-real-icon-btn .hibou-real-icon-holder img{
+  width:100% !important;
+  height:100% !important;
+  display:block !important;
+  object-fit:cover !important;
+  border:0 !important;
+  border-radius:10px !important;
+  pointer-events:none !important;
+  user-select:none !important;
+}
+
+/* Popup Outils / Liens utiles */
+#v23ShortcutsOverlay .v23-shortcuts-globe.hibou-popup-real-icon{
+  width:82px !important;
+  height:82px !important;
+  padding:0 !important;
+  overflow:hidden !important;
+  border-radius:20px !important;
+  background:#fff !important;
+  font-size:0 !important;
+  box-shadow:0 5px 16px rgba(18,31,68,.18) !important;
+}
+
+#v23ShortcutsOverlay .v23-shortcuts-globe.hibou-popup-real-icon img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  display:block !important;
+  border-radius:18px !important;
+}
+
+/* Popup Grandir ensemble */
+#mhGrowTogetherOverlay #mhGrowTitle.hibou-grow-title-real-icon{
+  display:flex !important;
+  align-items:center !important;
+  gap:12px !important;
+}
+
+#mhGrowTogetherOverlay #mhGrowTitle.hibou-grow-title-real-icon > img[data-hibou-popup-icon="grow"]{
+  width:58px !important;
+  height:58px !important;
+  flex:0 0 58px !important;
+  object-fit:cover !important;
+  border-radius:15px !important;
+  background:#fff !important;
+  box-shadow:0 3px 10px rgba(77,52,145,.18) !important;
+}
+
+/* Tablette paysage */
+@media (orientation:landscape) and (max-width:1180px){
+  body.v21-final .subjects-bar .hibou-real-icon-btn .hibou-real-icon-holder,
+  .subjects-bar .hibou-real-icon-btn .hibou-real-icon-holder{
+    width:36px !important;
+    height:36px !important;
+    min-width:36px !important;
+    min-height:36px !important;
+    border-radius:9px !important;
+  }
+
+  #mhGrowTogetherOverlay #mhGrowTitle.hibou-grow-title-real-icon > img[data-hibou-popup-icon="grow"]{
+    width:50px !important;
+    height:50px !important;
+    flex-basis:50px !important;
+  }
+}
+
+@media (max-width:700px){
+  body.v21-final .subjects-bar .hibou-real-icon-btn .hibou-real-icon-holder,
+  .subjects-bar .hibou-real-icon-btn .hibou-real-icon-holder{
+    width:34px !important;
+    height:34px !important;
+    min-width:34px !important;
+    min-height:34px !important;
+  }
+}

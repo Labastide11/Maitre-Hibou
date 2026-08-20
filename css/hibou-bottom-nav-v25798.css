@@ -1,0 +1,143 @@
+/* Maître Hibou V25.7.98 — Bandeau inférieur avec vraies icônes matières */
+
+body.v21-final .subjects-bar.hibou-bottom-nav-v25798 {
+  width: min(1240px, calc(100% - 32px)) !important;
+  max-width: 1240px !important;
+  min-height: 100px !important;
+  height: 100px !important;
+  margin: 10px auto !important;
+  padding: 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+  align-items: stretch !important;
+  gap: 10px !important;
+  overflow: visible !important;
+  white-space: normal !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body.v21-final .hibou-bottom-nav-v25798 .hibou-bottom-nav__btn {
+  --nav-bg1:#6C63FF; --nav-bg2:#8E86FF; --nav-shadow:rgba(108,99,255,.22);
+  box-sizing:border-box !important;
+  width:100% !important;
+  min-width:0 !important;
+  height:100px !important;
+  min-height:100px !important;
+  max-height:100px !important;
+  margin:0 !important;
+  padding:7px 6px 8px !important;
+  border:2px solid rgba(255,255,255,.56) !important;
+  border-radius:21px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:4px !important;
+  background:linear-gradient(135deg,var(--nav-bg1),var(--nav-bg2)) !important;
+  color:#fff !important;
+  box-shadow:0 9px 19px var(--nav-shadow), inset 0 1px 0 rgba(255,255,255,.35) !important;
+  font-family:inherit !important;
+  cursor:pointer !important;
+  overflow:hidden !important;
+}
+
+body.v21-final .hibou-bottom-nav-v25798 .hibou-bottom-nav__btn:hover,
+body.v21-final .hibou-bottom-nav-v25798 .hibou-bottom-nav__btn:focus-visible {
+  filter:brightness(1.035) !important;
+  outline:3px solid rgba(255,255,255,.8) !important;
+  outline-offset:-4px !important;
+}
+
+body.v21-final .hibou-bottom-nav-v25798 .hibou-bottom-nav__icon {
+  display:block !important;
+  font-size:27px !important;
+  line-height:1 !important;
+}
+
+body.v21-final .hibou-bottom-nav-v25798 .hibou-bottom-nav__icon--image {
+  width:56px !important;
+  height:56px !important;
+  flex:0 0 56px !important;
+  border-radius:15px !important;
+  overflow:hidden !important;
+  background:#fff !important;
+  box-shadow:0 3px 9px rgba(18,31,68,.18) !important;
+}
+
+body.v21-final .hibou-bottom-nav-v25798 .hibou-bottom-nav__icon--image img {
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  pointer-events:none !important;
+  user-select:none !important;
+}
+
+body.v21-final .hibou-bottom-nav-v25798 .hibou-bottom-nav__label {
+  display:block !important;
+  font-family:"Trebuchet MS",system-ui,sans-serif !important;
+  font-size:14px !important;
+  font-weight:1000 !important;
+  line-height:1.02 !important;
+  text-align:center !important;
+}
+
+body.v21-final .hibou-bottom-nav-v25798 .hibou-bottom-nav__mini {
+  display:block !important;
+  margin-top:2px !important;
+  font-size:9px !important;
+  line-height:1.05 !important;
+  font-weight:900 !important;
+  opacity:.96 !important;
+}
+
+/* Couleurs historiques des six matières conservées. */
+body.v21-final .hibou-bottom-nav-v25798 [data-subject="francais"]   {--nav-bg1:#FF4F67;--nav-bg2:#FF687D;--nav-shadow:rgba(255,79,103,.24);}
+body.v21-final .hibou-bottom-nav-v25798 [data-subject="maths"]      {--nav-bg1:#258FF0;--nav-bg2:#40A8F6;--nav-shadow:rgba(37,143,240,.24);}
+body.v21-final .hibou-bottom-nav-v25798 [data-subject="anglais"]    {--nav-bg1:#9A50F5;--nav-bg2:#B66AFF;--nav-shadow:rgba(154,80,245,.22);}
+body.v21-final .hibou-bottom-nav-v25798 [data-subject="sciences"]   {--nav-bg1:#2DB854;--nav-bg2:#54CB6D;--nav-shadow:rgba(45,184,84,.22);}
+body.v21-final .hibou-bottom-nav-v25798 [data-subject="geographie"] {--nav-bg1:#FF8E18;--nav-bg2:#FFA830;--nav-shadow:rgba(255,142,24,.23);}
+body.v21-final .hibou-bottom-nav-v25798 [data-subject="histoire"]   {--nav-bg1:#7166F5;--nav-bg2:#887DFF;--nav-shadow:rgba(113,102,245,.22);}
+
+body.v21-final .hibou-bottom-nav-v25798 .hibou-bottom-nav__btn[data-nav-action="grow"] {
+  --nav-bg1:#FFF0B1;--nav-bg2:#F5E19A;--nav-shadow:rgba(202,166,45,.18);
+  color:#765300 !important;
+  border-color:#E6CE72 !important;
+  margin-left:8px !important;
+  position:relative !important;
+}
+body.v21-final .hibou-bottom-nav-v25798 .hibou-bottom-nav__btn[data-nav-action="grow"]::before {
+  content:""; position:absolute; left:-10px; top:9px; bottom:9px; width:2px;
+  border-radius:999px; background:#D8DAEB;
+}
+body.v21-final .hibou-bottom-nav-v25798 .hibou-bottom-nav__btn[data-nav-action="tools"] {
+  --nav-bg1:#DCEFFF;--nav-bg2:#CBE5FC;--nav-shadow:rgba(63,139,211,.18);
+  color:#104C92 !important; border-color:#A8D0F4 !important;
+}
+
+@media (max-width:1180px){
+  body.v21-final .subjects-bar.hibou-bottom-nav-v25798{
+    width:calc(100% - 18px) !important; height:90px !important; min-height:90px !important; gap:7px !important;
+  }
+  body.v21-final .hibou-bottom-nav-v25798 .hibou-bottom-nav__btn{
+    height:90px !important; min-height:90px !important; max-height:90px !important;
+    border-radius:18px !important; padding:6px 4px !important;
+  }
+  body.v21-final .hibou-bottom-nav-v25798 .hibou-bottom-nav__icon--image{
+    width:48px !important; height:48px !important; flex-basis:48px !important; border-radius:13px !important;
+  }
+  body.v21-final .hibou-bottom-nav-v25798 .hibou-bottom-nav__label{font-size:12.5px !important;}
+}
+
+@media (max-width:900px){
+  body.v21-final .subjects-bar.hibou-bottom-nav-v25798{
+    height:auto !important; min-height:0 !important; grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  }
+  body.v21-final .hibou-bottom-nav-v25798 .hibou-bottom-nav__btn[data-nav-action="grow"]{margin-left:0 !important;}
+  body.v21-final .hibou-bottom-nav-v25798 .hibou-bottom-nav__btn[data-nav-action="grow"]::before{display:none !important;}
+}
+@media (max-width:560px){
+  body.v21-final .subjects-bar.hibou-bottom-nav-v25798{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+}

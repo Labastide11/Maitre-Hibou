@@ -1,0 +1,85 @@
+@import url('hibou-parcours-progres-v25784.css');
+/* Maître Hibou V25.7.86 — Header popup portrait + titre resserrés */
+#hibouProgressHubBodyV25786 .hp86-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(250px,340px);
+  align-items:center;
+  gap:18px;
+  padding:18px 26px 16px 18px;
+  background:linear-gradient(135deg,#17336e,#285a99);
+  color:#fff;
+  border-bottom:4px solid #f1e7b2;
+}
+#hibouProgressHubBodyV25786 .hp86-main{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+#hibouProgressHubBodyV25786 .hp86-avatar-wrap{
+  flex:0 0 88px;
+  width:88px;height:88px;
+  display:flex;align-items:center;justify-content:center;
+}
+#hibouProgressHubBodyV25786 .hp86-avatar{
+  width:82px;height:82px;object-fit:contain;
+  border-radius:999px;background:#fff;border:4px solid rgba(255,255,255,.95);
+  box-shadow:0 4px 12px rgba(0,0,0,.14);
+  padding:5px;display:block;
+}
+#hibouProgressHubBodyV25786 .hp86-title{
+  min-width:0;
+  flex:1 1 auto;
+  display:flex;flex-direction:column;justify-content:center;
+}
+#hibouProgressHubBodyV25786 .hp86-title h2{
+  margin:0;
+  font:1000 30px/1.02 "Trebuchet MS",system-ui,sans-serif;
+  letter-spacing:.1px;
+  white-space:nowrap;
+}
+#hibouProgressHubBodyV25786 .hp86-title p{
+  margin:8px 0 0;
+  color:#eaf2ff;
+  font-weight:800;
+  font-size:14px;
+  line-height:1.28;
+  max-width:720px;
+}
+#hibouProgressHubBodyV25786 .hp86-quote{
+  min-width:0;
+  min-height:76px;
+  padding:12px 14px;
+  border-radius:18px;
+  background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.23);
+  display:flex;flex-direction:column;justify-content:center;
+  box-sizing:border-box;
+}
+#hibouProgressHubBodyV25786 .hp86-quote em{
+  font-style:normal;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.06em;color:#ffdf74;
+}
+#hibouProgressHubBodyV25786 .hp86-quote strong{
+  display:block;margin-top:5px;font-size:15px;line-height:1.25;color:#fff;
+}
+@media (max-width: 1100px){
+  #hibouProgressHubBodyV25786 .hp86-head{grid-template-columns:minmax(0,1fr) 300px;gap:14px;padding-right:18px;}
+  #hibouProgressHubBodyV25786 .hp86-title h2{font-size:27px;}
+}
+@media (max-width: 900px){
+  #hibouProgressHubBodyV25786 .hp86-head{grid-template-columns:1fr;align-items:start;gap:12px;padding:16px 18px 14px;}
+  #hibouProgressHubBodyV25786 .hp86-main{align-items:center;gap:14px;}
+  #hibouProgressHubBodyV25786 .hp86-avatar-wrap{flex-basis:76px;width:76px;height:76px;}
+  #hibouProgressHubBodyV25786 .hp86-avatar{width:72px;height:72px;}
+  #hibouProgressHubBodyV25786 .hp86-title h2{font-size:25px;white-space:normal;}
+  #hibouProgressHubBodyV25786 .hp86-title p{font-size:13px;max-width:none;}
+  #hibouProgressHubBodyV25786 .hp86-quote{min-height:0;}
+}
+@media (max-width: 640px){
+  #hibouProgressHubBodyV25786 .hp86-main{align-items:flex-start;gap:12px;}
+  #hibouProgressHubBodyV25786 .hp86-avatar-wrap{flex-basis:64px;width:64px;height:64px;}
+  #hibouProgressHubBodyV25786 .hp86-avatar{width:60px;height:60px;padding:4px;border-width:3px;}
+  #hibouProgressHubBodyV25786 .hp86-title h2{font-size:21px;line-height:1.06;}
+  #hibouProgressHubBodyV25786 .hp86-title p{font-size:12px;line-height:1.28;}
+  #hibouProgressHubBodyV25786 .hp86-quote strong{font-size:13px;}
+}

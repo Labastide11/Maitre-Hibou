@@ -1,0 +1,140 @@
+/* Maître Hibou V25.8.05 — 8 boutons garantis */
+
+body.v21-final .subjects-bar.hibou-eight-buttons-v25805,
+.subjects-bar.hibou-eight-buttons-v25805{
+  display:grid !important;
+  grid-template-columns:repeat(8,minmax(0,1fr)) !important;
+  gap:10px !important;
+  align-items:stretch !important;
+  width:min(1240px,calc(100% - 28px)) !important;
+  max-width:1240px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+body.v21-final .subjects-bar .hibou-real-icon-btn .hibou-real-icon-holder,
+.subjects-bar .hibou-real-icon-btn .hibou-real-icon-holder{
+  width:42px !important;
+  height:42px !important;
+  min-width:42px !important;
+  min-height:42px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  margin:0 auto 3px !important;
+  padding:0 !important;
+  border-radius:11px !important;
+  overflow:hidden !important;
+  background:#fff !important;
+  box-shadow:0 2px 7px rgba(18,31,68,.18) !important;
+  font-size:0 !important;
+  line-height:0 !important;
+}
+
+body.v21-final .subjects-bar .hibou-real-icon-btn .hibou-real-icon-holder img,
+.subjects-bar .hibou-real-icon-btn .hibou-real-icon-holder img{
+  width:100% !important;
+  height:100% !important;
+  display:block !important;
+  object-fit:cover !important;
+  border-radius:10px !important;
+  pointer-events:none !important;
+  user-select:none !important;
+}
+
+.subjects-bar .hibou-bottom-utility-btn{
+  box-sizing:border-box !important;
+  width:100% !important;
+  min-width:0 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:2px !important;
+  cursor:pointer !important;
+}
+
+.subjects-bar .hibou-bottom-utility-label{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  line-height:1.05 !important;
+  text-align:center !important;
+}
+.subjects-bar .hibou-bottom-utility-label strong{
+  font-size:12px !important;
+  font-weight:1000 !important;
+}
+.subjects-bar .hibou-bottom-utility-label small{
+  margin-top:2px !important;
+  font-size:8.5px !important;
+  font-weight:850 !important;
+}
+
+.subjects-bar .v25805-grow-btn{
+  background:#F8E7A1 !important;
+  border-color:#E5C451 !important;
+  color:#684C00 !important;
+}
+.subjects-bar .v25805-tools-btn{
+  background:#D9ECFF !important;
+  border-color:#9FCDF4 !important;
+  color:#164E84 !important;
+}
+
+/* Popup Outils */
+#v23ShortcutsOverlay .v23-shortcuts-globe.hibou-popup-real-icon{
+  width:82px !important;
+  height:82px !important;
+  padding:0 !important;
+  overflow:hidden !important;
+  border-radius:20px !important;
+  background:#fff !important;
+  font-size:0 !important;
+}
+#v23ShortcutsOverlay .v23-shortcuts-globe.hibou-popup-real-icon img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+}
+
+/* Popup Grandir ensemble */
+#mhGrowTogetherOverlay #mhGrowTitle.hibou-grow-title-real-icon{
+  display:flex !important;
+  align-items:center !important;
+  gap:12px !important;
+}
+#mhGrowTogetherOverlay #mhGrowTitle.hibou-grow-title-real-icon > img{
+  width:58px !important;
+  height:58px !important;
+  flex:0 0 58px !important;
+  border-radius:15px !important;
+  object-fit:cover !important;
+}
+
+/* Tablette paysage : toujours 8 boutons sur une ligne. */
+@media (orientation:landscape) and (max-width:1180px){
+  body.v21-final .subjects-bar.hibou-eight-buttons-v25805,
+  .subjects-bar.hibou-eight-buttons-v25805{
+    grid-template-columns:repeat(8,minmax(0,1fr)) !important;
+    gap:6px !important;
+    width:calc(100% - 18px) !important;
+  }
+  body.v21-final .subjects-bar .hibou-real-icon-btn .hibou-real-icon-holder,
+  .subjects-bar .hibou-real-icon-btn .hibou-real-icon-holder{
+    width:36px !important;
+    height:36px !important;
+    min-width:36px !important;
+    min-height:36px !important;
+  }
+  .subjects-bar .hibou-bottom-utility-label strong{font-size:10.5px !important;}
+  .subjects-bar .hibou-bottom-utility-label small{font-size:7.5px !important;}
+}
+
+@media (max-width:760px){
+  body.v21-final .subjects-bar.hibou-eight-buttons-v25805,
+  .subjects-bar.hibou-eight-buttons-v25805{
+    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  }
+}

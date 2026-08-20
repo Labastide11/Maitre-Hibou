@@ -1,0 +1,101 @@
+
+/* V25.7.63 — Lecture / Compréhension / Littérature commune avec Progressions CE2 */
+.fr-v25763-reading-card{
+  grid-column:1 / -1 !important;
+  min-height:112px !important;
+  background:linear-gradient(135deg,#EEF8FF 0%,#F8F3FF 100%) !important;
+  border-color:#BFDDF8 !important;
+}
+.fr-v25763-reading-card .fr-v25720-domain-title{color:#174D79 !important;}
+.fr-v25763-reading-card .fr-v25720-domain-icon{background:#fff !important;}
+.fr-v25763-shell{padding:2px 0 8px;}
+.fr-v25763-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;}
+.fr-v25763-back{border:0;border-radius:12px;background:#EEF2F8;color:#253A5D;font-weight:900;padding:10px 13px;cursor:pointer;}
+.fr-v25763-period{font-size:12px;font-weight:1000;color:#5B6690;background:#F2F1FF;border-radius:999px;padding:8px 11px;}
+.fr-v25763-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0 14px;}
+.fr-v25763-tab{border:2px solid #DCE6F2;background:#fff;border-radius:16px;padding:12px 8px;font-weight:1000;color:#294369;cursor:pointer;}
+.fr-v25763-tab.active{border-color:#6F8FE8;background:#EEF3FF;color:#173C79;box-shadow:0 6px 16px rgba(73,98,170,.10);}
+.fr-v25763-list{display:flex;flex-direction:column;gap:9px;max-height:430px;overflow:auto;padding-right:3px;}
+.fr-v25763-item{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:11px;align-items:center;border:2px solid #E5EAF2;border-radius:17px;background:#fff;padding:11px 12px;}
+.fr-v25763-item-icon{width:44px;height:44px;border-radius:13px;background:#F1F6FF;display:flex;align-items:center;justify-content:center;font-size:24px;}
+.fr-v25763-item strong{display:block;color:#172C55;font-size:16px;line-height:1.16;}
+.fr-v25763-item span{display:block;color:#68728C;font-size:12px;font-weight:800;margin-top:4px;line-height:1.25;}
+.fr-v25763-go{border:0;border-radius:50%;width:40px;height:40px;background:#F1F5FF;color:#245CC8;font-size:22px;font-weight:1000;cursor:pointer;}
+.fr-v25763-mission{background:#fff;border:2px solid #DEE8F5;border-radius:20px;padding:16px;}
+.fr-v25763-mission h3{margin:0 0 6px;color:#17335E;font-size:24px;}
+.fr-v25763-je-sais{padding:12px 14px;border-radius:15px;background:#F1F7FF;color:#28496D;font-weight:900;line-height:1.35;margin:10px 0 14px;}
+.fr-v25763-steps{display:grid;gap:8px;margin:0;padding:0;list-style:none;}
+.fr-v25763-steps li{padding:10px 12px;border-radius:13px;background:#FAFBFD;border:1px solid #E7EAF0;color:#39445A;font-weight:800;line-height:1.3;}
+.fr-v25763-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:15px;}
+.fr-v25763-action{border:0;border-radius:13px;padding:11px 14px;font-weight:1000;cursor:pointer;background:#245FC8;color:#fff;}
+.fr-v25763-action.secondary{background:#EEF2F8;color:#34435F;}
+.fr-v25763-code-teacher{display:none;}
+@media(max-width:760px){
+  .fr-v25763-tabs{grid-template-columns:1fr;}
+  .fr-v25763-item{grid-template-columns:40px minmax(0,1fr) 36px;}
+}
+
+
+.fr-v25763-item{width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit;appearance:none;-webkit-appearance:none;}
+.fr-v25763-item:hover,.fr-v25763-item:focus-visible{border-color:#C9D8EE;box-shadow:0 8px 20px rgba(58,87,140,.10);background:#FCFDFF;}
+.fr-v25763-item:focus-visible{outline:3px solid #C7D7FF;outline-offset:2px;}
+.fr-v25763-item-main{min-width:0;}
+.fr-v25763-item .fr-v25763-go{display:flex;align-items:center;justify-content:center;pointer-events:none;flex:0 0 auto;}
+
+/* V25.8.09 : aucun code technique visible côté élève */
+.fr-v25763-code-teacher{display:none!important}
+
+/* V25.8.27 — mode test enseignant Français */
+#frenchTrainingOverlayV2348 .fr-v2348-owl{touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .16s ease,filter .16s ease}
+#frenchTrainingOverlayV2348 .fr-v2348-owl.hibou-fr-secret-hold-v25827{transform:scale(.96);filter:brightness(.96)}
+.hibou-fr-test-badge-v25827{position:absolute;right:84px;top:18px;z-index:8;padding:7px 12px;border-radius:999px;background:#34255f;color:#fff;font-size:12px;line-height:1;font-weight:1000;letter-spacing:.04em;box-shadow:0 5px 14px rgba(35,25,70,.22);pointer-events:none}
+.hibou-fr-test-overlay-v25827{position:fixed;inset:0;z-index:25050;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(21,25,48,.64);backdrop-filter:blur(5px)}
+.hibou-fr-test-overlay-v25827.hidden{display:none!important}
+.hibou-fr-test-popup-v25827{width:min(620px,94vw);border:3px solid rgba(255,255,255,.95);border-radius:26px;overflow:hidden;background:#fffdfd;box-shadow:0 24px 70px rgba(13,18,45,.34);color:#232b55}
+.hibou-fr-test-head-v25827{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;background:linear-gradient(135deg,#ff4561,#ff7388);color:#fff}
+.hibou-fr-test-head-v25827>div{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:1000}
+.hibou-fr-test-head-v25827>div>span{font-size:28px}
+.hibou-fr-test-close-v25827{width:46px;height:46px;border:0;border-radius:50%;background:#fff;color:#f23c58;font-size:29px;font-weight:1000;cursor:pointer}
+.hibou-fr-test-intro-v25827{margin:0;padding:22px 22px 12px;text-align:center;font-size:16px;font-weight:800;color:#4c5575}
+.hibou-fr-test-periods-v25827{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px 22px 16px}
+.hibou-fr-test-periods-v25827 button{min-height:58px;border:2px solid #d8dcec;border-radius:15px;background:#f8f9fd;color:#364165;font:inherit;font-size:16px;font-weight:1000;cursor:pointer}
+.hibou-fr-test-periods-v25827 button:first-child{grid-column:1/-1}
+.hibou-fr-test-periods-v25827 button.active{border-color:#7256cf;background:#ede8ff;color:#4d349d;box-shadow:inset 0 0 0 2px rgba(114,86,207,.10)}
+.hibou-fr-test-status-v25827{margin:0 22px 12px;padding:12px 14px;border-radius:13px;background:#f2efff;color:#514382;text-align:center;font-size:13px;font-weight:900}
+.hibou-fr-test-note-v25827{margin:0 22px 22px;padding:12px 14px;border-radius:13px;background:#f8fafc;color:#68728a;font-size:12px;line-height:1.4;font-weight:800;text-align:center}
+@media(max-width:650px){.hibou-fr-test-badge-v25827{top:92px;right:18px}.hibou-fr-test-periods-v25827{grid-template-columns:repeat(2,1fr)}}
+
+
+/* =========================================================
+   V25.8.27 — popup Test enseignant toujours au premier plan
+   ========================================================= */
+html > .hibou-fr-test-overlay-v25827{
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483646!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:18px!important;
+  background:rgba(21,25,48,.70)!important;
+  backdrop-filter:blur(6px)!important;
+  -webkit-backdrop-filter:blur(6px)!important;
+  pointer-events:auto!important;
+  isolation:isolate!important;
+}
+html > .hibou-fr-test-overlay-v25827.hidden{
+  display:none!important;
+  pointer-events:none!important;
+}
+html > .hibou-fr-test-overlay-v25827 .hibou-fr-test-popup-v25827{
+  position:relative!important;
+  z-index:2147483647!important;
+  pointer-events:auto!important;
+}
+html > .hibou-fr-test-overlay-v25827 .hibou-fr-test-close-v25827{
+  position:relative!important;
+  z-index:2147483647!important;
+  pointer-events:auto!important;
+  touch-action:manipulation!important;
+  cursor:pointer!important;
+}

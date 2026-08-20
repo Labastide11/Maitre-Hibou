@@ -1,0 +1,51 @@
+.hle-shell{max-width:980px;margin:0 auto}.hle-progress{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:0 0 16px}.hle-step{background:#f4f6fb;border:1px solid #dde3ef;border-radius:14px;padding:8px 5px;text-align:center;color:#74809a;font-weight:800}.hle-step span{display:block;font-size:20px}.hle-step small{display:block;font-size:11px;margin-top:3px}.hle-step.active{background:#fff4d6;border-color:#e8bc53;color:#664b00}.hle-step.done{background:#eaf8ef;border-color:#b6dfc1;color:#24623b}.hle-card{background:#fff;border:1px solid #e0e5ef;border-radius:18px;padding:18px;box-shadow:0 5px 16px rgba(33,43,77,.08)}.hle-card h3{margin:0 0 10px;color:#2d2b66;font-size:22px}.hle-intro,.hle-prompt,.hle-bilan-advice{font-size:16px;line-height:1.5;color:#404b68}.hle-lesson-steps{padding-left:26px}.hle-lesson-steps li{margin:8px 0}.hle-example{margin-top:14px;background:#f8f5ff;border:1px solid #ddd4f5;border-radius:14px;padding:14px;text-align:center}.hle-word{font-size:27px;font-weight:1000;color:#27315f}.hle-chunks{display:flex;justify-content:center;gap:7px;align-items:center;margin:8px 0}.hle-chunks span{background:#fff;border:1px solid #d9ddea;border-radius:10px;padding:7px 10px;font-weight:900}.hle-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px}.hle-actions button{border:0;border-radius:12px;padding:11px 16px;font-weight:900;cursor:pointer}.hle-primary{background:#6952b5;color:white}.hle-secondary{background:#eef1f7;color:#3e4965}.hle-help{background:#fff2c9;color:#6a4c00}.hle-stage-label{font-size:13px;color:#6952b5;font-weight:1000;text-transform:uppercase}.hle-question-count{float:right;font-size:12px;color:#7b859b;font-weight:800}.hle-stem{background:#f4f7fb;border-radius:12px;padding:14px;margin:12px 0;font-size:18px;font-weight:900;text-align:center;color:#26335e}.hle-choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}.hle-choice{min-height:54px;border:2px solid #d8deea;background:#fff;border-radius:13px;font-size:16px;font-weight:900;color:#303a5d;cursor:pointer}.hle-order-answer{min-height:64px;border:2px dashed #c8cfdd;border-radius:14px;padding:10px;display:flex;gap:7px;align-items:center;justify-content:center;flex-wrap:wrap;background:#fafbfe}.hle-order-answer button,.hle-order-bank button{border:1px solid #c9d2e4;border-radius:11px;background:#fff;padding:10px 14px;font-weight:1000;color:#27345f;font-size:16px}.hle-order-bank{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}.hle-feedback{min-height:24px;text-align:center;font-weight:900;margin-top:8px}.hle-feedback.ok{color:#277a45}.hle-feedback.bad{color:#a74d3e}.hle-helpbox{display:none;background:#fff8dc;border:1px solid #ebd989;border-radius:12px;padding:10px 12px;margin:10px auto 0;max-width:700px;color:#635016;font-weight:800}.hle-helpbox.show{display:block}.hle-scoreboard{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:15px 0}.hle-scoreboard>div{background:#f6f8fc;border:1px solid #e1e6ef;border-radius:14px;padding:14px;text-align:center}.hle-scoreboard strong{display:block;font-size:25px;color:#2e3263}.hle-scoreboard span{display:block;margin-top:4px;font-size:12px;color:#66718a;font-weight:800}.hle-status{display:flex;align-items:center;justify-content:center;gap:10px;border-radius:14px;padding:13px;margin:14px 0;font-size:18px}.hle-status.a_renforcer{background:#fff0ee;color:#8f342a}.hle-status.reussi_avec_aide{background:#fff8d9;color:#705500}.hle-status.reussi_seul{background:#eaf8ef;color:#21633a}.hle-status.maitrise_plusieurs_fois{background:#f3edff;color:#63459c}.hle-saved{background:#ecf8ef;color:#2f7143;padding:10px 12px;border-radius:12px;text-align:center;font-weight:900}@media(max-width:760px){.hle-progress{gap:4px}.hle-step small{font-size:9px}.hle-choice-grid{grid-template-columns:1fr}}
+.hle-multi.selected{background:#eee9ff!important;border-color:#7a61c6!important;color:#3f2c7d!important;box-shadow:inset 0 0 0 1px #7a61c6}
+.hle-multi-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:760px){.hle-multi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.hle-reading-text{margin:14px 0;padding:16px 18px;border-radius:15px;background:#fffdf7;border:1px solid #eadfbf;color:#30384f;font-size:17px;line-height:1.6;font-weight:700}
+.hle-highlight-list{display:grid;gap:9px;margin:14px 0}
+.hle-highlight{width:100%;text-align:left;border:2px solid #d8deea;background:#fff;border-radius:12px;padding:12px 14px;color:#34405f;font-size:15px;line-height:1.4;font-weight:800;cursor:pointer}
+.hle-highlight.selected{background:#fff1a8;border-color:#d6ae28;color:#554100;box-shadow:inset 0 0 0 1px #d6ae28}
+@media(max-width:760px){.hle-reading-text{font-size:15px;padding:13px 14px}.hle-highlight{font-size:14px}}
+
+
+/* V25.8.17 — support illustration simple pour COM-P2-04 */
+.hle-visual-card{
+  margin:14px auto;
+  max-width:620px;
+  padding:18px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#f8fbff,#f2f7ff);
+  border:1px solid #cfdcf0;
+  text-align:center;
+}
+.hle-visual-emoji{
+  font-size:44px;
+  line-height:1.35;
+  letter-spacing:5px;
+  word-spacing:8px;
+}
+.hle-visual-card small{
+  display:block;
+  margin-top:8px;
+  color:#5d6882;
+  font-weight:800;
+  font-size:12px;
+}
+@media(max-width:760px){
+  .hle-visual-emoji{font-size:36px;letter-spacing:2px;word-spacing:4px}
+}
+
+
+/* V25.8.18 — mini-document structuré pour la compréhension documentaire */
+.hle-document{margin:14px 0 18px;padding:16px 18px;border-radius:16px;background:#fbfcff;border:1px solid #cfd8e8;color:#30384f}
+.hle-document h4{margin:0 0 5px;font-size:20px;color:#243b69}
+.hle-doc-kicker{margin-bottom:11px;font-size:12px;font-weight:900;color:#69758f;text-transform:uppercase;letter-spacing:.04em}
+.hle-doc-section{padding:9px 0;border-top:1px solid #e4e9f1}
+.hle-doc-section:first-of-type{border-top:0}
+.hle-doc-section h5{margin:0 0 4px;font-size:15px;color:#5c4293}
+.hle-doc-section p{margin:0;font-size:15px;line-height:1.5;font-weight:650}
+.hle-doc-visual{margin:10px auto 4px;padding:10px;border-radius:12px;background:#f3f7ff;text-align:center;font-size:42px;line-height:1.35}
+.hle-doc-caption{margin-top:5px;font-size:12px;font-weight:800;color:#66738b;text-align:center}
+@media(max-width:760px){.hle-document{padding:13px 14px}.hle-document h4{font-size:18px}.hle-doc-section p{font-size:14px}.hle-doc-visual{font-size:35px}}
