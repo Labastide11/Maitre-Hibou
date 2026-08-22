@@ -1,6 +1,6 @@
 # Maître Hibou
 
-Application pédagogique CE2 — version V25.8.41.
+Application pédagogique CE2 — version V25.8.42.
 
 ## Version stable
 
@@ -31,3 +31,9 @@ Cette version correspond à une phase de consolidation sans changement fonctionn
 
 - Audit détaillé des générations JS/CSS historiques.
 - Aucun déplacement ni suppression de code actif.
+
+
+### Correctif V25.8.42
+
+- Centralisation fonctionnelle du titre/version affiché : les réécritures runtime utilisent désormais V25.8.42.
+- Les mentions V25.8.39 conservées correspondent uniquement à l'historique LSU ou aux versions réelles des modules chargés.

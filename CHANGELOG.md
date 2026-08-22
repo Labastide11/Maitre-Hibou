@@ -1,5 +1,12 @@
 # CHANGELOG — Maître Hibou
 
+## V25.8.42 — correctif titre/version
+
+- Correction des scripts internes qui réécrivaient encore le titre de l'onglet en V25.8.39.
+- La balise `<title>`, les constantes de titre et `window.MAITRE_HIBOU_VERSION` sont alignées sur V25.8.42.
+- Les numéros de version des modules JS réellement chargés et les commentaires/logs historiques LSU V25.8.39 restent inchangés.
+- Aucun changement API, synchronisation, données élèves ou logique pédagogique.
+
 ## V25.8.41 — audit détaillé des anciens JS/CSS
 
 - Cartographie des versions JS/CSS réellement chargées.
