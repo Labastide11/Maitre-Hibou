@@ -1,5 +1,12 @@
 # CHANGELOG — Maître Hibou
 
+## V25.8.45 — correctif relance IA boîte à questions
+
+- Correction du bouton « Relancer l’IA » après une réponse IA invalide ou vide.
+- La relance conserve désormais la question initiale même lorsque le champ `qInput` n’est plus présent à l’écran.
+- `boite_questions.html` affiche la version V25.8.45 dans son titre/diagnostic.
+- Aucun changement API, synchronisation, données élèves ou logique de sauvegarde.
+
 ## V25.8.44 — consolidation code historique, lot 2
 
 - Archivage de 20 anciens fichiers JS/CSS de la famille `hibou-question-modal`.

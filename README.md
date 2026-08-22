@@ -1,6 +1,6 @@
 # Maître Hibou
 
-Application pédagogique CE2 — version V25.8.44.
+Application pédagogique CE2 — version V25.8.45.
 
 ## Version stable
 
@@ -52,3 +52,10 @@ Cette version correspond à une phase de consolidation sans changement fonctionn
 - Deuxième lot d'archivage de code historique.
 - Anciennes générations `hibou-question-modal` archivées.
 - La version active `hibou-question-modal-v25807` reste en place.
+
+
+### Correctif V25.8.45
+
+- Correction du bouton « Relancer l’IA » dans la boîte à questions.
+- Lors d’une relance depuis l’écran d’erreur, la question initiale conservée dans `state.original` est réutilisée.
+- Le correctif n’altère ni l’API ni la logique de sauvegarde des questions.
