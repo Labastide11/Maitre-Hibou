@@ -1,5 +1,13 @@
 # CHANGELOG — Maître Hibou
 
+## V25.8.44 — consolidation code historique, lot 2
+
+- Archivage de 20 anciens fichiers JS/CSS de la famille `hibou-question-modal`.
+- Les anciennes versions sont déplacées vers `docs/historique/code/` et non supprimées.
+- Conservation de la version active `hibou-question-modal-v25807.js` / `.css`.
+- Vérification préalable : aucun fichier archivé n'est référencé par les pages/modules actuels.
+- Aucun changement API, synchronisation, données élèves ou logique pédagogique.
+
 ## V25.8.43 — consolidation code historique, lot 1
 
 - Archivage de 9 anciens fichiers JS/CSS des familles `hibou-advice` et `hibou-home-title`.

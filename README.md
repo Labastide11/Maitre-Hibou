@@ -1,6 +1,6 @@
 # Maître Hibou
 
-Application pédagogique CE2 — version V25.8.43.
+Application pédagogique CE2 — version V25.8.44.
 
 ## Version stable
 
@@ -45,3 +45,10 @@ Cette version correspond à une phase de consolidation sans changement fonctionn
 - Anciennes générations `hibou-advice` V25.8.04 à V25.8.07 archivées.
 - Ancienne génération `hibou-home-title` V25.8.06 archivée.
 - Les versions actives restent en place : `hibou-advice-v25815` et `hibou-home-title-v25807`.
+
+
+### Consolidation V25.8.44
+
+- Deuxième lot d'archivage de code historique.
+- Anciennes générations `hibou-question-modal` archivées.
+- La version active `hibou-question-modal-v25807` reste en place.
