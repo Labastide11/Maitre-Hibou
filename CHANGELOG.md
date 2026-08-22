@@ -1,5 +1,13 @@
 # CHANGELOG — Maître Hibou
 
+## V25.8.43 — consolidation code historique, lot 1
+
+- Archivage de 9 anciens fichiers JS/CSS des familles `hibou-advice` et `hibou-home-title`.
+- Les anciennes versions sont déplacées vers `docs/historique/code/` et non supprimées.
+- Conservation des versions actives `hibou-advice-v25815` et `hibou-home-title-v25807`.
+- Vérification préalable : aucun des 9 fichiers archivés n'était référencé par les pages/modules actuels.
+- Aucun changement API, synchronisation, données élèves ou logique pédagogique.
+
 ## V25.8.42 — correctif titre/version
 
 - Correction des scripts internes qui réécrivaient encore le titre de l'onglet en V25.8.39.
