@@ -1,6 +1,6 @@
 # Maître Hibou
 
-Application pédagogique CE2 — version V25.8.45.
+Application pédagogique CE2 — version V25.8.46.
 
 ## Version stable
 
@@ -59,3 +59,11 @@ Cette version correspond à une phase de consolidation sans changement fonctionn
 - Correction du bouton « Relancer l’IA » dans la boîte à questions.
 - Lors d’une relance depuis l’écran d’erreur, la question initiale conservée dans `state.original` est réutilisée.
 - Le correctif n’altère ni l’API ni la logique de sauvegarde des questions.
+
+### Consolidation V25.8.46
+
+- Troisième lot d’archivage de code historique.
+- Anciennes générations `hibou-learning-engine` V25.8.09, V25.8.10, V25.8.11, V25.8.16, V25.8.17 et V25.8.18 archivées (JS + CSS).
+- La version active `hibou-learning-engine-v25822.js` / `.css` reste en place.
+- Le script d’application refuse de continuer si un ancien fichier est encore référencé par une ressource active.
+- Aucun changement API, synchronisation, données élèves ou logique pédagogique.

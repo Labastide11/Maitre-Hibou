@@ -1,5 +1,13 @@
 # CHANGELOG — Maître Hibou
 
+## V25.8.46 — consolidation code historique, lot 3
+
+- Archivage de 12 anciens fichiers JS/CSS de la famille `hibou-learning-engine`.
+- Versions archivées : V25.8.09, V25.8.10, V25.8.11, V25.8.16, V25.8.17 et V25.8.18.
+- Conservation de la version active `hibou-learning-engine-v25822.js` / `.css`.
+- Précontrôle automatique des références avant tout déplacement.
+- Aucun changement API, synchronisation, données élèves ou logique pédagogique.
+
 ## V25.8.45 — correctif relance IA boîte à questions
 
 - Correction du bouton « Relancer l’IA » après une réponse IA invalide ou vide.
