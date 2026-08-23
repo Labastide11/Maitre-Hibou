@@ -119,7 +119,7 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
   }
 
   function init(){
-    document.title = 'Boîte à questions — Maître Hibou V25.8.46';
+    document.title = 'Boîte à questions — Maître Hibou V25.8.47';
     var returnLink = $('returnLink');
     if(returnLink){
       returnLink.href = returnUrlWithStudent();
@@ -129,7 +129,7 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
       };
     }
     $('studentBadge').textContent = state.prenom || 'élève';
-    log('Page GitHub légère prête', {version:'V25.8.46', api: API_URL, prenom: state.prenom || ''});
+    log('Page GitHub légère prête', {version:'V25.8.47', api: API_URL, prenom: state.prenom || ''});
     renderWrite();
   }
   function ensureName(){
