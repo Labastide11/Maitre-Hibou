@@ -1,0 +1,75 @@
+@import url('hibou-parcours-progres-v25858.css');
+
+/* Maître Hibou V25.8.63 — badges pédagogiques des entraînements */
+.hp863-training-event{
+  align-items:flex-start;
+}
+.hp863-training-icon{
+  background:#eef7ff;
+}
+.hp863-training-copy{
+  min-width:0;
+  width:100%;
+}
+.hp863-training-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+}
+.hp863-training-head strong{
+  min-width:0;
+}
+.hp863-training-status{
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  padding:7px 12px;
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+  border:1px solid transparent;
+}
+.hp863-training-status.exceptional,
+.hp863-training-status.verygood{
+  background:#e7f8ec;
+  color:#1f7a43;
+  border-color:#8fd4a6;
+}
+.hp863-training-status.good,
+.hp863-training-status.bravo{
+  background:#eef9e7;
+  color:#48781f;
+  border-color:#b7db8d;
+}
+.hp863-training-status.continue{
+  background:#fff4dc;
+  color:#9a6400;
+  border-color:#efc66d;
+}
+.hp863-training-status.practice{
+  background:#fff0dc;
+  color:#9b5700;
+  border-color:#e9b15b;
+}
+.hp863-training-chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:7px;
+}
+.hp863-training-chip{
+  display:inline-flex;
+  border-radius:999px;
+  padding:4px 9px;
+  background:#eef7ff;
+  color:#285d84;
+  font-size:11px;
+  font-weight:900;
+}
+@media(max-width:700px){
+  .hp863-training-head{gap:8px}
+  .hp863-training-status{padding:6px 9px;font-size:11px}
+}
