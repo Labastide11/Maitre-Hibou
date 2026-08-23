@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<title>BoÃ®te Ã  questions â€” MaÃ®tre Hibou V25.7.93</title>
+<title>Boîte à questions — Maître Hibou V25.7.93</title>
 <style>
 :root{
   --navy:#0f1e46; --navy2:#263c7a; --violet:#6d45f5; --violet2:#8b6cff;
@@ -20,16 +20,16 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
 <body>
 <div class="app">
   <header class="top">
-    <div><h1>ðŸ¦‰ Poser une question Ã  MaÃ®tre Hibou</h1><small>La vraie IA reformule. Tu choisis, puis tu recopies.</small></div>
-    <a class="close" id="returnLink" href="#" aria-label="Retour Ã  MaÃ®tre Hibou">Ã—</a>
+    <div><h1>🦉 Poser une question à Maître Hibou</h1><small>La vraie IA reformule. Tu choisis, puis tu recopies.</small></div>
+    <a class="close" id="returnLink" href="#" aria-label="Retour à Maître Hibou">×</a>
   </header>
   <div class="body">
-    <aside class="left"><h2>ðŸ¦‰ MaÃ®tre Hibou</h2><p>Ã‰cris ta question.<br>Je tâ€™aide Ã  la rendre claire.</p><img id="hibouImg" src="https://labastide11.github.io/Prof_virtuel/hibou_boite_questions.png" alt="MaÃ®tre Hibou et la boÃ®te Ã  questions"></aside>
+    <aside class="left"><h2>🦉 Maître Hibou</h2><p>Écris ta question.<br>Je t’aide à la rendre claire.</p><img id="hibouImg" src="https://labastide11.github.io/Prof_virtuel/hibou_boite_questions.png" alt="Maître Hibou et la boîte à questions"></aside>
     <main class="right">
-      <div class="head"><div><h2>Poser une question</h2><p>Ã‰cris comme tu peux. Lâ€™IA proposera plusieurs vraies questions, mais elle ne rÃ©pondra pas Ã  ta question.</p></div><div class="name" id="studentBadge">Ã©lÃ¨ve</div></div>
+      <div class="head"><div><h2>Poser une question</h2><p>Écris comme tu peux. L’IA proposera plusieurs vraies questions, mais elle ne répondra pas à ta question.</p></div><div class="name" id="studentBadge">élève</div></div>
       <div class="steps" id="steps"></div>
       <div id="panel"></div>
-      <div class="note">V25.7.53 Â· ðŸ”’ La rÃ©ponse IA nâ€™est pas affichÃ©e aux Ã©lÃ¨ves. Elle aide seulement le maÃ®tre. â­ Les questions vedettes seront choisies dans lâ€™espace enseignant.</div>
+      <div class="note">V25.7.53 · 🔒 La réponse IA n’est pas affichée aux élèves. Elle aide seulement le maître. ⭐ Les questions vedettes seront choisies dans l’espace enseignant.</div>
     </main>
   </div>
 </div>
@@ -65,17 +65,17 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
     var t = new Date().toLocaleTimeString('fr-FR');
     var line = '[' + t + '] ' + msg + (data ? '\n  ' + JSON.stringify(data) : '');
     state.logs.push(line);
-    try { console.log('[BoÃ®te Ã  questions]', line); } catch(e) {}
+    try { console.log('[Boîte à questions]', line); } catch(e) {}
   }
   function setStep(active){
-    var labels = ['Jâ€™Ã©cris','Lâ€™IA propose','Je recopie','Je choisis','Jâ€™envoie'];
+    var labels = ['J’écris','L’IA propose','Je recopie','Je choisis','J’envoie'];
     $('steps').innerHTML = labels.map(function(label,i){return '<div class="step '+(active===i+1?'active':'')+'"><strong>'+(i+1)+'</strong>'+label+'</div>';}).join('');
   }
   function setPanel(html){ $('panel').innerHTML = html; }
   function btnHtml(){ return ''; }
   function bindDiag(){ }
   function closeQuestionPage(){
-    /* V25.7.93 : si la boÃ®te est intÃ©grÃ©e dans MaÃ®tre Hibou,
+    /* V25.7.93 : si la boîte est intégrée dans Maître Hibou,
        demander au parent de fermer uniquement la popup. */
     try{
       if(window.parent && window.parent !== window){
@@ -86,14 +86,14 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
       }
     }catch(e){}
 
-    /* Secours : ancien mode fenÃªtre/onglet sÃ©parÃ© conservÃ©. */
+    /* Secours : ancien mode fenêtre/onglet séparé conservé. */
     try{
       if(window.opener && !window.opener.closed){
         try{ window.opener.focus(); }catch(e){}
         window.close();
         /* Certains navigateurs peuvent refuser window.close().
-           Si la fenÃªtre est encore ouverte, on reste sur cette page plutÃ´t
-           que de recharger MaÃ®tre Hibou dans l'onglet enfant. */
+           Si la fenêtre est encore ouverte, on reste sur cette page plutôt
+           que de recharger Maître Hibou dans l'onglet enfant. */
         setTimeout(function(){
           try{
             if(!window.closed){
@@ -102,7 +102,7 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
                 notice = document.createElement('div');
                 notice.id = 'closeFallbackNotice';
                 notice.style.cssText = 'position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#102E67;color:#fff;padding:10px 14px;border-radius:14px;font-weight:900;box-shadow:0 8px 24px rgba(0,0,0,.25)';
-                notice.textContent = 'Tu peux revenir Ã  lâ€™onglet MaÃ®tre Hibou : ta connexion est conservÃ©e.';
+                notice.textContent = 'Tu peux revenir à l’onglet Maître Hibou : ta connexion est conservée.';
                 document.body.appendChild(notice);
               }
             }
@@ -112,14 +112,14 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
       }
     }catch(e){}
 
-    /* Si la page a Ã©tÃ© ouverte directement, sans page MaÃ®tre Hibou parente,
-       on revient vers MaÃ®tre Hibou avec le prÃ©nom transmis. */
+    /* Si la page a été ouverte directement, sans page Maître Hibou parente,
+       on revient vers Maître Hibou avec le prénom transmis. */
     try{ location.href = returnUrlWithStudent(); }catch(e){}
     return false;
   }
 
   function init(){
-    document.title = 'BoÃ®te Ã  questions â€” MaÃ®tre Hibou V25.8.47';
+    document.title = 'Boîte à questions — Maître Hibou V25.8.46';
     var returnLink = $('returnLink');
     if(returnLink){
       returnLink.href = returnUrlWithStudent();
@@ -128,8 +128,8 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
         return closeQuestionPage();
       };
     }
-    $('studentBadge').textContent = state.prenom || 'Ã©lÃ¨ve';
-    log('Page GitHub lÃ©gÃ¨re prÃªte', {version:'V25.8.47', api: API_URL, prenom: state.prenom || ''});
+    $('studentBadge').textContent = state.prenom || 'élève';
+    log('Page GitHub légère prête', {version:'V25.8.46', api: API_URL, prenom: state.prenom || ''});
     renderWrite();
   }
   function ensureName(){
@@ -141,12 +141,12 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
   function renderWrite(){
     setStep(1);
     setPanel('<section class="panel">'+
-      '<h3>â­ Ã‰tape 1 â€” Ã‰cris ta question</h3>'+
-      '<p class="help">Ã‰cris naturellement. Ce nâ€™est pas grave sâ€™il y a des fautes : la vraie IA proposera plusieurs formulations correctes.</p>'+
-      (!state.prenom ? '<p class="help"><b>Ton prÃ©nom :</b></p><input type="text" id="prenomInput" placeholder="Ã‰cris ton prÃ©nom" autocomplete="off">' : '')+
-      '<textarea id="qInput" required placeholder="Exemple : Pourquoi les Ã©toiles brillent-elles la nuit ?">'+esc(state.original)+'</textarea>'+
-      '<div class="actions"><button type="button" class="btn primary" id="reformBtn">ðŸ¦‰ Reformuler avec lâ€™IA</button><button type="button" class="btn" id="clearBtn">Effacer</button></div>'+
-      '<div class="rule"><b>But :</b> apprendre Ã  poser une vraie question. Lâ€™IA ne rÃ©pond pas Ã  la question, elle aide seulement Ã  mieux la formuler.</div>'+btnHtml()+
+      '<h3>⭐ Étape 1 — Écris ta question</h3>'+
+      '<p class="help">Écris naturellement. Ce n’est pas grave s’il y a des fautes : la vraie IA proposera plusieurs formulations correctes.</p>'+
+      (!state.prenom ? '<p class="help"><b>Ton prénom :</b></p><input type="text" id="prenomInput" placeholder="Écris ton prénom" autocomplete="off">' : '')+
+      '<textarea id="qInput" required placeholder="Exemple : Pourquoi les étoiles brillent-elles la nuit ?">'+esc(state.original)+'</textarea>'+
+      '<div class="actions"><button type="button" class="btn primary" id="reformBtn">🦉 Reformuler avec l’IA</button><button type="button" class="btn" id="clearBtn">Effacer</button></div>'+
+      '<div class="rule"><b>But :</b> apprendre à poser une vraie question. L’IA ne répond pas à la question, elle aide seulement à mieux la formuler.</div>'+btnHtml()+
       '</section>');
     $('reformBtn').onclick = reformulate;
     $('clearBtn').onclick = function(){ $('qInput').value=''; $('qInput').focus(); };
@@ -155,9 +155,9 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
   function renderWaiting(seconds){
     setStep(2);
     setPanel('<section class="panel">'+
-      '<h3>ðŸ¦‰ Ã‰tape 2 â€” MaÃ®tre Hibou rÃ©flÃ©chit</h3>'+
-      '<div class="wait">La vraie IA reformule ta question. Comme un humain, elle a besoin dâ€™un petit temps de rÃ©flexion.<br><br><b>Temps dâ€™attente : '+seconds+' s</b></div>'+
-      '<div class="actions"><button class="btn" type="button" id="backWrite">â† Modifier ma question</button></div>'+btnHtml()+
+      '<h3>🦉 Étape 2 — Maître Hibou réfléchit</h3>'+
+      '<div class="wait">La vraie IA reformule ta question. Comme un humain, elle a besoin d’un petit temps de réflexion.<br><br><b>Temps d’attente : '+seconds+' s</b></div>'+
+      '<div class="actions"><button class="btn" type="button" id="backWrite">← Modifier ma question</button></div>'+btnHtml()+
       '</section>');
     $('backWrite').onclick = renderWrite;
     bindDiag();
@@ -173,7 +173,7 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
       var script = document.createElement('script');
       var timer = setTimeout(function(){
         if(done) return; done = true;
-        cleanup(); reject(new Error('DÃ©lai dÃ©passÃ© : lâ€™IA nâ€™a pas rÃ©pondu dans un temps raisonnable.'));
+        cleanup(); reject(new Error('Délai dépassé : l’IA n’a pas répondu dans un temps raisonnable.'));
       }, timeoutMs);
       function cleanup(){
         clearTimeout(timer);
@@ -184,34 +184,34 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
         if(done) return; done = true; cleanup(); resolve(data || {});
       };
       script.onerror = function(){
-        if(done) return; done = true; cleanup(); reject(new Error('Erreur rÃ©seau pendant lâ€™appel Ã  Google Apps Script.'));
+        if(done) return; done = true; cleanup(); reject(new Error('Erreur réseau pendant l’appel à Google Apps Script.'));
       };
       script.src = url;
       document.head.appendChild(script);
     });
   }
   function reformulate(){
-    if(!ensureName()) { alert('Ã‰cris ton prÃ©nom avant de poser ta question.'); return; }
+    if(!ensureName()) { alert('Écris ton prénom avant de poser ta question.'); return; }
     var qInput = $('qInput');
     if(qInput){
       state.original = clean(qInput.value || '');
     }else{
       state.original = clean(state.original || '');
     }
-    if(!state.original){ alert('Ã‰cris dâ€™abord une question.'); return; }
+    if(!state.original){ alert('Écris d’abord une question.'); return; }
     var started = Date.now();
     var tick = 0;
     renderWaiting(0);
     var interval = setInterval(function(){ tick = Math.floor((Date.now()-started)/1000); renderWaiting(tick); }, 1000);
-    log('RequÃªte IA envoyÃ©e via Apps Script', {action:'reformulateQuestion', question: state.original});
+    log('Requête IA envoyée via Apps Script', {action:'reformulateQuestion', question: state.original});
     jsonp({action:'reformulateQuestion', prenom:state.prenom, question:state.original, source:'boite_questions_github_v25_7_13'}, 45000)
       .then(function(data){
         clearInterval(interval);
-        log('RÃ©ponse IA reÃ§ue', {success:data.success, durationMs:data.durationMs || null});
-        if(!data || data.success === false) throw new Error(data && data.error ? data.error : 'RÃ©ponse IA inexploitable.');
+        log('Réponse IA reçue', {success:data.success, durationMs:data.durationMs || null});
+        if(!data || data.success === false) throw new Error(data && data.error ? data.error : 'Réponse IA inexploitable.');
         state.propositions = Array.isArray(data.propositions) ? data.propositions : [];
-        state.reponseIA = data.reponseIA || 'Reformulation IA rÃ©alisÃ©e. RÃ©ponse rÃ©servÃ©e au maÃ®tre.';
-        if(!state.propositions.length) throw new Error('La vraie IA nâ€™a pas proposÃ© de formulation.');
+        state.reponseIA = data.reponseIA || 'Reformulation IA réalisée. Réponse réservée au maître.';
+        if(!state.propositions.length) throw new Error('La vraie IA n’a pas proposé de formulation.');
         renderProposals();
       })
       .catch(function(err){
@@ -222,10 +222,10 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
   }
   function renderError(message){
     setStep(2);
-    setPanel('<section class="panel"><h3>â³ Lâ€™IA nâ€™a pas rÃ©pondu correctement</h3>'+
+    setPanel('<section class="panel"><h3>⏳ L’IA n’a pas répondu correctement</h3>'+
       '<div class="error">'+esc(message)+'</div>'+
-      '<div class="rule"><b>Important :</b> MaÃ®tre Hibou ne fabrique pas de correction locale. La reformulation doit venir de la vraie IA.</div>'+
-      '<div class="actions"><button type="button" class="btn primary" id="retryBtn">ðŸ” Relancer lâ€™IA</button><button type="button" class="btn" id="modifyBtn">â† Modifier ma question</button></div>'+btnHtml()+'</section>');
+      '<div class="rule"><b>Important :</b> Maître Hibou ne fabrique pas de correction locale. La reformulation doit venir de la vraie IA.</div>'+
+      '<div class="actions"><button type="button" class="btn primary" id="retryBtn">🔁 Relancer l’IA</button><button type="button" class="btn" id="modifyBtn">← Modifier ma question</button></div>'+btnHtml()+'</section>');
     $('retryBtn').onclick = reformulate;
     $('modifyBtn').onclick = renderWrite;
     bindDiag();
@@ -233,10 +233,10 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
   function renderProposals(){
     setStep(2);
     var buttons = state.propositions.map(function(p,i){return '<button class="option" type="button" data-i="'+i+'">'+esc(p)+'</button>';}).join('');
-    setPanel('<section class="panel"><span class="badge">âœ¨ Reformulation par la vraie IA</span>'+
-      '<h3>ðŸ¦‰ Ã‰tape 2 â€” Choisis la question qui correspond le mieux Ã  ton idÃ©e</h3>'+
-      '<p class="help">Ta phrase de dÃ©part : <b>Â« '+esc(state.original)+' Â»</b></p><div class="options">'+buttons+'</div>'+
-      '<div class="actions"><button class="btn" type="button" id="modifyBtn">â† Modifier ma question de dÃ©part</button></div>'+btnHtml()+'</section>');
+    setPanel('<section class="panel"><span class="badge">✨ Reformulation par la vraie IA</span>'+
+      '<h3>🦉 Étape 2 — Choisis la question qui correspond le mieux à ton idée</h3>'+
+      '<p class="help">Ta phrase de départ : <b>« '+esc(state.original)+' »</b></p><div class="options">'+buttons+'</div>'+
+      '<div class="actions"><button class="btn" type="button" id="modifyBtn">← Modifier ma question de départ</button></div>'+btnHtml()+'</section>');
     Array.prototype.forEach.call(document.querySelectorAll('.option'), function(btn){ btn.onclick = function(){ state.selected = state.propositions[Number(btn.getAttribute('data-i'))] || ''; renderCopy(); }; });
     $('modifyBtn').onclick = renderWrite;
     bindDiag();
@@ -245,7 +245,7 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
     return String(v || '')
       .toLowerCase()
       .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-      .replace(/[â€™']/g,' ')
+      .replace(/[’']/g,' ')
       .replace(/[^a-z0-9]+/g,' ')
       .replace(/\s+/g,' ')
       .trim();
@@ -268,9 +268,9 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
     var t = clean(raw);
     var tips = [];
     if(!t) return ['Recopie la question choisie.'];
-    if(!/^[A-ZÃ‰ÃˆÃŠÃ€Ã‚ÃŽÃÃ”Ã›Ã™Ã‡]/.test(t)) tips.push('Attention : une phrase commence par une majuscule.');
-    if(!/\?$/.test(t)) tips.push('Attention : une question se termine par un point dâ€™interrogation.');
-    if(normaliseForCompare(t) !== normaliseForCompare(model) && similarity(t, model) < 0.96) tips.push('Compare avec le modÃ¨le : tu as peut-Ãªtre oubliÃ© une lettre, un mot, ou changÃ© un accord.');
+    if(!/^[A-ZÉÈÊÀÂÎÏÔÛÙÇ]/.test(t)) tips.push('Attention : une phrase commence par une majuscule.');
+    if(!/\?$/.test(t)) tips.push('Attention : une question se termine par un point d’interrogation.');
+    if(normaliseForCompare(t) !== normaliseForCompare(model) && similarity(t, model) < 0.96) tips.push('Compare avec le modèle : tu as peut-être oublié une lettre, un mot, ou changé un accord.');
     return tips;
   }
   function updateCopyAdvice(){
@@ -280,25 +280,25 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
     var tips = copyAdvice(input.value, state.selected);
     if(!clean(input.value)){
       box.className = 'copywarn';
-      box.innerHTML = 'âœï¸ Recopie la question choisie dans le cadre.';
+      box.innerHTML = '✍️ Recopie la question choisie dans le cadre.';
     } else if(tips.length){
       box.className = 'copywarn';
-      box.innerHTML = 'ðŸ¦‰ <b>Relis-toi :</b><br>' + tips.map(function(t){ return 'â€¢ '+esc(t); }).join('<br>');
+      box.innerHTML = '🦉 <b>Relis-toi :</b><br>' + tips.map(function(t){ return '• '+esc(t); }).join('<br>');
     } else {
       box.className = 'copywarn ok';
-      box.innerHTML = 'âœ… Ta question ressemble bien au modÃ¨le. Tu peux continuer.';
+      box.innerHTML = '✅ Ta question ressemble bien au modèle. Tu peux continuer.';
     }
     return tips;
   }
   function renderCopy(){
     setStep(3);
     state.corrected = '';
-    setPanel('<section class="panel"><h3>âœï¸ Ã‰tape 3 â€” Recopie la question correctement</h3>'+
-      '<p class="help">Prends ton temps. Recopie la proposition choisie. MaÃ®tre Hibou tâ€™aide seulement Ã  te relire.</p>'+
-      '<div class="corrected">Â« '+esc(state.selected)+' Â»</div>'+
+    setPanel('<section class="panel"><h3>✍️ Étape 3 — Recopie la question correctement</h3>'+
+      '<p class="help">Prends ton temps. Recopie la proposition choisie. Maître Hibou t’aide seulement à te relire.</p>'+
+      '<div class="corrected">« '+esc(state.selected)+' »</div>'+
       '<textarea id="copyInput" required placeholder="Recopie ici la question choisie."></textarea>'+
-      '<div id="copyAdvice" class="copywarn">âœï¸ Recopie la question choisie dans le cadre.</div>'+
-      '<div class="actions"><button type="button" class="btn primary" id="copyOk">âœ… Jâ€™ai recopiÃ© ma question</button><button type="button" class="btn" id="backProps">â† Revoir les propositions</button></div>'+btnHtml()+'</section>');
+      '<div id="copyAdvice" class="copywarn">✍️ Recopie la question choisie dans le cadre.</div>'+
+      '<div class="actions"><button type="button" class="btn primary" id="copyOk">✅ J’ai recopié ma question</button><button type="button" class="btn" id="backProps">← Revoir les propositions</button></div>'+btnHtml()+'</section>');
     $('copyInput').focus();
     $('copyInput').oninput = updateCopyAdvice;
     $('copyOk').onclick = function(){
@@ -313,12 +313,12 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
   }
   function renderVisibility(){
     setStep(4);
-    setPanel('<section class="panel"><h3>ðŸ‘€ Ã‰tape 4 â€” Je choisis</h3>'+
-      '<p class="help">Le maÃ®tre lira ta question. Choisis si elle peut Ãªtre partagÃ©e avec la classe.</p>'+
-      '<div class="corrected">Â« '+esc(state.corrected)+' Â»</div>'+
-      '<div class="actions"><button type="button" class="btn class" id="classBtn">ðŸ‘¥ Question de classe</button><button type="button" class="btn private" id="privateBtn">ðŸ”’ Question privÃ©e</button></div>'+btnHtml()+'</section>');
+    setPanel('<section class="panel"><h3>👀 Étape 4 — Je choisis</h3>'+
+      '<p class="help">Le maître lira ta question. Choisis si elle peut être partagée avec la classe.</p>'+
+      '<div class="corrected">« '+esc(state.corrected)+' »</div>'+
+      '<div class="actions"><button type="button" class="btn class" id="classBtn">👥 Question de classe</button><button type="button" class="btn private" id="privateBtn">🔒 Question privée</button></div>'+btnHtml()+'</section>');
     $('classBtn').onclick = function(){ submit('classe'); };
-    $('privateBtn').onclick = function(){ submit('privÃ©e'); };
+    $('privateBtn').onclick = function(){ submit('privée'); };
     bindDiag();
   }
   function notifyQuestionJournal(vis, responseData){
@@ -326,9 +326,9 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
       type: 'hibou_question_posee',
       event_id: 'question-' + clean(state.prenom || 'eleve').toLowerCase() + '-' + Date.now(),
       prenom: state.prenom || '',
-      matiere: 'BoÃ®te Ã  questions',
-      domaine: 'BoÃ®te Ã  questions',
-      titre: 'Question posÃ©e',
+      matiere: 'Boîte à questions',
+      domaine: 'Boîte à questions',
+      titre: 'Question posée',
       questionCorrigee: state.corrected || '',
       questionOriginale: state.original || '',
       question: state.corrected || state.original || '',
@@ -346,26 +346,26 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
       if(window.parent && window.parent !== window) window.parent.postMessage(payload, '*');
     }catch(e){}
     try{ window.dispatchEvent(new CustomEvent('hibou:question-saved', { detail: payload })); }catch(e){}
-    log('Pont journal Ã©lÃ¨ve envoyÃ©', {prenom: payload.prenom, matiere: payload.matiere, question: payload.questionCorrigee});
+    log('Pont journal élève envoyé', {prenom: payload.prenom, matiere: payload.matiere, question: payload.questionCorrigee});
     return payload;
   }
 
   function submit(vis){
     setStep(5);
-    setPanel('<section class="panel"><h3>ðŸ“¨ Ã‰tape 5 â€” Jâ€™envoie</h3><div class="wait">Jâ€™enregistre ta question dans le journal du maÃ®treâ€¦</div>'+btnHtml()+'</section>'); bindDiag();
-    log('Enregistrement envoyÃ©', {visibilite: vis, questionCorrigee: state.corrected});
+    setPanel('<section class="panel"><h3>📨 Étape 5 — J’envoie</h3><div class="wait">J’enregistre ta question dans le journal du maître…</div>'+btnHtml()+'</section>'); bindDiag();
+    log('Enregistrement envoyé', {visibilite: vis, questionCorrigee: state.corrected});
     jsonp({
-      action:'appendQuestion', prenom:state.prenom, matiere:'BoÃ®te Ã  questions', questionOriginale:state.original,
+      action:'appendQuestion', prenom:state.prenom, matiere:'Boîte à questions', questionOriginale:state.original,
       questionCorrigee:state.corrected, reponseIA:state.reponseIA, visibilite:vis, statut:'nouvelle', pointsCuriosite:'1',
       source:'boite_questions_github_v25_7_13'
     }, 30000).then(function(data){
-      log('Enregistrement terminÃ©', {success:data.success});
-      if(!data || data.success === false) throw new Error(data && data.error ? data.error : 'Erreur pendant lâ€™enregistrement.');
+      log('Enregistrement terminé', {success:data.success});
+      if(!data || data.success === false) throw new Error(data && data.error ? data.error : 'Erreur pendant l’enregistrement.');
       notifyQuestionJournal(vis, data);
       renderSuccess(vis);
     }).catch(function(err){
       log('Erreur enregistrement', {message: err.message || String(err)});
-      setPanel('<section class="panel"><h3>âš ï¸ Enregistrement impossible</h3><div class="error">'+esc(err.message || String(err))+'</div><div class="actions"><button type="button" class="btn primary" id="retrySave">ðŸ” RÃ©essayer</button><button type="button" class="btn" id="backVisibility">â† Revenir au choix</button></div>'+btnHtml()+'</section>');
+      setPanel('<section class="panel"><h3>⚠️ Enregistrement impossible</h3><div class="error">'+esc(err.message || String(err))+'</div><div class="actions"><button type="button" class="btn primary" id="retrySave">🔁 Réessayer</button><button type="button" class="btn" id="backVisibility">← Revenir au choix</button></div>'+btnHtml()+'</section>');
       $('retrySave').onclick = function(){ submit(vis); };
       $('backVisibility').onclick = renderVisibility;
       bindDiag();
@@ -373,9 +373,9 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
   }
   function renderSuccess(vis){
     setStep(5);
-    setPanel('<section class="panel"><div class="success">âœ… Ta question a Ã©tÃ© enregistrÃ©e.<br>Merci, '+esc(state.prenom || 'Ã©lÃ¨ve')+' !</div>'+
-      '<div class="rule"><b>Question envoyÃ©e :</b><br>Â« '+esc(state.corrected)+' Â»<br><br><b>VisibilitÃ© :</b> '+esc(vis)+'</div>'+
-      '<div class="actions"><button type="button" class="btn primary" id="againBtn">ðŸ“¦ Poser une autre question</button><button type="button" class="btn" id="backToHibouBtn">Retour Ã  MaÃ®tre Hibou</button></div>'+btnHtml()+'</section>');
+    setPanel('<section class="panel"><div class="success">✅ Ta question a été enregistrée.<br>Merci, '+esc(state.prenom || 'élève')+' !</div>'+
+      '<div class="rule"><b>Question envoyée :</b><br>« '+esc(state.corrected)+' »<br><br><b>Visibilité :</b> '+esc(vis)+'</div>'+
+      '<div class="actions"><button type="button" class="btn primary" id="againBtn">📦 Poser une autre question</button><button type="button" class="btn" id="backToHibouBtn">Retour à Maître Hibou</button></div>'+btnHtml()+'</section>');
     $('againBtn').onclick = function(){ state.original=''; state.propositions=[]; state.selected=''; state.corrected=''; renderWrite(); };
     var backBtn = $('backToHibouBtn');
     if(backBtn) backBtn.onclick = function(){ return closeQuestionPage(); };
@@ -386,4 +386,3 @@ body{min-height:100vh;padding:12px;overflow-x:hidden}.app{width:min(1180px,100%)
 </script>
 </body>
 </html>
-
