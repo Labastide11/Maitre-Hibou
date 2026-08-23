@@ -1,6 +1,6 @@
 # Maître Hibou
 
-Application pédagogique CE2 — version V25.8.46.
+Application pédagogique CE2 — version V25.8.48.
 
 ## Version stable
 
@@ -67,3 +67,12 @@ Cette version correspond à une phase de consolidation sans changement fonctionn
 - La version active `hibou-learning-engine-v25822.js` / `.css` reste en place.
 - Le script d’application refuse de continuer si un ancien fichier est encore référencé par une ressource active.
 - Aucun changement API, synchronisation, données élèves ou logique pédagogique.
+
+### Fiabilisation V25.8.48
+
+- « Mes progrès » fusionne le journal local et `student_snapshot.reussites`.
+- « Parcours » est trié chronologiquement du plus récent au plus ancien, y compris avec les dates françaises renvoyées par l’API.
+- « Mon dernier score » de calcul mental vient désormais du Parcours (tous les entraînements).
+- « Mon meilleur score » et « Mon meilleur temps » restent fondés sur `records_calcul`.
+- Le panneau visible se rafraîchit dès que le snapshot Google Sheet arrive.
+- Aucun changement de l’API Apps Script.

@@ -1,5 +1,13 @@
 # CHANGELOG — Maître Hibou
 
+## V25.8.48 — fiabilisation Mes progrès : dernier calcul + ordre chronologique
+
+- Fusion du Parcours local avec `student_snapshot.reussites` issu du Google Sheet.
+- Tri chronologique réel du plus récent au plus ancien.
+- Séparation des rôles : dernier calcul = Parcours ; meilleur score/temps = `records_calcul`.
+- Rafraîchissement automatique de la popup après réception du snapshot.
+- Aucun changement de l’API Apps Script.
+
 ## V25.8.46 — consolidation code historique, lot 3
 
 - Archivage de 12 anciens fichiers JS/CSS de la famille `hibou-learning-engine`.
