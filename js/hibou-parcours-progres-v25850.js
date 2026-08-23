@@ -1,0 +1,503 @@
+/* Maître Hibou V25.8.25 — Mes progrès enrichi + fermeture explicite */
+(function(){
+'use strict';if(window.__hibouProgressHubV25850)return;window.__hibouProgressHubV25850=true;
+var VERSION='🦉 Maître Hibou V25.8.50',latestSnapshot=null,overlay=null,quoteIndex=-1,activeTab='recent',recentExpanded=false,classRecords=null,classRecordsLoading=false,snapshotLoading=false,questionsLoading=false,questionsError='';
+var QUOTES=[
+    {text:'Je crois en toi.'},
+    {text:'J’ai confiance en toi.'},
+    {text:'On apprend aussi pour aider les autres et transmettre.'},
+    {text:'Tu es capable de réaliser bien plus que ce que tu crois.'},
+    {text:'Mets ton cœur dans tout ce que tu fais.'},
+    {text:'Tu n’es pas en train d’échouer, tu es en train d’apprendre.'},
+    {text:'Tu as le droit de demander de l’aide.'},
+    {text:'Ta valeur ne se résume pas à une note.'},
+    {text:'Tes erreurs sont des chances de progresser plus vite.'},
+    {text:'Même quand ce n’était pas facile, tu as continué à donner le meilleur de toi-même, bravo !'}
+  ];
+function clean(v){return String(v==null?'':v).replace(/\s+/g,' ').trim()}function esc(v){return clean(v).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}function norm(v){return clean(v).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'_')}function rank(v){v=clean(v);return/or|🥇/i.test(v)?3:/argent|🥈/i.test(v)?2:/bronze|🥉/i.test(v)?1:0}function setVersion(){try{document.title=VERSION}catch(e){}}
+function studentLabel(v){var s=clean(v);s=s.replace(/\b(?:LEC|COM|LIT)-?P\d-?\d{1,2}\b/gi,'').replace(/\b(?:LEC|COM|LIT)\s*P\d\s*\d{1,2}\b/gi,'').replace(/\s*[—–-]\s*Je sais\b.*$/i,'').replace(/\s{2,}/g,' ').replace(/^[—–:\s]+|[—–:\s]+$/g,'');return clean(s)||'Activité'}
+function currentName(){try{if(window.hibouStudentSystem&&window.hibouStudentSystem.currentName)return clean(window.hibouStudentSystem.currentName())}catch(e){}try{var o=JSON.parse(localStorage.getItem('hibou_current_student')||'{}');if(o&&o.prenom)return clean(o.prenom)}catch(e){}try{return clean(window.prenomActuel||localStorage.getItem('hibou_prenom')||localStorage.getItem('elevePrenom')||'Élève')||'Élève'}catch(e){return'Élève'}}
+function studentData(){if(latestSnapshot&&latestSnapshot.eleve)return latestSnapshot.eleve;try{var o=JSON.parse(localStorage.getItem('hibou_current_student')||'{}');if(o&&o.prenom)return o}catch(e){}return{prenom:currentName(),sexe:''}}
+function avatarPath(){var s=clean(studentData().sexe).toLowerCase();if(/^f/.test(s))return'images/portrait_fille.png';if(/^g/.test(s)||/^m/.test(s)||/gar/.test(s)||/boy/.test(s))return'images/portrait_garcon.png';return'images/portrait_neutre.png'}
+function eventTime(v){
+  v=clean(v);
+  if(!v)return 0;
+  var direct=Date.parse(v);
+  if(isFinite(direct))return direct;
+  var m=v.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s*(?:à|a)?\s*(\d{1,2})[:h](\d{2})(?::(\d{2}))?)?/i);
+  if(!m)return 0;
+  return new Date(Number(m[3]),Number(m[2])-1,Number(m[1]),Number(m[4]||0),Number(m[5]||0),Number(m[6]||0)).getTime()||0;
+}
+function eventId(e){
+  return clean(e&&(e.id_evenement||e.event_id||e.id)||'');
+}
+function eventKey(e){
+  var id=eventId(e);
+  if(id)return'id:'+id;
+  return[
+    norm(e&&e.prenom||currentName()),
+    clean(e&&(e.date_iso||e.date)||''),
+    norm(e&&(e.type||e.source)||''),
+    norm(e&&(e.titre||e.texte||e.activite||e.domaine)||''),
+    String(e&&e.score==null?'':e.score),
+    String(e&&e.total==null?'':e.total)
+  ].join('|');
+}
+function history(){
+  var local=[],remote=[];
+  try{local=window.hibouGetEventHistory?(window.hibouGetEventHistory(currentName())||[]):[]}catch(e){local=[]}
+  if(latestSnapshot&&Array.isArray(latestSnapshot.reussites))remote=latestSnapshot.reussites;
+  var seen={},out=[];
+  local.concat(remote).forEach(function(e){
+    if(!e)return;
+    var k=eventKey(e);
+    if(seen[k])return;
+    seen[k]=1;
+    out.push(e);
+  });
+  out.sort(function(a,b){
+    return eventTime(b&&(b.date_iso||b.date))-eventTime(a&&(a.date_iso||a.date));
+  });
+  return out;
+}
+function bestCompetences(){var rows=(latestSnapshot&&Array.isArray(latestSnapshot.competences))?latestSnapshot.competences:[],best={};rows.forEach(function(r){var key=norm(r.skill_id||r.skillId||r.competence||r.texte||r.activite);if(!key)return;var rr=rank(r.medaille||r.medal||r.rank),score=parseInt(String(r.validations||'').split('/')[0],10)||Number(r.score)||0;if(!best[key]||rr>best[key].rank||(rr===best[key].rank&&score>best[key].score))best[key]={rank:rr,score:score,row:r}});return Object.keys(best).map(function(k){return best[k].row}).sort(function(a,b){return eventTime(b&&b.date)-eventTime(a&&a.date)})}
+function medalCounts(){var c={or:0,argent:0,bronze:0};bestCompetences().forEach(function(r){var x=rank(r.medaille||r.medal||r.rank);if(x===3)c.or++;else if(x===2)c.argent++;else if(x===1)c.bronze++});return c}
+function formatDate(v){var t=eventTime(v),d=t?new Date(t):null;if(!d||isNaN(d))return clean(v);return d.toLocaleDateString('fr-FR')+' à '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}
+function eventTitle(e){var raw=clean(e&&(e.titre||e.texte||e.affichage||e.activite)||'Activité');raw=raw.replace(/^[✅❌🧭⭐🏅📖🧮💬\s]+/,'').replace(/\s+[—-]\s+(?:LEC|COM|LIT)-?P\d-?\d{1,2}\b/gi,'').replace(/\s+[—-]\s+Je sais\b.*$/i,'').replace(/\s+[—-]\s+(?:🥇|🥈|🥉)?\s*(?:Or|Argent|Bronze)\b.*$/i,'').replace(/\s+[—-]\s+\d+\/\d+\b.*$/i,'');return studentLabel(raw)}
+function eventIcon(e){var t=clean(e&&e.type);if(/lecture/.test(t))return'📖';if(/ceinture/.test(t))return'🎗️';if(/entrainement/.test(t))return'🧮';if(/question/.test(t))return'💬';if(e&&e.resultat==='erreur')return'🎯';return e&&e.resultat==='reussite'?'✅':'🧭'}
+
+function isLearningTrace(e){
+  return !!(e&&(
+    clean(e.mastery_status)||
+    clean(e.competence_label)||
+    clean(e.learning_session_id)||
+    clean(e.source).indexOf('hibou_learning_engine')===0
+  ));
+}
+function masteryInfo(v){
+  var k=norm(v);
+  if(k==='a_renforcer')return{key:'a_renforcer',label:'À renforcer',icon:'🔴'};
+  if(k==='reussi_avec_aide')return{key:'reussi_avec_aide',label:'Réussi avec aide',icon:'🟡'};
+  if(k==='reussi_seul')return{key:'reussi_seul',label:'Réussi seul',icon:'🟢'};
+  if(k==='maitrise_plusieurs_fois')return{key:'maitrise_plusieurs_fois',label:'Maîtrisé plusieurs fois',icon:'⭐'};
+  return{key:'',label:'',icon:''};
+}
+function learningTitle(e){
+  return studentLabel(e&&e.competence_label||eventTitle(e));
+}
+function learningMetrics(e){
+  var parts=[];
+  if(e&&e.score!==''&&e.score!=null&&e.total!==''&&e.total!=null){
+    parts.push('Entraînement '+clean(e.score)+'/'+clean(e.total));
+  }
+  if(e&&e.challenge_score!==''&&e.challenge_score!=null&&e.challenge_total!==''&&e.challenge_total!=null){
+    parts.push('Défi '+clean(e.challenge_score)+'/'+clean(e.challenge_total));
+  }
+  var help=Number(e&&e.help_used);
+  if(isFinite(help)&&help>0)parts.push(help+' aide'+(help>1?'s':''));
+  else if(e&&e.help_used!==''&&e.help_used!=null)parts.push('Sans aide');
+  return parts;
+}
+function learningEventRow(e){
+  var m=masteryInfo(e&&e.mastery_status),metrics=learningMetrics(e),dom=studentLabel(e&&e.matiere||'Français');
+  return '<article class="hp79-event hp814-learning-event">'
+    +'<span class="hp79-event-icon">📖</span>'
+    +'<div class="hp814-learning-copy">'
+      +'<div class="hp814-learning-head"><strong>'+esc(learningTitle(e))+'</strong>'
+        +(m.label?'<span class="hp814-mastery '+esc(m.key)+'">'+m.icon+' '+esc(m.label)+'</span>':'')
+      +'</div>'
+      +'<small>'+esc(formatDate(e&&e.date_iso||e&&e.date||''))+(dom?' · '+esc(dom):'')+'</small>'
+      +(metrics.length?'<div class="hp814-learning-metrics">'+metrics.map(function(x){return'<span>'+esc(x)+'</span>'}).join('')+'</div>':'')
+    +'</div>'
+  +'</article>';
+}
+function eventResult(e){if(!e)return'';if(isLearningTrace(e)){var mi=masteryInfo(e.mastery_status);if(mi.label)return mi.icon+' '+mi.label}var medal=clean(e.medaille||''),score=(e.score!==''&&e.score!=null&&e.total!==''&&e.total!=null)?clean(e.score)+'/'+clean(e.total):'';if(medal){var nice=/or/i.test(medal)?'🥇 Or':/argent/i.test(medal)?'🥈 Argent':/bronze/i.test(medal)?'🥉 Bronze':medal;return score?nice+' · '+score:nice}if(score)return score;if(e.resultat==='reussite')return'Réussite';if(e.resultat==='erreur')return'À reprendre';return''}
+function eventRow(e){if(isLearningTrace(e))return learningEventRow(e);var dom=studentLabel(e.matiere||e.domaine||''),res=eventResult(e);return'<article class="hp79-event"><span class="hp79-event-icon">'+eventIcon(e)+'</span><div><strong>'+esc(eventTitle(e))+'</strong><small>'+esc(formatDate(e.date_iso||e.date||''))+(dom?' · '+esc(dom):'')+'</small>'+(res?'<span class="hp79-result">'+esc(res)+'</span>':'')+'</div></article>'}
+function recentHTML(){var all=history(),rows=all.slice(0,recentExpanded?12:4),more=all.length>4?'<button type="button" class="hp79-more" data-hp79-more>'+(recentExpanded?'Voir moins':'Voir plus')+'</button>':'';return(rows.length?rows.map(eventRow).join(''):'<div class="hp79-empty">Aucune activité récente pour le moment.</div>')+more}
+function beltCategory(r){var s=norm([r.matiere,r.domaine,r.skill_id,r.skillId,r.competence,r.activite].join(' '));return/math|calcul|nombre|table|multipli|dizaine|centaine/.test(s)?'maths':'francais'}
+function beltColorKey(r){
+  var source=norm([r.couleur,r.color,r.belt_color,r.ceinture,r.competence,r.texte,r.activite,r.skill_id,r.skillId].join(' '));
+  source=source.replace(/couleur_/g,'').replace(/ceinture_/g,'');
+  if(/verte?_?claire|vert_?clair/.test(source)) return 'verte_claire';
+  if(/verte?_?foncee|vert_?fonce/.test(source)) return 'verte_foncee';
+  if(/bleue?_?claire|bleu_?clair/.test(source)) return 'bleue_claire';
+  if(/bleue?_?foncee|bleu_?fonce|bleu_?marine/.test(source)) return 'bleue_foncee';
+  if(/blanch/.test(source)) return 'blanche';
+  if(/jaun/.test(source)) return 'jaune';
+  if(/orang/.test(source)) return 'orange';
+  if(/verte?|vert/.test(source)) return beltCategory(r)==='maths' ? 'verte_claire' : 'verte_foncee';
+  if(/bleue?|bleu/.test(source)) return beltCategory(r)==='maths' ? 'bleue_claire' : 'bleue_foncee';
+  if(/rose/.test(source)) return 'rose';
+  if(/beige|creme/.test(source)) return 'beige';
+  if(/violet|violette|pourpre|lilas/.test(source)) return 'violette';
+  if(/marron|brun|brune/.test(source)) return 'marron';
+  if(/roug/.test(source)) return 'rouge';
+  if(/gris|grise/.test(source)) return 'grise';
+  if(/noir|noire/.test(source)) return 'noire';
+  return 'blanche';
+}
+function beltColorLabel(key){
+  return {blanche:'Blanche',jaune:'Jaune',orange:'Orange',verte_claire:'Vert clair',verte_foncee:'Vert foncé',bleue_claire:'Bleu clair',bleue_foncee:'Bleu foncé',rose:'Rose',beige:'Beige',violette:'Violette',marron:'Marron',rouge:'Rouge',grise:'Grise',noire:'Noire'}[key]||'Ceinture';
+}
+function beltIconPath(key){return 'assets/ceintures/'+key+'.png'}
+function beltMetaText(r,key){
+  var parts=[beltColorLabel(key)], medal=clean(r.medaille||''), score=clean(r.validations||((r.score!=null&&r.total!=null)?r.score+'/'+r.total:''));
+  if(medal) parts.push(medal);
+  if(score) parts.push(score);
+  return parts.join(' · ');
+}
+function beltItemHTML(r){
+  var key=beltColorKey(r), title=studentLabel(r.competence||r.texte||r.activite||'Compétence');
+  return '<article class="hp94-belt-item">'+
+    '<img class="hp94-belt-icon" src="'+beltIconPath(key)+'" alt="Ceinture '+esc(beltColorLabel(key))+'">'+
+    '<div class="hp94-belt-copy"><strong>'+esc(title)+'</strong><span>'+esc(beltMetaText(r,key))+'</span></div>'+
+  '</article>';
+}
+function beltListHTML(rows){
+  if(!rows.length)return '<div class="hp79-empty">Aucune ceinture validée pour le moment.</div>';
+  return '<div class="hp94-belt-list">'+rows.map(beltItemHTML).join('')+'</div>';
+}
+function beltsHTML(){
+  var rows=bestCompetences(), fr=rows.filter(function(r){return beltCategory(r)==='francais'}), maths=rows.filter(function(r){return beltCategory(r)==='maths'});
+  return '<div class="hp94-belt-grid">'+
+    '<section class="hp79-belt-col hp94-belt-col"><h4>📘 Français</h4>'+beltListHTML(fr)+'</section>'+
+    '<section class="hp79-belt-col hp94-belt-col"><h4>🧮 Maths</h4>'+beltListHTML(maths)+'</section>'+
+  '</div>';
+}
+
+var QUESTION_STORE_V25825='hibou_student_questions_v25807';
+
+function questionStatusLabel(v){
+  var s=clean(v).toLowerCase();
+  if(/expliquee|expliquée|repondu|répondu|traitee|traitée/.test(s))return'Expliquée';
+  if(/a_expliquer|à expliquer|expliquer|attente|relire/.test(s))return'À expliquer';
+  return'Envoyée';
+}
+function questionText(q){
+  return clean(q&&(q.questionCorrigee||q.question_corrigee||q.question||q.texte||q.titre||q.questionOriginale||q.question_originale)||'');
+}
+function questionDate(q){
+  return q&&(q.date_iso||q.date||q.created_at||q.timestamp||q.createdAt)||'';
+}
+function questionKey(q){
+  return norm([questionText(q),questionDate(q)].join('|'));
+}
+function readStoredQuestions(){
+  try{
+    var rows=JSON.parse(localStorage.getItem(QUESTION_STORE_V25825)||'[]');
+    return Array.isArray(rows)?rows:[];
+  }catch(e){return[]}
+}
+function writeStoredQuestion(payload){
+  if(!payload)return;
+  var name=clean(payload.prenom||payload.student||payload.eleve||currentName());
+  if(norm(name)!==norm(currentName()))return;
+  var row={
+    prenom:name,
+    question:questionText(payload),
+    questionCorrigee:clean(payload.questionCorrigee||''),
+    questionOriginale:clean(payload.questionOriginale||''),
+    date_iso:payload.date_iso||payload.date||new Date().toISOString(),
+    statut:payload.statut||'nouvelle'
+  };
+  if(!row.question)return;
+  try{
+    var rows=readStoredQuestions(), key=questionKey(row);
+    rows=rows.filter(function(r){return questionKey(r)!==key});
+    rows.unshift(row);
+    localStorage.setItem(QUESTION_STORE_V25825,JSON.stringify(rows.slice(0,40)));
+  }catch(e){}
+}
+function studentQuestions(){
+  var rows=(latestSnapshot&&Array.isArray(latestSnapshot.questions))
+    ? latestSnapshot.questions.slice()
+    : [];
+
+  // V25.8.25 : source unique = Google Sheet via API V2.7.1.
+  // Aucun ajout depuis localStorage ou l'historique du parcours.
+  var seen={};
+  rows=rows.filter(function(q){
+    if(!q)return false;
+    var id=clean(q.id||'');
+    var text=questionText(q);
+    if(!text)return false;
+    var k=id||norm([
+      clean(q.prenom||currentName()),
+      clean(q.date||q.date_only||''),
+      clean(q.heure||''),
+      text
+    ].join('|'));
+    if(seen[k])return false;
+    seen[k]=1;
+    return true;
+  });
+
+  rows.sort(function(a,b){
+    var da=clean(a.date||a.date_only||'')+' '+clean(a.heure||'');
+    var db=clean(b.date||b.date_only||'')+' '+clean(b.heure||'');
+    return db.localeCompare(da);
+  });
+  return rows;
+}
+function questionRowHTML(q){
+  var status=questionStatusLabel(q.statut||q.status||'nouvelle');
+  var cls=status==='Expliquée'?'done':status==='À expliquer'?'todo':'sent';
+  var d=questionDate(q), date=d?formatDate(d):'';
+  return '<article class="hp96-question-row">'
+    +'<div class="hp96-question-main">'
+      +'<strong>'+esc(questionText(q))+'</strong>'
+      +(date?'<small>'+esc(date)+'</small>':'')
+    +'</div>'
+    +'<span class="hp96-question-status '+cls+'">'+esc(status)+'</span>'
+  +'</article>';
+}
+function questionsHTML(){
+  if(questionsLoading){
+    return '<div class="hp79-empty hp96-question-empty hp801-loading">Synchronisation de tes questions…</div>';
+  }
+
+  var rows=studentQuestions();
+  if(rows.length){
+    return '<div class="hp96-question-list">'+rows.map(questionRowHTML).join('')+'</div>';
+  }
+
+  if(questionsError){
+    return '<div class="hp801-question-error">'
+      +'<strong>Impossible de synchroniser les questions pour le moment.</strong>'
+      +'<span>'+esc(questionsError)+'</span>'
+      +'<button type="button" data-hp801-retry>Réessayer</button>'
+      +'</div>';
+  }
+
+  var meta=latestSnapshot&&latestSnapshot.questions_meta;
+  if(meta&&meta.source==='sheet'){
+    return '<div class="hp79-empty hp96-question-empty">Aucune question trouvée dans ton carnet pour le moment. 💬</div>';
+  }
+
+  return '<div class="hp79-empty hp96-question-empty">Ouvre cet onglet pour synchroniser tes questions.</div>';
+}
+
+function successes(){return history().filter(function(e){if(!e)return false;var m=masteryInfo(e.mastery_status);return e.resultat==='reussite'||/ceinture.*validee/.test(clean(e.type))||rank(e.medaille)>0||m.key==='reussi_avec_aide'||m.key==='reussi_seul'||m.key==='maitrise_plusieurs_fois'}).slice(0,8)}
+function successHTML(){var rows=successes();if(!rows.length)return'<div class="hp79-empty">Tes prochaines réussites apparaîtront ici.</div>';var belt=rows.find(function(e){return/ceinture/.test(clean(e.type))}),reading=rows.find(function(e){return/lecture|franc/i.test(norm([e.type,e.matiere,e.domaine,e.titre].join(' ')))}),maths=rows.find(function(e){return/math|calcul/i.test(norm([e.matiere,e.domaine,e.titre].join(' ')))}),question=rows.find(function(e){return/question/.test(clean(e.type))}),cards=[];if(belt)cards.push(['🌟 Dernière fierté',eventTitle(belt)+(eventResult(belt)?' — '+eventResult(belt):'')]);if(reading)cards.push(['📖 En lecture / français',eventTitle(reading)+(eventResult(reading)?' — '+eventResult(reading):'')]);if(maths)cards.push(['🧮 En maths',eventTitle(maths)+(eventResult(maths)?' — '+eventResult(maths):'')]);if(question)cards.push(['💬 Curiosité',eventTitle(question)]);if(!cards.length)cards.push(['🌟 Ma réussite',eventTitle(rows[0])]);return'<div class="hp79-success-grid">'+cards.slice(0,4).map(function(c){return'<div class="hp79-success"><b>'+esc(c[0])+'</b><span>'+esc(c[1])+'</span></div>'}).join('')+'</div>'}
+function isMentalEvent(e){
+  if(!e)return false;
+  var src=norm(e.source||''),type=norm(e.type||''),mat=norm(e.matiere||''),label=norm([e.titre,e.texte,e.activite,e.domaine].join(' '));
+  if(src==='calcul_mental'||src.indexOf('calcul_mental')===0)return true;
+  return /math/.test(mat)&&/entrainement/.test(type)&&/calcul|nombre|dizaine|table|multipli|mental/.test(label);
+}
+function mentalHistory(){
+  return history().filter(function(e){
+    return isMentalEvent(e)&&e.score!==''&&e.score!=null&&Number(e.total||10)>0;
+  }).map(function(e){
+    return{
+      score:Number(e.score)||0,
+      total:Number(e.total)||10,
+      time:Number(e.temps_secondes||e.temps||0)||0,
+      date:e.date_iso||e.date||'',
+      source:'parcours',
+      label:clean(e.titre||e.activite||e.texte||e.domaine||'').replace(/^Calcul mental\s*[—-]\s*/i,''),
+      belt:clean(e.ceinture||e.belt||''),
+      skill_id:clean(e.skill_id||e.skillId||e.competence_code||'')
+    };
+  }).sort(function(a,b){return eventTime(b.date)-eventTime(a.date)});
+}
+function recordRows(){
+  var rows=[],snap=(latestSnapshot&&Array.isArray(latestSnapshot.records))?latestSnapshot.records:[];
+  snap.forEach(function(r){
+    rows.push({
+      score:Number(r.score)||0,
+      total:Number(r.total)||10,
+      time:Number(r.temps_secondes||r.temps||0)||0,
+      date:r.date||'',
+      source:'records'
+    });
+  });
+  /* Immédiatement après un exercice, le Parcours local peut être plus récent que le snapshot.
+     On l'ajoute comme candidat au meilleur résultat sans en faire un faux "record" persistant. */
+  var last=mentalHistory()[0];
+  if(last)rows.push(last);
+  return rows;
+}
+function bestRecord(rows){if(!rows||!rows.length)return null;return rows.slice().sort(function(a,b){var ra=a.total?a.score/a.total:0,rb=b.total?b.score/b.total:0;if(rb!==ra)return rb-ra;if((b.score||0)!==(a.score||0))return(b.score||0)-(a.score||0);var ta=Number(a.time||a.temps_secondes)||999999,tb=Number(b.time||b.temps_secondes)||999999;return ta-tb})[0]}
+function personalCalc(){
+  var recent=mentalHistory(),records=recordRows();
+  if(!recent.length&&!records.length)return{last:null,best:null,bestTime:0};
+  var times=records.map(function(r){return r.time}).filter(function(t){return t>0});
+  return{
+    last:recent.length?recent[0]:null,
+    best:bestRecord(records),
+    bestTime:times.length?Math.min.apply(Math,times):0
+  };
+}
+function classBest(){if(!Array.isArray(classRecords)||!classRecords.length)return null;return bestRecord(classRecords.map(function(r){return{score:Number(r.score)||0,total:Number(r.total)||10,time:Number(r.temps_secondes)||0}}).filter(function(r){return r.total>0}))}
+function calcHTML(){var p=personalCalc();if(!p.last)return'<div class="hp79-empty">Aucun entraînement de calcul mental enregistré pour le moment.</div>';var cb=classBest(),classCard=classRecordsLoading?'<div class="hp79-calc-card class-record loading"><span>🏆 Record de la classe</span><strong>Chargement…</strong></div>':'<div class="hp79-calc-card class-record"><span>🏆 Record de la classe</span><strong>'+(cb?esc(cb.score)+'/'+esc(cb.total):'—')+'</strong></div>',label=clean(p.last.label||'Calcul mental'),belt=p.last.belt?' · Ceinture '+esc(p.last.belt):'',detail='<div class="hp79-note"><strong>🎯 Dernière compétence travaillée : '+esc(label)+'</strong><br><span>'+esc(p.last.score)+'/'+esc(p.last.total)+(p.last.time?' · '+esc(p.last.time)+' s':'')+belt+'</span></div>';return'<div class="hp79-calc"><div class="hp79-calc-card"><span>Mon dernier score</span><strong>'+esc(p.last.score)+'/'+esc(p.last.total)+'</strong></div><div class="hp79-calc-card"><span>Mon meilleur score</span><strong>'+esc(p.best.score)+'/'+esc(p.best.total)+'</strong></div><div class="hp79-calc-card"><span>Mon meilleur temps</span><strong>'+(p.bestTime?esc(p.bestTime)+' s':'—')+'</strong></div>'+classCard+'</div>'+detail+'<p class="hp79-note">Le record de la classe est seulement un repère pour voir jusqu’où on peut aller. Aucun prénom n’est affiché.</p>'}
+function objectiveText(){
+  var learning=history().find(function(e){return isLearningTrace(e)&&clean(e.mastery_status)});
+  if(learning){
+    var m=masteryInfo(learning.mastery_status),title=learningTitle(learning);
+    if(m.key==='a_renforcer')return'Je reprends tranquillement : '+title+'.';
+    if(m.key==='reussi_avec_aide')return'Je refais « '+title+' » en essayant d’utiliser moins d’aide.';
+    if(m.key==='reussi_seul')return'Je confirmerai « '+title+' » une autre fois, sans aide.';
+  }
+  var retry=history().find(function(e){return e&&e.resultat==='erreur'});
+  if(retry)return'Je reprends tranquillement : '+eventTitle(retry)+'.';
+  if(!bestCompetences().length)return'Je m’entraîne, puis j’essaie ma première ceinture quand je me sens prêt.';
+  return'Je continue à m’entraîner régulièrement et j’avance à mon rythme.';
+}
+function prideText(){
+  var h=history(),
+      belt=h.find(function(e){return e&&/ceinture.*validee/.test(clean(e.type))}),
+      learning=h.find(function(e){var m=masteryInfo(e&&e.mastery_status);return m.key==='maitrise_plusieurs_fois'||m.key==='reussi_seul'||m.key==='reussi_avec_aide'}),
+      success=belt||learning||h.find(function(e){return e&&e.resultat==='reussite'});
+  if(success){
+    if(isLearningTrace(success)){
+      var m=masteryInfo(success.mastery_status);
+      return learningTitle(success)+(m.label?' — '+m.icon+' '+m.label:'');
+    }
+    return eventTitle(success)+(eventResult(success)?' — '+eventResult(success):'');
+  }
+  var b=bestCompetences();
+  if(b.length)return studentLabel(b[0].competence||'Une compétence validée')+' — '+clean(b[0].medaille||'');
+  return'Chaque activité terminée est déjà un pas en avant.';
+}
+function chooseQuote(){if(QUOTES.length<=1)return 0;var n=quoteIndex;while(n===quoteIndex)n=Math.floor(Math.random()*QUOTES.length);quoteIndex=n;return n}
+function apiConfig(){try{return{url:clean(localStorage.getItem('hibou_sync_api_url_v25754')||''),key:clean(localStorage.getItem('hibou_sync_device_key_v25754')||'')}}catch(e){return{url:'',key:''}}}
+function jsonp(params){return new Promise(function(resolve,reject){var c=apiConfig();if(!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(c.url))return reject(new Error('API non configurée'));var cb='__hibouClassRecord_'+Date.now()+'_'+Math.floor(Math.random()*1e6),s=document.createElement('script'),done=false,timer=setTimeout(function(){finish(false,new Error('Délai dépassé'))},12000);function finish(ok,v){if(done)return;done=true;clearTimeout(timer);try{delete window[cb]}catch(e){}if(s.parentNode)s.parentNode.removeChild(s);ok?resolve(v):reject(v)}window[cb]=function(d){if(d&&d.ok===false)finish(false,new Error(d.error||d.code));else finish(true,d)};s.onerror=function(){finish(false,new Error('Connexion impossible'))};params=params||{};if(c.key){params.device_key=c.key;params.tablet_key=c.key}params.callback=cb;params._=Date.now();s.src=c.url+'?'+Object.keys(params).map(function(k){return encodeURIComponent(k)+'='+encodeURIComponent(params[k])}).join('&');document.head.appendChild(s)})}
+
+function questionsApiConfigV25825(){
+  try{
+    return {
+      url:clean(localStorage.getItem('hibou_sync_api_url_v25754')||''),
+      key:clean(localStorage.getItem('hibou_sync_device_key_v25754')||'')
+    };
+  }catch(e){
+    return {url:'',key:''};
+  }
+}
+
+function questionsApiSnapshotV25825(){
+  var cfg=questionsApiConfigV25825();
+  if(!cfg.url){
+    return Promise.reject(new Error('URL API absente sur cet appareil.'));
+  }
+  if(!cfg.key){
+    return Promise.reject(new Error('Clé appareil absente sur cet appareil.'));
+  }
+
+  // jsonp() ajoute automatiquement device_key + tablet_key depuis la même
+  // configuration locale utilisée par Maître Hibou.
+  return jsonp({
+    action:'student_snapshot',
+    prenom:currentName(),
+    limit:300
+  }).then(function(data){
+    if(!data||data.ok===false){
+      throw new Error(clean(data&&(data.error||data.code)||'Réponse API invalide'));
+    }
+    if(!data.snapshot||typeof data.snapshot!=='object'){
+      throw new Error('L’API n’a pas renvoyé de student_snapshot.');
+    }
+    return data.snapshot;
+  });
+}
+
+function loadStudentSnapshot(force){
+  if(snapshotLoading&&!force)return Promise.resolve(latestSnapshot);
+  var name=currentName();
+  if(!name||name==='Élève')return Promise.resolve(latestSnapshot);
+
+  snapshotLoading=true;
+  questionsLoading=(activeTab==='questions');
+  questionsError='';
+
+  if(activeTab==='questions')renderPanel('questions');
+
+  return questionsApiSnapshotV25825().then(function(snap){
+    snapshotLoading=false;
+    questionsLoading=false;
+    latestSnapshot=snap;
+
+    if(activeTab==='questions'){
+      if(!Array.isArray(snap.questions)){
+        questionsError='L’API ne renvoie pas encore la liste des questions.';
+      }else if(!snap.questions_meta){
+        questionsError='Les informations de synchronisation des questions sont absentes.';
+      }else if(snap.questions_meta.source!=='sheet'){
+        questionsError='La source renvoyée par l’API n’est pas le Google Sheet.';
+      }else{
+        questionsError='';
+      }
+      renderPanel('questions');
+    }
+
+    renderHeaderCard();
+    if(overlay&&!overlay.classList.contains('hidden'))renderPopup();
+    return latestSnapshot;
+  }).catch(function(err){
+    snapshotLoading=false;
+    questionsLoading=false;
+    questionsError=clean(err&&err.message||'Synchronisation impossible');
+    if(activeTab==='questions')renderPanel('questions');
+    return latestSnapshot;
+  });
+}
+
+function loadClassRecord(){if(classRecordsLoading||Array.isArray(classRecords))return Promise.resolve(classRecords);classRecordsLoading=true;if(activeTab==='calc')renderPanel('calc');return jsonp({action:'records_calcul'}).then(function(data){classRecords=Array.isArray(data)?data:(data&&Array.isArray(data.records)?data.records:[]);classRecordsLoading=false;if(activeTab==='calc')renderPanel('calc');return classRecords}).catch(function(){classRecords=[];classRecordsLoading=false;if(activeTab==='calc')renderPanel('calc');return[]})}
+function summaryHTML(){var c=medalCounts(),p=personalCalc(),best=p.best?esc(p.best.score)+'/'+esc(p.best.total):'—';return'<div class="hp79-summary">'
++'<div class="hp79-summary-card hp80-summary-card objective"><div class="hp80-summary-label"><img class="hp81-summary-icon" src="assets/progress/objectif.png" alt=""><span>Mon objectif</span></div><div class="hp80-summary-value">'+esc(objectiveText())+'</div></div>'
++'<div class="hp79-summary-card hp80-summary-card pride"><div class="hp80-summary-label"><img class="hp81-summary-icon" src="assets/progress/fierte.png" alt=""><span>Ma dernière fierté</span></div><div class="hp80-summary-value">'+esc(prideText())+'</div></div>'
++'<div class="hp79-summary-card hp80-summary-card medals"><div class="hp80-summary-label"><img class="hp81-summary-icon" src="assets/progress/medailles.png" alt=""><span>Mes médailles</span></div><div class="hp80-summary-value hp79-medal-line">🥇 '+c.or+' &nbsp; 🥈 '+c.argent+' &nbsp; 🥉 '+c.bronze+'</div></div>'
++'<div class="hp79-summary-card hp80-summary-card calc"><div class="hp80-summary-label"><img class="hp81-summary-icon" src="assets/progress/calcul_mental.png" alt=""><span>Calcul mental</span></div><div class="hp80-summary-value hp79-calc-line">'+best+'</div><div class="hp80-summary-caption">Mon meilleur score</div></div>'
++'</div>'}
+function tabButton(k,i,l){return'<button type="button" class="hp79-tab'+(activeTab===k?' active':'')+'" data-hp79-tab="'+k+'"><span class="hp96-tab-icon" aria-hidden="true">'+i+'</span><span class="hp96-tab-label">'+l+'</span></button>'}function tabsHTML(){return'<nav class="hp79-tabs hp96-tabs">'+tabButton('recent','🧭','Parcours')+tabButton('medals','🏅','Médailles')+tabButton('belts','🎗️','Ceintures')+tabButton('success','🌟','Réussites')+tabButton('questions','💬','Mes questions')+tabButton('calc','🧮','Calcul mental')+'</nav>'}
+function panelContent(k){if(k==='recent')return'<h3>🧭 Mon parcours récent</h3>'+recentHTML();if(k==='medals'){var c=medalCounts();return'<h3>🏅 Mes médailles</h3><div class="hp79-medals"><div class="hp79-medal"><span class="emoji">🥇</span><strong>'+c.or+'</strong><small>Or</small></div><div class="hp79-medal"><span class="emoji">🥈</span><strong>'+c.argent+'</strong><small>Argent</small></div><div class="hp79-medal"><span class="emoji">🥉</span><strong>'+c.bronze+'</strong><small>Bronze</small></div></div><p class="hp79-note">Tes médailles montrent tes meilleures validations. Une compétence compte une seule fois, avec sa meilleure médaille.</p>'}if(k==='belts')return'<h3>🎗️ Mes ceintures</h3>'+beltsHTML();if(k==='success')return'<h3>🌟 Mes réussites</h3>'+successHTML();if(k==='questions')return'<h3>💬 Mes questions</h3>'+questionsHTML();if(k==='calc')return'<h3>🧮 Calcul mental</h3>'+calcHTML();return''}
+function ensureOverlay(){if(overlay&&document.body.contains(overlay))return overlay;overlay=document.createElement('div');overlay.id='hibouProgressHubOverlayV25791';overlay.className='hp79-overlay hidden';overlay.innerHTML='<div class="hp79-dialog" role="dialog" aria-modal="true"><button class="hp79-close" type="button" aria-label="Fermer">×</button><div id="hibouProgressHubBodyV25791"></div></div>';document.body.appendChild(overlay);overlay.querySelector('.hp79-close').addEventListener('click',close);overlay.addEventListener('click',function(e){if(e.target===overlay)close()});return overlay}
+function renderPanel(k){var p=document.querySelector('.hp79-panel');if(!p)return;p.classList.toggle('hp91-recent-panel',k==='recent');p.classList.toggle('hp96-questions-panel',k==='questions');p.innerHTML=panelContent(k);var m=p.querySelector('[data-hp79-more]');if(m)m.addEventListener('click',function(){recentExpanded=!recentExpanded;renderPanel('recent')});var r=p.querySelector('[data-hp801-retry]');if(r)r.addEventListener('click',function(){loadStudentSnapshot(true)})}
+function bindTabs(){document.querySelectorAll('[data-hp79-tab]').forEach(function(btn){btn.addEventListener('click',function(){activeTab=btn.getAttribute('data-hp79-tab')||'recent';document.querySelectorAll('[data-hp79-tab]').forEach(function(b){b.classList.toggle('active',b===btn)});renderPanel(activeTab);if(activeTab==='calc')loadClassRecord();if(activeTab==='questions'){questionsError='';questionsLoading=true;latestSnapshot=latestSnapshot||{};latestSnapshot.questions=[];delete latestSnapshot.questions_meta;renderPanel('questions');loadStudentSnapshot(true)}})})}
+function renderHeaderCard(){var card=document.getElementById('bandeauLastCard');if(!card)return;var c=medalCounts();card.classList.add('hp75-top-card','hp77-top-card');card.setAttribute('role','button');card.setAttribute('tabindex','0');card.setAttribute('title','Ouvrir Mon parcours et mes progrès');card.innerHTML='<span class="hp75-top-icon" aria-hidden="true">⭐</span><span class="hp75-top-content"><span class="hp75-top-title">Ce que j’ai appris et validé</span><span class="hp75-top-medals"><b>🥇 '+c.or+'</b><b>🥈 '+c.argent+'</b><b>🥉 '+c.bronze+'</b></span></span>'}
+function renderPopup(){
+  ensureOverlay();
+  var body=document.getElementById('hibouProgressHubBodyV25791');
+  if(!body)return;
+  var st=studentData(),
+      name=clean(st.prenom||currentName()||'Élève'),
+      q=QUOTES[quoteIndex>=0?quoteIndex:chooseQuote()];
+
+  body.innerHTML=
+    '<header class="hp87-head">'
+      +'<div class="hp87-identity">'
+        +'<div class="hp87-avatar-box">'
+          +'<img class="hp87-avatar" src="'+avatarPath()+'" alt="Portrait de '+esc(name)+'">'
+        +'</div>'
+        +'<div class="hp87-copy">'
+          +'<h2><span class="hp87-name">'+esc(name)+'</span><span class="hp87-dash"> — </span><span class="hp87-heading">Mon parcours et mes progrès</span></h2>'
+          +'<p>Je regarde ce que j’ai appris, ce que j’ai réussi et comment je progresse.</p>'
+        +'</div>'
+      +'</div>'
+      +'<aside class="hp87-quote" aria-label="Message pour m’encourager">'
+        
+        +'<strong>'+esc(q.text)+'</strong>'
+      +'</aside>'
+      +'<button type="button" class="hp824-header-close" data-hp824-close aria-label="Fermer Mon parcours et mes progrès">×</button>'
+    +'</header>'
+    +summaryHTML()
+    +tabsHTML()
+    +'<div class="hp79-body"><section class="hp79-panel '+(activeTab==='recent'?'hp91-recent-panel':'')+'">'+panelContent(activeTab)+'</section></div>'
+    +'<div class="hp79-footer hp824-footer"><span>🦉 Continue à ton rythme : chaque petit progrès compte.</span></div>';
+
+  bindTabs();
+  var m=body.querySelector('[data-hp79-more]');
+  if(m)m.addEventListener('click',function(){recentExpanded=!recentExpanded;renderPanel('recent')});
+  var headerClose=body.querySelector('[data-hp824-close]');
+  if(headerClose)headerClose.addEventListener('click',close);
+}
+function open(ev){if(ev&&ev.preventDefault)ev.preventDefault();quoteIndex=chooseQuote();activeTab='recent';recentExpanded=false;questionsError='';questionsLoading=false;renderPopup();ensureOverlay().classList.remove('hidden');loadStudentSnapshot(true);try{if(window.hibouRefreshStudent)window.hibouRefreshStudent(true).then(function(s){if(s){latestSnapshot=s;renderHeaderCard();renderPopup();loadStudentSnapshot(true)}})}catch(e){}}
+function close(){
+  if(overlay)overlay.classList.add('hidden');
+  try{document.documentElement.style.overflow='';document.body.style.overflow='';}catch(e){}
+}function bindTopCard(){var card=document.getElementById('bandeauLastCard');if(!card||card.__hp79Bound)return;card.__hp79Bound=true;card.addEventListener('click',open,true);card.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();open(ev)}},true)}
+function refresh(force){renderHeaderCard();bindTopCard();loadStudentSnapshot(!!force);try{if(window.hibouRefreshStudent)return window.hibouRefreshStudent(!!force).then(function(s){if(s)latestSnapshot=s;renderHeaderCard();if(overlay&&!overlay.classList.contains('hidden'))renderPopup();loadStudentSnapshot(true);return s})}catch(e){}return loadStudentSnapshot(!!force)}
+function boot(){setVersion();renderHeaderCard();bindTopCard();setTimeout(function(){refresh(false)},350);setTimeout(function(){renderHeaderCard();bindTopCard()},1200)}
+window.openHibouProgressHubV25850=open;window.closeHibouProgressHubV25850=close;window.openHibouProgressHubV25848=open;window.closeHibouProgressHubV25848=close;window.openHibouProgressHubV25825=open;window.closeHibouProgressHubV25825=close;window.openHibouProgressHubV25824=open;window.closeHibouProgressHubV25824=close;window.openHibouProgressHubV25823=open;window.closeHibouProgressHubV25823=close;window.openHibouProgressHubV25821=open;window.closeHibouProgressHubV25821=close;window.openHibouProgressHubV25814=open;window.closeHibouProgressHubV25814=close;window.openHibouProgressHubV25791=open;window.closeHibouProgressHubV25791=close;
+document.addEventListener('hibou:student-snapshot',function(e){if(e&&e.detail&&e.detail.snapshot)latestSnapshot=e.detail.snapshot;renderHeaderCard();if(overlay&&!overlay.classList.contains('hidden'))renderPopup()});['hibou:student-event','hibou:belts-updated'].forEach(function(t){document.addEventListener(t,function(){setTimeout(function(){renderHeaderCard();if(overlay&&!overlay.classList.contains('hidden'))renderPopup()},0)})});document.addEventListener('hibou:student-changed',function(){latestSnapshot=null;classRecords=null;setTimeout(function(){refresh(true)},120)});document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();window.addEventListener('load',function(){setVersion();renderHeaderCard();bindTopCard()},{once:true});
+})();
