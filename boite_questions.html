@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<title>Boîte à questions — Maître Hibou V25.8.76</title>
+<title>Boîte à questions — Maître Hibou V25.8.77</title>
 <style>
 :root{
   --navy:#0f1e46; --navy2:#263c7a; --violet:#6d45f5; --violet2:#8b6cff;
@@ -90,7 +90,7 @@ textarea:focus,input[type="text"]:focus{border-color:var(--violet2);box-shadow:0
       <div class="head"><div><h2>Poser une question</h2><p>Écris comme tu peux. L’IA proposera plusieurs questions correctes, sans répondre à ta place.</p></div><div class="name" id="studentBadge">élève</div></div>
       <div class="steps" id="steps"></div>
       <div id="panel"></div>
-      <div class="note">V25.8.76 · 🔒 La réponse IA n’est pas affichée aux élèves. Elle aide seulement le maître.</div>
+      <div class="note">V25.8.77 · 🔒 La réponse IA n’est pas affichée aux élèves. Elle aide seulement le maître.</div>
     </main>
   </div>
 </div>
@@ -149,34 +149,11 @@ function studentInitials(name){
   return parts.slice(0,2).map(function(p){return p.charAt(0).toUpperCase()}).join('');
 }
 
-function studentPhotoCandidates(name){
-  var n=clean(name);
-  if(!n)return [];
-  var encoded=encodeURIComponent(n);
-  var simple=n.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-  var simpleEncoded=encodeURIComponent(simple);
-  var variants=[];
-  [n,simple].forEach(function(v){
-    if(v && variants.indexOf(v)<0)variants.push(v);
-  });
-
-  var list=[];
-  if(state.photo) list.push(state.photo);
-
-  var dirs=['photos/','images/eleves/','assets/eleves/','assets/photos/','eleves/','images/',''];
-  var exts=['.JPG','.JPEG','.PNG','.jpg','.jpeg','.png'];
-
-  variants.forEach(function(v){
-    var ev=encodeURIComponent(v);
-    dirs.forEach(function(d){
-      exts.forEach(function(ext){
-        list.push(d+ev+ext);
-      });
-    });
-  });
-
-  // dédoublonnage
-  return list.filter(function(v,i,a){return v && a.indexOf(v)===i;});
+function safePhotoFile(value){
+  var file=clean(value);
+  // N'accepte qu'un nom de fichier anonyme simple : ce2-01.png, ce2-17.png, etc.
+  if(!/^ce2-\d{2}\.(png|jpg|jpeg|webp)$/i.test(file)) return '';
+  return file;
 }
 
 function loadStudentPhoto(){
@@ -190,28 +167,26 @@ function loadStudentPhoto(){
   img.alt='Photo de '+name;
   fallback.textContent=studentInitials(name);
 
-  var candidates=studentPhotoCandidates(name);
-  var i=0;
-
-  function next(){
-    if(i>=candidates.length){
-      img.style.display='none';
-      fallback.style.display='grid';
-      return;
-    }
-    var src=candidates[i++];
-    img.onload=function(){
-      img.style.display='block';
-      fallback.style.display='none';
-    };
-    img.onerror=next;
-    img.src=src;
+  var file=safePhotoFile(state.photo);
+  if(!file){
+    img.style.display='none';
+    fallback.style.display='grid';
+    return;
   }
-  next();
+
+  img.onload=function(){
+    img.style.display='block';
+    fallback.style.display='none';
+  };
+  img.onerror=function(){
+    img.style.display='none';
+    fallback.style.display='grid';
+  };
+  img.src='photos/eleves/'+file;
 }
 
 function init(){
-  document.title='Boîte à questions — Maître Hibou V25.8.76';
+  document.title='Boîte à questions — Maître Hibou V25.8.77';
   $('studentBadge').textContent=state.prenom||'élève';
   loadStudentPhoto();
   $('homeNav').onclick=function(){ return goToMaitreHibouAction(''); };
@@ -326,7 +301,7 @@ function reformulate(){
     action:'reformulateQuestion',
     prenom:state.prenom,
     question:state.original,
-    source:'maitre_hibou_v25_8_76'
+    source:'maitre_hibou_v25_8_77'
   },45000).then(function(raw){
     clearInterval(interval);
     if(requestId!==state.requestId)return;
@@ -415,7 +390,7 @@ function notifyJournal(vis){
     questionOriginale:state.original||'',
     question:state.corrected||state.original||'',
     visibilite:vis||'',
-    source:'maitre_hibou_v25_8_76',
+    source:'maitre_hibou_v25_8_77',
     date_iso:new Date().toISOString()
   };
   try{localStorage.setItem('hibou_question_event',JSON.stringify(payload))}catch(e){}
@@ -436,7 +411,7 @@ function submit(vis){
     visibilite:vis,
     statut:'nouvelle',
     pointsCuriosite:'1',
-    source:'maitre_hibou_v25_8_76'
+    source:'maitre_hibou_v25_8_77'
   },30000).then(function(raw){
     var data=normaliseAiResponse(raw);
     if(raw&&raw.success===false)throw new Error(raw.error||'Erreur pendant l’enregistrement.');
