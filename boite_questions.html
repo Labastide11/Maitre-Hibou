@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<title>Boîte à questions — Maître Hibou V25.8.77</title>
+<title>Boîte à questions — Maître Hibou V25.8.79</title>
 <style>
 :root{
   --navy:#0f1e46; --navy2:#263c7a; --violet:#6d45f5; --violet2:#8b6cff;
@@ -61,6 +61,18 @@ textarea:focus,input[type="text"]:focus{border-color:var(--violet2);box-shadow:0
 .copywarn.ok{background:#ecfdf5;border-color:#86efac;color:#14532d}
 @media(max-width:900px){.top{padding:9px 12px;gap:8px}.top-brand{min-width:auto}.top-brand small{display:none}.site-nav{justify-content:flex-end}.site-nav a,.site-nav button,.site-nav .nav-current{padding:8px 10px;font-size:12px}.body{grid-template-columns:190px minmax(0,1fr);gap:10px;padding:10px}.left{padding:0;border-radius:18px}.left img{width:100%;height:100%;object-fit:cover}.right{padding:12px}.head h2{font-size:24px}textarea,input[type="text"]{font-size:18px;min-height:92px}.steps{gap:6px}.step{font-size:11px;padding:7px 4px}.step strong{font-size:14px}}
 @media(max-width:700px){.top{align-items:flex-start;flex-wrap:wrap}.top-brand{width:100%}.site-nav{width:100%;order:3;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px}.top-student-photo{position:absolute;right:12px;top:8px;width:48px;height:48px;flex-basis:48px}.body{grid-template-columns:1fr;overflow:auto}.left{height:190px;min-height:190px;display:block}.left img{width:100%;height:100%;object-fit:cover;object-position:center 38%}.right{overflow:visible}.steps{grid-template-columns:repeat(5,minmax(54px,1fr));overflow:auto}.top h1{font-size:17px}.top small{font-size:12px}.head{display:block}.name{display:inline-block;margin-top:8px}.panel h3{font-size:20px}.option{font-size:16px}.corrected{font-size:18px}}
+
+.student-inline-photo{
+  width:46px;height:46px;border-radius:50%;overflow:hidden;
+  border:3px solid #ded4ff;background:#fff;display:grid;place-items:center;
+  box-shadow:0 4px 12px rgba(82,61,180,.15);flex:0 0 46px;
+}
+.student-inline-photo img{width:100%;height:100%;object-fit:cover;display:none}
+.student-inline-photo span{
+  width:100%;height:100%;display:grid;place-items:center;
+  background:linear-gradient(135deg,#efe8ff,#fff);color:#5d3be8;
+  font-weight:1000;font-size:14px
+}
 </style>
 </head>
 <body>
@@ -87,10 +99,13 @@ textarea:focus,input[type="text"]:focus{border-color:var(--violet2);box-shadow:0
   <div class="body">
     <aside class="left"><img src="page_hibou_questions.png" alt="Maître Hibou — Pose une question"></aside>
     <main class="right">
-      <div class="head"><div><h2>Poser une question</h2><p>Écris comme tu peux. L’IA proposera plusieurs questions correctes, sans répondre à ta place.</p></div><div class="name" id="studentBadge">élève</div></div>
+      <div class="head"><div><h2>Poser une question</h2><p>Écris comme tu peux. L’IA proposera plusieurs questions correctes, sans répondre à ta place.</p></div><div class="student-inline-photo" id="studentInlinePhoto" title="Élève">
+      <img id="studentInlinePhotoImg" alt="">
+      <span id="studentInlineFallback">👤</span>
+    </div></div>
       <div class="steps" id="steps"></div>
       <div id="panel"></div>
-      <div class="note">V25.8.77 · 🔒 La réponse IA n’est pas affichée aux élèves. Elle aide seulement le maître.</div>
+      <div class="note">V25.8.79 · 🔒 La réponse IA n’est pas affichée aux élèves. Elle aide seulement le maître.</div>
     </main>
   </div>
 </div>
@@ -157,37 +172,47 @@ function safePhotoFile(value){
 }
 
 function loadStudentPhoto(){
-  var wrap=$('topStudentPhoto');
-  var img=$('topStudentPhotoImg');
-  var fallback=$('topStudentFallback');
-  if(!wrap||!img||!fallback)return;
+  var topWrap=$('topStudentPhoto');
+  var topImg=$('topStudentPhotoImg');
+  var topFallback=$('topStudentFallback');
+
+  var inlineWrap=$('studentInlinePhoto');
+  var inlineImg=$('studentInlinePhotoImg');
+  var inlineFallback=$('studentInlineFallback');
 
   var name=state.prenom||'élève';
-  wrap.title=name;
-  img.alt='Photo de '+name;
-  fallback.textContent=studentInitials(name);
-
   var file=safePhotoFile(state.photo);
-  if(!file){
-    img.style.display='none';
-    fallback.style.display='grid';
-    return;
+  var initials=studentInitials(name);
+
+  function prepare(wrap,img,fallback){
+    if(!wrap||!img||!fallback)return;
+    wrap.title=name;
+    img.alt='Photo de '+name;
+    fallback.textContent=initials;
+
+    if(!file){
+      img.style.display='none';
+      fallback.style.display='grid';
+      return;
+    }
+
+    img.onload=function(){
+      img.style.display='block';
+      fallback.style.display='none';
+    };
+    img.onerror=function(){
+      img.style.display='none';
+      fallback.style.display='grid';
+    };
+    img.src='photos/'+file;
   }
 
-  img.onload=function(){
-    img.style.display='block';
-    fallback.style.display='none';
-  };
-  img.onerror=function(){
-    img.style.display='none';
-    fallback.style.display='grid';
-  };
-  img.src='photos/eleves/'+file;
+  prepare(topWrap,topImg,topFallback);
+  prepare(inlineWrap,inlineImg,inlineFallback);
 }
 
 function init(){
-  document.title='Boîte à questions — Maître Hibou V25.8.77';
-  $('studentBadge').textContent=state.prenom||'élève';
+  document.title='Boîte à questions — Maître Hibou V25.8.79';
   loadStudentPhoto();
   $('homeNav').onclick=function(){ return goToMaitreHibouAction(''); };
   $('trainNav').onclick=function(){ return goToMaitreHibouAction('training'); };
@@ -203,7 +228,6 @@ function ensureName(){
   if(!v)return false;
   state.prenom=v;
   try{localStorage.setItem('hibou_last_prenom',v)}catch(e){}
-  $('studentBadge').textContent=v;
   loadStudentPhoto();
   return true;
 }
@@ -301,7 +325,7 @@ function reformulate(){
     action:'reformulateQuestion',
     prenom:state.prenom,
     question:state.original,
-    source:'maitre_hibou_v25_8_77'
+    source:'maitre_hibou_v25_8_79'
   },45000).then(function(raw){
     clearInterval(interval);
     if(requestId!==state.requestId)return;
@@ -390,7 +414,7 @@ function notifyJournal(vis){
     questionOriginale:state.original||'',
     question:state.corrected||state.original||'',
     visibilite:vis||'',
-    source:'maitre_hibou_v25_8_77',
+    source:'maitre_hibou_v25_8_79',
     date_iso:new Date().toISOString()
   };
   try{localStorage.setItem('hibou_question_event',JSON.stringify(payload))}catch(e){}
@@ -411,7 +435,7 @@ function submit(vis){
     visibilite:vis,
     statut:'nouvelle',
     pointsCuriosite:'1',
-    source:'maitre_hibou_v25_8_77'
+    source:'maitre_hibou_v25_8_79'
   },30000).then(function(raw){
     var data=normaliseAiResponse(raw);
     if(raw&&raw.success===false)throw new Error(raw.error||'Erreur pendant l’enregistrement.');
