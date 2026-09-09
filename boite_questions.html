@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<title>Boîte à questions — Maître Hibou V25.8.71</title>
+<title>Boîte à questions — Maître Hibou V25.8.72</title>
 <style>
 :root{
   --navy:#0f1e46; --navy2:#263c7a; --violet:#6d45f5; --violet2:#8b6cff;
@@ -68,7 +68,7 @@ textarea:focus,input[type="text"]:focus{border-color:var(--violet2);box-shadow:0
       <div class="head"><div><h2>Poser une question</h2><p>Écris comme tu peux. L’IA proposera plusieurs questions correctes, sans répondre à ta place.</p></div><div class="name" id="studentBadge">élève</div></div>
       <div class="steps" id="steps"></div>
       <div id="panel"></div>
-      <div class="note">V25.8.71 · 🔒 La réponse IA n’est pas affichée aux élèves. Elle aide seulement le maître.</div>
+      <div class="note">V25.8.72 · 🔒 La réponse IA n’est pas affichée aux élèves. Elle aide seulement le maître.</div>
     </main>
   </div>
 </div>
@@ -108,7 +108,7 @@ function closeQuestionPage(){
 }
 
 function init(){
-  document.title='Boîte à questions — Maître Hibou V25.8.71';
+  document.title='Boîte à questions — Maître Hibou V25.8.72';
   $('studentBadge').textContent=state.prenom||'élève';
   $('returnLink').onclick=function(ev){if(ev)ev.preventDefault();return closeQuestionPage()};
   renderWrite();
@@ -218,7 +218,7 @@ function reformulate(){
     action:'reformulateQuestion',
     prenom:state.prenom,
     question:state.original,
-    source:'maitre_hibou_v25_8_71'
+    source:'maitre_hibou_v25_8_72'
   },45000).then(function(raw){
     clearInterval(interval);
     if(requestId!==state.requestId)return;
@@ -241,7 +241,7 @@ function renderError(message){
   setStep(2);
   setPanel('<section class="panel"><h3>⚠️ L’IA n’a pas répondu</h3>'+
     '<div class="error">'+esc(message)+'</div>'+
-    '<div class="rule"><b>Ta question est conservée.</b> Tu peux relancer sans la retaper.</div>'+
+    '<div class="rule"><b>Ta question reste seulement sur cette page.</b> Elle n’est pas enregistrée tant que tu n’as pas terminé l’étape 5. Tu peux relancer sans la retaper.</div>'+
     '<div class="actions"><button type="button" class="btn primary" id="retryBtn">🔁 Relancer l’IA</button><button type="button" class="btn" id="modifyBtn">← Modifier ma question</button></div></section>');
   $('retryBtn').onclick=reformulate;
   $('modifyBtn').onclick=renderWrite;
@@ -307,7 +307,7 @@ function notifyJournal(vis){
     questionOriginale:state.original||'',
     question:state.corrected||state.original||'',
     visibilite:vis||'',
-    source:'maitre_hibou_v25_8_71',
+    source:'maitre_hibou_v25_8_72',
     date_iso:new Date().toISOString()
   };
   try{localStorage.setItem('hibou_question_event',JSON.stringify(payload))}catch(e){}
@@ -328,7 +328,7 @@ function submit(vis){
     visibilite:vis,
     statut:'nouvelle',
     pointsCuriosite:'1',
-    source:'maitre_hibou_v25_8_71'
+    source:'maitre_hibou_v25_8_72'
   },30000).then(function(raw){
     var data=normaliseAiResponse(raw);
     if(raw&&raw.success===false)throw new Error(raw.error||'Erreur pendant l’enregistrement.');
