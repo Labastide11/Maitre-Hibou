@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<title>Boîte à questions — Maître Hibou V25.8.80</title>
+<title>Boîte à questions — Maître Hibou V25.8.81</title>
 <style>
 :root{
   --navy:#0f1e46; --navy2:#263c7a; --violet:#6d45f5; --violet2:#8b6cff;
@@ -71,7 +71,7 @@ textarea:focus,input[type="text"]:focus{border-color:var(--violet2);box-shadow:0
 .student-inline-photo span{
   width:100%;height:100%;display:grid;place-items:center;
   background:linear-gradient(135deg,#efe8ff,#fff);color:#5d3be8;
-  font-weight:1000;font-size:14px
+  font-weight:1000;font-size:18px
 }
 </style>
 </head>
@@ -105,7 +105,7 @@ textarea:focus,input[type="text"]:focus{border-color:var(--violet2);box-shadow:0
     </div></div>
       <div class="steps" id="steps"></div>
       <div id="panel"></div>
-      <div class="note">V25.8.80 · 🔒 La réponse IA n’est pas affichée aux élèves. Elle aide seulement le maître.</div>
+      <div class="note">V25.8.81 · 🔒 La réponse IA n’est pas affichée aux élèves. Elle aide seulement le maître.</div>
     </main>
   </div>
 </div>
@@ -212,7 +212,7 @@ function loadStudentPhoto(){
 }
 
 function init(){
-  document.title='Boîte à questions — Maître Hibou V25.8.80';
+  document.title='Boîte à questions — Maître Hibou V25.8.81';
   loadStudentPhoto();
   $('homeNav').onclick=function(){ return goToMaitreHibouAction(''); };
   $('trainNav').onclick=function(){ return goToMaitreHibouAction('training'); };
@@ -325,7 +325,7 @@ function reformulate(){
     action:'reformulateQuestion',
     prenom:state.prenom,
     question:state.original,
-    source:'maitre_hibou_v25_8_80'
+    source:'maitre_hibou_v25_8_81'
   },45000).then(function(raw){
     clearInterval(interval);
     if(requestId!==state.requestId)return;
@@ -414,7 +414,7 @@ function notifyJournal(vis){
     questionOriginale:state.original||'',
     question:state.corrected||state.original||'',
     visibilite:vis||'',
-    source:'maitre_hibou_v25_8_80',
+    source:'maitre_hibou_v25_8_81',
     date_iso:new Date().toISOString()
   };
   try{localStorage.setItem('hibou_question_event',JSON.stringify(payload))}catch(e){}
@@ -435,7 +435,7 @@ function submit(vis){
     visibilite:vis,
     statut:'nouvelle',
     pointsCuriosite:'1',
-    source:'maitre_hibou_v25_8_80'
+    source:'maitre_hibou_v25_8_81'
   },30000).then(function(raw){
     var data=normaliseAiResponse(raw);
     if(raw&&raw.success===false)throw new Error(raw.error||'Erreur pendant l’enregistrement.');
