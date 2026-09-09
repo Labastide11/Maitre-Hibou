@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<title>Boîte à questions — Maître Hibou V25.8.75</title>
+<title>Boîte à questions — Maître Hibou V25.8.76</title>
 <style>
 :root{
   --navy:#0f1e46; --navy2:#263c7a; --violet:#6d45f5; --violet2:#8b6cff;
@@ -21,7 +21,9 @@ body{min-height:100vh;overflow-x:hidden}
 .site-nav a,.site-nav button,.site-nav .nav-current{appearance:none;border:0;text-decoration:none;border-radius:13px;padding:10px 14px;background:rgba(255,255,255,.12);color:#fff;font:inherit;font-size:14px;font-weight:1000;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
 .site-nav a:hover,.site-nav button:hover{background:rgba(255,255,255,.22)}
 .site-nav .active{background:#fff;color:#4f36d9;cursor:default;box-shadow:0 3px 10px rgba(0,0,0,.14)}
-.top-student{background:#fff;color:#5d3be8;border-radius:999px;padding:9px 14px;font-weight:1000;white-space:nowrap}
+.top-student-photo{width:54px;height:54px;border-radius:50%;background:#fff;border:3px solid rgba(255,255,255,.95);box-shadow:0 5px 16px rgba(0,0,0,.22);overflow:hidden;display:grid;place-items:center;flex:0 0 54px}
+.top-student-photo img{width:100%;height:100%;object-fit:cover;object-position:center;display:none}
+.top-student-fallback{width:100%;height:100%;display:grid;place-items:center;background:linear-gradient(135deg,#efe8ff,#fff);color:#5d3be8;font-size:16px;font-weight:1000;letter-spacing:.02em}
 .body{flex:1;min-height:0;display:grid;grid-template-columns:minmax(220px,280px) minmax(0,1fr);gap:20px;padding:20px clamp(18px,3vw,46px) 28px;background:linear-gradient(120deg,#fff6d8,#f3f8ff 48%,#fff)}
 .left{border:2px dashed rgba(194,148,44,.32);border-radius:24px;background:#102044;padding:0;display:flex;align-items:stretch;justify-content:center;overflow:hidden;min-height:0}
 .left img{width:100%;height:100%;min-height:0;object-fit:cover;object-position:center center;border-radius:20px;display:block}
@@ -58,7 +60,7 @@ textarea:focus,input[type="text"]:focus{border-color:var(--violet2);box-shadow:0
 .copywarn{margin-top:10px;background:#fff8d6;border:2px solid #ffd43b;border-radius:16px;padding:10px 12px;color:#5c4300;font-size:15px;font-weight:900;line-height:1.35}
 .copywarn.ok{background:#ecfdf5;border-color:#86efac;color:#14532d}
 @media(max-width:900px){.top{padding:9px 12px;gap:8px}.top-brand{min-width:auto}.top-brand small{display:none}.site-nav{justify-content:flex-end}.site-nav a,.site-nav button,.site-nav .nav-current{padding:8px 10px;font-size:12px}.body{grid-template-columns:190px minmax(0,1fr);gap:10px;padding:10px}.left{padding:0;border-radius:18px}.left img{width:100%;height:100%;object-fit:cover}.right{padding:12px}.head h2{font-size:24px}textarea,input[type="text"]{font-size:18px;min-height:92px}.steps{gap:6px}.step{font-size:11px;padding:7px 4px}.step strong{font-size:14px}}
-@media(max-width:700px){.top{align-items:flex-start;flex-wrap:wrap}.top-brand{width:100%}.site-nav{width:100%;order:3;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px}.top-student{position:absolute;right:12px;top:10px}.body{grid-template-columns:1fr;overflow:auto}.left{height:190px;min-height:190px;display:block}.left img{width:100%;height:100%;object-fit:cover;object-position:center 38%}.right{overflow:visible}.steps{grid-template-columns:repeat(5,minmax(54px,1fr));overflow:auto}.top h1{font-size:17px}.top small{font-size:12px}.head{display:block}.name{display:inline-block;margin-top:8px}.panel h3{font-size:20px}.option{font-size:16px}.corrected{font-size:18px}}
+@media(max-width:700px){.top{align-items:flex-start;flex-wrap:wrap}.top-brand{width:100%}.site-nav{width:100%;order:3;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px}.top-student-photo{position:absolute;right:12px;top:8px;width:48px;height:48px;flex-basis:48px}.body{grid-template-columns:1fr;overflow:auto}.left{height:190px;min-height:190px;display:block}.left img{width:100%;height:100%;object-fit:cover;object-position:center 38%}.right{overflow:visible}.steps{grid-template-columns:repeat(5,minmax(54px,1fr));overflow:auto}.top h1{font-size:17px}.top small{font-size:12px}.head{display:block}.name{display:inline-block;margin-top:8px}.panel h3{font-size:20px}.option{font-size:16px}.corrected{font-size:18px}}
 </style>
 </head>
 <body>
@@ -77,7 +79,10 @@ textarea:focus,input[type="text"]:focus{border-color:var(--violet2);box-shadow:0
       <button type="button" id="lessonNav">📚 <span>Revoir une leçon</span></button>
       <span class="active nav-current">💬 <span>Poser une question</span></span>
     </nav>
-    <div class="top-student" id="topStudentBadge">élève</div>
+    <div class="top-student-photo" id="topStudentPhoto" title="Élève">
+      <img id="topStudentPhotoImg" alt="">
+      <span class="top-student-fallback" id="topStudentFallback">👤</span>
+    </div>
   </header>
   <div class="body">
     <aside class="left"><img src="page_hibou_questions.png" alt="Maître Hibou — Pose une question"></aside>
@@ -85,7 +90,7 @@ textarea:focus,input[type="text"]:focus{border-color:var(--violet2);box-shadow:0
       <div class="head"><div><h2>Poser une question</h2><p>Écris comme tu peux. L’IA proposera plusieurs questions correctes, sans répondre à ta place.</p></div><div class="name" id="studentBadge">élève</div></div>
       <div class="steps" id="steps"></div>
       <div id="panel"></div>
-      <div class="note">V25.8.75 · 🔒 La réponse IA n’est pas affichée aux élèves. Elle aide seulement le maître.</div>
+      <div class="note">V25.8.76 · 🔒 La réponse IA n’est pas affichée aux élèves. Elle aide seulement le maître.</div>
     </main>
   </div>
 </div>
@@ -99,6 +104,7 @@ if(qs.get('apiUrl')) API_URL=qs.get('apiUrl');
 
 var state={
   prenom:clean(qs.get('prenom')||qs.get('eleve')||localStorage.getItem('hibou_last_prenom')||''),
+  photo:clean(qs.get('photo')||''),
   returnUrl:qs.get('returnUrl')||'index.html',
   original:'', propositions:[], selected:'', corrected:'', reponseIA:'', requestId:0
 };
@@ -137,10 +143,77 @@ function closeQuestionPage(){
   return returnToMaitreHibou();
 }
 
+function studentInitials(name){
+  var parts=clean(name).split(/\s+/).filter(Boolean);
+  if(!parts.length)return '👤';
+  return parts.slice(0,2).map(function(p){return p.charAt(0).toUpperCase()}).join('');
+}
+
+function studentPhotoCandidates(name){
+  var n=clean(name);
+  if(!n)return [];
+  var encoded=encodeURIComponent(n);
+  var simple=n.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  var simpleEncoded=encodeURIComponent(simple);
+  var variants=[];
+  [n,simple].forEach(function(v){
+    if(v && variants.indexOf(v)<0)variants.push(v);
+  });
+
+  var list=[];
+  if(state.photo) list.push(state.photo);
+
+  var dirs=['photos/','images/eleves/','assets/eleves/','assets/photos/','eleves/','images/',''];
+  var exts=['.JPG','.JPEG','.PNG','.jpg','.jpeg','.png'];
+
+  variants.forEach(function(v){
+    var ev=encodeURIComponent(v);
+    dirs.forEach(function(d){
+      exts.forEach(function(ext){
+        list.push(d+ev+ext);
+      });
+    });
+  });
+
+  // dédoublonnage
+  return list.filter(function(v,i,a){return v && a.indexOf(v)===i;});
+}
+
+function loadStudentPhoto(){
+  var wrap=$('topStudentPhoto');
+  var img=$('topStudentPhotoImg');
+  var fallback=$('topStudentFallback');
+  if(!wrap||!img||!fallback)return;
+
+  var name=state.prenom||'élève';
+  wrap.title=name;
+  img.alt='Photo de '+name;
+  fallback.textContent=studentInitials(name);
+
+  var candidates=studentPhotoCandidates(name);
+  var i=0;
+
+  function next(){
+    if(i>=candidates.length){
+      img.style.display='none';
+      fallback.style.display='grid';
+      return;
+    }
+    var src=candidates[i++];
+    img.onload=function(){
+      img.style.display='block';
+      fallback.style.display='none';
+    };
+    img.onerror=next;
+    img.src=src;
+  }
+  next();
+}
+
 function init(){
-  document.title='Boîte à questions — Maître Hibou V25.8.75';
+  document.title='Boîte à questions — Maître Hibou V25.8.76';
   $('studentBadge').textContent=state.prenom||'élève';
-  $('topStudentBadge').textContent=state.prenom||'élève';
+  loadStudentPhoto();
   $('homeNav').onclick=function(){ return goToMaitreHibouAction(''); };
   $('trainNav').onclick=function(){ return goToMaitreHibouAction('training'); };
   $('beltNav').onclick=function(){ return goToMaitreHibouAction('belt'); };
@@ -156,6 +229,7 @@ function ensureName(){
   state.prenom=v;
   try{localStorage.setItem('hibou_last_prenom',v)}catch(e){}
   $('studentBadge').textContent=v;
+  loadStudentPhoto();
   return true;
 }
 
@@ -252,7 +326,7 @@ function reformulate(){
     action:'reformulateQuestion',
     prenom:state.prenom,
     question:state.original,
-    source:'maitre_hibou_v25_8_75'
+    source:'maitre_hibou_v25_8_76'
   },45000).then(function(raw){
     clearInterval(interval);
     if(requestId!==state.requestId)return;
@@ -341,7 +415,7 @@ function notifyJournal(vis){
     questionOriginale:state.original||'',
     question:state.corrected||state.original||'',
     visibilite:vis||'',
-    source:'maitre_hibou_v25_8_75',
+    source:'maitre_hibou_v25_8_76',
     date_iso:new Date().toISOString()
   };
   try{localStorage.setItem('hibou_question_event',JSON.stringify(payload))}catch(e){}
@@ -362,7 +436,7 @@ function submit(vis){
     visibilite:vis,
     statut:'nouvelle',
     pointsCuriosite:'1',
-    source:'maitre_hibou_v25_8_75'
+    source:'maitre_hibou_v25_8_76'
   },30000).then(function(raw){
     var data=normaliseAiResponse(raw);
     if(raw&&raw.success===false)throw new Error(raw.error||'Erreur pendant l’enregistrement.');
