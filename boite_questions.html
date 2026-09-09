@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<title>Boîte à questions — Maître Hibou V25.8.82</title>
+<title>Boîte à questions — Maître Hibou V25.8.83</title>
 <style>
 :root{
   --navy:#0f1e46; --navy2:#263c7a; --violet:#6d45f5; --violet2:#8b6cff;
@@ -83,7 +83,7 @@ textarea:focus,input[type="text"]:focus{border-color:var(--violet2);box-shadow:0
       <div class="head"><div><h2>Poser une question</h2><p>Écris comme tu peux. L’IA proposera plusieurs questions correctes, sans répondre à ta place.</p></div></div>
       <div class="steps" id="steps"></div>
       <div id="panel"></div>
-      <div class="note">V25.8.82 · 🔒 La réponse IA n’est pas affichée aux élèves. Elle aide seulement le maître.</div>
+      <div class="note">V25.8.83 · 🔒 La réponse IA n’est pas affichée aux élèves. Elle aide seulement le maître.</div>
     </main>
   </div>
 </div>
@@ -154,7 +154,7 @@ function panelPhotoHtml(){
   var file = safePhotoFile(state.photo);
   var initials = esc(studentInitials(state.prenom||'élève'));
   var img = file
-    ? '<img src="photos/'+escAttr(file)+'?v=25882" alt="Photo de '+name+'" onload="this.style.display=\'block\'; this.nextElementSibling.style.display=\'none\';" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'grid\';">'
+    ? '<img src="photos/'+file+'?v=25883" alt="Photo de '+name+'" onload="this.style.display=\'block\'; this.nextElementSibling.style.display=\'none\';" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'grid\';">'
     : '';
   return '<span class="panel-photo" title="'+name+'">' +
          img +
@@ -170,7 +170,7 @@ function panelTitleHtml(icon, title){
 }
 
 function init(){
-  document.title='Boîte à questions — Maître Hibou V25.8.82';
+  document.title='Boîte à questions — Maître Hibou V25.8.83';
   $('homeNav').onclick=function(){ return goToMaitreHibouAction(''); };
   $('trainNav').onclick=function(){ return goToMaitreHibouAction('training'); };
   $('beltNav').onclick=function(){ return goToMaitreHibouAction('belt'); };
@@ -281,7 +281,7 @@ function reformulate(){
     action:'reformulateQuestion',
     prenom:state.prenom,
     question:state.original,
-    source:'maitre_hibou_v25_8_82'
+    source:'maitre_hibou_v25_8_83'
   },45000).then(function(raw){
     clearInterval(interval);
     if(requestId!==state.requestId)return;
@@ -370,7 +370,7 @@ function notifyJournal(vis){
     questionOriginale:state.original||'',
     question:state.corrected||state.original||'',
     visibilite:vis||'',
-    source:'maitre_hibou_v25_8_82',
+    source:'maitre_hibou_v25_8_83',
     date_iso:new Date().toISOString()
   };
   try{localStorage.setItem('hibou_question_event',JSON.stringify(payload))}catch(e){}
@@ -391,7 +391,7 @@ function submit(vis){
     visibilite:vis,
     statut:'nouvelle',
     pointsCuriosite:'1',
-    source:'maitre_hibou_v25_8_82'
+    source:'maitre_hibou_v25_8_83'
   },30000).then(function(raw){
     var data=normaliseAiResponse(raw);
     if(raw&&raw.success===false)throw new Error(raw.error||'Erreur pendant l’enregistrement.');
