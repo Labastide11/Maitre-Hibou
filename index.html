@@ -27084,7 +27084,15 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       })
       : MATHS_TRAINING_BELTS_V2413;
 
-    return belts.map(function(belt){
+    var numberStickCard = cardHTML({
+      icon:'🧮',
+      title:'Number Stick — Tables de multiplication',
+      sub:'Bâton à calcul · Tables de 2 à 10',
+      state:'Découvrir',
+      action:'window.open("number-stick-ce2.html","_blank","noopener")'
+    });
+
+    return numberStickCard + belts.map(function(belt){
       return cardHTML({
         icon:belt.icon,
         title:belt.title,
