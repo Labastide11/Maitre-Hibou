@@ -1,29 +1,111 @@
-<!DOCTYPE html>
-<html lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Résoudre un problème de partage ou de groupement — Maître Hibou</title><link href="../css/math-lecons.css" rel="stylesheet"/><style>
-/* Lot 5 : compacte les quatre cadres sur un écran en mode paysage. */
-html,body{margin:0;min-height:100%;}
-body.lesson .sheet{box-sizing:border-box;width:min(96vw,1400px);max-width:1400px;min-height:100vh;margin:auto;padding:clamp(12px,1.1vw,19px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1.15fr) minmax(0,.85fr) auto;gap:12px;align-items:stretch;}
-body.lesson .sheet>.head{grid-column:1/-1;margin:0;min-width:0;}
-body.lesson .sheet>.block{margin:0;min-height:0;min-width:0;box-sizing:border-box;overflow:hidden;display:flex;flex-direction:column;gap:7px;padding:clamp(10px,1.1vw,16px)}
-body.lesson .sheet>.actions{grid-column:1/-1;margin:0;align-self:center;}
-body.lesson .sheet .head h1{font-size:clamp(27px,3vw,43px);line-height:1.07;margin:4px 0}
-body.lesson .sheet .head .goal{margin:2px 0;font-size:clamp(15px,1.25vw,20px)}
-body.lesson .sheet .owlbox img{max-height:75px;object-fit:contain}
-body.lesson .sheet .title{font-size:clamp(20px,1.65vw,27px);line-height:1.15}
-body.lesson .sheet .rule{font-size:clamp(16px,1.45vw,21px);padding:2px 6px;line-height:1.26}
-body.lesson .sheet .examples{display:flex;flex-wrap:wrap;gap:6px}
-body.lesson .sheet .examples .ex{flex:1 1 42%;padding:8px;font-size:clamp(14px,1.13vw,18px)}
-body.lesson .sheet .tip,body.lesson .sheet .question{font-size:clamp(15px,1.18vw,20px);line-height:1.28}
-body.lesson .sheet .answers{display:flex;flex-wrap:wrap;gap:8px}
-body.lesson .sheet .ans{padding:9px 13px;min-height:42px;font-size:clamp(14px,1.13vw,18px)}
-.hibou-diagram{width:100%;max-width:520px;min-height:0;margin:0 auto;background:#fff;border:1px solid #d6e7f4;border-radius:14px;padding:5px;display:flex;align-items:center;justify-content:center;flex:1}
-.hibou-diagram svg{display:block;width:100%;height:auto;max-height:155px}
-@media(min-width:861px) and (max-height:850px){body.lesson .sheet{gap:8px;padding:10px;grid-template-rows:auto minmax(0,1.13fr) minmax(0,.87fr) auto;}body.lesson .sheet>.block{padding:8px;gap:5px}body.lesson .sheet .head h1{font-size:clamp(25px,2.7vw,37px)}body.lesson .sheet .owlbox img{max-height:61px}.hibou-diagram svg{max-height:110px}.hibou-diagram{padding:2px}body.lesson .sheet .examples .ex{padding:5px}}
-@media(max-width:860px){body.lesson .sheet{width:100%;min-height:100vh;grid-template-columns:1fr;grid-template-rows:auto;gap:10px}body.lesson .sheet>.head,body.lesson .sheet>.actions{grid-column:1}body.lesson .sheet>.block{min-height:0;overflow:visible}.hibou-diagram svg{max-height:165px}}
-</style></head>
-<body class="lesson" style="--accent:#1565c0;--soft:#eef6ff"><main class="sheet"><header class="head"><div><div class="domain">🧩 Résolution de problèmes</div><span class="program">CE2 — programme 2025</span><h1>Résoudre un problème de partage ou de groupement</h1><p class="goal">Je sais choisir entre partage et groupement.</p></div><div class="owlbox"><img alt="Logo officiel des leçons de Maître Hibou" src="../images/logo_lecons_officiel.png"/></div></header>
-<section class="block"><div class="title">1 · Je retiens</div><div class="rule">Le partage cherche la valeur d’une part ; le groupement cherche le nombre de groupes.</div></section>
-<section class="block"><div class="title">2 · Exemples</div><div class="examples"><div class="ex">36 images partagées entre 4 enfants : 9 chacun</div><div class="ex">36 images par paquets de 9 : 4 paquets</div></div><div aria-label="36 images partagées équitablement en quatre groupes de 9" class="hibou-diagram" role="img"><svg preserveaspectratio="xMidYMid meet" viewbox="0 0 520 146" xmlns="http://www.w3.org/2000/svg"><text fill="#0f315b" font-family="Arial,sans-serif" font-size="20" font-weight="700" text-anchor="middle" x="255" y="25">36 images à partager en 4 parts</text><rect fill="#f0f7ff" height="58" rx="9" stroke="#2c73bc" stroke-width="2" width="112" x="25" y="47"></rect><text fill="#0f315b" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="81" y="73">9 images</text><circle cx="58" cy="76" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="79" cy="76" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="100" cy="76" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="58" cy="89" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="79" cy="89" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="100" cy="89" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="58" cy="102" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="79" cy="102" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="100" cy="102" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><rect fill="#f0f7ff" height="58" rx="9" stroke="#2c73bc" stroke-width="2" width="112" x="152" y="47"></rect><text fill="#0f315b" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="208" y="73">9 images</text><circle cx="185" cy="76" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="206" cy="76" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="227" cy="76" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="185" cy="89" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="206" cy="89" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="227" cy="89" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="185" cy="102" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="206" cy="102" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="227" cy="102" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><rect fill="#f0f7ff" height="58" rx="9" stroke="#2c73bc" stroke-width="2" width="112" x="279" y="47"></rect><text fill="#0f315b" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="335" y="73">9 images</text><circle cx="312" cy="76" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="333" cy="76" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="354" cy="76" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="312" cy="89" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="333" cy="89" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="354" cy="89" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="312" cy="102" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="333" cy="102" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="354" cy="102" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><rect fill="#f0f7ff" height="58" rx="9" stroke="#2c73bc" stroke-width="2" width="112" x="406" y="47"></rect><text fill="#0f315b" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="462" y="73">9 images</text><circle cx="439" cy="76" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="460" cy="76" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="481" cy="76" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="439" cy="89" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="460" cy="89" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="481" cy="89" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="439" cy="102" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="460" cy="102" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><circle cx="481" cy="102" fill="#1474c3" r="5" stroke="#fff" stroke-width="1"></circle><text fill="#0f315b" font-family="Arial,sans-serif" font-size="20" font-weight="700" text-anchor="middle" x="260" y="134">4 × 9 = 36</text></svg></div></section>
-<section class="block"><div class="title">3 · 🦉 L’astuce de Maître Hibou</div><div class="tip">Écris la multiplication associée pour vérifier.</div></section>
-<section class="block"><div class="title">4 · Tu as compris ?</div><div class="question">42 biscuits rangés par paquets de 6 donnent :</div><div class="answers"><button class="ans" data-correct="true" onclick="HibouMathLesson.answer(this,true)">7 paquets</button><button class="ans" onclick="HibouMathLesson.answer(this,false)">6 paquets</button><button class="ans" onclick="HibouMathLesson.answer(this,false)">48 paquets</button></div><div class="feedback"></div></section>
-<div class="actions"><a class="back" href="../index.html">← Retour aux leçons</a><button class="done" onclick='HibouMathLesson.complete({"titre": "Résoudre un problème de partage ou de groupement", "domaine": "Résolution de problèmes"},this)'>✅ J’ai compris cette leçon</button></div></main><script src="../js/math-lecons.js"></script></body></html>
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Résoudre un problème de partage ou de groupement — Maître Hibou</title>
+<link rel="stylesheet" href="../css/math-lecons.css">
+<style>
+/* Mise en page spécifique : les styles historiques et les fonctions JS du site restent disponibles. */
+:root{--accent:#1565c0;--soft:#eef6ff}
+*{box-sizing:border-box}
+body.lesson{margin:0;background:#f0f5fd;color:#092955}
+body.lesson .sheet{width:min(1400px,calc(100% - 24px));max-width:1400px;min-height:calc(100dvh - 8px);margin:4px auto;padding:clamp(10px,1.2vw,19px);border:3px solid #1974d2;border-radius:24px;background:#fffefa;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1.27fr) minmax(0,.76fr) auto;gap:10px}
+body.lesson .head{grid-column:1/-1;display:flex;align-items:flex-start;justify-content:space-between;gap:14px;min-width:0;margin:0;padding:0}
+body.lesson .head .domain{color:#1164bd;font-size:clamp(16px,1.3vw,21px);font-weight:850}
+body.lesson .head .program{display:inline-block;color:#1565c0;background:#e4f1ff;padding:5px 9px;border-radius:25px;font-weight:800;font-size:clamp(12px,1vw,16px);margin:4px 0 0}
+body.lesson .head h1{font-size:clamp(25px,2.6vw,43px);line-height:1.09;color:#092955;margin:5px 0 3px;letter-spacing:-.025em}
+body.lesson .head .goal{margin:2px 0;font-size:clamp(15px,1.18vw,19px)}
+body.lesson .owlbox{width:88px;height:91px;min-width:88px;border:2px solid #9dc7f5;border-radius:20px;background:white;display:flex;align-items:center;justify-content:center;padding:7px}
+body.lesson .owlbox img{max-width:100%;max-height:100%;object-fit:contain}
+body.lesson .block{margin:0;min-height:0;min-width:0;padding:11px 13px;border:2px solid #a9c9f0;border-radius:19px;background:#eef6ff;display:flex;flex-direction:column;gap:7px;overflow:hidden}
+body.lesson .block:nth-of-type(2){background:#fff;border-color:#9fc8f5}
+body.lesson .block:nth-of-type(3){background:#ecf9ef;border-color:#aeddb6}
+body.lesson .block:nth-of-type(4){background:#eef6ff}
+body.lesson .block .title{font-size:clamp(20px,1.8vw,29px);line-height:1.1;margin:0;color:#1166be;font-weight:900}
+body.lesson .block:nth-of-type(3) .title{color:#167943}
+body.lesson .rule{font-size:clamp(15px,1.14vw,18px);line-height:1.22;font-weight:750;background:#fff5d5;border-radius:12px;padding:7px 9px;text-align:center;margin:0}
+body.lesson .concepts{display:grid;grid-template-columns:1fr 1fr;gap:7px;min-height:0;flex:1}
+body.lesson .concept{border-radius:13px;padding:7px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;min-width:0;gap:3px}
+body.lesson .concept.share{background:#fff0f2;border:1px solid #f7b9c4}
+body.lesson .concept.grouping{background:#eafaf0;border:1px solid #b5dfc4}
+body.lesson .concept h3{margin:0;font-size:clamp(16px,1.22vw,20px);color:#ae2251}
+body.lesson .concept.grouping h3{color:#087a3f}
+body.lesson .concept p{font-size:clamp(12px,.9vw,15px);line-height:1.22;text-align:center;margin:0}
+body.lesson .kids,body.lesson .small-groups{display:flex;justify-content:center;align-items:stretch;gap:5px;width:100%;min-width:0}
+body.lesson .kid{text-align:center;min-width:0;flex:1;background:#fff;border-radius:10px;padding:3px}
+body.lesson .kid-face{font-size:clamp(22px,2vw,36px);line-height:1}
+body.lesson .kid-count{font-size:clamp(10px,.75vw,13px);font-weight:800;white-space:nowrap}
+body.lesson .small-groups .group{padding:4px 3px}
+body.lesson .concept .result{font-size:clamp(12px,.88vw,15px);font-weight:900;text-align:center;color:#123866}
+body.lesson .examples{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;min-height:0;margin:0}
+body.lesson .case{background:#f1f7ff;border:1px solid #c6dafa;border-radius:13px;padding:8px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;gap:5px;min-height:0;min-width:0}
+body.lesson .case.green{background:#f1fbf4;border-color:#b6dfbd}
+body.lesson .case h3{margin:0;font-size:clamp(13px,1vw,16px);line-height:1.2;text-align:center;color:#103f83}
+body.lesson .case.green h3{color:#136c39}
+body.lesson .four-groups{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;width:100%;min-height:0}
+body.lesson .group{border:1.5px solid #2478ce;border-radius:9px;background:#fff;padding:6px 3px;min-width:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;flex:1}
+body.lesson .group.green{border-color:#28a05c}
+body.lesson .group-title{font-weight:800;font-size:clamp(10px,.7vw,13px);white-space:nowrap}
+body.lesson .dots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;width:min(100%,54px);justify-items:center}
+body.lesson .dots i{display:block;width:clamp(5px,.55vw,9px);aspect-ratio:1;border-radius:50%;background:#2784db}
+body.lesson .dots.green i{background:#28a15f}
+body.lesson .dots.orange i{background:#eeb14a}
+body.lesson .equation{font-size:clamp(15px,1.28vw,20px);font-weight:900;color:#1154a5;text-align:center;background:#e0efff;padding:4px 12px;border-radius:10px}
+body.lesson .case.green .equation{background:#d9f5df;color:#197942}
+body.lesson .tip{display:flex;justify-content:center;flex-direction:column;align-items:flex-start;gap:9px;flex:1;padding:9px 13px;border:1px solid #bbe2bf;border-radius:13px;background:#fff;font-size:clamp(15px,1.15vw,19px);margin:0}
+body.lesson .tip .formulas{display:flex;gap:8px;flex-wrap:wrap}
+body.lesson .tip .formula{padding:7px 10px;border-radius:10px;background:#eef6ff;font-weight:900}
+body.lesson .tip .formula.green{background:#e8f9ed}
+body.lesson .question{margin:2px 0 7px;font-size:clamp(16px,1.21vw,20px)}
+body.lesson .answers{display:flex;gap:10px;flex-wrap:wrap;margin:0}
+body.lesson .answers .ans{padding:10px 13px;border:2px solid #b4c8df;background:white;color:#103661;border-radius:12px;font-weight:900;font-size:clamp(14px,1vw,17px);min-width:0;cursor:pointer}
+body.lesson .answers .ans:hover,body.lesson .answers .ans:focus-visible{background:#e1f1ff;border-color:#1669c2}
+body.lesson .feedback{font-size:clamp(13px,1vw,16px);font-weight:750;margin-top:6px;min-height:20px}
+body.lesson .actions{grid-column:1/-1;display:flex;justify-content:center;gap:10px;align-items:center;margin:0;padding:0}
+body.lesson .actions .back,body.lesson .actions .done{border:0;border-radius:13px;padding:9px 15px;text-decoration:none;font-size:clamp(13px,.98vw,16px);font-weight:800;line-height:1.25}
+body.lesson .actions .back{background:#e5edf7;color:#103b73}
+body.lesson .actions .done{background:#156cc6;color:white}
+@media (min-width:850px) and (max-height:800px){
+ body.lesson .sheet{gap:7px;padding:9px;grid-template-rows:auto minmax(0,1.3fr) minmax(0,.72fr) auto}
+ body.lesson .head h1{font-size:clamp(25px,2.5vw,36px)}
+ body.lesson .block{padding:8px 10px;gap:5px}
+ body.lesson .block .title{font-size:clamp(19px,1.65vw,25px)}
+ body.lesson .owlbox{width:70px;height:74px;min-width:70px}
+ body.lesson .concept{padding:5px}
+ body.lesson .concept .dots i{width:5px}
+ body.lesson .kid-face{font-size:25px}
+ body.lesson .case{padding:6px;gap:3px}
+ body.lesson .group{padding:4px 2px;gap:2px}
+ body.lesson .dots{gap:2px}
+ body.lesson .dots i{width:5px}
+}
+@media (max-width:849px){
+ body.lesson .sheet{width:100%;margin:0;border:0;border-radius:0;min-height:100dvh;display:flex;flex-direction:column;padding:10px}
+ body.lesson .block{min-height:0;overflow:visible}
+ body.lesson .head h1{font-size:clamp(24px,4vw,37px)}
+ body.lesson .examples{min-height:180px}
+ body.lesson .concepts{min-height:175px}
+ body.lesson .owlbox{width:65px;height:69px;min-width:65px}
+}
+@media (max-width:540px){
+ body.lesson .concepts,body.lesson .examples{grid-template-columns:1fr}
+ body.lesson .head .owlbox{display:none}
+ body.lesson .four-groups{gap:3px}
+ body.lesson .small-groups{gap:4px}
+ body.lesson .actions{flex-wrap:wrap}
+}
+@media print{body.lesson .sheet{border:0;min-height:0}body.lesson .actions{display:none}}
+</style>
+</head><body class="lesson" style="--accent:#1565c0;--soft:#eef6ff">
+<main class="sheet">
+<header class="head"><div><div class="domain">🧩 Résolution de problèmes</div><span class="program">CE2 — programme 2025</span><h1>Résoudre un problème de partage ou de groupement</h1><p class="goal">Je sais choisir entre partage et groupement.</p></div><div class="owlbox"><img src="../images/logo_lecons_officiel.png" alt="Logo officiel des leçons de Maître Hibou"></div></header>
+<section class="block"><div class="title">1 · Je retiens</div><div class="rule">Le <b>partage</b> cherche combien chacun reçoit ; le <b>groupement</b> cherche combien de groupes on peut faire.</div>
+<div class="concepts"><article class="concept share"><h3>Le partage</h3><p>12 biscuits partagés entre <b>3 enfants</b>.</p><div class="kids"><div class="kid"><div class="kid-face" aria-hidden="true">👧</div><div class="kid-count">4 biscuits</div><div class="dots orange" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div><div class="kid"><div class="kid-face" aria-hidden="true">👦</div><div class="kid-count">4 biscuits</div><div class="dots orange" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div><div class="kid"><div class="kid-face" aria-hidden="true">👧</div><div class="kid-count">4 biscuits</div><div class="dots orange" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div></div><div class="result">Chaque enfant reçoit 4 biscuits.</div></article>
+<article class="concept grouping"><h3>Le groupement</h3><p>12 biscuits en paquets de <b>4 biscuits</b>.</p><div class="small-groups"><div class="group green"><span class="group-title">4 biscuits</span><div class="dots green" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div><div class="group green"><span class="group-title">4 biscuits</span><div class="dots green" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div><div class="group green"><span class="group-title">4 biscuits</span><div class="dots green" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div></div><div class="result">On peut faire 3 paquets.</div></article></div>
+</section>
+<section class="block"><div class="title">2 · Exemples</div><div class="examples">
+<article class="case"><h3>36 images partagées entre 4 enfants : <b>9 chacun</b></h3><div class="four-groups"><div class="group blue"><span class="group-title">9 images</span><div class="dots blue" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="group blue"><span class="group-title">9 images</span><div class="dots blue" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="group blue"><span class="group-title">9 images</span><div class="dots blue" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="group blue"><span class="group-title">9 images</span><div class="dots blue" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div><div class="equation">4 × 9 = 36</div></article>
+<article class="case green"><h3>36 images par paquets de 9 : <b>4 paquets</b></h3><div class="four-groups"><div class="group green"><span class="group-title">9 images</span><div class="dots green" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="group green"><span class="group-title">9 images</span><div class="dots green" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="group green"><span class="group-title">9 images</span><div class="dots green" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="group green"><span class="group-title">9 images</span><div class="dots green" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div><div class="equation">4 × 9 = 36</div></article>
+</div></section>
+<section class="block"><div class="title">3 · 🦉 L’astuce de Maître Hibou</div><div class="tip"><strong>Je cherche ce que je ne connais pas :</strong><div>Combien <b>dans chaque groupe</b> ou combien <b>de groupes</b> ?</div><div class="formulas"><span class="formula">36 ÷ 4 = 9</span><span class="formula green">36 ÷ 9 = 4</span></div><div>Je vérifie avec <b>4 × 9 = 36</b>.</div></div></section>
+<section class="block"><div class="title">4 · Tu as compris ?</div><div class="question">42 biscuits rangés par paquets de 6 donnent :</div><div class="answers"><button class="ans" data-correct="true" onclick="HibouMathLesson.answer(this,true)">7 paquets</button><button class="ans" onclick="HibouMathLesson.answer(this,false)">6 paquets</button><button class="ans" onclick="HibouMathLesson.answer(this,false)">48 paquets</button></div><div class="feedback" aria-live="polite"></div></section>
+<div class="actions"><a class="back" href="../index.html">← Retour aux leçons</a><button class="done" onclick='HibouMathLesson.complete({"titre": "Résoudre un problème de partage ou de groupement", "domaine": "Résolution de problèmes"},this)'>✅ J’ai compris cette leçon</button></div>
+</main><script src="../js/math-lecons.js"></script></body></html>
