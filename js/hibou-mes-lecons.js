@@ -1,13 +1,72 @@
 (function(){
   'use strict';
-  if(window.__hibouMesLeconsV25772) return;
-  window.__hibouMesLeconsV25772 = true;
+  if(window.__hibouMesLeconsV25890) return;
+  window.__hibouMesLeconsV25890 = true;
 
-  var VERSION = window.MAITRE_HIBOU_TITLE || '🦉 Maître Hibou V25.7.72';
+  var VERSION = window.MAITRE_HIBOU_TITLE || '🦉 Maître Hibou V25.8.90';
 
   function byId(id){ return document.getElementById(id); }
   function textOf(node){ return node ? String(node.textContent || '').replace(/\s+/g,' ').trim() : ''; }
   function esc(v){ return String(v == null ? '' : v).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  var SUBJECTS = {
+    francais: {
+      label:'Français',
+      title:'Mes leçons de français',
+      subtitle:'38 fiches de français harmonisées avec le programme 2025.',
+      url:'bibliotheque_lecons/index.html',
+      frameTitle:'Bibliothèque des leçons de français'
+    },
+    maths: {
+      label:'Mathématiques',
+      title:'Mes leçons de mathématiques',
+      subtitle:'48 fiches de mathématiques avec le programme 2025.',
+      url:'bibliotheque_math/index.html',
+      frameTitle:'Bibliothèque des leçons de mathématiques'
+    },
+    sciences: {
+      label:'Sciences',
+      title:'Mes leçons de sciences',
+      subtitle:'Retrouve les leçons de sciences de Maître Hibou.',
+      url:'bibliotheque_sciences/index.html',
+      frameTitle:'Bibliothèque des leçons de sciences'
+    },
+    geographie: {
+      label:'Géographie',
+      title:'Mes leçons de géographie',
+      subtitle:'Retrouve les leçons de géographie de Maître Hibou.',
+      url:'bibliotheque_geographie/index.html',
+      frameTitle:'Bibliothèque des leçons de géographie'
+    },
+    histoire: {
+      label:'Histoire',
+      title:'Mes leçons d’histoire',
+      subtitle:'Retrouve les leçons d’histoire de Maître Hibou.',
+      url:'bibliotheque_histoire/index.html',
+      frameTitle:'Bibliothèque des leçons d’histoire'
+    },
+    recit: {
+      label:'Récit',
+      title:'Mes leçons de récit',
+      subtitle:'Retrouve les leçons de récit de Maître Hibou.',
+      url:'bibliotheque_recit/index.html',
+      frameTitle:'Bibliothèque des leçons de récit'
+    },
+    lexique: {
+      label:'Lexique',
+      title:'Mes leçons de lexique',
+      subtitle:'Retrouve les leçons de lexique de Maître Hibou.',
+      url:'bibliotheque_lexique/index.html',
+      frameTitle:'Bibliothèque des leçons de lexique'
+    },
+    mini: {
+      label:'Mini-leçon',
+      title:'Mini-leçon du jour',
+      subtitle:'Une petite leçon à revoir avec Maître Hibou.',
+      url:'',
+      frameTitle:'Mini-leçon'
+    }
+  };
 
   function setVersion(){
     try{ document.title = VERSION; }catch(e){}
@@ -22,16 +81,19 @@
     overlay.innerHTML =
       '<section class="hibou-lessons-dialog" role="dialog" aria-modal="true" aria-labelledby="hibouLessonsTitle">' +
         '<header class="hibou-lessons-header">' +
-          '<button type="button" class="hibou-lessons-back" id="hibouLessonsBack" aria-label="Retour aux matières">← Mes matières</button>' +
-          '<div class="owl" aria-hidden="true"><img src="bibliotheque_lecons/images/logo_lecons_officiel.png?v=25772-logo-officiel" alt=""></div>' +
-          '<div class="hibou-lessons-title"><h2 id="hibouLessonsTitle">Mes leçons</h2><p>Choisis une matière ou retrouve la mini-leçon du jour dans cette fenêtre.</p></div>' +
+          '<div class="owl" aria-hidden="true"><img src="bibliotheque_lecons/images/logo_lecons_officiel.png?v=25890-logo-officiel" alt=""></div>' +
+          '<button type="button" class="hibou-lessons-back" id="hibouLessonsBack" aria-label="Voir les matières">← Mes matières</button>' +
+          '<div class="hibou-lessons-title"><h2 id="hibouLessonsTitle">Mes leçons de français</h2><p id="hibouLessonsSubtitle">38 fiches de français harmonisées avec le programme 2025.</p></div>' +
           '<button type="button" class="hibou-lessons-close" id="hibouLessonsClose" aria-label="Fermer">×</button>' +
         '</header>' +
-        '<nav class="hibou-lessons-tabs" aria-label="Choisir un contenu">' +
+        '<nav class="hibou-lessons-tabs" aria-label="Choisir une matière">' +
           '<button type="button" class="hibou-lessons-tab active" id="hibouLessonsFrench">📘 Français</button>' +
           '<button type="button" class="hibou-lessons-tab" id="hibouLessonsMaths">📐 Mathématiques</button>' +
           '<button type="button" class="hibou-lessons-tab" id="hibouLessonsSciences">💧 Sciences</button>' +
-          '<button type="button" class="hibou-lessons-tab" id="hibouLessonsGeographie">🏙️ Géographie</button><button type="button" class="hibou-lessons-tab" id="hibouLessonsHistoire">🏡 Histoire</button><button type="button" class="hibou-lessons-tab" id="hibouLessonsRecit">📖 Récit</button><button type="button" class="hibou-lessons-tab" id="hibouLessonsLexique">🔤 Lexique</button>' +
+          '<button type="button" class="hibou-lessons-tab" id="hibouLessonsGeographie">🏙️ Géographie</button>' +
+          '<button type="button" class="hibou-lessons-tab" id="hibouLessonsHistoire">🏡 Histoire</button>' +
+          '<button type="button" class="hibou-lessons-tab" id="hibouLessonsRecit">📖 Récit</button>' +
+          '<button type="button" class="hibou-lessons-tab" id="hibouLessonsLexique">🔤 Lexique</button>' +
           '<button type="button" class="hibou-lessons-tab" id="hibouLessonsMiniTab">💡 Mini-leçon</button>' +
         '</nav>' +
         '<div class="hibou-lessons-content">' +
@@ -41,73 +103,49 @@
       '</section>';
     document.body.appendChild(overlay);
 
-    var close = byId('hibouLessonsClose');
-    var back = byId('hibouLessonsBack');
-    if(back) back.addEventListener('click', showSubjects);
-    var french = byId('hibouLessonsFrench');
-    var maths = byId('hibouLessonsMaths');
-    var mini = byId('hibouLessonsMiniTab');
-    var sciences = byId('hibouLessonsSciences');
-    var geographie = byId('hibouLessonsGeographie');
-    var histoire = byId('hibouLessonsHistoire');
-    var recit = byId('hibouLessonsRecit');
-    var lexique = byId('hibouLessonsLexique');
-    var lessonFrame = byId('hibouLessonsFrame');
-    if(lessonFrame) lessonFrame.addEventListener('load', function(){
-      [0,150,600,1400].forEach(function(ms){ setTimeout(compactEmbeddedLibrary,ms); });
-    });
-    if(close) close.addEventListener('click', closeLessons);
-    if(french) french.addEventListener('click', function(){ selectSubject('francais'); });
-    if(maths) maths.addEventListener('click', function(){ selectSubject('maths'); });
-    if(mini) mini.addEventListener('click', function(){ selectSubject('mini'); });
-    if(sciences) sciences.addEventListener('click', function(){ selectSubject('sciences'); });
-    if(geographie) geographie.addEventListener('click', function(){ selectSubject('geographie'); });
-    if(histoire) histoire.addEventListener('click', function(){ selectSubject('histoire'); });
-    if(recit) recit.addEventListener('click', function(){ selectSubject('recit'); });
-    if(lexique) lexique.addEventListener('click', function(){ selectSubject('lexique'); });
-    overlay.addEventListener('click', function(ev){ if(ev.target === overlay) closeLessons(); });
+    bindControls();
   }
 
-  // Élimine le bandeau redondant de la bibliothèque dans l'iframe,
-  // sans changer les pages de bibliothèque utilisées directement.
-  function isLandscapeTouch(){
-    return !!(window.matchMedia && window.matchMedia('(orientation: landscape) and (hover: none) and (pointer: coarse)').matches);
-  }
-  function compactEmbeddedLibrary(){
+  function bindControls(){
+    var close = byId('hibouLessonsClose');
+    var back = byId('hibouLessonsBack');
     var frame = byId('hibouLessonsFrame');
-    if(!frame) return;
-    try{
-      var doc = frame.contentDocument;
-      if(!doc || !doc.body) return;
-      var compact = isLandscapeTouch();
-      // Ne masquer que le véritable bandeau de titre, jamais les filtres.
-      if(!compact){
-        doc.querySelectorAll('[data-hibou-compact-banner="1"]').forEach(function(el){
-          el.style.removeProperty('display');
-          el.removeAttribute('data-hibou-compact-banner');
-        });
-        return;
-      }
-      var headings = Array.from(doc.querySelectorAll('h1,h2,h3'));
-      var h = headings.find(function(el){
-        return /^mes leçons de\s/i.test(textOf(el)) || /^mes leçons\s+(de|d[’'])\s/i.test(textOf(el));
-      });
-      if(!h) return;
-      var banner = h.closest('header');
-      // Certaines bibliothèques utilisent une carte plutôt qu'un <header>.
-      if(!banner || banner === doc.body){
-        banner = h.parentElement;
-        for(var i=0; i<3 && banner && banner.parentElement; i++){
-          if(banner.querySelector('p') && banner.querySelector('img,svg,.owl')) break;
-          banner = banner.parentElement;
+    if(close && !close.__bound){
+      close.__bound = true;
+      close.addEventListener('click', closeLessons);
+    }
+    if(back && !back.__bound){
+      back.__bound = true;
+      back.addEventListener('click', function(){
+        var nav = document.querySelector('.hibou-lessons-tabs');
+        if(nav){
+          try{ nav.scrollIntoView({block:'nearest', behavior:'smooth'}); }
+          catch(e){ nav.scrollIntoView(true); }
         }
+      });
+    }
+
+    [['hibouLessonsFrench','francais'],['hibouLessonsMaths','maths'],['hibouLessonsSciences','sciences'],['hibouLessonsGeographie','geographie'],['hibouLessonsHistoire','histoire'],['hibouLessonsRecit','recit'],['hibouLessonsLexique','lexique'],['hibouLessonsMiniTab','mini']].forEach(function(entry){
+      var btn = byId(entry[0]);
+      if(btn && !btn.__bound){
+        btn.__bound = true;
+        btn.addEventListener('click', function(){ selectSubject(entry[1]); });
       }
-      if(!banner || banner === doc.body || banner === doc.documentElement) return;
-      // Sécurité : ne jamais cacher une zone contenant les commandes de recherche.
-      if(banner.querySelector('input, select, [type="search"]')) return;
-      banner.setAttribute('data-hibou-compact-banner','1');
-      banner.style.setProperty('display','none','important');
-    }catch(e){ /* iframe éventuellement inaccessible : aucun effet sur la page principale */ }
+    });
+
+    if(frame && !frame.__bound){
+      frame.__bound = true;
+      frame.addEventListener('load', function(){
+        syncHeaderFromFrame();
+        [40,220,700].forEach(function(ms){ setTimeout(compactEmbeddedLibrary, ms); });
+      });
+    }
+
+    var overlay = byId('hibouLessonsOverlay');
+    if(overlay && !overlay.__bound){
+      overlay.__bound = true;
+      overlay.addEventListener('click', function(ev){ if(ev.target === overlay) closeLessons(); });
+    }
   }
 
   function sourceMiniCard(){
@@ -150,7 +188,8 @@
       '</div>';
 
     var refresh = byId('hibouMiniRefresh');
-    if(refresh){
+    if(refresh && !refresh.__bound){
+      refresh.__bound = true;
       refresh.addEventListener('click', function(){
         try{
           var card = sourceMiniCard();
@@ -162,90 +201,135 @@
     }
   }
 
-  // Sur tablette uniquement, l'écran de choix des matières précède la bibliothèque.
-  function isTabletLessons(){
-    return window.matchMedia && (window.matchMedia('(max-width: 1100px)').matches || isLandscapeTouch());
+  function setHeaderForSubject(subject){
+    var data = SUBJECTS[subject] || SUBJECTS.francais;
+    var title = byId('hibouLessonsTitle');
+    var subtitle = byId('hibouLessonsSubtitle');
+    if(title) title.textContent = data.title;
+    if(subtitle) subtitle.textContent = data.subtitle;
   }
 
-  function showSubjects(){
-    var dialog = document.querySelector('#hibouLessonsOverlay .hibou-lessons-dialog');
+  function syncHeaderFromFrame(){
     var frame = byId('hibouLessonsFrame');
-    var panel = byId('hibouLessonsMiniPanel');
-    if(!dialog || !isTabletLessons()) return;
-    dialog.classList.remove('hibou-subject-selected');
-    var heading = byId('hibouLessonsTitle');
-    if(heading) heading.textContent = 'Mes leçons';
-    dialog.classList.add('hibou-subject-chooser');
-    if(frame) frame.style.display = 'none';
-    if(panel) panel.hidden = true;
-    var tabs = dialog.querySelectorAll('.hibou-lessons-tab');
-    tabs.forEach(function(tab){ tab.classList.remove('active'); });
-    var first = byId('hibouLessonsFrench');
-    if(first) first.focus({preventScroll:true});
+    if(!frame || frame.style.display === 'none') return;
+    try{
+      var doc = frame.contentDocument;
+      if(!doc || !doc.body) return;
+      var titleEl = Array.from(doc.querySelectorAll('h1,h2,h3')).find(function(el){
+        return /^mes leçons/i.test(textOf(el));
+      });
+      var subtitleEl = null;
+      if(titleEl){
+        var scope = titleEl.parentElement;
+        if(scope){
+          subtitleEl = scope.querySelector('p');
+          if(!subtitleEl && scope.parentElement) subtitleEl = scope.parentElement.querySelector('p');
+        }
+      }
+      var title = byId('hibouLessonsTitle');
+      var subtitle = byId('hibouLessonsSubtitle');
+      if(title && titleEl) title.textContent = textOf(titleEl);
+      if(subtitle && subtitleEl){
+        var txt = textOf(subtitleEl);
+        if(txt) subtitle.textContent = txt;
+      }
+    }catch(e){ }
+  }
+
+  function findBannerCandidate(doc, heading){
+    var el = heading ? heading.parentElement : null;
+    var best = null;
+    var depth = 0;
+    while(el && el !== doc.body && depth < 7){
+      var hasControls = !!el.querySelector('input,select,[type="search"]');
+      var hasHeading = !!el.querySelector('h1,h2,h3');
+      var hasImg = !!el.querySelector('img,svg');
+      var hasParagraph = !!el.querySelector('p');
+      var textLen = textOf(el).length;
+      if(!hasControls && hasHeading && (hasImg || hasParagraph) && textLen > 10 && textLen < 260){
+        best = el;
+        break;
+      }
+      el = el.parentElement;
+      depth += 1;
+    }
+    return best;
+  }
+
+  function compactEmbeddedLibrary(){
+    var frame = byId('hibouLessonsFrame');
+    if(!frame || frame.style.display === 'none') return;
+    try{
+      var doc = frame.contentDocument;
+      if(!doc || !doc.body) return;
+      if(doc.__hibouCompactStyleApplied !== true){
+        var style = doc.createElement('style');
+        style.id = 'hibouCompactOuterStyle';
+        style.textContent = '[data-hibou-hidden-banner="1"]{display:none !important;} body{padding-top:0 !important;}';
+        doc.head.appendChild(style);
+        doc.__hibouCompactStyleApplied = true;
+      }
+      // restore previously hidden banners if needed before recalculating
+      Array.from(doc.querySelectorAll('[data-hibou-hidden-banner="1"]')).forEach(function(node){
+        node.style.removeProperty('display');
+        node.removeAttribute('data-hibou-hidden-banner');
+      });
+      var heading = Array.from(doc.querySelectorAll('h1,h2,h3')).find(function(el){
+        return /^mes leçons/i.test(textOf(el));
+      });
+      if(!heading) return;
+      var candidate = findBannerCandidate(doc, heading);
+      if(candidate){
+        candidate.setAttribute('data-hibou-hidden-banner','1');
+        candidate.style.setProperty('display','none','important');
+      }
+      // ensure the search zone is visible near the top when opened
+      var search = doc.querySelector('input[type="search"], input[placeholder*="Cherche"], input[placeholder*="cherche"], input[placeholder*="Recherche"], input[placeholder*="recherche"]');
+      if(search && search.scrollIntoView){
+        try{ search.scrollIntoView({block:'start'}); }catch(e){}
+      }
+    }catch(e){ }
   }
 
   function selectSubject(subject){
-    var dialog = document.querySelector('#hibouLessonsOverlay .hibou-lessons-dialog');
-    if(dialog){
-      dialog.classList.add('hibou-subject-selected');
-      dialog.classList.remove('hibou-subject-chooser');
-      if(isTabletLessons()){
-        var names = {francais:'Français', maths:'Mathématiques', sciences:'Sciences', geographie:'Géographie', histoire:'Histoire', recit:'Récit', lexique:'Lexique', mini:'Mini-leçon'};
-        var heading = byId('hibouLessonsTitle');
-        if(heading) heading.textContent = names[subject] || 'Mes leçons';
-      }
-    }
-    var french = byId('hibouLessonsFrench');
-    var maths = byId('hibouLessonsMaths');
-    var sciences = byId('hibouLessonsSciences');
-    var geographie = byId('hibouLessonsGeographie');
-    var histoire = byId('hibouLessonsHistoire');
-    var recit = byId('hibouLessonsRecit');
-    var lexique = byId('hibouLessonsLexique');
-    var mini = byId('hibouLessonsMiniTab');
     var frame = byId('hibouLessonsFrame');
     var panel = byId('hibouLessonsMiniPanel');
     var isMini = subject === 'mini';
-    var pages = {
-      francais: ['bibliotheque_lecons/index.html', 'Bibliothèque des leçons de français'],
-      maths: ['bibliotheque_math/index.html', 'Bibliothèque des leçons de mathématiques'],
-      sciences: ['bibliotheque_sciences/index.html', "Leçon de sciences : les états de l’eau"],
-      geographie: ['bibliotheque_geographie/index.html', 'Leçon de géographie : la ville et ses quartiers'],
-      histoire: ['bibliotheque_histoire/index.html', 'Leçon d’histoire : habiter autrefois et aujourd’hui'],
-      recit: ['bibliotheque_recit/index.html', 'Leçon de français : raconter dans l’ordre'],
-      lexique: ['bibliotheque_lexique/index.html', 'Leçon de lexique : familles, synonymes, contraires']
-    };
-    var tabs = [[french,'francais'],[maths,'maths'],[sciences,'sciences'],[geographie,'geographie'],[histoire,'histoire'],[recit,'recit'],[lexique,'lexique'],[mini,'mini']];
-    tabs.forEach(function(item){
-      if(item[0]) item[0].classList.toggle('active', item[1] === subject);
+    [['hibouLessonsFrench','francais'],['hibouLessonsMaths','maths'],['hibouLessonsSciences','sciences'],['hibouLessonsGeographie','geographie'],['hibouLessonsHistoire','histoire'],['hibouLessonsRecit','recit'],['hibouLessonsLexique','lexique'],['hibouLessonsMiniTab','mini']].forEach(function(entry){
+      var btn = byId(entry[0]);
+      if(btn) btn.classList.toggle('active', entry[1] === subject);
     });
+
+    setHeaderForSubject(subject);
+
     if(frame){
       if(isMini){
         frame.style.display = 'none';
       }else{
         frame.style.display = 'block';
-        var page = pages[subject] || pages.francais;
-        if(frame.getAttribute('src') !== page[0]) frame.setAttribute('src', page[0]);
-        frame.title = page[1];
+        var data = SUBJECTS[subject] || SUBJECTS.francais;
+        frame.title = data.frameTitle;
+        if(frame.getAttribute('src') !== data.url) frame.setAttribute('src', data.url);
       }
     }
-    [0,120,450].forEach(function(ms){ setTimeout(compactEmbeddedLibrary,ms); });
     if(panel){
       panel.hidden = !isMini;
       if(isMini) renderMiniLesson();
+    }
+    if(!isMini){
+      [100,350,900].forEach(function(ms){ setTimeout(function(){ syncHeaderFromFrame(); compactEmbeddedLibrary(); }, ms); });
     }
   }
 
   function openLessons(subject){
     createPopup();
-    if(isTabletLessons() && (!subject || subject === 'francais')) showSubjects();
-    else selectSubject(subject || 'francais');
+    selectSubject(subject || 'francais');
     var overlay = byId('hibouLessonsOverlay');
     if(overlay){
       overlay.classList.add('open');
       overlay.setAttribute('aria-hidden','false');
       document.body.style.overflow = 'hidden';
-      setTimeout(function(){ var c=byId('hibouLessonsClose'); if(c) c.focus(); },30);
+      setTimeout(function(){ var c = byId('hibouLessonsClose'); if(c) c.focus(); }, 30);
     }
   }
 
@@ -270,7 +354,7 @@
       lessons.className = 'v24-advice-btn v24-advice-lessons';
       actions.insertBefore(lessons, actions.firstChild);
     }
-    lessons.innerHTML = '📚 Leçons & mini-leçon<small>Français · Maths · Sciences · Géographie · Histoire · Récit · Lexique</small>';
+    lessons.innerHTML = '📚 Revoir une leçon<small>Français · Maths · Sciences · Géographie · Histoire · Récit · Lexique</small>';
     if(!lessons.__hibouLessonBound){
       lessons.__hibouLessonBound = true;
       lessons.addEventListener('click', function(ev){ ev.preventDefault(); openLessons('francais'); }, true);
@@ -302,8 +386,6 @@
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', install);
   else install();
   window.addEventListener('load', install);
-  window.addEventListener('resize', compactEmbeddedLibrary);
-  window.addEventListener('orientationchange', function(){ setTimeout(compactEmbeddedLibrary,200); });
-  [50,150,350,700,1200,2200,4000].forEach(function(ms){ setTimeout(install,ms); });
-  setInterval(function(){ setVersion(); installButton(); },3000);
+  [50,150,350,700,1200,2200,4000].forEach(function(ms){ setTimeout(install, ms); });
+  setInterval(function(){ setVersion(); installButton(); }, 3000);
 })();
