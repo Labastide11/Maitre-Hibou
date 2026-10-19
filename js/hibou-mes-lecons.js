@@ -3,14 +3,14 @@
   if(window.__hibouMesLeconsV25891) return;
   window.__hibouMesLeconsV25891 = true;
 
-  var VERSION = window.MAITRE_HIBOU_TITLE || '🦉 Maître Hibou V25.7.72';
+  var VERSION = window.MAITRE_HIBOU_TITLE || '🦉 Maître Hibou';
 
   function byId(id){ return document.getElementById(id); }
   function textOf(node){ return node ? String(node.textContent || '').replace(/\s+/g,' ').trim() : ''; }
   function esc(v){ return String(v == null ? '' : v).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
   function setVersion(){
-    try{ document.title = VERSION; }catch(e){}
+    // Le titre de l'onglet du site est conservé, pas modifié par Mes leçons.
   }
 
   function createPopup(){
@@ -23,7 +23,7 @@
       '<section class="hibou-lessons-dialog" role="dialog" aria-modal="true" aria-labelledby="hibouLessonsTitle">' +
         '<header class="hibou-lessons-header">' +
           '<div class="owl" aria-hidden="true"><img src="bibliotheque_lecons/images/logo_lecons_officiel.png?v=25772-logo-officiel" alt=""></div>' +
-          '<div class="hibou-lessons-title"><h2 id="hibouLessonsTitle">Mes leçons de français</h2><p id="hibouLessonsSubTitle">38 fiches de français harmonisées avec le programme 2025.</p></div>' +
+          '<div class="hibou-lessons-title"><h2 id="hibouLessonsTitle">Mes leçons</h2></div>' +
           '<button type="button" class="hibou-lessons-close" id="hibouLessonsClose" aria-label="Fermer">×</button>' +
         '</header>' +
         '<nav class="hibou-lessons-tabs" aria-label="Choisir un contenu">' +
@@ -86,7 +86,7 @@
   function setLessonHeader(subject){
     var values=subjects[subject]||subjects.francais;
     var h=byId('hibouLessonsTitle'),p=byId('hibouLessonsSubTitle');
-    if(h)h.textContent=values[0];
+    if(h)h.textContent='Mes leçons';
     if(p)p.textContent=values[1];
   }
   function artFor(title,domain){
@@ -139,7 +139,7 @@
           .hibou-lesson-thumb{order:1!important;height:114px!important;background:var(--thumb-bg)!important;border-radius:13px!important;display:flex!important;align-items:center!important;justify-content:space-evenly!important;gap:5px!important;margin-top:4px!important;overflow:hidden!important;border:1px solid #fff!important;}
           .hibou-thumb-symbol{font-size:58px!important;line-height:1!important;filter:drop-shadow(0 3px 2px #0001)!important;}
           .hibou-thumb-sample{font-size:15px!important;line-height:1.35!important;font-weight:850!important;text-align:center!important;color:#164376!important;background:#fffd!important;border-radius:10px!important;padding:8px!important;max-width:52%!important;}
-          .open-link,.grid .card .open{order:3!important;background:#edf5ff!important;color:#174979!important;padding:8px 11px!important;border-radius:11px!important;font-size:12px!important;text-decoration:none!important;margin-top:auto!important;}
+          .open-link,.grid .card .open{display:none!important;} .lesson-card,.grid .card{cursor:pointer!important;transition:transform .16s,box-shadow .16s!important;} .lesson-card:hover,.grid .card:hover{transform:translateY(-2px)!important;box-shadow:0 8px 22px #172e4528!important;} .lesson-card:focus-visible,.grid .card:focus-visible{outline:3px solid #0bb9b9!important;outline-offset:2px!important;}
           @media(max-width:580px){.lesson-grid,.grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}.hibou-lesson-thumb{height:94px!important}.hibou-thumb-symbol{font-size:38px!important}.hibou-thumb-sample{font-size:11px!important}.lesson-card h2,.grid .card h2{font-size:14px!important}}
         `;
         doc.head.appendChild(style);
@@ -150,7 +150,23 @@
         var link=card.querySelector('a[href]');
         var thumb=makeThumb(doc,textOf(h),card.getAttribute('data-domain')||'');
         h.insertAdjacentElement('afterend',thumb);
-        if(link){link.textContent='📄 Leçon + exercices';}
+        if(link){
+          // Une carte entière donne accès à son véritable lien de leçon.
+          card.setAttribute('role','link');
+          card.setAttribute('tabindex','0');
+          card.setAttribute('aria-label','Ouvrir la leçon : '+textOf(h));
+          link.style.display='none';
+          if(!card.__hibouClickable){
+            card.__hibouClickable=true;
+            card.addEventListener('click',function(event){
+              if(event.target.closest('a,button,input,select'))return;
+              link.click();
+            });
+            card.addEventListener('keydown',function(event){
+              if(event.key==='Enter' || event.key===' '){event.preventDefault();link.click();}
+            });
+          }
+        }
       });
       try{doc.documentElement.scrollTop=0;doc.body.scrollTop=0;}catch(e){}
     }catch(e){console.warn('Bibliothèque non modifiée :',e);}
@@ -163,7 +179,7 @@
       '<button class="hibou-single-card" id="hibouSingleOpen" type="button">'+
        '<strong>'+esc(data.title)+'</strong>'+
        '<span class="hibou-single-art" style="background:'+data.tone+'"><span>'+data.emoji+'</span><small>'+esc(data.hint)+'</small></span>'+
-       '<span class="hibou-single-foot">📄 Ouvrir la leçon et ses exercices →</span>'+
+       ''+
       '</button>';
     var button=byId('hibouSingleOpen');
     if(button)button.addEventListener('click',function(){

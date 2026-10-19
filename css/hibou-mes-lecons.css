@@ -347,3 +347,56 @@ body.hibou-lessons-ready .v24-advice-btn{
     min-height:0 !important;
   }
 }
+
+/* V25.8.93 : disposition stable et minimale ; sans dépendance au type de pointeur. */
+.hibou-lessons-dialog{grid-template-rows:52px 46px minmax(0,1fr) !important;}
+.hibou-lessons-header{
+  box-sizing:border-box !important;
+  display:grid !important;
+  grid-template-columns:34px minmax(0,1fr) 34px !important;
+  gap:9px !important;
+  align-items:center !important;
+  min-height:0 !important;
+  height:52px !important;
+  padding:5px 12px !important;
+  background:linear-gradient(100deg,#122b4e,#1c4f84) !important;
+}
+.hibou-lessons-header .owl{width:34px !important;height:34px !important;flex:0 0 34px !important;display:flex !important;}
+.hibou-lessons-header .owl img{border-radius:8px !important;}
+.hibou-lessons-title{min-width:0 !important;text-align:center !important;}
+.hibou-lessons-title h2{font:800 19px/1.1 system-ui,sans-serif !important;white-space:nowrap !important;margin:0 !important;}
+.hibou-lessons-title p,#hibouLessonsSubTitle{display:none !important;}
+.hibou-lessons-close{width:32px !important;height:32px !important;font-size:22px !important;line-height:1 !important;justify-self:end !important;}
+.hibou-lessons-back{display:none !important;}
+.hibou-lessons-tabs{
+  display:grid !important;
+  grid-template-columns:repeat(8,minmax(0,1fr)) !important;
+  grid-auto-rows:36px !important;
+  gap:5px !important;
+  padding:5px 8px !important;
+  overflow:hidden !important;
+  white-space:nowrap !important;
+  background:#e8f0fa !important;
+}
+.hibou-lessons-tab{
+  box-sizing:border-box !important;
+  min-width:0 !important;
+  width:100% !important;
+  min-height:0 !important;
+  height:36px !important;
+  padding:5px 1px !important;
+  font:800 clamp(9px,1.05vw,14px)/1.1 system-ui,sans-serif !important;
+  border:2px solid transparent !important;
+  border-radius:11px !important;
+  white-space:nowrap !important;
+  letter-spacing:-.2px !important;
+}
+.hibou-lessons-tab.active{border-color:#12b9b7 !important;}
+.hibou-lessons-content{min-height:0 !important;overflow:hidden !important;}
+.hibou-single-foot{display:none !important;}
+.hibou-single-card{cursor:pointer !important;}
+@media(max-width:710px) and (orientation:portrait){
+ .hibou-lessons-dialog{grid-template-rows:50px 88px minmax(0,1fr) !important;}
+ .hibou-lessons-tabs{grid-template-columns:repeat(4,minmax(0,1fr)) !important;grid-template-rows:repeat(2,36px) !important;}
+ .hibou-lessons-tab{font-size:11px !important;}
+}
