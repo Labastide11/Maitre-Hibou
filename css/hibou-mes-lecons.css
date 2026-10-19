@@ -400,3 +400,138 @@ body.hibou-lessons-ready .v24-advice-btn{
  .hibou-lessons-tabs{grid-template-columns:repeat(4,minmax(0,1fr)) !important;grid-template-rows:repeat(2,36px) !important;}
  .hibou-lessons-tab{font-size:11px !important;}
 }
+
+
+/* V25.8.94 — SANS bandeau bleu : navigation des matières et cartes immédiatement visibles. */
+.hibou-lessons-dialog{
+  position:relative !important;
+  display:grid !important;
+  grid-template-rows:48px minmax(0,1fr) !important;
+}
+.hibou-lessons-header{
+  position:absolute !important;
+  top:0 !important;
+  right:0 !important;
+  width:0 !important;
+  height:0 !important;
+  min-height:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  overflow:visible !important;
+  z-index:15 !important;
+  display:block !important;
+}
+.hibou-lessons-header .owl,
+.hibou-lessons-title,
+.hibou-lessons-back{
+  display:none !important;
+}
+.hibou-lessons-close{
+  display:grid !important;
+  position:absolute !important;
+  top:7px !important;
+  right:7px !important;
+  width:33px !important;
+  height:33px !important;
+  font-size:22px !important;
+  line-height:1 !important;
+  border:2px solid #c6d7e9 !important;
+  background:#fff !important;
+  color:#17365f !important;
+  border-radius:50% !important;
+  cursor:pointer !important;
+  box-shadow:0 2px 6px #102b4e24 !important;
+}
+.hibou-lessons-tabs{
+  grid-row:1 !important;
+  display:grid !important;
+  grid-template-columns:repeat(8,minmax(0,1fr)) !important;
+  grid-auto-rows:38px !important;
+  gap:5px !important;
+  height:48px !important;
+  padding:5px 47px 5px 7px !important;
+  overflow:visible !important;
+  background:#e8f0fa !important;
+  min-height:0 !important;
+}
+.hibou-lessons-tab{
+  width:100% !important;
+  min-width:0 !important;
+  height:38px !important;
+  min-height:0 !important;
+  border-radius:11px !important;
+  padding:5px 2px !important;
+  font:800 clamp(9px,1.06vw,14px)/1.1 system-ui,sans-serif !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+.hibou-lessons-content{
+  grid-row:2 !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+}
+@media (max-width:700px) and (orientation:portrait){
+  .hibou-lessons-dialog{grid-template-rows:84px minmax(0,1fr) !important;}
+  .hibou-lessons-tabs{
+    height:84px !important;
+    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+    grid-template-rows:repeat(2,36px) !important;
+    grid-auto-rows:36px !important;
+    padding-right:45px !important;
+  }
+  .hibou-lessons-tab{height:36px !important;}
+}
+
+/* V25.8.95 — les HUIT matières complètes sur UNE seule ligne en paysage. */
+@media (orientation: landscape) and (min-width: 750px) {
+  .hibou-lessons-dialog {
+    grid-template-rows: 52px minmax(0,1fr) !important;
+  }
+  .hibou-lessons-tabs {
+    display: grid !important;
+    grid-template-columns: 1.00fr 1.50fr .90fr 1.15fr .85fr .70fr .85fr 1.03fr !important;
+    grid-template-rows: 40px !important;
+    grid-auto-rows: 40px !important;
+    gap: 5px !important;
+    width: 100% !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    padding: 6px 46px 6px 8px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    align-items: stretch !important;
+  }
+  .hibou-lessons-tab {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    padding: 4px 2px !important;
+    margin: 0 !important;
+    border-radius: 12px !important;
+    font-family: system-ui,Arial,sans-serif !important;
+    font-size: clamp(10px,1.12vw,15px) !important;
+    font-weight: 800 !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.25px !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+  }
+  .hibou-lessons-close {
+    position: absolute !important;
+    top: 9px !important;
+    right: 8px !important;
+    height: 32px !important;
+    width: 32px !important;
+  }
+}

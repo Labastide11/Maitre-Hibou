@@ -131,7 +131,7 @@
           .filters{gap:6px!important;}
           .filter{font-size:13px!important;padding:10px 12px!important;}
           .lesson-grid,.grid{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))!important;gap:12px!important;}
-          .lesson-card,.grid .card{min-height:0!important;padding:12px!important;border-radius:18px!important;display:flex!important;flex-direction:column!important;background:white!important;border:1px solid #dce6f5!important;box-shadow:0 4px 13px #172e4512!important;}
+          .lesson-card,.grid .card{min-height:0!important;padding:12px!important;border-radius:18px!important;display:flex;flex-direction:column!important;background:white!important;border:1px solid #dce6f5!important;box-shadow:0 4px 13px #172e4512!important;}
           .lesson-card h2,.grid .card h2{font:800 17px/1.2 system-ui,sans-serif!important;color:#113965!important;margin:4px 0 8px!important;min-height:40px!important;}
           .lesson-card p,.grid .card p{display:none!important;}
           .lesson-card .badge,.grid .card .tag{order:2!important;font-size:11px!important;align-self:start!important;margin:5px 0!important;padding:4px 8px!important;}
