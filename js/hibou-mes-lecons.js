@@ -22,6 +22,7 @@
     overlay.innerHTML =
       '<section class="hibou-lessons-dialog" role="dialog" aria-modal="true" aria-labelledby="hibouLessonsTitle">' +
         '<header class="hibou-lessons-header">' +
+          '<button type="button" class="hibou-lessons-back" id="hibouLessonsBack" aria-label="Retour aux matières">← Mes matières</button>' +
           '<div class="owl" aria-hidden="true"><img src="bibliotheque_lecons/images/logo_lecons_officiel.png?v=25772-logo-officiel" alt=""></div>' +
           '<div class="hibou-lessons-title"><h2 id="hibouLessonsTitle">Mes leçons</h2><p>Choisis une matière ou retrouve la mini-leçon du jour dans cette fenêtre.</p></div>' +
           '<button type="button" class="hibou-lessons-close" id="hibouLessonsClose" aria-label="Fermer">×</button>' +
@@ -41,6 +42,8 @@
     document.body.appendChild(overlay);
 
     var close = byId('hibouLessonsClose');
+    var back = byId('hibouLessonsBack');
+    if(back) back.addEventListener('click', showSubjects);
     var french = byId('hibouLessonsFrench');
     var maths = byId('hibouLessonsMaths');
     var mini = byId('hibouLessonsMiniTab');
@@ -113,7 +116,39 @@
     }
   }
 
+  // Sur tablette uniquement, l'écran de choix des matières précède la bibliothèque.
+  function isTabletLessons(){
+    return window.matchMedia && window.matchMedia('(max-width: 1100px)').matches;
+  }
+
+  function showSubjects(){
+    var dialog = document.querySelector('#hibouLessonsOverlay .hibou-lessons-dialog');
+    var frame = byId('hibouLessonsFrame');
+    var panel = byId('hibouLessonsMiniPanel');
+    if(!dialog || !isTabletLessons()) return;
+    dialog.classList.remove('hibou-subject-selected');
+    var heading = byId('hibouLessonsTitle');
+    if(heading) heading.textContent = 'Mes leçons';
+    dialog.classList.add('hibou-subject-chooser');
+    if(frame) frame.style.display = 'none';
+    if(panel) panel.hidden = true;
+    var tabs = dialog.querySelectorAll('.hibou-lessons-tab');
+    tabs.forEach(function(tab){ tab.classList.remove('active'); });
+    var first = byId('hibouLessonsFrench');
+    if(first) first.focus({preventScroll:true});
+  }
+
   function selectSubject(subject){
+    var dialog = document.querySelector('#hibouLessonsOverlay .hibou-lessons-dialog');
+    if(dialog){
+      dialog.classList.add('hibou-subject-selected');
+      dialog.classList.remove('hibou-subject-chooser');
+      if(isTabletLessons()){
+        var names = {francais:'Français', maths:'Mathématiques', sciences:'Sciences', geographie:'Géographie', histoire:'Histoire', recit:'Récit', lexique:'Lexique', mini:'Mini-leçon'};
+        var heading = byId('hibouLessonsTitle');
+        if(heading) heading.textContent = names[subject] || 'Mes leçons';
+      }
+    }
     var french = byId('hibouLessonsFrench');
     var maths = byId('hibouLessonsMaths');
     var sciences = byId('hibouLessonsSciences');
@@ -156,7 +191,8 @@
 
   function openLessons(subject){
     createPopup();
-    selectSubject(subject || 'francais');
+    if(isTabletLessons() && (!subject || subject === 'francais')) showSubjects();
+    else selectSubject(subject || 'francais');
     var overlay = byId('hibouLessonsOverlay');
     if(overlay){
       overlay.classList.add('open');
