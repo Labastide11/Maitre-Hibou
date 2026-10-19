@@ -42,7 +42,25 @@
 
     var close = byId('hibouLessonsClose');
     var frame = byId('hibouLessonsFrame');
-    if(frame) frame.addEventListener('load', function(){ injectLibraryCards(); });
+    if(frame) frame.addEventListener('load', function(){
+      injectLibraryCards();
+      // Les pages de leçons maths sont affichées dans cette même iframe.
+      // Une image garde ses proportions et occupe presque toute la largeur.
+      try {
+        var doc = frame.contentDocument;
+        var path = frame.contentWindow.location.pathname;
+        if(!doc || !/\/bibliotheque_math\/lecons\/[^/]+\.html$/.test(path)) return;
+        if(doc.getElementById('hibouMathsFullWidth')) return;
+        var style = doc.createElement('style');
+        style.id = 'hibouMathsFullWidth';
+        style.textContent =
+          'html,body{width:100%!important;max-width:none!important;}' +
+          'main{width:100%!important;max-width:none!important;box-sizing:border-box!important;padding:clamp(6px,1vw,14px)!important;}' +
+          'img.lesson-image{display:block!important;width:100%!important;max-width:100%!important;height:auto!important;max-height:none!important;object-fit:contain!important;margin-left:auto!important;margin-right:auto!important;}' +
+          '.practice{width:100%!important;max-width:none!important;box-sizing:border-box!important;}';
+        doc.head.appendChild(style);
+      }catch(e){console.warn('Affichage pleine largeur non appliqué :',e);}
+    });
     var french = byId('hibouLessonsFrench');
     var maths = byId('hibouLessonsMaths');
     var mini = byId('hibouLessonsMiniTab');
