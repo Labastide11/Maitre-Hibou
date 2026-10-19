@@ -310,3 +310,34 @@ body.hibou-lessons-ready .v24-advice-btn{
   .hibou-lessons-title h2{font-size:18px;}
   .hibou-subject-selected .hibou-lessons-back{font-size:12px;padding:7px;}
 }
+
+/* V25.8.86 — Un seul bandeau compact sur tablette en paysage.
+   L'entête de la bibliothèque intégrée est masqué par le JavaScript
+   uniquement lorsque cette bibliothèque est ouverte en iframe. */
+@media (orientation:landscape) and (hover:none) and (pointer:coarse){
+  .hibou-lessons-overlay{padding:5px;}
+  .hibou-lessons-dialog{
+    height:calc(100dvh - 10px);
+    border-radius:15px;
+    grid-template-rows:52px minmax(0,1fr);
+  }
+  .hibou-lessons-header{min-height:0;height:52px;padding:5px 12px;gap:10px;flex-wrap:nowrap;}
+  .hibou-lessons-header .owl{width:34px;height:34px;flex-basis:34px;}
+  .hibou-lessons-title h2{font-size:20px;line-height:1.1;}
+  .hibou-lessons-title p{display:none;}
+  .hibou-lessons-close{width:34px;height:34px;font-size:23px;flex-shrink:0;}
+  .hibou-lessons-dialog.hibou-subject-chooser,
+  .hibou-lessons-dialog.hibou-subject-selected{grid-template-rows:52px minmax(0,1fr);}
+  .hibou-lessons-dialog.hibou-subject-chooser .hibou-lessons-tabs{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:9px;padding:12px;align-content:start;
+  }
+  .hibou-lessons-dialog.hibou-subject-selected .hibou-lessons-tabs{display:none;}
+  .hibou-lessons-dialog.hibou-subject-selected .hibou-lessons-back{
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:6px 10px;border:0;border-radius:10px;background:white;
+    color:#17365f;font:800 13px system-ui,sans-serif;cursor:pointer;
+  }
+  .hibou-lessons-dialog.hibou-subject-selected .hibou-lessons-header .owl{display:none;}
+  .hibou-lessons-tab{font-size:15px;min-height:46px;padding:9px;border-radius:12px;}
+}

@@ -52,6 +52,10 @@
     var histoire = byId('hibouLessonsHistoire');
     var recit = byId('hibouLessonsRecit');
     var lexique = byId('hibouLessonsLexique');
+    var lessonFrame = byId('hibouLessonsFrame');
+    if(lessonFrame) lessonFrame.addEventListener('load', function(){
+      [0,150,600,1400].forEach(function(ms){ setTimeout(compactEmbeddedLibrary,ms); });
+    });
     if(close) close.addEventListener('click', closeLessons);
     if(french) french.addEventListener('click', function(){ selectSubject('francais'); });
     if(maths) maths.addEventListener('click', function(){ selectSubject('maths'); });
@@ -62,6 +66,48 @@
     if(recit) recit.addEventListener('click', function(){ selectSubject('recit'); });
     if(lexique) lexique.addEventListener('click', function(){ selectSubject('lexique'); });
     overlay.addEventListener('click', function(ev){ if(ev.target === overlay) closeLessons(); });
+  }
+
+  // Élimine le bandeau redondant de la bibliothèque dans l'iframe,
+  // sans changer les pages de bibliothèque utilisées directement.
+  function isLandscapeTouch(){
+    return !!(window.matchMedia && window.matchMedia('(orientation: landscape) and (hover: none) and (pointer: coarse)').matches);
+  }
+  function compactEmbeddedLibrary(){
+    var frame = byId('hibouLessonsFrame');
+    if(!frame) return;
+    try{
+      var doc = frame.contentDocument;
+      if(!doc || !doc.body) return;
+      var compact = isLandscapeTouch();
+      // Ne masquer que le véritable bandeau de titre, jamais les filtres.
+      if(!compact){
+        doc.querySelectorAll('[data-hibou-compact-banner="1"]').forEach(function(el){
+          el.style.removeProperty('display');
+          el.removeAttribute('data-hibou-compact-banner');
+        });
+        return;
+      }
+      var headings = Array.from(doc.querySelectorAll('h1,h2,h3'));
+      var h = headings.find(function(el){
+        return /^mes leçons de\s/i.test(textOf(el)) || /^mes leçons\s+(de|d[’'])\s/i.test(textOf(el));
+      });
+      if(!h) return;
+      var banner = h.closest('header');
+      // Certaines bibliothèques utilisent une carte plutôt qu'un <header>.
+      if(!banner || banner === doc.body){
+        banner = h.parentElement;
+        for(var i=0; i<3 && banner && banner.parentElement; i++){
+          if(banner.querySelector('p') && banner.querySelector('img,svg,.owl')) break;
+          banner = banner.parentElement;
+        }
+      }
+      if(!banner || banner === doc.body || banner === doc.documentElement) return;
+      // Sécurité : ne jamais cacher une zone contenant les commandes de recherche.
+      if(banner.querySelector('input, select, [type="search"]')) return;
+      banner.setAttribute('data-hibou-compact-banner','1');
+      banner.style.setProperty('display','none','important');
+    }catch(e){ /* iframe éventuellement inaccessible : aucun effet sur la page principale */ }
   }
 
   function sourceMiniCard(){
@@ -118,7 +164,7 @@
 
   // Sur tablette uniquement, l'écran de choix des matières précède la bibliothèque.
   function isTabletLessons(){
-    return window.matchMedia && window.matchMedia('(max-width: 1100px)').matches;
+    return window.matchMedia && (window.matchMedia('(max-width: 1100px)').matches || isLandscapeTouch());
   }
 
   function showSubjects(){
@@ -183,6 +229,7 @@
         frame.title = page[1];
       }
     }
+    [0,120,450].forEach(function(ms){ setTimeout(compactEmbeddedLibrary,ms); });
     if(panel){
       panel.hidden = !isMini;
       if(isMini) renderMiniLesson();
@@ -255,6 +302,8 @@
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', install);
   else install();
   window.addEventListener('load', install);
+  window.addEventListener('resize', compactEmbeddedLibrary);
+  window.addEventListener('orientationchange', function(){ setTimeout(compactEmbeddedLibrary,200); });
   [50,150,350,700,1200,2200,4000].forEach(function(ms){ setTimeout(install,ms); });
   setInterval(function(){ setVersion(); installButton(); },3000);
 })();
