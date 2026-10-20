@@ -172,7 +172,12 @@
     'Comprendre la valeur des chiffres':'math-valeur-position.jpg',
     'Comparer, ranger et encadrer les nombres':'math-comparer-ranger.jpg',
     'Poser et effectuer une addition':'math-addition-posee.jpg',
-    'Poser et effectuer une soustraction':'math-soustraction-posee.jpg'
+    'Poser et effectuer une soustraction':'math-soustraction-posee.jpg',
+    'Lire, écrire et représenter les nombres jusqu’à 10 000':'math-lire-ecrire-nombres-10000.jpg',
+    'Placer des nombres sur une ligne graduée':'math-ligne-graduee.jpg',
+    'Comprendre une fraction comme part d’un tout':'math-fractions-part-tout.jpg',
+    'Calculer mentalement une addition':'math-calcul-mental-addition.jpg',
+    'Comprendre la soustraction':'math-comprendre-soustraction.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
