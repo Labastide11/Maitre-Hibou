@@ -124,13 +124,18 @@
     if(/tableau|données/.test(s))return ['📊','3  ·  5  ·  7','#e1f4ff'];
     return ['🦉','Je découvre !','#e6f1ff'];
   }
-  // Couvertures BD de la première série : chemins relatifs au catalogue iframe.
+  // Couvertures BD des séries de grammaire : chemins relatifs au catalogue iframe.
   var lessonCoverFiles = {
     'La phrase et la ponctuation':'grammaire-phrase-ponctuation.jpg',
     'Les types de phrases':'grammaire-types-phrases.jpg',
     'La phrase interrogative':'grammaire-phrase-interrogative.jpg',
     'Les formes de phrases':'grammaire-formes-phrases.jpg',
-    'Les classes de mots':'grammaire-classes-mots.jpg'
+    'Les classes de mots':'grammaire-classes-mots.jpg',
+    'Le déterminant':'grammaire-determinant.png',
+    'Le groupe nominal':'grammaire-groupe-nominal.png',
+    'Le verbe':'grammaire-verbe.png',
+    'Le sujet du verbe':'grammaire-sujet-verbe.png',
+    'Les compléments du verbe':'grammaire-complements-verbe.png'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
@@ -145,15 +150,17 @@
       img.alt='Grammaire — '+title;
       img.loading='eager';
       img.decoding='async';
-      img.addEventListener('load',function(){
+      function activateCover(){
         d.classList.add('hibou-thumb-has-cover');
         var card=d.closest('.lesson-card,.card');
         if(card)card.classList.add('hibou-card-has-cover');
-      });
+      }
+      img.addEventListener('load',activateCover);
       img.addEventListener('error',function(){img.remove();});
       // doc est /bibliotheque_lecons/index.html : remonter à la racine.
       img.src='../images-lecons/francais/'+coverFile;
       d.appendChild(img);
+      if(img.complete && img.naturalWidth) activateCover();
     }
     return d;
   }
@@ -187,7 +194,7 @@
           /* Couverture complète quand son image est effectivement chargée. */
           .hibou-thumb-has-cover{height:auto!important;aspect-ratio:4/3!important;display:block!important;margin:0!important;border:0!important;background:transparent!important;}
           .hibou-thumb-has-cover .hibou-thumb-symbol,.hibou-thumb-has-cover .hibou-thumb-sample{display:none!important;}
-          .hibou-lesson-cover{display:block!important;width:100%;height:100%;object-fit:cover;}
+          .hibou-lesson-cover{display:none;width:100%;height:100%;object-fit:cover;}
           .hibou-thumb-has-cover .hibou-lesson-cover{display:block!important;}
           .lesson-card.hibou-card-has-cover,.grid .card.hibou-card-has-cover{padding:0!important;overflow:hidden!important;}
           .lesson-card.hibou-card-has-cover h2,.lesson-card.hibou-card-has-cover .badge,.grid .card.hibou-card-has-cover h2,.grid .card.hibou-card-has-cover .tag{display:none!important;}
