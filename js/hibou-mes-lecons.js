@@ -140,7 +140,17 @@
     'L’adverbe':'grammaire-adverbe.jpg',
     'Les mots variables et invariables':'grammaire-mots-variables-invariables.jpg',
     'L’imparfait':'conjugaison-imparfait.jpg',
-    'L’imparfait de quelques verbes irréguliers':'conjugaison-imparfait-irreguliers.jpg'
+    'L’imparfait de quelques verbes irréguliers':'conjugaison-imparfait-irreguliers.jpg',
+    'Le passé composé':'conjugaison-passe-compose.jpg',
+    'Le passé composé : avoir et être':'conjugaison-passe-compose-avoir-etre.jpg',
+    'Le passé composé de quelques verbes irréguliers':'conjugaison-passe-compose-irreguliers.jpg',
+    'Le futur':'conjugaison-futur.jpg',
+    'Le futur de quelques verbes irréguliers':'conjugaison-futur-irreguliers.jpg',
+    'Le présent':'conjugaison-present.jpg',
+    'Le présent de quelques verbes irréguliers':'conjugaison-present-irreguliers.jpg',
+    'L’ordre alphabétique':'vocabulaire-ordre-alphabetique.jpg',
+    'Les synonymes':'vocabulaire-synonymes.jpg',
+    'Synonymes et antonymes':'vocabulaire-synonymes-antonymes.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
