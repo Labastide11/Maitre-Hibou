@@ -155,7 +155,12 @@
     'Le champ lexical':'vocabulaire-champ-lexical.jpg',
     'Le dictionnaire':'vocabulaire-dictionnaire.jpg',
     'Les termes génériques et spécifiques':'vocabulaire-termes-generiques-specifiques.jpg',
-    'Le sens propre et le sens figuré':'vocabulaire-sens-propre-figure.jpg'
+    'Le sens propre et le sens figuré':'vocabulaire-sens-propre-figure.jpg',
+    'Les niveaux de langue':'vocabulaire-niveaux-langue.jpg',
+    'La lettre G':'orthographe-lettre-g.jpg',
+    'La lettre C':'orthographe-lettre-c.jpg',
+    'La lettre S':'orthographe-lettre-s.jpg',
+    'Le pluriel des noms':'orthographe-pluriel-noms.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
