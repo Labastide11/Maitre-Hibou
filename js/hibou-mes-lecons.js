@@ -160,7 +160,12 @@
     'La lettre G':'orthographe-lettre-g.jpg',
     'La lettre C':'orthographe-lettre-c.jpg',
     'La lettre S':'orthographe-lettre-s.jpg',
-    'Le pluriel des noms':'orthographe-pluriel-noms.jpg'
+    'Le pluriel des noms':'orthographe-pluriel-noms.jpg',
+    'Le pluriel des adjectifs':'orthographe-pluriel-adjectifs.jpg',
+    'Le féminin des noms':'orthographe-feminin-noms.jpg',
+    'Le féminin des adjectifs':'orthographe-feminin-adjectifs.jpg',
+    'm devant m, b et p':'orthographe-m-devant-m-b-p.jpg',
+    'Je relis et j’améliore mon texte':'ecriture-relire-ameliorer-texte.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
