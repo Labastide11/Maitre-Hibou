@@ -150,7 +150,12 @@
     'Le présent de quelques verbes irréguliers':'conjugaison-present-irreguliers.jpg',
     'L’ordre alphabétique':'vocabulaire-ordre-alphabetique.jpg',
     'Les synonymes':'vocabulaire-synonymes.jpg',
-    'Synonymes et antonymes':'vocabulaire-synonymes-antonymes.jpg'
+    'Synonymes et antonymes':'vocabulaire-synonymes-antonymes.jpg',
+    'Familles de mots, préfixes et suffixes':'vocabulaire-familles-prefixes-suffixes.jpg',
+    'Le champ lexical':'vocabulaire-champ-lexical.jpg',
+    'Le dictionnaire':'vocabulaire-dictionnaire.jpg',
+    'Les termes génériques et spécifiques':'vocabulaire-termes-generiques-specifiques.jpg',
+    'Le sens propre et le sens figuré':'vocabulaire-sens-propre-figure.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
