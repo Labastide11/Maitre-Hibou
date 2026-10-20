@@ -177,7 +177,8 @@
     'Placer des nombres sur une ligne graduée':'math-ligne-graduee.jpg',
     'Comprendre une fraction comme part d’un tout':'math-fractions-part-tout.jpg',
     'Calculer mentalement une addition':'math-calcul-mental-addition.jpg',
-    'Comprendre la soustraction':'math-comprendre-soustraction.jpg'
+    'Comprendre la soustraction':'math-comprendre-soustraction.jpg',
+    'Placer des fractions sur une bande graduée':'math-fractions-bande-graduee.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
