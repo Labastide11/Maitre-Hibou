@@ -135,7 +135,12 @@
     'Le groupe nominal':'grammaire-groupe-nominal.png',
     'Le verbe':'grammaire-verbe.png',
     'Le sujet du verbe':'grammaire-sujet-verbe.png',
-    'Les compléments du verbe':'grammaire-complements-verbe.png'
+    'Les compléments du verbe':'grammaire-complements-verbe.png',
+    'Les groupes dans la phrase':'grammaire-groupes-phrase.jpg',
+    'L’adverbe':'grammaire-adverbe.jpg',
+    'Les mots variables et invariables':'grammaire-mots-variables-invariables.jpg',
+    'L’imparfait':'conjugaison-imparfait.jpg',
+    'L’imparfait de quelques verbes irréguliers':'conjugaison-imparfait-irreguliers.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
@@ -143,11 +148,11 @@
     var symbol=doc.createElement('span');symbol.className='hibou-thumb-symbol';symbol.textContent=a[0];
     var sample=doc.createElement('span');sample.className='hibou-thumb-sample';sample.textContent=a[1];
     d.appendChild(symbol);d.appendChild(sample);
-    var coverFile = domain === 'Grammaire' ? lessonCoverFiles[title] : null;
+    var coverFile = lessonCoverFiles[title] || null;
     if(coverFile){
       var img=doc.createElement('img');
       img.className='hibou-lesson-cover';
-      img.alt='Grammaire — '+title;
+      img.alt=domain+' — '+title;
       img.loading='eager';
       img.decoding='async';
       function activateCover(){
