@@ -124,12 +124,38 @@
     if(/tableau|données/.test(s))return ['📊','3  ·  5  ·  7','#e1f4ff'];
     return ['🦉','Je découvre !','#e6f1ff'];
   }
+  // Couvertures BD de la première série : chemins relatifs au catalogue iframe.
+  var lessonCoverFiles = {
+    'La phrase et la ponctuation':'grammaire-phrase-ponctuation.jpg',
+    'Les types de phrases':'grammaire-types-phrases.jpg',
+    'La phrase interrogative':'grammaire-phrase-interrogative.jpg',
+    'Les formes de phrases':'grammaire-formes-phrases.jpg',
+    'Les classes de mots':'grammaire-classes-mots.jpg'
+  };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
     d.className='hibou-lesson-thumb';d.style.setProperty('--thumb-bg',a[2]);
     var symbol=doc.createElement('span');symbol.className='hibou-thumb-symbol';symbol.textContent=a[0];
     var sample=doc.createElement('span');sample.className='hibou-thumb-sample';sample.textContent=a[1];
-    d.appendChild(symbol);d.appendChild(sample);return d;
+    d.appendChild(symbol);d.appendChild(sample);
+    var coverFile = domain === 'Grammaire' ? lessonCoverFiles[title] : null;
+    if(coverFile){
+      var img=doc.createElement('img');
+      img.className='hibou-lesson-cover';
+      img.alt='Grammaire — '+title;
+      img.loading='lazy';
+      img.decoding='async';
+      img.addEventListener('load',function(){
+        d.classList.add('hibou-thumb-has-cover');
+        var card=d.closest('.lesson-card,.card');
+        if(card)card.classList.add('hibou-card-has-cover');
+      });
+      img.addEventListener('error',function(){img.remove();});
+      // doc est /bibliotheque_lecons/index.html : remonter à la racine.
+      img.src='../images-lecons/francais/'+coverFile;
+      d.appendChild(img);
+    }
+    return d;
   }
   function injectLibraryCards(){
     var frame=byId('hibouLessonsFrame');if(!frame)return;
@@ -158,6 +184,13 @@
           .hibou-thumb-symbol{font-size:58px!important;line-height:1!important;filter:drop-shadow(0 3px 2px #0001)!important;}
           .hibou-thumb-sample{font-size:15px!important;line-height:1.35!important;font-weight:850!important;text-align:center!important;color:#164376!important;background:#fffd!important;border-radius:10px!important;padding:8px!important;max-width:52%!important;}
           .open-link,.grid .card .open{display:none!important;} .lesson-card,.grid .card{cursor:pointer!important;transition:transform .16s,box-shadow .16s!important;} .lesson-card:hover,.grid .card:hover{transform:translateY(-2px)!important;box-shadow:0 8px 22px #172e4528!important;} .lesson-card:focus-visible,.grid .card:focus-visible{outline:3px solid #0bb9b9!important;outline-offset:2px!important;}
+          /* Couverture complète quand son image est effectivement chargée. */
+          .hibou-thumb-has-cover{height:auto!important;aspect-ratio:4/3!important;display:block!important;margin:0!important;border:0!important;background:transparent!important;}
+          .hibou-thumb-has-cover .hibou-thumb-symbol,.hibou-thumb-has-cover .hibou-thumb-sample{display:none!important;}
+          .hibou-lesson-cover{display:none;width:100%;height:100%;object-fit:cover;}
+          .hibou-thumb-has-cover .hibou-lesson-cover{display:block!important;}
+          .lesson-card.hibou-card-has-cover,.grid .card.hibou-card-has-cover{padding:0!important;overflow:hidden!important;}
+          .lesson-card.hibou-card-has-cover h2,.lesson-card.hibou-card-has-cover .badge,.grid .card.hibou-card-has-cover h2,.grid .card.hibou-card-has-cover .tag{display:none!important;}
           @media(max-width:580px){.lesson-grid,.grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}.hibou-lesson-thumb{height:94px!important}.hibou-thumb-symbol{font-size:38px!important}.hibou-thumb-sample{font-size:11px!important}.lesson-card h2,.grid .card h2{font-size:14px!important}}
         `;
         doc.head.appendChild(style);
