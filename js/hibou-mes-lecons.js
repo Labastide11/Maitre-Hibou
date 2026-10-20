@@ -167,13 +167,21 @@
     'm devant m, b et p':'orthographe-m-devant-m-b-p.jpg',
     'Je relis et j’améliore mon texte':'ecriture-relire-ameliorer-texte.jpg'
   };
+  // Couvertures de mathématiques : titres exacts du catalogue mathématique.
+  var mathCoverFiles = {
+    'Comprendre la valeur des chiffres':'math-valeur-position.jpg',
+    'Comparer, ranger et encadrer les nombres':'math-comparer-ranger.jpg',
+    'Poser et effectuer une addition':'math-addition-posee.jpg',
+    'Poser et effectuer une soustraction':'math-soustraction-posee.jpg'
+  };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
     d.className='hibou-lesson-thumb';d.style.setProperty('--thumb-bg',a[2]);
     var symbol=doc.createElement('span');symbol.className='hibou-thumb-symbol';symbol.textContent=a[0];
     var sample=doc.createElement('span');sample.className='hibou-thumb-sample';sample.textContent=a[1];
     d.appendChild(symbol);d.appendChild(sample);
-    var coverFile = lessonCoverFiles[title] || null;
+    var isMathCatalog=/\/bibliotheque_math\//.test(doc.location.pathname);
+    var coverFile = isMathCatalog ? mathCoverFiles[title] : lessonCoverFiles[title];
     if(coverFile){
       var img=doc.createElement('img');
       img.className='hibou-lesson-cover';
@@ -188,7 +196,7 @@
       img.addEventListener('load',activateCover);
       img.addEventListener('error',function(){img.remove();});
       // doc est /bibliotheque_lecons/index.html : remonter à la racine.
-      img.src='../images-lecons/francais/'+coverFile;
+      img.src='../images-lecons/'+(isMathCatalog ? 'maths/' : 'francais/')+coverFile;
       d.appendChild(img);
       if(img.complete && img.naturalWidth) activateCover();
     }
