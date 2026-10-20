@@ -1,0 +1,54 @@
+/* Maître Hibou — série 1 : cinq couvertures BD de grammaire.
+   À ajouter À LA FIN de bibliotheque_lecons/css/hibou-lecons.css.
+   Images dans images-lecons/francais/.
+   Fonctionne avec les cartes originales et leur affichage dans Maître Hibou. */
+:is(.lesson-grid,.grid) :is(.lesson-card,.card):is(
+  [data-search="phrase ponctuation majuscule point question"],
+  [data-search="type phrase ordre question déclaration"],
+  [data-search="question interrogation interrogative"],
+  [data-search="affirmative négative exclamative forme"],
+  [data-search="nom verbe déterminant adjectif"]
+) {
+  position: relative !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  aspect-ratio: 4 / 3 !important;
+  overflow: hidden !important;
+  border-radius: 18px !important;
+  background-color: #eaf3ff !important;
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+:is(.lesson-grid,.grid) :is(.lesson-card,.card):is(
+  [data-search="phrase ponctuation majuscule point question"],
+  [data-search="type phrase ordre question déclaration"],
+  [data-search="question interrogation interrogative"],
+  [data-search="affirmative négative exclamative forme"],
+  [data-search="nom verbe déterminant adjectif"]
+) > :is(h2,p,.badge,.tag,.hibou-lesson-thumb) {display:none !important;}
+/* Le véritable lien occupe la surface de la couverture. */
+:is(.lesson-grid,.grid) :is(.lesson-card,.card):is(
+  [data-search="phrase ponctuation majuscule point question"],
+  [data-search="type phrase ordre question déclaration"],
+  [data-search="question interrogation interrogative"],
+  [data-search="affirmative négative exclamative forme"],
+  [data-search="nom verbe déterminant adjectif"]
+) > a[href] {
+  display:block !important;
+  opacity:0 !important;
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  z-index:5 !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+}
+.lesson-grid .lesson-card[data-search="phrase ponctuation majuscule point question"] {background-image:url('../../images-lecons/francais/grammaire-phrase-ponctuation.jpg') !important;}
+.lesson-grid .lesson-card[data-search="type phrase ordre question déclaration"] {background-image:url('../../images-lecons/francais/grammaire-types-phrases.jpg') !important;}
+.lesson-grid .lesson-card[data-search="question interrogation interrogative"] {background-image:url('../../images-lecons/francais/grammaire-phrase-interrogative.jpg') !important;}
+.lesson-grid .lesson-card[data-search="affirmative négative exclamative forme"] {background-image:url('../../images-lecons/francais/grammaire-formes-phrases.jpg') !important;}
+.lesson-grid .lesson-card[data-search="nom verbe déterminant adjectif"] {background-image:url('../../images-lecons/francais/grammaire-classes-mots.jpg') !important;}
