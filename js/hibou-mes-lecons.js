@@ -143,7 +143,7 @@
       var img=doc.createElement('img');
       img.className='hibou-lesson-cover';
       img.alt='Grammaire — '+title;
-      img.loading='lazy';
+      img.loading='eager';
       img.decoding='async';
       img.addEventListener('load',function(){
         d.classList.add('hibou-thumb-has-cover');
@@ -187,7 +187,7 @@
           /* Couverture complète quand son image est effectivement chargée. */
           .hibou-thumb-has-cover{height:auto!important;aspect-ratio:4/3!important;display:block!important;margin:0!important;border:0!important;background:transparent!important;}
           .hibou-thumb-has-cover .hibou-thumb-symbol,.hibou-thumb-has-cover .hibou-thumb-sample{display:none!important;}
-          .hibou-lesson-cover{display:none;width:100%;height:100%;object-fit:cover;}
+          .hibou-lesson-cover{display:block!important;width:100%;height:100%;object-fit:cover;}
           .hibou-thumb-has-cover .hibou-lesson-cover{display:block!important;}
           .lesson-card.hibou-card-has-cover,.grid .card.hibou-card-has-cover{padding:0!important;overflow:hidden!important;}
           .lesson-card.hibou-card-has-cover h2,.lesson-card.hibou-card-has-cover .badge,.grid .card.hibou-card-has-cover h2,.grid .card.hibou-card-has-cover .tag{display:none!important;}
