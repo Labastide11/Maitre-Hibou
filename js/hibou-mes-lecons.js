@@ -95,7 +95,6 @@
     mini:['Mini-leçon du jour','Une nouvelle découverte avec Maître Hibou.']
   };
   var singlePages = {
-    sciences:{title:'L’eau : ses états et ses changements',emoji:'💧',hint:'Glace · Eau liquide · Vapeur',tone:'#d9f1ff'},
     geographie:{title:'La ville et ses quartiers',emoji:'🗺️',hint:'Observer et comprendre la ville',tone:'#e5f6df'},
     histoire:{title:'Habiter autrefois et aujourd’hui',emoji:'🏠',hint:'Comparer les habitations',tone:'#fff0db'},
     recit:{title:'Raconter une histoire dans l’ordre',emoji:'📖',hint:'Début · Événements · Fin',tone:'#eee5ff'},
@@ -386,7 +385,7 @@
     var pages = {
       francais: ['bibliotheque_lecons/index.html', 'Bibliothèque des leçons de français'],
       maths: ['bibliotheque_math/index.html', 'Bibliothèque des leçons de mathématiques'],
-      sciences: ['bibliotheque_sciences/index.html', "Leçon de sciences : les états de l’eau"],
+      sciences: ['bibliotheque_sciences/index.html', 'Bibliothèque des leçons de sciences'],
       geographie: ['bibliotheque_geographie/index.html', 'Leçon de géographie : la ville et ses quartiers'],
       histoire: ['bibliotheque_histoire/index.html', 'Leçon d’histoire : habiter autrefois et aujourd’hui'],
       recit: ['bibliotheque_recit/index.html', 'Leçon de français : raconter dans l’ordre'],
