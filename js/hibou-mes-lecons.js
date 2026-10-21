@@ -165,7 +165,11 @@
     'Le féminin des noms':'orthographe-feminin-noms.jpg',
     'Le féminin des adjectifs':'orthographe-feminin-adjectifs.jpg',
     'm devant m, b et p':'orthographe-m-devant-m-b-p.jpg',
-    'Je relis et j’améliore mon texte':'ecriture-relire-ameliorer-texte.jpg'
+    'Je relis et j’améliore mon texte':'ecriture-relire-ameliorer-texte.jpg',
+    'a / à':'orthographe-a-a-ce2-paysage.jpg',
+    'et / est':'orthographe-et-est-ce2-paysage.jpg',
+    'L’accord sujet-verbe':'orthographe-accord-sujet-verbe-ce2-paysage.jpg',
+    "L'accord sujet-verbe":'orthographe-accord-sujet-verbe-ce2-paysage.jpg'
   };
   // Couvertures de mathématiques : titres exacts du catalogue mathématique.
   var mathCoverFiles = {
