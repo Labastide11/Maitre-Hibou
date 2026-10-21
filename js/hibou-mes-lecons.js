@@ -371,15 +371,18 @@
     var data = readMiniLessonData();
     panel.innerHTML =
       '<div class="hibou-mini-card">' +
-        '<div class="hibou-mini-top">' +
-          '<div class="hibou-mini-icon" aria-hidden="true">💡</div>' +
-          '<div><p class="hibou-mini-kicker">Le savais-tu ?</p><h3>Mini-leçon du jour</h3></div>' +
+        '<div class="hibou-mini-banner">' +
+          '<div class="hibou-mini-mascot" aria-hidden="true">🦉</div>' +
+          '<div class="hibou-mini-heading"><p class="hibou-mini-kicker">LE SAVAIS-TU ?</p><h3>Mini-leçon du jour</h3><p class="hibou-mini-heading-caption">Une idée à découvrir, un petit défi à réussir !</p></div>' +
+          '<span class="hibou-mini-sparkles" aria-hidden="true">✦ ✧</span>' +
         '</div>' +
-        '<p class="hibou-mini-question">' + esc(data.question) + '</p>' +
-        '<p class="hibou-mini-retains"><strong>Je retiens :</strong> ' + esc(data.lesson || '—') + '</p>' +
-        (data.challenge ? '<p class="hibou-mini-defi"><strong>Petit défi :</strong> ' + esc(data.challenge) + '</p>' : '') +
-        '<details class="hibou-mini-details"><summary>Voir la correction</summary><div>' + esc(data.correction || 'Correction à venir.') + '</div></details>' +
-        '<div class="hibou-mini-actions"><button type="button" class="hibou-mini-refresh" id="hibouMiniRefresh">Une autre mini-leçon</button></div>' +
+        '<div class="hibou-mini-body">' +
+          '<p class="hibou-mini-question">' + esc(data.question) + '</p>' +
+          '<section class="hibou-mini-retains" aria-label="Je retiens"><div class="hibou-mini-block-title"><span aria-hidden="true">📗</span> Je retiens</div><p>' + esc(data.lesson || '—') + '</p></section>' +
+          (data.challenge ? '<section class="hibou-mini-defi" aria-label="Petit défi"><div class="hibou-mini-block-title"><span aria-hidden="true">✏️</span> À toi de jouer !</div><p>' + esc(data.challenge) + '</p></section>' : '') +
+          '<details class="hibou-mini-details"><summary><span aria-hidden="true">🔎</span> Voir la correction <span class="hibou-mini-disclosure" aria-hidden="true">⌄</span></summary><div>' + esc(data.correction || 'Correction à venir.') + '</div></details>' +
+          '<div class="hibou-mini-actions"><button type="button" class="hibou-mini-refresh" id="hibouMiniRefresh">↻ Une autre mini-leçon</button></div>' +
+        '</div>' +
       '</div>';
 
     var refresh = byId('hibouMiniRefresh');

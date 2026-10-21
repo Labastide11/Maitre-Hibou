@@ -535,3 +535,86 @@ body.hibou-lessons-ready .v24-advice-btn{
     width: 32px !important;
   }
 }
+
+
+/* Mini-leçon CE2 : nouvelle présentation ; toutes les règles sont limitées au panneau. */
+#hibouLessonsMiniPanel.hibou-mini-panel{
+  background:linear-gradient(155deg,#f0f8fe 0%,#f7fbf6 50%,#fff9eb 100%);
+  padding:clamp(12px,2.2vw,28px);
+  overflow-y:auto;
+}
+#hibouLessonsMiniPanel .hibou-mini-card{
+  max-width:940px;padding:0;margin:0 auto;overflow:hidden;
+  border:2px solid #c9e3f4;border-radius:26px;background:#fff;
+  box-shadow:0 16px 38px rgba(20,54,104,.13);
+  font-family:'Trebuchet MS',system-ui,sans-serif;
+}
+#hibouLessonsMiniPanel .hibou-mini-banner{
+  display:flex;align-items:center;gap:18px;position:relative;
+  background:linear-gradient(108deg,#e5f5ff 0%,#f1f9ed 62%,#fff4cf 100%);
+  border-bottom:2px dashed #b7dbed;padding:17px 24px;
+}
+#hibouLessonsMiniPanel .hibou-mini-mascot{
+  flex:0 0 auto;display:grid;place-items:center;width:86px;height:86px;
+  border-radius:24px;background:#fff;border:2px solid #f4d68c;
+  box-shadow:0 5px 0 #efdbae;font-size:53px;
+}
+#hibouLessonsMiniPanel .hibou-mini-heading{min-width:0;flex:1}
+#hibouLessonsMiniPanel .hibou-mini-kicker{margin:0 0 4px;color:#977018;font-size:13px;font-weight:900;letter-spacing:.09em}
+#hibouLessonsMiniPanel .hibou-mini-heading h3{margin:0;color:#123c78;font-size:clamp(25px,3vw,35px);line-height:1.12}
+#hibouLessonsMiniPanel .hibou-mini-heading-caption{font-size:14px;color:#45647e;margin:6px 0 0;font-weight:700}
+#hibouLessonsMiniPanel .hibou-mini-sparkles{color:#dfad36;font-size:25px;align-self:flex-start}
+#hibouLessonsMiniPanel .hibou-mini-body{padding:22px 26px 23px}
+#hibouLessonsMiniPanel .hibou-mini-question{
+  font-size:clamp(22px,2.4vw,29px);font-weight:900;line-height:1.25;
+  color:#153d70;margin:0 0 18px;
+}
+#hibouLessonsMiniPanel .hibou-mini-retains,
+#hibouLessonsMiniPanel .hibou-mini-defi{
+  margin:0 0 14px;padding:14px 19px 16px;
+  border-radius:17px;font-size:18px;line-height:1.4;font-weight:700;
+}
+#hibouLessonsMiniPanel .hibou-mini-retains{background:#eaf8ed;border:2px solid #a5dcbc;color:#18583c}
+#hibouLessonsMiniPanel .hibou-mini-defi{background:#f2edfe;border:2px solid #d0c0fb;color:#513d83}
+#hibouLessonsMiniPanel .hibou-mini-block-title{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:900;margin-bottom:7px}
+#hibouLessonsMiniPanel .hibou-mini-retains p,
+#hibouLessonsMiniPanel .hibou-mini-defi p{font:inherit;margin:0;line-height:1.38}
+#hibouLessonsMiniPanel .hibou-mini-details{
+  margin-top:3px;padding:0;border-radius:15px;overflow:hidden;
+  border:2px solid #f5d67d;background:#fffaf0;
+}
+#hibouLessonsMiniPanel .hibou-mini-details summary{
+  display:flex;align-items:center;gap:9px;list-style:none;
+  padding:12px 16px;min-height:50px;color:#765600;
+  font-weight:900;font-size:16px;cursor:pointer;
+}
+#hibouLessonsMiniPanel .hibou-mini-details summary::-webkit-details-marker{display:none}
+#hibouLessonsMiniPanel .hibou-mini-disclosure{margin-left:auto;font-size:24px;transition:transform .15s}
+#hibouLessonsMiniPanel .hibou-mini-details[open] .hibou-mini-disclosure{transform:rotate(180deg)}
+#hibouLessonsMiniPanel .hibou-mini-details div{margin:0;padding:12px 16px 16px;border-top:1px solid #f7dfa3;font-size:17px;line-height:1.4;color:#624a0e;font-weight:800}
+#hibouLessonsMiniPanel .hibou-mini-actions{margin-top:16px;display:flex;justify-content:flex-end}
+#hibouLessonsMiniPanel .hibou-mini-refresh{
+  background:#6355d9;color:#fff;border:0;border-radius:999px;
+  padding:12px 22px;min-height:48px;font-size:16px;font-weight:900;
+  box-shadow:0 6px 14px #6355d933;cursor:pointer;
+}
+#hibouLessonsMiniPanel .hibou-mini-refresh:hover{background:#4c3fbd}
+#hibouLessonsMiniPanel .hibou-mini-refresh:focus-visible,
+#hibouLessonsMiniPanel .hibou-mini-details summary:focus-visible{outline:3px solid #efaa33;outline-offset:3px}
+@media(max-width:700px){
+  #hibouLessonsMiniPanel .hibou-mini-banner{padding:14px;gap:12px}
+  #hibouLessonsMiniPanel .hibou-mini-mascot{width:60px;height:60px;font-size:36px;border-radius:16px}
+  #hibouLessonsMiniPanel .hibou-mini-sparkles{display:none}
+  #hibouLessonsMiniPanel .hibou-mini-heading-caption{font-size:12px}
+  #hibouLessonsMiniPanel .hibou-mini-body{padding:16px}
+  #hibouLessonsMiniPanel .hibou-mini-retains,#hibouLessonsMiniPanel .hibou-mini-defi{padding:12px;font-size:16px}
+  #hibouLessonsMiniPanel .hibou-mini-actions{justify-content:stretch}
+  #hibouLessonsMiniPanel .hibou-mini-refresh{width:100%}
+}
+@media(orientation:landscape) and (max-height:650px){
+  #hibouLessonsMiniPanel .hibou-mini-banner{padding:10px 18px}
+  #hibouLessonsMiniPanel .hibou-mini-mascot{width:62px;height:62px;font-size:38px}
+  #hibouLessonsMiniPanel .hibou-mini-body{padding:13px 20px}
+  #hibouLessonsMiniPanel .hibou-mini-question{margin-bottom:12px}
+  #hibouLessonsMiniPanel .hibou-mini-retains,#hibouLessonsMiniPanel .hibou-mini-defi{padding:9px 13px;margin-bottom:10px}
+}
