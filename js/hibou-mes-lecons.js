@@ -182,6 +182,7 @@
     'Comprendre une fraction comme part d’un tout':'math-fractions-part-tout.jpg',
     'Calculer mentalement une addition':'math-calcul-mental-addition.jpg',
     'Comprendre la soustraction':'math-comprendre-soustraction.jpg',
+    'Calculer mentalement une soustraction':'math-calcul-mental-soustraction.jpg',
     'Placer des fractions sur une bande graduée':'math-fractions-bande-graduee.jpg',
     'Reconnaître des fractions égales':'math-fractions-egales.jpg',
     'Comparer des fractions inférieures ou égales à 1':'math-comparer-fractions.jpg',
