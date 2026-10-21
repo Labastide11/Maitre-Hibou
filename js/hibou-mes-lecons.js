@@ -9,6 +9,59 @@
   function textOf(node){ return node ? String(node.textContent || '').replace(/\s+/g,' ').trim() : ''; }
   function esc(v){ return String(v == null ? '' : v).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
+  // Navigation de Mes leçons : uniquement pendant cet onglet navigateur.
+  var LESSON_STATE_KEY='hibouMesLeconsNavigationV1';
+  var currentLessonSubject='francais';
+  var restoringLessonState=false;
+  var lessonStateRestored=false;
+  function readLessonState(){
+    try{
+      var value=JSON.parse(sessionStorage.getItem(LESSON_STATE_KEY)||'null');
+      return value&&typeof value==='object'?value:null;
+    }catch(e){return null;}
+  }
+  function writeLessonState(patch){
+    if(restoringLessonState)return;
+    try{
+      var value=readLessonState()||{open:false,subject:'francais',url:'',showLesson:false};
+      Object.keys(patch).forEach(function(key){value[key]=patch[key];});
+      sessionStorage.setItem(LESSON_STATE_KEY,JSON.stringify(value));
+    }catch(e){}
+  }
+  function captureFrameNavigation(){
+    var overlay=byId('hibouLessonsOverlay');
+    var frame=byId('hibouLessonsFrame');
+    if(!overlay||!overlay.classList.contains('open')||!frame||frame.style.display==='none')return;
+    try{
+      var url=frame.contentWindow.location.href;
+      var parsed=new URL(url,location.href);
+      // N'enregistrer que les pages appartenant à ce même site.
+      if(parsed.origin!==location.origin)return;
+      writeLessonState({subject:currentLessonSubject,url:parsed.href,showLesson:true});
+    }catch(e){}
+  }
+  function restoreLessonNavigation(){
+    if(lessonStateRestored)return;
+    lessonStateRestored=true;
+    var saved=readLessonState();
+    if(!saved||!saved.open||!subjects[saved.subject])return;
+    restoringLessonState=true;
+    openLessons(saved.subject);
+    var frame=byId('hibouLessonsFrame');
+    if(frame&&saved.showLesson&&saved.url&&saved.subject!=='mini'){
+      try{
+        var target=new URL(saved.url,location.href);
+        if(target.origin===location.origin&&/\/bibliotheque_/.test(target.pathname)){
+          frame.style.display='block';
+          frame.setAttribute('src',target.href);
+          var catalog=byId('hibouSubjectCatalog');
+          if(catalog)catalog.hidden=true;
+        }
+      }catch(e){}
+    }
+    restoringLessonState=false;
+  }
+
   function setVersion(){
     // Le titre de l'onglet du site est conservé, pas modifié par Mes leçons.
   }
@@ -44,6 +97,7 @@
     var frame = byId('hibouLessonsFrame');
     if(frame) frame.addEventListener('load', function(){
       injectLibraryCards();
+      captureFrameNavigation();
       // Les pages de leçons maths sont affichées dans cette même iframe.
       // Une image garde ses proportions et occupe presque toute la largeur.
       try {
@@ -331,6 +385,7 @@
       catalog.hidden=true;
       var frame=byId('hibouLessonsFrame');
       if(frame){frame.style.display='block';frame.setAttribute('src',SINGLE_URLS[subject]);}
+      writeLessonState({subject:subject,showLesson:true,url:new URL(SINGLE_URLS[subject],location.href).href});
       var back=byId('hibouLessonsBack');if(back)back.hidden=false;
     });
   }
@@ -340,7 +395,7 @@
     if(catalog&&!catalog.hidden){return false;}
     var subject=document.querySelector('.hibou-lessons-tab.active');
     var key=subject&&({hibouLessonsSciences:'sciences',hibouLessonsGeographie:'geographie',hibouLessonsHistoire:'histoire',hibouLessonsRecit:'recit',hibouLessonsLexique:'lexique'})[subject.id];
-    if(key){if(frame)frame.style.display='none';showSubjectCatalog(key);return true;}
+    if(key){if(frame)frame.style.display='none';showSubjectCatalog(key);writeLessonState({showLesson:false,url:''});return true;}
     return false;
   }
 
@@ -397,6 +452,8 @@
   }
 
   function selectSubject(subject){
+    currentLessonSubject=subject;
+    writeLessonState({subject:subject,showLesson:false,url:''});
     var french = byId('hibouLessonsFrench');
     var maths = byId('hibouLessonsMaths');
     var sciences = byId('hibouLessonsSciences');
@@ -450,6 +507,7 @@
     var overlay = byId('hibouLessonsOverlay');
     if(overlay){
       overlay.classList.add('open');
+      writeLessonState({open:true,subject:subject||'francais'});
       overlay.setAttribute('aria-hidden','false');
       document.body.style.overflow = 'hidden';
       setTimeout(function(){ var c=byId('hibouLessonsClose'); if(c) c.focus(); },30);
@@ -457,6 +515,7 @@
   }
 
   function closeLessons(){
+    writeLessonState({open:false});
     var overlay = byId('hibouLessonsOverlay');
     if(overlay){
       overlay.classList.remove('open');
@@ -496,11 +555,13 @@
     setVersion();
     createPopup();
     installButton();
+    restoreLessonNavigation();
   }
 
   window.openHibouLessons = function(){ openLessons('francais'); };
   window.openHibouMiniLesson = function(){ openLessons('mini'); };
   window.closeHibouLessons = closeLessons;
+  window.addEventListener('pagehide',captureFrameNavigation);
 
   document.addEventListener('keydown', function(ev){
     if(ev.key === 'Escape' && byId('hibouLessonsOverlay') && byId('hibouLessonsOverlay').classList.contains('open')) closeLessons();
