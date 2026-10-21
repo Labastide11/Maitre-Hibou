@@ -95,6 +95,7 @@
     mini:['Mini-leçon du jour','Une nouvelle découverte avec Maître Hibou.']
   };
   var singlePages = {
+    sciences:{title:'L’eau : ses états et ses changements',emoji:'💧',hint:'Glace · Eau liquide · Vapeur',tone:'#d9f1ff'},
     geographie:{title:'La ville et ses quartiers',emoji:'🗺️',hint:'Observer et comprendre la ville',tone:'#e5f6df'},
     histoire:{title:'Habiter autrefois et aujourd’hui',emoji:'🏠',hint:'Comparer les habitations',tone:'#fff0db'},
     recit:{title:'Raconter une histoire dans l’ordre',emoji:'📖',hint:'Début · Événements · Fin',tone:'#eee5ff'},
@@ -199,7 +200,27 @@
     'Résoudre un problème de groupes égaux':'math-probleme-groupes-egaux.jpg',
     'Reconnaître des points alignés':'math-points-alignes-ce2.jpg',
     'Distinguer droite, segment et milieu':'math-droite-segment-milieu-ce2.jpg',
-    'Se repérer et reproduire sur un quadrillage':'math-quadrillage-ce2.jpg'
+    'Se repérer et reproduire sur un quadrillage':'math-quadrillage-ce2.jpg',
+    'Comprendre la division':'maitre-hibou-comprendre-division.png',
+    'Résoudre un problème de partage ou de groupement':'math-probleme-partage-groupement-ce2.jpg',
+    'Résoudre un problème en plusieurs étapes':'math-probleme-plusieurs-etapes-ce2.jpg',
+    'Reconnaître et tracer un angle droit':'math-angle-droit-ce2.jpg',
+    'Reconnaître un polygone':'math-polygone-ce2.jpg',
+    'Reconnaître carré, rectangle et losange':'math-carre-rectangle-losange-ce2.jpg',
+    'Reconnaître les triangles':'math-triangles-ce2.jpg',
+    'Tracer et décrire un cercle':'math-cercle-ce2.jpg',
+    'Reconnaître et décrire des solides':'math-solides-ce2.jpg',
+    'Reconnaître et compléter une symétrie':'math-symetrie-ce2.jpg',
+    'Mesurer et convertir des longueurs':'math-longueurs-conversions-ce2.jpg',
+    'Déterminer le périmètre d’un polygone':'math-perimetre-polygone-ce2.jpg',
+    'Mesurer et comparer des masses':'math-masses-comparaison-ce2.jpg',
+    'Mesurer des contenances':'math-contenances-ce2.jpg',
+    'Utiliser les euros et les centimes':'math-euros-centimes-ce2.jpg',
+    'Calculer avec des prix':'math-calculer-avec-prix-ce2.jpg',
+    'Lire l’heure':'math-lire-heure-ce2.jpg',
+    'Calculer une durée':'math-calculer-duree-ce2.jpg',
+    'Lire et compléter un tableau à double entrée':'math-tableau-double-entree-ce2.jpg',
+    'Lire et produire un diagramme en barres':'math-diagramme-barres-ce2.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
@@ -386,7 +407,7 @@
     var frame = byId('hibouLessonsFrame');
     var panel = byId('hibouLessonsMiniPanel');
     var isMini = subject === 'mini';
-    var isSingle=!!singlePages[subject];
+    var isSingle=subject !== 'sciences' && !!singlePages[subject];
     var catalog=byId('hibouSubjectCatalog');
     if(catalog)catalog.hidden=true;
     setLessonHeader(subject);
