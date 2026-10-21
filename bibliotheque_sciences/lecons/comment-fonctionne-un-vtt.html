@@ -1,0 +1,119 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Comment fonctionne un VTT ? — Maître Hibou CE2</title><style>
+:root{--navy:#143668;--blue:#1685c4;--green:#0d8c74}*{box-sizing:border-box}body{margin:0;background:#eef5fb;color:var(--navy);font-family:'Comic Sans MS','Trebuchet MS',system-ui,sans-serif}main{max-width:1450px;margin:auto;padding:12px}.sheet{border-radius:18px;border:3px solid #d4e4ee;background-color:#fffdf6;background-image:linear-gradient(#dcebf675 1px,transparent 1px),linear-gradient(90deg,#dcebf675 1px,transparent 1px);background-size:28px 28px;padding:clamp(12px,2vw,26px);box-shadow:0 6px 20px #163c6120}.top{display:flex;gap:15px;align-items:center}.owl{font-size:52px}.wood{font-size:16px;background:#f1cb82;border:2px solid #ad8043;border-radius:12px;padding:8px;font-weight:800}h1{flex:1;text-align:center;font-size:clamp(24px,4.5vw,55px);margin:7px 0;color:#113b8e}.subtitle{font-size:clamp(15px,2vw,21px);font-weight:800;text-align:center;background:#d8f6e4;border-radius:11px;padding:8px}.diagram{width:100%;display:block;max-height:590px}.line{stroke:#182c39;stroke-width:8;stroke-linejoin:round;stroke-linecap:round;fill:none}.frame{stroke:#1879c3;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;fill:none}.wheel{stroke:#253847;stroke-width:16;fill:none}.spoke{stroke:#a0b1c3;stroke-width:2}.chain{fill:none;stroke:#d08b1a;stroke-width:12;stroke-dasharray:9 9;stroke-linecap:round}.chainbg{fill:none;stroke:#485463;stroke-width:18;stroke-linecap:round}.rim{stroke:#668ca6;stroke-width:5;fill:#fafefe}.center{fill:#eea021;stroke:#1d4f7b;stroke-width:6}.call{font-weight:900;font-size:22px;fill:#183860;paint-order:stroke;stroke:#fff;stroke-width:5}.ar{stroke:#ff6b38;stroke-width:6;fill:none;stroke-linecap:round;stroke-linejoin:round}.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:10px 0}button{cursor:pointer;min-height:48px;border:0;padding:10px 17px;border-radius:12px;font-size:17px;font-weight:900;color:#103565;background:#e0eefa}button.primary{background:#128a77;color:white}button:focus-visible,input:focus-visible{outline:3px solid orange;outline-offset:2px}label{font-weight:900}input{width:180px;accent-color:#118b75}.steps{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:8px;margin-top:12px}.steps button{background:#e8f0fc;border:2px solid #d2dff1;text-align:center;font-size:15px;height:auto;min-height:65px}.steps button.active{background:#fef1b3;border-color:#efad32}.explain{font-size:19px;font-weight:800;background:#fff;border-left:7px solid #16a27a;padding:16px;border-radius:10px;margin-top:12px}.note{font-size:14px;color:#52677d;margin-top:10px}#rearRotate,#frontRotate,#crankRotate,#rearCogRotate{transform-box:fill-box;transform-origin:center;transform:rotate(0deg)}@media(max-width:700px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.diagram{min-height:260px}.owl{font-size:30px}.wood{font-size:12px}.call{font-size:26px}}
+
+
+/* Entrainement CE2 : indépendant de l'animation existante */
+.practice{margin-top:18px;background:#fff;border:3px solid #d5e4ef;border-radius:19px;padding:clamp(15px,2.5vw,28px);box-shadow:0 6px 20px #163c6115}
+.practice h2{margin:0;color:#133c80;font-size:clamp(25px,3vw,36px)}
+.practice .lead{color:#55718b;margin:7px 0 15px;font-size:16px}
+.progressline{height:12px;border-radius:20px;background:#e2eaf1;overflow:hidden;margin:14px 0}
+.progressline>div{width:0;height:100%;background:#18a68b;transition:width .2s}
+.practice-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-weight:800;font-size:15px}
+.level{border-radius:20px;background:#fff0c1;padding:6px 12px;color:#745512}
+.question-title{font-size:clamp(20px,2.5vw,27px);font-weight:900;margin:15px 0 7px}
+.instruction{font-size:17px;color:#526783;margin:0 0 14px}
+.activity{display:grid;gap:10px;margin-top:12px}
+.answer-btn,.word-btn,.order-btn{background:#edf5ff;border:2px solid #c9dff2;color:#123668;text-align:left;border-radius:13px;padding:13px 15px;min-height:52px;font-size:17px;font-weight:800}
+.answer-btn.selected,.word-btn.selected,.order-btn.selected{background:#d5f4e7;border-color:#168a77}
+.answer-btn:disabled,.word-btn:disabled,.order-btn:disabled{opacity:.85;cursor:default}
+.practice .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:17px}
+.practice .check{background:#128a77;color:white}.practice .next{background:#174f99;color:#fff}
+.practice .feedback{margin-top:13px;padding:13px;border-radius:11px;font-size:17px;font-weight:800;background:#eff6ff;color:#193e71}
+.practice .feedback.ok{background:#dbf6e7;color:#166843}.practice .feedback.try{background:#fff1d9;color:#815012}
+.practice .answer-input{width:100%;max-width:540px;min-height:52px;border:2px solid #b9d2ec;border-radius:12px;font:800 19px system-ui;padding:12px;color:#17385c}
+.order-picked{display:flex;flex-wrap:wrap;gap:8px;min-height:48px;align-items:center;background:#f3f8ff;border:1px dashed #a2bbda;border-radius:12px;padding:9px}
+.chip{display:inline-flex;background:#dceaff;color:#143668;padding:7px 10px;border-radius:10px;font-weight:750}
+.match-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.match-col{display:grid;gap:8px;align-content:start}
+.match-btn{border:2px solid #bdd6e8;background:#edf5ff;color:#15385f;font-size:16px;text-align:center;min-height:61px;padding:8px;white-space:normal}
+.match-btn.selected{border-color:#159581;background:#d5f6ea}.match-btn.paired{border-color:#8cb2a2;background:#e4f2ed;color:#43745d}
+.practice .hidden{display:none!important}
+@media(max-width:560px){.match-grid{gap:6px}.match-btn{font-size:14px;padding:6px}.practice .actions button{flex:1}.practice{padding:12px}.question-title{font-size:21px}}
+
+</style></head><body><main><section class="sheet"><div class="top"><div class="owl" aria-hidden="true">🦉</div><div class="wood">Sciences<br>CE2</div><h1>Comment fonctionne un VTT ?</h1></div><p class="subtitle">Je pédale → la chaîne entraîne les pignons → la roue arrière tourne !</p><svg class="diagram" viewBox="0 0 1100 620" role="img" aria-label="Animation d'un vélo vu de profil : les pédales tournent, la chaîne avance et entraîne la roue arrière.">
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#ff6b38" stroke-width="2"/></marker></defs>
+<path d="M80 520 H1030" stroke="#bfd6bc" stroke-width="8" stroke-linecap="round"/>
+<g id="rearRotate"><circle cx="262" cy="433" r="155" class="wheel"/><circle cx="262" cy="433" r="142" class="rim"/><g id="rearSpokes"></g></g>
+<g id="frontRotate"><circle cx="888" cy="433" r="155" class="wheel"/><circle cx="888" cy="433" r="142" class="rim"/><g id="frontSpokes"></g></g>
+<path d="M262 433 L417 248 L564 433 L262 433 L498 277" class="frame"/><path d="M417 248 L498 277 L564 433" class="frame"/><path d="M498 277 L262 433" class="frame"/><path d="M498 277 L848 260 L888 433" class="frame"/>
+<path d="M422 250 L409 203" class="line"/><path d="M366 199 H467" class="line" stroke-width="12"/>
+<path d="M848 262 L830 210 L777 210" class="line"/><path d="M827 210 H932" class="line" stroke-width="12"/>
+<path d="M410 312 C344 315 306 332 262 433" class="line" stroke-width="3"/>
+<path d="M564 433 L262 433" stroke="#0000"/>
+<path id="chainBg" d="M262 407 L563 392 A42 42 0 0 1 563 474 L262 448 A22 22 0 0 1 262 407 Z" class="chainbg"/>
+<path id="chain" d="M262 407 L563 392 A42 42 0 0 1 563 474 L262 448 A22 22 0 0 1 262 407 Z" class="chain"/>
+<g id="rearCogRotate"><circle cx="262" cy="433" r="24" fill="#efb042" stroke="#825a29" stroke-width="7"/><path d="M242 433 H282 M262 413 V453" stroke="#774c27" stroke-width="7"/></g>
+<g id="crankRotate"><circle cx="564" cy="433" r="44" fill="#e9aa36" stroke="#705628" stroke-width="7"/><circle cx="564" cy="433" r="12" fill="#214967"/><path d="M564 433 L617 471 M564 433 L511 395" stroke="#2f4858" stroke-width="13" stroke-linecap="round"/><rect x="604" y="459" width="57" height="20" rx="8" fill="#303c48"/><rect x="469" y="378" width="57" height="20" rx="8" fill="#303c48"/></g>
+<path d="M585 318 Q540 300 500 320" class="ar" marker-end="url(#arrow)"/><path d="M387 372 H305" class="ar" marker-end="url(#arrow)"/><path d="M191 358 Q183 410 195 456" class="ar" marker-end="url(#arrow)"/>
+<g><text class="call" x="560" y="272">1. Pédales</text><text class="call" x="370" y="370">2. Chaîne</text><text class="call" x="93" y="255">3. Pignons</text><text class="call" x="98" y="570">4. Roue arrière</text><path d="M203 265 L249 404 M226 545 L257 495" stroke="#476aa6" stroke-width="4" fill="none"/></g>
+</svg>
+<div class="controls"><button id="play" class="primary" type="button">▶ Démarrer</button><button id="reset" type="button">↺ Recommencer</button><label for="speed">Vitesse</label><input id="speed" type="range" min="1" max="5" value="2"><output id="speedValue">2 / 5</output></div>
+<div class="steps" id="steps"><button type="button" data-step="0" class="active">1. Je pédale</button><button type="button" data-step="1">2. Le pédalier tourne</button><button type="button" data-step="2">3. La chaîne avance</button><button type="button" data-step="3">4. Les pignons tournent</button><button type="button" data-step="4">5. La roue avance</button></div>
+<div id="explain" class="explain" role="status">Mes pieds poussent les pédales : je donne de l'énergie au vélo.</div><p class="note">Animation simplifiée : sur un vrai VTT, la transmission dépend aussi des vitesses. Les deux roues tournent lorsque le vélo avance.</p>
+</section>
+<section class="practice" id="vtt-practice" aria-labelledby="practice-title">
+ <h2 id="practice-title">Je m'entraîne avec Maître Hibou</h2>
+ <p class="lead">10 petits défis, du plus simple au plus difficile. Observe le VTT animé juste au-dessus.</p>
+ <div class="practice-meta"><span id="practice-count">Exercice 1 sur 10</span><span class="level" id="practice-level">★ Je découvre</span></div>
+ <div class="progressline" aria-label="Progression"><div id="practice-progress"></div></div>
+ <div id="practice-question" class="question-title"></div><p class="instruction" id="practice-instruction"></p>
+ <div id="practice-activity" class="activity"></div>
+ <div id="practice-feedback" class="feedback hidden" role="status" aria-live="polite"></div>
+ <div class="actions"><button type="button" class="check" id="practice-check">Vérifier ma réponse</button><button type="button" class="next hidden" id="practice-next">Exercice suivant →</button><button type="button" class="hidden" id="practice-restart">Recommencer les 10 exercices</button></div>
+</section>
+</main><script>
+(()=>{'use strict';const $=id=>document.getElementById(id);for(const id of ['rearSpokes','frontSpokes']){const g=$(id),x=id==='rearSpokes'?262:888;for(let k=0;k<16;k++){const a=2*Math.PI*k/16;const el=document.createElementNS('http://www.w3.org/2000/svg','line');el.setAttribute('x1',x);el.setAttribute('y1',433);el.setAttribute('x2',x+139*Math.cos(a));el.setAttribute('y2',433+139*Math.sin(a));el.setAttribute('class','spoke');g.appendChild(el)}}let playing=false,last=0,angle=0,step=0;const messages=['Mes pieds poussent les pédales : je donne de l’énergie au vélo.','Les pédales font tourner le pédalier.','La chaîne transmet le mouvement vers l’arrière.','Les pignons reçoivent le mouvement de la chaîne.','La roue arrière tourne et fait avancer le VTT.'];const buttons=[...document.querySelectorAll('[data-step]')];function select(i){step=i;buttons.forEach((b,k)=>b.classList.toggle('active',k===i));$('explain').textContent=messages[i]}buttons.forEach((b,i)=>b.addEventListener('click',()=>select(i)));function draw(){const rear=-angle*2.2,front=rear;const transforms=[['crankRotate',angle],['rearCogRotate',rear],['rearRotate',rear],['frontRotate',front]];transforms.forEach(([id,deg])=>$(id).style.transform=`rotate(${deg}deg)`);$('chain').style.strokeDashoffset=String(-angle*.8)}function animate(t){if(!last)last=t;let dt=Math.min(.05,(t-last)/1000);last=t;if(playing){angle+=dt*(26+Number($('speed').value)*35);draw()}requestAnimationFrame(animate)}requestAnimationFrame(animate);$('play').addEventListener('click',()=>{playing=!playing;$('play').textContent=playing?'⏸ Pause':'▶ Démarrer'});$('reset').addEventListener('click',()=>{angle=0;playing=false;draw();select(0);$('play').textContent='▶ Démarrer'});$('speed').addEventListener('input',()=>{$('speedValue').textContent=$('speed').value+' / 5'});})();
+</script>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+const steps=['Je pédale','Le pédalier tourne','La chaîne avance','Les pignons tournent','La roue arrière tourne'];
+const exercises=[
+ {kind:'observe',title:'J’observe le VTT en mouvement',instruction:'Appuie sur « Démarrer » au-dessus, puis regarde tourner les pédales et les roues. Quand tu as observé, vérifie.',hint:'Le bouton vert « Démarrer » se trouve juste sous le grand dessin.'},
+ {kind:'single',title:'Que fais-tu pour faire avancer le VTT ?',instruction:'Choisis la bonne réponse.',options:['Je pousse les pédales avec mes pieds.','Je tire sur la selle.','Je serre les freins.'],answer:0,hint:'Regarde la première étape de l’animation : « Je pédale ».'},
+ {kind:'single',title:'Qu’est-ce que les pédales font tourner ?',instruction:'Observe le milieu du VTT.',options:['Le guidon.','Le pédalier.','La selle.'],answer:1,hint:'Clique sur « 2. Le pédalier tourne » dans la leçon.'},
+ {kind:'single',title:'À quoi sert la chaîne ?',instruction:'Choisis le rôle de la chaîne.',options:['À diriger le VTT.','À arrêter le VTT.','À transmettre le mouvement vers l’arrière.'],answer:2,hint:'La chaîne relie le pédalier aux pignons près de la roue arrière.'},
+ {kind:'order',title:'Je remets les actions dans l’ordre',instruction:'Touche les quatre étapes dans l’ordre du mouvement.',items:['La roue arrière tourne.','Je pousse les pédales.','La chaîne avance.','Le pédalier tourne.'],answer:[1,3,2,0],hint:'Commence par ce que fait le cycliste avec ses pieds.'},
+ {kind:'match',title:'J’associe chaque pièce à son rôle',instruction:'Touche une pièce à gauche, puis son rôle à droite.',left:['Pédales','Chaîne','Pignons'],right:['Reçoivent le mouvement de la chaîne.','Reçoivent la poussée des pieds.','Transmet le mouvement vers l’arrière.'],pairs:[1,2,0],hint:'Les pieds poussent les pédales ; la chaîne transmet ; les pignons reçoivent.'},
+ {kind:'single',title:'Vrai ou faux ?',instruction:'« La chaîne avance quand le pédalier tourne. »',options:['Vrai','Faux'],answer:0,hint:'Lance l’animation et observe la chaîne orange.'},
+ {kind:'multi',title:'Je reconnais les pièces de la transmission',instruction:'Sélectionne les trois éléments qui transmettent le mouvement jusqu’à la roue arrière.',options:['Le pédalier','La selle','La chaîne','Les pignons','Le guidon'],answer:[0,2,3],hint:'Ce sont les pièces qui travaillent entre les pédales et la roue arrière.'},
+ {kind:'single',title:'Que se passe-t-il si tu arrêtes de pédaler ?',instruction:'Dans un VTT qui possède une roue libre, choisis la bonne réponse.',options:['Le vélo peut continuer à avancer un moment.','Le guidon tourne tout seul.','Les pédales tournent toujours obligatoirement.'],answer:0,hint:'Le vélo peut rouler sur son élan, même quand le cycliste ne pédale plus.'},
+ {kind:'words',title:'Défi Maître Hibou : j’explique le mouvement',instruction:'Complète la chaîne du mouvement avec les trois mots proposés.',parts:['Je pousse les ',' ; le ',' tourne ; la ',' avance et entraîne la roue arrière.'],options:['pédalier','chaîne','pédales'],answer:['pédales','pédalier','chaîne'],hint:'D’abord les pieds agissent, puis la pièce centrale tourne, puis la chaîne se déplace.'}
+];
+let index=0,done=0,choice=null,selected=[],order=[],matches=[],leftActive=null,words=[],observed=false,tries=0,solved=false;
+const act=$('practice-activity'),fb=$('practice-feedback');
+$('play').addEventListener('click',()=>{observed=true;});
+function btn(label,cls,fn){const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=label;b.addEventListener('click',fn);return b;}
+function showFeedback(message,good){fb.textContent=message;fb.className='feedback '+(good?'ok':'try');}
+function render(){choice=null;selected=[];order=[];matches=[];leftActive=null;words=[];tries=0;solved=false;const t=exercises[index];
+ $('practice-count').textContent=`Exercice ${index+1} sur 10`;$('practice-level').textContent=(index<4?'★ Je découvre':index<7?'★★ Je comprends':'★★★ Je réfléchis');
+ $('practice-progress').style.width=(done*10)+'%';$('practice-question').textContent=t.title;$('practice-instruction').textContent=t.instruction;
+ fb.className='feedback hidden';fb.textContent='';act.replaceChildren();$('practice-check').classList.remove('hidden');$('practice-next').classList.add('hidden');$('practice-restart').classList.add('hidden');
+ if(t.kind==='observe'){const p=document.createElement('p');p.textContent='Observe d’abord l’animation au-dessus de cette activité.';act.append(p);}
+ if(t.kind==='single'||t.kind==='multi'){t.options.forEach((label,i)=>act.append(btn(label,'answer-btn',()=>{if(solved)return;if(t.kind==='single'){choice=i;}else{selected=selected.includes(i)?selected.filter(x=>x!==i):[...selected,i];}act.querySelectorAll('.answer-btn').forEach((b,j)=>b.classList.toggle('selected',t.kind==='single'?j===choice:selected.includes(j)));})));}
+ if(t.kind==='order'){
+ const picked=document.createElement('div');picked.className='order-picked';picked.setAttribute('aria-label','Étapes sélectionnées');act.append(picked);
+ const pool=document.createElement('div');pool.className='activity';act.append(pool);
+ t.items.forEach((label,i)=>pool.append(btn(label,'order-btn',()=>{if(solved||order.includes(i))return;order.push(i);pool.children[i].disabled=true;pool.children[i].classList.add('selected');const chip=document.createElement('span');chip.className='chip';chip.textContent=order.length+'. '+label;picked.append(chip);})));act.append(btn('Effacer mon ordre','answer-btn',()=>{if(solved)return;order=[];picked.replaceChildren();[...pool.children].forEach(b=>{b.disabled=false;b.classList.remove('selected')});}));
+ }
+ if(t.kind==='match'){
+ const grid=document.createElement('div');grid.className='match-grid';const lc=document.createElement('div'),rc=document.createElement('div');lc.className='match-col';rc.className='match-col';grid.append(lc,rc);act.append(grid);
+ function refresh(){[...lc.children].forEach((b,i)=>{b.classList.toggle('selected',leftActive===i);b.classList.toggle('paired',matches.some(m=>m[0]===i))});[...rc.children].forEach((b,i)=>b.classList.toggle('paired',matches.some(m=>m[1]===i)));}
+ t.left.forEach((label,i)=>lc.append(btn(label,'match-btn',()=>{if(solved||matches.some(m=>m[0]===i))return;leftActive=i;refresh();})));
+ t.right.forEach((label,j)=>rc.append(btn(label,'match-btn',()=>{if(solved||leftActive===null||matches.some(m=>m[1]===j))return;matches.push([leftActive,j]);leftActive=null;refresh();})));
+ act.append(btn('Effacer les associations','answer-btn',()=>{if(solved)return;matches=[];leftActive=null;refresh();}));
+ }
+ if(t.kind==='words'){
+ const picked=document.createElement('div');picked.className='order-picked';picked.textContent='Choisis les mots dans l’ordre des espaces à compléter.';act.append(picked);
+ const pool=document.createElement('div');pool.className='activity';act.append(pool);
+ t.options.forEach((label,i)=>pool.append(btn(label,'word-btn',()=>{if(solved||words.includes(i)||words.length>=3)return;if(words.length===0)picked.replaceChildren();words.push(i);const chip=document.createElement('span');chip.className='chip';chip.textContent=(words.length)+'. '+label;picked.append(chip);pool.children[i].disabled=true;pool.children[i].classList.add('selected');})));
+ act.append(btn('Effacer les mots','answer-btn',()=>{if(solved)return;words=[];picked.textContent='Choisis les mots dans l’ordre des espaces à compléter.';[...pool.children].forEach(b=>{b.disabled=false;b.classList.remove('selected')});}));
+ }
+}
+function correct(){const t=exercises[index];if(t.kind==='observe')return observed;if(t.kind==='single')return choice===t.answer;if(t.kind==='multi')return selected.length===t.answer.length&&t.answer.every(x=>selected.includes(x));if(t.kind==='order')return order.length===4&&t.answer.every((x,i)=>order[i]===x);if(t.kind==='match')return matches.length===3&&t.pairs.every((j,i)=>matches.some(m=>m[0]===i&&m[1]===j));if(t.kind==='words')return words.length===3&&t.answer.every((w,i)=>t.options[words[i]]===w);return false;}
+$('practice-check').addEventListener('click',()=>{if(solved)return;const t=exercises[index];if(!correct()){tries++;showFeedback(tries===1?'Essaie encore ! Indice : '+t.hint:'Regarde à nouveau l’animation ou la leçon, puis réessaie. '+t.hint,false);return;}
+ solved=true;done=index+1;$('practice-progress').style.width=(done*10)+'%';showFeedback(index===9?'Bravo ! Tu sais expliquer comment les pédales, le pédalier, la chaîne et les pignons font tourner la roue arrière.':'Bravo ! Tu as réussi cet exercice.',true);$('practice-check').classList.add('hidden');if(index<9){$('practice-next').classList.remove('hidden')}else{$('practice-restart').classList.remove('hidden');$('practice-count').textContent='10 exercices sur 10 terminés !';}});
+$('practice-next').addEventListener('click',()=>{if(!solved||index>=9)return;index++;render();});
+$('practice-restart').addEventListener('click',()=>{index=0;done=0;observed=false;render();});render();
+})();
+</script>
+</body></html>
