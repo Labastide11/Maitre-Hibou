@@ -178,7 +178,16 @@
     'Comprendre une fraction comme part d’un tout':'math-fractions-part-tout.jpg',
     'Calculer mentalement une addition':'math-calcul-mental-addition.jpg',
     'Comprendre la soustraction':'math-comprendre-soustraction.jpg',
-    'Placer des fractions sur une bande graduée':'math-fractions-bande-graduee.jpg'
+    'Placer des fractions sur une bande graduée':'math-fractions-bande-graduee.jpg',
+    'Reconnaître des fractions égales':'math-fractions-egales.jpg',
+    'Comparer des fractions inférieures ou égales à 1':'math-comparer-fractions.jpg',
+    'Additionner et soustraire des fractions':'math-addition-soustraction-fractions.jpg',
+    'Comprendre l’addition':'math-comprendre-addition.jpg',
+    'Comprendre la multiplication':'math-comprendre-multiplication.jpg',
+    'Mémoriser les tables de multiplication':'math-tables-multiplication.jpg',
+    'Multiplier par 10 ou par 100':'math-multiplier-10-100.jpg',
+    'Poser une multiplication par un chiffre':'math-multiplication-posee-un-chiffre.jpg',
+    'Poser une multiplication par deux chiffres':'math-multiplication-posee-deux-chiffres.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
