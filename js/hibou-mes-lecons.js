@@ -200,7 +200,18 @@
     'Résoudre un problème de groupes égaux':'math-probleme-groupes-egaux.jpg',
     'Reconnaître des points alignés':'math-points-alignes-ce2.jpg',
     'Distinguer droite, segment et milieu':'math-droite-segment-milieu-ce2.jpg',
-    'Se repérer et reproduire sur un quadrillage':'math-quadrillage-ce2.jpg'
+    'Se repérer et reproduire sur un quadrillage':'math-quadrillage-ce2.jpg',
+    'Reconnaître et tracer un angle droit':'math-angle-droit-ce2.jpg',
+    'Reconnaître carré, rectangle et losange':'math-carre-rectangle-losange-ce2.jpg',
+    'Utiliser les euros et les centimes':'math-euros-centimes-ce2.jpg',
+    'Calculer avec des prix':'math-calculer-avec-prix-ce2.jpg',
+    'Lire l’heure':'math-lire-heure-ce2.jpg',
+    'Calculer une durée':'math-calculer-duree-ce2.jpg',
+    'Lire et compléter un tableau à double entrée':'math-tableau-double-entree-ce2.jpg',
+    'Mesurer et convertir des longueurs':'math-longueurs-conversions-ce2.jpg',
+    'Déterminer le périmètre d’un polygone':'math-perimetre-polygone-ce2.jpg',
+    'Mesurer et comparer des masses':'math-masses-comparaison-ce2.jpg',
+    'Mesurer des contenances':'math-contenances-ce2.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
@@ -318,7 +329,7 @@
     var catalog=byId('hibouSubjectCatalog'),frame=byId('hibouLessonsFrame');
     if(catalog&&!catalog.hidden){return false;}
     var subject=document.querySelector('.hibou-lessons-tab.active');
-    var key=subject&&({hibouLessonsGeographie:'geographie',hibouLessonsHistoire:'histoire',hibouLessonsRecit:'recit',hibouLessonsLexique:'lexique'})[subject.id];
+    var key=subject&&({hibouLessonsSciences:'sciences',hibouLessonsGeographie:'geographie',hibouLessonsHistoire:'histoire',hibouLessonsRecit:'recit',hibouLessonsLexique:'lexique'})[subject.id];
     if(key){if(frame)frame.style.display='none';showSubjectCatalog(key);return true;}
     return false;
   }
@@ -387,7 +398,7 @@
     var frame = byId('hibouLessonsFrame');
     var panel = byId('hibouLessonsMiniPanel');
     var isMini = subject === 'mini';
-    var isSingle=subject !== 'sciences' && !!singlePages[subject];
+    var isSingle=!!singlePages[subject];
     var catalog=byId('hibouSubjectCatalog');
     if(catalog)catalog.hidden=true;
     setLessonHeader(subject);
