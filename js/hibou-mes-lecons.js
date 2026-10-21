@@ -216,7 +216,10 @@
     'Mesurer et convertir des longueurs':'math-longueurs-conversions-ce2.jpg',
     'Déterminer le périmètre d’un polygone':'math-perimetre-polygone-ce2.jpg',
     'Mesurer et comparer des masses':'math-masses-comparaison-ce2.jpg',
-    'Mesurer des contenances':'math-contenances-ce2.jpg'
+    'Mesurer des contenances':'math-contenances-ce2.jpg',
+    'Lire un diagramme en barres':'math-diagramme-barres-ce2.jpg',
+    'Lire et produire un diagramme en barres':'math-diagramme-barres-ce2.jpg',
+    'Lire un tableau':'math-lire-tableau-ce2.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
