@@ -205,7 +205,11 @@
     'Calculer avec des prix':'math-calculer-avec-prix-ce2.jpg',
     'Lire l’heure':'math-lire-heure-ce2.jpg',
     'Calculer une durée':'math-calculer-duree-ce2.jpg',
-    'Lire et compléter un tableau à double entrée':'math-tableau-double-entree-ce2.jpg'
+    'Lire et compléter un tableau à double entrée':'math-tableau-double-entree-ce2.jpg',
+    'Mesurer et convertir des longueurs':'math-longueurs-conversions-ce2.jpg',
+    'Déterminer le périmètre d’un polygone':'math-perimetre-polygone-ce2.jpg',
+    'Mesurer et comparer des masses':'math-masses-comparaison-ce2.jpg',
+    'Mesurer des contenances':'math-contenances-ce2.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
