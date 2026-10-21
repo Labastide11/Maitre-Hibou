@@ -198,6 +198,8 @@
     'Résoudre un problème de parties et de tout':'math-probleme-parties-tout.jpg',
     'Résoudre un problème de comparaison':'math-probleme-comparaison.jpg',
     'Résoudre un problème de groupes égaux':'math-probleme-groupes-egaux.jpg',
+    'Résoudre un problème de partage ou de groupement':'math-probleme-partage-groupement-ce2.jpg',
+    'Résoudre un problème en plusieurs étapes':'math-probleme-plusieurs-etapes-ce2.jpg',
     'Reconnaître des points alignés':'math-points-alignes-ce2.jpg',
     'Distinguer droite, segment et milieu':'math-droite-segment-milieu-ce2.jpg',
     'Se repérer et reproduire sur un quadrillage':'math-quadrillage-ce2.jpg',
