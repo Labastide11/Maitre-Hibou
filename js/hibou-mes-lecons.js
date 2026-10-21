@@ -9,6 +9,59 @@
   function textOf(node){ return node ? String(node.textContent || '').replace(/\s+/g,' ').trim() : ''; }
   function esc(v){ return String(v == null ? '' : v).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
+  // Navigation de Mes leçons : uniquement pendant cet onglet navigateur.
+  var LESSON_STATE_KEY='hibouMesLeconsNavigationV1';
+  var currentLessonSubject='francais';
+  var restoringLessonState=false;
+  var lessonStateRestored=false;
+  function readLessonState(){
+    try{
+      var value=JSON.parse(sessionStorage.getItem(LESSON_STATE_KEY)||'null');
+      return value&&typeof value==='object'?value:null;
+    }catch(e){return null;}
+  }
+  function writeLessonState(patch){
+    if(restoringLessonState)return;
+    try{
+      var value=readLessonState()||{open:false,subject:'francais',url:'',showLesson:false};
+      Object.keys(patch).forEach(function(key){value[key]=patch[key];});
+      sessionStorage.setItem(LESSON_STATE_KEY,JSON.stringify(value));
+    }catch(e){}
+  }
+  function captureFrameNavigation(){
+    var overlay=byId('hibouLessonsOverlay');
+    var frame=byId('hibouLessonsFrame');
+    if(!overlay||!overlay.classList.contains('open')||!frame||frame.style.display==='none')return;
+    try{
+      var url=frame.contentWindow.location.href;
+      var parsed=new URL(url,location.href);
+      // N'enregistrer que les pages appartenant à ce même site.
+      if(parsed.origin!==location.origin)return;
+      writeLessonState({subject:currentLessonSubject,url:parsed.href,showLesson:true});
+    }catch(e){}
+  }
+  function restoreLessonNavigation(){
+    if(lessonStateRestored)return;
+    lessonStateRestored=true;
+    var saved=readLessonState();
+    if(!saved||!saved.open||!subjects[saved.subject])return;
+    restoringLessonState=true;
+    openLessons(saved.subject);
+    var frame=byId('hibouLessonsFrame');
+    if(frame&&saved.showLesson&&saved.url&&saved.subject!=='mini'){
+      try{
+        var target=new URL(saved.url,location.href);
+        if(target.origin===location.origin&&/\/bibliotheque_/.test(target.pathname)){
+          frame.style.display='block';
+          frame.setAttribute('src',target.href);
+          var catalog=byId('hibouSubjectCatalog');
+          if(catalog)catalog.hidden=true;
+        }
+      }catch(e){}
+    }
+    restoringLessonState=false;
+  }
+
   function setVersion(){
     // Le titre de l'onglet du site est conservé, pas modifié par Mes leçons.
   }
@@ -44,6 +97,7 @@
     var frame = byId('hibouLessonsFrame');
     if(frame) frame.addEventListener('load', function(){
       injectLibraryCards();
+      captureFrameNavigation();
       // Les pages de leçons maths sont affichées dans cette même iframe.
       // Une image garde ses proportions et occupe presque toute la largeur.
       try {
@@ -198,29 +252,30 @@
     'Résoudre un problème de parties et de tout':'math-probleme-parties-tout.jpg',
     'Résoudre un problème de comparaison':'math-probleme-comparaison.jpg',
     'Résoudre un problème de groupes égaux':'math-probleme-groupes-egaux.jpg',
+    'Résoudre un problème de partage ou de groupement':'math-probleme-partage-groupement-ce2.jpg',
+    'Résoudre un problème en plusieurs étapes':'math-probleme-plusieurs-etapes-ce2.jpg',
     'Reconnaître des points alignés':'math-points-alignes-ce2.jpg',
     'Distinguer droite, segment et milieu':'math-droite-segment-milieu-ce2.jpg',
     'Se repérer et reproduire sur un quadrillage':'math-quadrillage-ce2.jpg',
-    'Comprendre la division':'maitre-hibou-comprendre-division.png',
-    'Résoudre un problème de partage ou de groupement':'math-probleme-partage-groupement-ce2.jpg',
-    'Résoudre un problème en plusieurs étapes':'math-probleme-plusieurs-etapes-ce2.jpg',
     'Reconnaître et tracer un angle droit':'math-angle-droit-ce2.jpg',
-    'Reconnaître un polygone':'math-polygone-ce2.jpg',
     'Reconnaître carré, rectangle et losange':'math-carre-rectangle-losange-ce2.jpg',
+    'Reconnaître un polygone':'math-polygone-ce2.jpg',
     'Reconnaître les triangles':'math-triangles-ce2.jpg',
     'Tracer et décrire un cercle':'math-cercle-ce2.jpg',
     'Reconnaître et décrire des solides':'math-solides-ce2.jpg',
     'Reconnaître et compléter une symétrie':'math-symetrie-ce2.jpg',
-    'Mesurer et convertir des longueurs':'math-longueurs-conversions-ce2.jpg',
-    'Déterminer le périmètre d’un polygone':'math-perimetre-polygone-ce2.jpg',
-    'Mesurer et comparer des masses':'math-masses-comparaison-ce2.jpg',
-    'Mesurer des contenances':'math-contenances-ce2.jpg',
     'Utiliser les euros et les centimes':'math-euros-centimes-ce2.jpg',
     'Calculer avec des prix':'math-calculer-avec-prix-ce2.jpg',
     'Lire l’heure':'math-lire-heure-ce2.jpg',
     'Calculer une durée':'math-calculer-duree-ce2.jpg',
     'Lire et compléter un tableau à double entrée':'math-tableau-double-entree-ce2.jpg',
-    'Lire et produire un diagramme en barres':'math-diagramme-barres-ce2.jpg'
+    'Mesurer et convertir des longueurs':'math-longueurs-conversions-ce2.jpg',
+    'Déterminer le périmètre d’un polygone':'math-perimetre-polygone-ce2.jpg',
+    'Mesurer et comparer des masses':'math-masses-comparaison-ce2.jpg',
+    'Mesurer des contenances':'math-contenances-ce2.jpg',
+    'Lire un diagramme en barres':'math-diagramme-barres-ce2.jpg',
+    'Lire et produire un diagramme en barres':'math-diagramme-barres-ce2.jpg',
+    'Lire un tableau':'math-lire-tableau-ce2.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
@@ -267,7 +322,7 @@
           .searchbar input,.search input{min-width:180px!important;flex:1 1 310px!important;max-width:480px!important;padding:11px 14px!important;font-size:15px!important;border-width:2px!important;}
           .filters{gap:6px!important;}
           .filter{font-size:13px!important;padding:10px 12px!important;}
-          .lesson-grid,.grid{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(190px,1fr))!important;gap:12px!important;}
+          .lesson-grid,.grid{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))!important;gap:12px!important;}
           .lesson-card,.grid .card{min-height:0!important;padding:12px!important;border-radius:18px!important;display:flex;flex-direction:column!important;background:white!important;border:1px solid #dce6f5!important;box-shadow:0 4px 13px #172e4512!important;}
           .lesson-card h2,.grid .card h2{font:800 17px/1.2 system-ui,sans-serif!important;color:#113965!important;margin:4px 0 8px!important;min-height:40px!important;}
           .lesson-card p,.grid .card p{display:none!important;}
@@ -330,6 +385,7 @@
       catalog.hidden=true;
       var frame=byId('hibouLessonsFrame');
       if(frame){frame.style.display='block';frame.setAttribute('src',SINGLE_URLS[subject]);}
+      writeLessonState({subject:subject,showLesson:true,url:new URL(SINGLE_URLS[subject],location.href).href});
       var back=byId('hibouLessonsBack');if(back)back.hidden=false;
     });
   }
@@ -338,8 +394,8 @@
     var catalog=byId('hibouSubjectCatalog'),frame=byId('hibouLessonsFrame');
     if(catalog&&!catalog.hidden){return false;}
     var subject=document.querySelector('.hibou-lessons-tab.active');
-    var key=subject&&({hibouLessonsGeographie:'geographie',hibouLessonsHistoire:'histoire',hibouLessonsRecit:'recit',hibouLessonsLexique:'lexique'})[subject.id];
-    if(key){if(frame)frame.style.display='none';showSubjectCatalog(key);return true;}
+    var key=subject&&({hibouLessonsSciences:'sciences',hibouLessonsGeographie:'geographie',hibouLessonsHistoire:'histoire',hibouLessonsRecit:'recit',hibouLessonsLexique:'lexique'})[subject.id];
+    if(key){if(frame)frame.style.display='none';showSubjectCatalog(key);writeLessonState({showLesson:false,url:''});return true;}
     return false;
   }
 
@@ -371,18 +427,15 @@
     var data = readMiniLessonData();
     panel.innerHTML =
       '<div class="hibou-mini-card">' +
-        '<div class="hibou-mini-banner">' +
-          '<div class="hibou-mini-mascot" aria-hidden="true">🦉</div>' +
-          '<div class="hibou-mini-heading"><p class="hibou-mini-kicker">LE SAVAIS-TU ?</p><h3>Mini-leçon du jour</h3><p class="hibou-mini-heading-caption">Une idée à découvrir, un petit défi à réussir !</p></div>' +
-          '<span class="hibou-mini-sparkles" aria-hidden="true">✦ ✧</span>' +
+        '<div class="hibou-mini-top">' +
+          '<div class="hibou-mini-icon" aria-hidden="true">💡</div>' +
+          '<div><p class="hibou-mini-kicker">Le savais-tu ?</p><h3>Mini-leçon du jour</h3></div>' +
         '</div>' +
-        '<div class="hibou-mini-body">' +
-          '<p class="hibou-mini-question">' + esc(data.question) + '</p>' +
-          '<section class="hibou-mini-retains" aria-label="Je retiens"><div class="hibou-mini-block-title"><span aria-hidden="true">📗</span> Je retiens</div><p>' + esc(data.lesson || '—') + '</p></section>' +
-          (data.challenge ? '<section class="hibou-mini-defi" aria-label="Petit défi"><div class="hibou-mini-block-title"><span aria-hidden="true">✏️</span> À toi de jouer !</div><p>' + esc(data.challenge) + '</p></section>' : '') +
-          '<details class="hibou-mini-details"><summary><span aria-hidden="true">🔎</span> Voir la correction <span class="hibou-mini-disclosure" aria-hidden="true">⌄</span></summary><div>' + esc(data.correction || 'Correction à venir.') + '</div></details>' +
-          '<div class="hibou-mini-actions"><button type="button" class="hibou-mini-refresh" id="hibouMiniRefresh">↻ Une autre mini-leçon</button></div>' +
-        '</div>' +
+        '<p class="hibou-mini-question">' + esc(data.question) + '</p>' +
+        '<p class="hibou-mini-retains"><strong>Je retiens :</strong> ' + esc(data.lesson || '—') + '</p>' +
+        (data.challenge ? '<p class="hibou-mini-defi"><strong>Petit défi :</strong> ' + esc(data.challenge) + '</p>' : '') +
+        '<details class="hibou-mini-details"><summary>Voir la correction</summary><div>' + esc(data.correction || 'Correction à venir.') + '</div></details>' +
+        '<div class="hibou-mini-actions"><button type="button" class="hibou-mini-refresh" id="hibouMiniRefresh">Une autre mini-leçon</button></div>' +
       '</div>';
 
     var refresh = byId('hibouMiniRefresh');
@@ -399,6 +452,8 @@
   }
 
   function selectSubject(subject){
+    currentLessonSubject=subject;
+    writeLessonState({subject:subject,showLesson:false,url:''});
     var french = byId('hibouLessonsFrench');
     var maths = byId('hibouLessonsMaths');
     var sciences = byId('hibouLessonsSciences');
@@ -410,7 +465,7 @@
     var frame = byId('hibouLessonsFrame');
     var panel = byId('hibouLessonsMiniPanel');
     var isMini = subject === 'mini';
-    var isSingle=subject !== 'sciences' && !!singlePages[subject];
+    var isSingle=!!singlePages[subject] && subject !== 'sciences';
     var catalog=byId('hibouSubjectCatalog');
     if(catalog)catalog.hidden=true;
     setLessonHeader(subject);
@@ -452,6 +507,7 @@
     var overlay = byId('hibouLessonsOverlay');
     if(overlay){
       overlay.classList.add('open');
+      writeLessonState({open:true,subject:subject||'francais'});
       overlay.setAttribute('aria-hidden','false');
       document.body.style.overflow = 'hidden';
       setTimeout(function(){ var c=byId('hibouLessonsClose'); if(c) c.focus(); },30);
@@ -459,6 +515,7 @@
   }
 
   function closeLessons(){
+    writeLessonState({open:false});
     var overlay = byId('hibouLessonsOverlay');
     if(overlay){
       overlay.classList.remove('open');
@@ -498,11 +555,13 @@
     setVersion();
     createPopup();
     installButton();
+    restoreLessonNavigation();
   }
 
   window.openHibouLessons = function(){ openLessons('francais'); };
   window.openHibouMiniLesson = function(){ openLessons('mini'); };
   window.closeHibouLessons = closeLessons;
+  window.addEventListener('pagehide',captureFrameNavigation);
 
   document.addEventListener('keydown', function(ev){
     if(ev.key === 'Escape' && byId('hibouLessonsOverlay') && byId('hibouLessonsOverlay').classList.contains('open')) closeLessons();
