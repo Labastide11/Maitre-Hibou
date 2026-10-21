@@ -200,7 +200,12 @@
     'Résoudre un problème de groupes égaux':'math-probleme-groupes-egaux.jpg',
     'Reconnaître des points alignés':'math-points-alignes-ce2.jpg',
     'Distinguer droite, segment et milieu':'math-droite-segment-milieu-ce2.jpg',
-    'Se repérer et reproduire sur un quadrillage':'math-quadrillage-ce2.jpg'
+    'Se repérer et reproduire sur un quadrillage':'math-quadrillage-ce2.jpg',
+    'Utiliser les euros et les centimes':'math-euros-centimes-ce2.jpg',
+    'Calculer avec des prix':'math-calculer-avec-prix-ce2.jpg',
+    'Lire l’heure':'math-lire-heure-ce2.jpg',
+    'Calculer une durée':'math-calculer-duree-ce2.jpg',
+    'Lire et compléter un tableau à double entrée':'math-tableau-double-entree-ce2.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
