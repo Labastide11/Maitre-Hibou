@@ -196,7 +196,10 @@
     'Calculer des doubles et des moitiés':'math-doubles-moities.jpg',
     'Résoudre un problème de parties et de tout':'math-probleme-parties-tout.jpg',
     'Résoudre un problème de comparaison':'math-probleme-comparaison.jpg',
-    'Résoudre un problème de groupes égaux':'math-probleme-groupes-egaux.jpg'
+    'Résoudre un problème de groupes égaux':'math-probleme-groupes-egaux.jpg',
+    'Reconnaître des points alignés':'math-points-alignes-ce2.jpg',
+    'Distinguer droite, segment et milieu':'math-droite-segment-milieu-ce2.jpg',
+    'Se repérer et reproduire sur un quadrillage':'math-quadrillage-ce2.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
