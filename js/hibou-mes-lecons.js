@@ -152,7 +152,8 @@
     sciences:{title:'L’eau : ses états et ses changements',emoji:'💧',hint:'Glace · Eau liquide · Vapeur',tone:'#d9f1ff'},
     geographie:{title:'La ville et ses quartiers',emoji:'🗺️',hint:'Observer et comprendre la ville',tone:'#e5f6df'},
     histoire:{title:'Habiter autrefois et aujourd’hui',emoji:'🏠',hint:'Comparer les habitations',tone:'#fff0db'},
-    recit:{title:'Raconter une histoire dans l’ordre',emoji:'📖',hint:'Début · Événements · Fin',tone:'#eee5ff'}
+    recit:{title:'Raconter une histoire dans l’ordre',emoji:'📖',hint:'Début · Événements · Fin',tone:'#eee5ff'},
+    lexique:{title:'Familles de mots, synonymes et contraires',emoji:'🔤',hint:'Des mots qui vont ensemble',tone:'#dcfaf0'}
   };
   function setLessonHeader(subject){
     var values=subjects[subject]||subjects.francais;
@@ -465,7 +466,7 @@
     var frame = byId('hibouLessonsFrame');
     var panel = byId('hibouLessonsMiniPanel');
     var isMini = subject === 'mini';
-    var isSingle=!!singlePages[subject] && subject !== 'sciences' && subject !== 'lexique';
+    var isSingle=!!singlePages[subject] && subject !== 'sciences';
     var catalog=byId('hibouSubjectCatalog');
     if(catalog)catalog.hidden=true;
     setLessonHeader(subject);
@@ -477,7 +478,7 @@
       geographie: ['bibliotheque_geographie/index.html', 'Leçon de géographie : la ville et ses quartiers'],
       histoire: ['bibliotheque_histoire/index.html', 'Leçon d’histoire : habiter autrefois et aujourd’hui'],
       recit: ['bibliotheque_recit/index.html', 'Leçon de français : raconter dans l’ordre'],
-      lexique: ['bibliotheque_lexique/index.html', 'Bibliothèque des 20 leçons de lexique CE2']
+      lexique: ['bibliotheque_lexique/index.html', 'Leçon de lexique : familles, synonymes, contraires']
     };
     var tabs = [[french,'francais'],[maths,'maths'],[sciences,'sciences'],[geographie,'geographie'],[histoire,'histoire'],[recit,'recit'],[lexique,'lexique'],[mini,'mini']];
     tabs.forEach(function(item){
