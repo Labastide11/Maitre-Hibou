@@ -226,17 +226,8 @@
       // Géographie : les cartes possèdent déjà leur miniature native.
       // Ne pas ajouter la vignette « Je découvre ! » sous les titres.
       if(/\/bibliotheque_geographie\//.test(doc.location.pathname)){
-        // Les illustrations photographiques sont servies en JPG standards :
-        // ne pas laisser le navigateur interpréter un JPEG embarqué dans un SVG.
+        // Les 25 miniatures du catalogue sont directement référencées en JPG.
         doc.querySelectorAll('.hibou-lesson-thumb').forEach(function(thumb){thumb.remove();});
-        var geoJpgIds = ['geo-p4-02','geo-p4-03','geo-p4-04'];
-        geoJpgIds.forEach(function(id){
-          var img = doc.querySelector('img[src="miniatures/'+id+'.svg"]');
-          if(img){
-            img.src='miniatures/'+id+'.jpg';
-            img.setAttribute('loading','eager');
-          }
-        });
         return;
       }
       var cards=Array.from(doc.querySelectorAll('.lesson-grid .lesson-card,.grid .card'));
