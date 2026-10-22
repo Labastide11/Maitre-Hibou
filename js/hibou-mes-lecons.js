@@ -30,7 +30,7 @@
           '<button type="button" class="hibou-lessons-tab active" id="hibouLessonsFrench">📘 Français</button>' +
           '<button type="button" class="hibou-lessons-tab" id="hibouLessonsMaths">📐 Mathématiques</button>' +
           '<button type="button" class="hibou-lessons-tab" id="hibouLessonsSciences">💧 Sciences</button>' +
-          '<button type="button" class="hibou-lessons-tab" id="hibouLessonsGeographie">🏙️ Géographie</button><button type="button" class="hibou-lessons-tab" id="hibouLessonsHistoire">🏡 Histoire</button><button type="button" class="hibou-lessons-tab" id="hibouLessonsRecit">📖 Récit</button><button type="button" class="hibou-lessons-tab" id="hibouLessonsLexique">🔤 Lexique</button>' +
+          '<button type="button" class="hibou-lessons-tab" id="hibouLessonsGeographie">🏙️ Géographie</button><button type="button" class="hibou-lessons-tab" id="hibouLessonsHistoire">🏡 Histoire</button><button type="button" class="hibou-lessons-tab" id="hibouLessonsEvar">💛 EVAR</button><button type="button" class="hibou-lessons-tab" id="hibouLessonsLexique">🔤 Lexique</button>' +
           '<button type="button" class="hibou-lessons-tab" id="hibouLessonsMiniTab">💡 Mini-leçon</button>' +
         '</nav>' +
         '<div class="hibou-lessons-content">' +
@@ -67,7 +67,7 @@
     var sciences = byId('hibouLessonsSciences');
     var geographie = byId('hibouLessonsGeographie');
     var histoire = byId('hibouLessonsHistoire');
-    var recit = byId('hibouLessonsRecit');
+    var evar = byId('hibouLessonsEvar');
     var lexique = byId('hibouLessonsLexique');
     if(close) close.addEventListener('click', closeLessons);
     var back=byId('hibouLessonsBack');if(back)back.addEventListener('click',restoreCatalog);
@@ -77,7 +77,7 @@
     if(sciences) sciences.addEventListener('click', function(){ selectSubject('sciences'); });
     if(geographie) geographie.addEventListener('click', function(){ selectSubject('geographie'); });
     if(histoire) histoire.addEventListener('click', function(){ selectSubject('histoire'); });
-    if(recit) recit.addEventListener('click', function(){ selectSubject('recit'); });
+    if(evar) evar.addEventListener('click', function(){ selectSubject('evar'); });
     if(lexique) lexique.addEventListener('click', function(){ selectSubject('lexique'); });
     overlay.addEventListener('click', function(ev){ if(ev.target === overlay) closeLessons(); });
   }
@@ -90,7 +90,7 @@
     sciences:['Mes leçons de sciences','Choisis une leçon, puis ouvre-la pour la revoir.'],
     geographie:['Mes leçons de géographie','Choisis une leçon, puis ouvre-la pour la revoir.'],
     histoire:['Mes leçons d’histoire','Choisis une leçon, puis ouvre-la pour la revoir.'],
-    recit:['Mes leçons de récit','Choisis une leçon, puis ouvre-la pour la revoir.'],
+    evar:['Mon carnet EVAR','Éducation à la vie affective et relationnelle — CE2.'],
     lexique:['Mes leçons de lexique','Choisis une leçon, puis ouvre-la pour la revoir.'],
     mini:['Mini-leçon du jour','Une nouvelle découverte avec Maître Hibou.']
   };
@@ -98,7 +98,6 @@
     sciences:{title:'L’eau : ses états et ses changements',emoji:'💧',hint:'Glace · Eau liquide · Vapeur',tone:'#d9f1ff'},
     geographie:{title:'La ville et ses quartiers',emoji:'🗺️',hint:'Observer et comprendre la ville',tone:'#e5f6df'},
     histoire:{title:'Habiter autrefois et aujourd’hui',emoji:'🏠',hint:'Comparer les habitations',tone:'#fff0db'},
-    recit:{title:'Raconter une histoire dans l’ordre',emoji:'📖',hint:'Début · Événements · Fin',tone:'#eee5ff'},
   };
   function setLessonHeader(subject){
     var values=subjects[subject]||subjects.francais;
@@ -303,12 +302,12 @@
       var back=byId('hibouLessonsBack');if(back)back.hidden=false;
     });
   }
-  var SINGLE_URLS={sciences:'bibliotheque_sciences/index.html',geographie:'bibliotheque_geographie/index.html',histoire:'bibliotheque_histoire/index.html',recit:'bibliotheque_recit/index.html',lexique:'bibliotheque_lexique/index.html'};
+  var SINGLE_URLS={sciences:'bibliotheque_sciences/index.html',geographie:'bibliotheque_geographie/index.html',histoire:'bibliotheque_histoire/index.html',evar:'index_evar.html',lexique:'bibliotheque_lexique/index.html'};
   function restoreCatalog(){
     var catalog=byId('hibouSubjectCatalog'),frame=byId('hibouLessonsFrame');
     if(catalog&&!catalog.hidden){return false;}
     var subject=document.querySelector('.hibou-lessons-tab.active');
-    var key=subject&&({hibouLessonsSciences:'sciences',hibouLessonsGeographie:'geographie',hibouLessonsHistoire:'histoire',hibouLessonsRecit:'recit',hibouLessonsLexique:'lexique'})[subject.id];
+    var key=subject&&({hibouLessonsSciences:'sciences',hibouLessonsGeographie:'geographie',hibouLessonsHistoire:'histoire',hibouLessonsEvar:'evar',hibouLessonsLexique:'lexique'})[subject.id];
     if(key){if(frame)frame.style.display='none';showSubjectCatalog(key);return true;}
     return false;
   }
@@ -371,7 +370,7 @@
     var sciences = byId('hibouLessonsSciences');
     var geographie = byId('hibouLessonsGeographie');
     var histoire = byId('hibouLessonsHistoire');
-    var recit = byId('hibouLessonsRecit');
+    var evar = byId('hibouLessonsEvar');
     var lexique = byId('hibouLessonsLexique');
     var mini = byId('hibouLessonsMiniTab');
     var frame = byId('hibouLessonsFrame');
@@ -388,10 +387,10 @@
       sciences: ['bibliotheque_sciences/index.html', "Leçon de sciences : les états de l’eau"],
       geographie: ['bibliotheque_geographie/index.html', 'Bibliothèque des 25 leçons de géographie'],
       histoire: ['bibliotheque_histoire/index.html', 'Leçon d’histoire : habiter autrefois et aujourd’hui'],
-      recit: ['bibliotheque_recit/index.html', 'Leçon de français : raconter dans l’ordre'],
+      evar: ['index_evar.html', 'Mon carnet EVAR — CE2'],
       lexique: ['bibliotheque_lexique/index.html', 'Leçon de lexique : familles, synonymes, contraires']
     };
-    var tabs = [[french,'francais'],[maths,'maths'],[sciences,'sciences'],[geographie,'geographie'],[histoire,'histoire'],[recit,'recit'],[lexique,'lexique'],[mini,'mini']];
+    var tabs = [[french,'francais'],[maths,'maths'],[sciences,'sciences'],[geographie,'geographie'],[histoire,'histoire'],[evar,'evar'],[lexique,'lexique'],[mini,'mini']];
     tabs.forEach(function(item){
       if(item[0]) item[0].classList.toggle('active', item[1] === subject);
     });
@@ -446,7 +445,7 @@
       lessons.className = 'v24-advice-btn v24-advice-lessons';
       actions.insertBefore(lessons, actions.firstChild);
     }
-    lessons.innerHTML = '📚 Leçons & mini-leçon<small>Français · Maths · Sciences · Géographie · Histoire · Récit · Lexique</small>';
+    lessons.innerHTML = '📚 Leçons & mini-leçon<small>Français · Maths · Sciences · Géographie · Histoire · EVAR · Lexique</small>';
     if(!lessons.__hibouLessonBound){
       lessons.__hibouLessonBound = true;
       lessons.addEventListener('click', function(ev){ ev.preventDefault(); openLessons('francais'); }, true);
