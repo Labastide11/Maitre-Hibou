@@ -96,7 +96,6 @@
   };
   var singlePages = {
     sciences:{title:'L’eau : ses états et ses changements',emoji:'💧',hint:'Glace · Eau liquide · Vapeur',tone:'#d9f1ff'},
-    geographie:{title:'La ville et ses quartiers',emoji:'🗺️',hint:'Observer et comprendre la ville',tone:'#e5f6df'},
     histoire:{title:'Habiter autrefois et aujourd’hui',emoji:'🏠',hint:'Comparer les habitations',tone:'#fff0db'},
   };
   function setLessonHeader(subject){
@@ -307,7 +306,7 @@
     var catalog=byId('hibouSubjectCatalog'),frame=byId('hibouLessonsFrame');
     if(catalog&&!catalog.hidden){return false;}
     var subject=document.querySelector('.hibou-lessons-tab.active');
-    var key=subject&&({hibouLessonsSciences:'sciences',hibouLessonsGeographie:'geographie',hibouLessonsHistoire:'histoire',hibouLessonsEvar:'evar',hibouLessonsLexique:'lexique'})[subject.id];
+    var key=subject&&({hibouLessonsHistoire:'histoire',hibouLessonsEvar:'evar',hibouLessonsLexique:'lexique'})[subject.id];
     if(key){if(frame)frame.style.display='none';showSubjectCatalog(key);return true;}
     return false;
   }
