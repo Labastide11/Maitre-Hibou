@@ -223,6 +223,12 @@
     try{
       var doc=frame.contentDocument;
       if(!doc||!doc.body)return;
+      // Géographie : les cartes possèdent déjà leur miniature native.
+      // Ne pas ajouter la vignette « Je découvre ! » sous les titres.
+      if(/\/bibliotheque_geographie\//.test(doc.location.pathname)){
+        doc.querySelectorAll('.hibou-lesson-thumb').forEach(function(thumb){thumb.remove();});
+        return;
+      }
       var cards=Array.from(doc.querySelectorAll('.lesson-grid .lesson-card,.grid .card'));
       if(!cards.length)return;
       if(!doc.getElementById('hibouCardTheme')){
