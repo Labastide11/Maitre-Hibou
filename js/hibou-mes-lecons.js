@@ -9,6 +9,59 @@
   function textOf(node){ return node ? String(node.textContent || '').replace(/\s+/g,' ').trim() : ''; }
   function esc(v){ return String(v == null ? '' : v).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
+  // Navigation de Mes leçons : uniquement pendant cet onglet navigateur.
+  var LESSON_STATE_KEY='hibouMesLeconsNavigationV1';
+  var currentLessonSubject='francais';
+  var restoringLessonState=false;
+  var lessonStateRestored=false;
+  function readLessonState(){
+    try{
+      var value=JSON.parse(sessionStorage.getItem(LESSON_STATE_KEY)||'null');
+      return value&&typeof value==='object'?value:null;
+    }catch(e){return null;}
+  }
+  function writeLessonState(patch){
+    if(restoringLessonState)return;
+    try{
+      var value=readLessonState()||{open:false,subject:'francais',url:'',showLesson:false};
+      Object.keys(patch).forEach(function(key){value[key]=patch[key];});
+      sessionStorage.setItem(LESSON_STATE_KEY,JSON.stringify(value));
+    }catch(e){}
+  }
+  function captureFrameNavigation(){
+    var overlay=byId('hibouLessonsOverlay');
+    var frame=byId('hibouLessonsFrame');
+    if(!overlay||!overlay.classList.contains('open')||!frame||frame.style.display==='none')return;
+    try{
+      var url=frame.contentWindow.location.href;
+      var parsed=new URL(url,location.href);
+      // N'enregistrer que les pages appartenant à ce même site.
+      if(parsed.origin!==location.origin)return;
+      writeLessonState({subject:currentLessonSubject,url:parsed.href,showLesson:true});
+    }catch(e){}
+  }
+  function restoreLessonNavigation(){
+    if(lessonStateRestored)return;
+    lessonStateRestored=true;
+    var saved=readLessonState();
+    if(!saved||!saved.open||!subjects[saved.subject])return;
+    restoringLessonState=true;
+    openLessons(saved.subject);
+    var frame=byId('hibouLessonsFrame');
+    if(frame&&saved.showLesson&&saved.url&&saved.subject!=='mini'){
+      try{
+        var target=new URL(saved.url,location.href);
+        if(target.origin===location.origin&&/\/bibliotheque_/.test(target.pathname)){
+          frame.style.display='block';
+          frame.setAttribute('src',target.href);
+          var catalog=byId('hibouSubjectCatalog');
+          if(catalog)catalog.hidden=true;
+        }
+      }catch(e){}
+    }
+    restoringLessonState=false;
+  }
+
   function setVersion(){
     // Le titre de l'onglet du site est conservé, pas modifié par Mes leçons.
   }
@@ -44,6 +97,7 @@
     var frame = byId('hibouLessonsFrame');
     if(frame) frame.addEventListener('load', function(){
       injectLibraryCards();
+      captureFrameNavigation();
       // Les pages de leçons maths sont affichées dans cette même iframe.
       // Une image garde ses proportions et occupe presque toute la largeur.
       try {
@@ -99,6 +153,7 @@
     geographie:{title:'La ville et ses quartiers',emoji:'🗺️',hint:'Observer et comprendre la ville',tone:'#e5f6df'},
     histoire:{title:'Habiter autrefois et aujourd’hui',emoji:'🏠',hint:'Comparer les habitations',tone:'#fff0db'},
     recit:{title:'Raconter une histoire dans l’ordre',emoji:'📖',hint:'Début · Événements · Fin',tone:'#eee5ff'},
+    lexique:{title:'Familles de mots, synonymes et contraires',emoji:'🔤',hint:'Des mots qui vont ensemble',tone:'#dcfaf0'}
   };
   function setLessonHeader(subject){
     var values=subjects[subject]||subjects.francais;
@@ -174,23 +229,54 @@
   var mathCoverFiles = {
     'Comprendre la valeur des chiffres':'math-valeur-position.jpg',
     'Comparer, ranger et encadrer les nombres':'math-comparer-ranger.jpg',
-    'Poser et effectuer une addition':'math-addition-posee.jpg',
-    'Poser et effectuer une soustraction':'math-soustraction-posee.jpg',
+    'Poser et effectuer une addition':'math-addition-posee-v30.jpg',
+    'Poser et effectuer une soustraction':'math-soustraction-posee-v30.jpg',
     'Lire, écrire et représenter les nombres jusqu’à 10 000':'math-lire-ecrire-nombres-10000.jpg',
     'Placer des nombres sur une ligne graduée':'math-ligne-graduee.jpg',
     'Comprendre une fraction comme part d’un tout':'math-fractions-part-tout.jpg',
-    'Calculer mentalement une addition':'math-calcul-mental-addition.jpg',
-    'Comprendre la soustraction':'math-comprendre-soustraction.jpg',
+    'Calculer mentalement une addition':'math-calcul-mental-addition-v30.jpg',
+    'Comprendre la soustraction':'math-comprendre-soustraction-v30.jpg',
+    'Calculer mentalement une soustraction':'math-calcul-mental-soustraction-v30.jpg',
     'Placer des fractions sur une bande graduée':'math-fractions-bande-graduee.jpg',
     'Reconnaître des fractions égales':'math-fractions-egales.jpg',
     'Comparer des fractions inférieures ou égales à 1':'math-comparer-fractions.jpg',
     'Additionner et soustraire des fractions':'math-addition-soustraction-fractions.jpg',
-    'Comprendre l’addition':'math-comprendre-addition.jpg',
-    'Comprendre la multiplication':'math-comprendre-multiplication.jpg',
-    'Mémoriser les tables de multiplication':'math-tables-multiplication.jpg',
-    'Multiplier par 10 ou par 100':'math-multiplier-10-100.jpg',
-    'Poser une multiplication par un chiffre':'math-multiplication-posee-un-chiffre.jpg',
-    'Poser une multiplication par deux chiffres':'math-multiplication-posee-deux-chiffres.jpg'
+    'Comprendre l’addition':'math-comprendre-addition-v30.jpg',
+    'Comprendre la multiplication':'math-comprendre-multiplication-v30.jpg',
+    'Comprendre la division':'math-comprendre-division-ce2-v30.jpg',
+    'Mémoriser les tables de multiplication':'math-tables-multiplication-v30.jpg',
+    'Multiplier par 10 ou par 100':'math-multiplier-10-100-v30.jpg',
+    'Poser une multiplication par un chiffre':'math-multiplication-posee-un-chiffre-v30.jpg',
+    'Poser une multiplication par deux chiffres':'math-multiplication-posee-deux-chiffres-v30.jpg',
+    'Trouver des compléments':'math-trouver-complements-v30.jpg',
+    'Calculer des doubles et des moitiés':'math-doubles-moities-v30.jpg',
+    'Résoudre un problème de parties et de tout':'math-probleme-parties-tout.jpg',
+    'Résoudre un problème de comparaison':'math-probleme-comparaison.jpg',
+    'Résoudre un problème de groupes égaux':'math-probleme-groupes-egaux.jpg',
+    'Résoudre un problème de partage ou de groupement':'math-probleme-partage-groupement-ce2.jpg',
+    'Résoudre un problème en plusieurs étapes':'math-probleme-plusieurs-etapes-ce2.jpg',
+    'Reconnaître des points alignés':'math-points-alignes-ce2.jpg',
+    'Distinguer droite, segment et milieu':'math-droite-segment-milieu-ce2.jpg',
+    'Se repérer et reproduire sur un quadrillage':'math-quadrillage-ce2.jpg',
+    'Reconnaître et tracer un angle droit':'math-angle-droit-ce2.jpg',
+    'Reconnaître carré, rectangle et losange':'math-carre-rectangle-losange-ce2.jpg',
+    'Reconnaître un polygone':'math-polygone-ce2.jpg',
+    'Reconnaître les triangles':'math-triangles-ce2.jpg',
+    'Tracer et décrire un cercle':'math-cercle-ce2.jpg',
+    'Reconnaître et décrire des solides':'math-solides-ce2.jpg',
+    'Reconnaître et compléter une symétrie':'math-symetrie-ce2.jpg',
+    'Utiliser les euros et les centimes':'math-euros-centimes-ce2.jpg',
+    'Calculer avec des prix':'math-calculer-avec-prix-ce2.jpg',
+    'Lire l’heure':'math-lire-heure-ce2.jpg',
+    'Calculer une durée':'math-calculer-duree-ce2.jpg',
+    'Lire et compléter un tableau à double entrée':'math-tableau-double-entree-ce2.jpg',
+    'Mesurer et convertir des longueurs':'math-longueurs-conversions-ce2.jpg',
+    'Déterminer le périmètre d’un polygone':'math-perimetre-polygone-ce2.jpg',
+    'Mesurer et comparer des masses':'math-masses-comparaison-ce2.jpg',
+    'Mesurer des contenances':'math-contenances-ce2.jpg',
+    'Lire un diagramme en barres':'math-diagramme-barres-ce2.jpg',
+    'Lire et produire un diagramme en barres':'math-diagramme-barres-ce2.jpg',
+    'Lire un tableau':'math-lire-tableau-ce2.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
@@ -237,8 +323,8 @@
           .searchbar input,.search input{min-width:180px!important;flex:1 1 310px!important;max-width:480px!important;padding:11px 14px!important;font-size:15px!important;border-width:2px!important;}
           .filters{gap:6px!important;}
           .filter{font-size:13px!important;padding:10px 12px!important;}
-          .lesson-grid,.grid{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(190px,1fr))!important;gap:12px!important;}
-          .lesson-card,.grid .card{min-width:0!important;max-width:230px!important;min-height:0!important;padding:12px!important;border-radius:18px!important;display:flex;flex-direction:column!important;background:white!important;border:1px solid #dce6f5!important;box-shadow:0 4px 13px #172e4512!important;}
+          .lesson-grid,.grid{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))!important;gap:12px!important;}
+          .lesson-card,.grid .card{min-height:0!important;padding:12px!important;border-radius:18px!important;display:flex;flex-direction:column!important;background:white!important;border:1px solid #dce6f5!important;box-shadow:0 4px 13px #172e4512!important;}
           .lesson-card h2,.grid .card h2{font:800 17px/1.2 system-ui,sans-serif!important;color:#113965!important;margin:4px 0 8px!important;min-height:40px!important;}
           .lesson-card p,.grid .card p{display:none!important;}
           .lesson-card .badge,.grid .card .tag{order:2!important;font-size:11px!important;align-self:start!important;margin:5px 0!important;padding:4px 8px!important;}
@@ -250,7 +336,7 @@
           /* Couverture complète quand son image est effectivement chargée. */
           .hibou-thumb-has-cover{height:auto!important;aspect-ratio:4/3!important;display:block!important;margin:0!important;border:0!important;background:transparent!important;}
           .hibou-thumb-has-cover .hibou-thumb-symbol,.hibou-thumb-has-cover .hibou-thumb-sample{display:none!important;}
-          .hibou-lesson-cover{display:none;width:100%;max-width:100%;height:100%;object-fit:cover;}
+          .hibou-lesson-cover{display:none;width:100%;height:100%;object-fit:cover;}
           .hibou-thumb-has-cover .hibou-lesson-cover{display:block!important;}
           .lesson-card.hibou-card-has-cover,.grid .card.hibou-card-has-cover{padding:0!important;overflow:hidden!important;}
           .lesson-card.hibou-card-has-cover h2,.lesson-card.hibou-card-has-cover .badge,.grid .card.hibou-card-has-cover h2,.grid .card.hibou-card-has-cover .tag{display:none!important;}
@@ -300,6 +386,7 @@
       catalog.hidden=true;
       var frame=byId('hibouLessonsFrame');
       if(frame){frame.style.display='block';frame.setAttribute('src',SINGLE_URLS[subject]);}
+      writeLessonState({subject:subject,showLesson:true,url:new URL(SINGLE_URLS[subject],location.href).href});
       var back=byId('hibouLessonsBack');if(back)back.hidden=false;
     });
   }
@@ -309,7 +396,7 @@
     if(catalog&&!catalog.hidden){return false;}
     var subject=document.querySelector('.hibou-lessons-tab.active');
     var key=subject&&({hibouLessonsSciences:'sciences',hibouLessonsGeographie:'geographie',hibouLessonsHistoire:'histoire',hibouLessonsRecit:'recit',hibouLessonsLexique:'lexique'})[subject.id];
-    if(key){if(frame)frame.style.display='none';showSubjectCatalog(key);return true;}
+    if(key){if(frame)frame.style.display='none';showSubjectCatalog(key);writeLessonState({showLesson:false,url:''});return true;}
     return false;
   }
 
@@ -366,6 +453,8 @@
   }
 
   function selectSubject(subject){
+    currentLessonSubject=subject;
+    writeLessonState({subject:subject,showLesson:false,url:''});
     var french = byId('hibouLessonsFrench');
     var maths = byId('hibouLessonsMaths');
     var sciences = byId('hibouLessonsSciences');
@@ -377,7 +466,7 @@
     var frame = byId('hibouLessonsFrame');
     var panel = byId('hibouLessonsMiniPanel');
     var isMini = subject === 'mini';
-    var isSingle=!!singlePages[subject] && subject !== 'sciences' && subject !== 'lexique';
+    var isSingle=!!singlePages[subject] && subject !== 'sciences' && subject !== 'geographie';
     var catalog=byId('hibouSubjectCatalog');
     if(catalog)catalog.hidden=true;
     setLessonHeader(subject);
@@ -386,7 +475,7 @@
       francais: ['bibliotheque_lecons/index.html', 'Bibliothèque des leçons de français'],
       maths: ['bibliotheque_math/index.html', 'Bibliothèque des leçons de mathématiques'],
       sciences: ['bibliotheque_sciences/index.html', "Leçon de sciences : les états de l’eau"],
-      geographie: ['bibliotheque_geographie/index.html', 'Leçon de géographie : la ville et ses quartiers'],
+      geographie: ['bibliotheque_geographie/index.html', 'Bibliothèque des 25 leçons de géographie CE2'],
       histoire: ['bibliotheque_histoire/index.html', 'Leçon d’histoire : habiter autrefois et aujourd’hui'],
       recit: ['bibliotheque_recit/index.html', 'Leçon de français : raconter dans l’ordre'],
       lexique: ['bibliotheque_lexique/index.html', 'Leçon de lexique : familles, synonymes, contraires']
@@ -419,6 +508,7 @@
     var overlay = byId('hibouLessonsOverlay');
     if(overlay){
       overlay.classList.add('open');
+      writeLessonState({open:true,subject:subject||'francais'});
       overlay.setAttribute('aria-hidden','false');
       document.body.style.overflow = 'hidden';
       setTimeout(function(){ var c=byId('hibouLessonsClose'); if(c) c.focus(); },30);
@@ -426,6 +516,7 @@
   }
 
   function closeLessons(){
+    writeLessonState({open:false});
     var overlay = byId('hibouLessonsOverlay');
     if(overlay){
       overlay.classList.remove('open');
@@ -465,11 +556,13 @@
     setVersion();
     createPopup();
     installButton();
+    restoreLessonNavigation();
   }
 
   window.openHibouLessons = function(){ openLessons('francais'); };
   window.openHibouMiniLesson = function(){ openLessons('mini'); };
   window.closeHibouLessons = closeLessons;
+  window.addEventListener('pagehide',captureFrameNavigation);
 
   document.addEventListener('keydown', function(ev){
     if(ev.key === 'Escape' && byId('hibouLessonsOverlay') && byId('hibouLessonsOverlay').classList.contains('open')) closeLessons();
