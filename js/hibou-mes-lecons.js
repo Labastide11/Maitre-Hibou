@@ -170,25 +170,54 @@
   };
   // Couvertures de mathématiques : titres exacts du catalogue mathématique.
   var mathCoverFiles = {
+    'Lire, écrire et représenter les nombres jusqu’à 10 000':'math-lire-ecrire-nombres-10000.jpg',
     'Comprendre la valeur des chiffres':'math-valeur-position.jpg',
     'Comparer, ranger et encadrer les nombres':'math-comparer-ranger.jpg',
-    'Poser et effectuer une addition':'math-addition-posee.jpg',
-    'Poser et effectuer une soustraction':'math-soustraction-posee.jpg',
-    'Lire, écrire et représenter les nombres jusqu’à 10 000':'math-lire-ecrire-nombres-10000.jpg',
     'Placer des nombres sur une ligne graduée':'math-ligne-graduee.jpg',
     'Comprendre une fraction comme part d’un tout':'math-fractions-part-tout.jpg',
-    'Calculer mentalement une addition':'math-calcul-mental-addition.jpg',
-    'Comprendre la soustraction':'math-comprendre-soustraction.jpg',
     'Placer des fractions sur une bande graduée':'math-fractions-bande-graduee.jpg',
     'Reconnaître des fractions égales':'math-fractions-egales.jpg',
     'Comparer des fractions inférieures ou égales à 1':'math-comparer-fractions.jpg',
     'Additionner et soustraire des fractions':'math-addition-soustraction-fractions.jpg',
     'Comprendre l’addition':'math-comprendre-addition.jpg',
+    'Calculer mentalement une addition':'math-calcul-mental-addition.jpg',
+    'Poser et effectuer une addition':'math-addition-posee-v30.jpg',
+    'Comprendre la soustraction':'math-comprendre-soustraction.jpg',
+    'Calculer mentalement une soustraction':'math-calcul-mental-soustraction.jpg',
+    'Poser et effectuer une soustraction':'math-soustraction-posee.jpg',
     'Comprendre la multiplication':'math-comprendre-multiplication.jpg',
     'Mémoriser les tables de multiplication':'math-tables-multiplication.jpg',
     'Multiplier par 10 ou par 100':'math-multiplier-10-100.jpg',
     'Poser une multiplication par un chiffre':'math-multiplication-posee-un-chiffre.jpg',
-    'Poser une multiplication par deux chiffres':'math-multiplication-posee-deux-chiffres.jpg'
+    'Poser une multiplication par deux chiffres':'math-multiplication-posee-deux-chiffres.jpg',
+    'Comprendre la division':'math-comprendre-division-ce2.jpg',
+    'Trouver des compléments':'math-trouver-complements.jpg',
+    'Calculer des doubles et des moitiés':'math-doubles-moities.jpg',
+    'Résoudre un problème de parties et de tout':'math-probleme-parties-tout.jpg',
+    'Résoudre un problème de comparaison':'math-probleme-comparaison.jpg',
+    'Résoudre un problème de groupes égaux':'math-probleme-groupes-egaux.jpg',
+    'Résoudre un problème de partage ou de groupement':'math-probleme-partage-groupement-ce2.jpg',
+    'Résoudre un problème en plusieurs étapes':'math-probleme-plusieurs-etapes-ce2.jpg',
+    'Reconnaître des points alignés':'math-points-alignes-ce2.jpg',
+    'Distinguer droite, segment et milieu':'math-droite-segment-milieu-ce2.jpg',
+    'Se repérer et reproduire sur un quadrillage':'math-quadrillage-ce2.jpg',
+    'Reconnaître et tracer un angle droit':'math-angle-droit-ce2.jpg',
+    'Reconnaître un polygone':'math-polygone-ce2.jpg',
+    'Reconnaître carré, rectangle et losange':'math-carre-rectangle-losange-ce2.jpg',
+    'Reconnaître les triangles':'math-triangles-ce2.jpg',
+    'Tracer et décrire un cercle':'math-cercle-ce2.jpg',
+    'Reconnaître et décrire des solides':'math-solides-ce2.jpg',
+    'Reconnaître et compléter une symétrie':'math-symetrie-ce2.jpg',
+    'Mesurer et convertir des longueurs':'math-longueurs-conversions-ce2.jpg',
+    'Déterminer le périmètre d’un polygone':'math-perimetre-polygone-ce2.jpg',
+    'Mesurer et comparer des masses':'math-masses-comparaison-ce2.jpg',
+    'Mesurer des contenances':'math-contenances-ce2.jpg',
+    'Utiliser les euros et les centimes':'math-euros-centimes-ce2.jpg',
+    'Calculer avec des prix':'math-calculer-avec-prix-ce2.jpg',
+    'Lire l’heure':'math-lire-heure-ce2.jpg',
+    'Calculer une durée':'math-calculer-duree-ce2.jpg',
+    'Lire et compléter un tableau à double entrée':'math-tableau-double-entree-ce2.jpg',
+    'Lire et produire un diagramme en barres':'math-diagramme-barres-ce2.jpg'
   };
   function makeThumb(doc,title,domain){
     var a=artFor(title,domain), d=doc.createElement('div');
@@ -212,7 +241,7 @@
       img.addEventListener('load',activateCover);
       img.addEventListener('error',function(){img.remove();});
       // doc est /bibliotheque_lecons/index.html : remonter à la racine.
-      img.src='../images-lecons/'+(isMathCatalog ? 'maths/' : 'francais/')+coverFile;
+      img.src=isMathCatalog ? '../images-lecons/maths/miniatures/'+coverFile : '../images-lecons/francais/'+coverFile;
       d.appendChild(img);
       if(img.complete && img.naturalWidth) activateCover();
     }
@@ -226,8 +255,17 @@
       // Géographie : les cartes possèdent déjà leur miniature native.
       // Ne pas ajouter la vignette « Je découvre ! » sous les titres.
       if(/\/bibliotheque_geographie\//.test(doc.location.pathname)){
-        // Les 25 miniatures du catalogue sont directement référencées en JPG.
+        // Les illustrations photographiques sont servies en JPG standards :
+        // ne pas laisser le navigateur interpréter un JPEG embarqué dans un SVG.
         doc.querySelectorAll('.hibou-lesson-thumb').forEach(function(thumb){thumb.remove();});
+        var geoJpgIds = ['geo-p4-02','geo-p4-03','geo-p4-04'];
+        geoJpgIds.forEach(function(id){
+          var img = doc.querySelector('img[src="miniatures/'+id+'.svg"]');
+          if(img){
+            img.src='miniatures/'+id+'.jpg';
+            img.setAttribute('loading','eager');
+          }
+        });
         return;
       }
       var cards=Array.from(doc.querySelectorAll('.lesson-grid .lesson-card,.grid .card'));
