@@ -377,7 +377,7 @@
     var frame = byId('hibouLessonsFrame');
     var panel = byId('hibouLessonsMiniPanel');
     var isMini = subject === 'mini';
-    var isSingle=!!singlePages[subject] && subject !== 'sciences' && subject !== 'lexique';
+    var isSingle=!!singlePages[subject] && subject !== 'sciences' && subject !== 'lexique' && subject !== 'geographie';
     var catalog=byId('hibouSubjectCatalog');
     if(catalog)catalog.hidden=true;
     setLessonHeader(subject);
@@ -386,7 +386,7 @@
       francais: ['bibliotheque_lecons/index.html', 'Bibliothèque des leçons de français'],
       maths: ['bibliotheque_math/index.html', 'Bibliothèque des leçons de mathématiques'],
       sciences: ['bibliotheque_sciences/index.html', "Leçon de sciences : les états de l’eau"],
-      geographie: ['bibliotheque_geographie/index.html', 'Leçon de géographie : la ville et ses quartiers'],
+      geographie: ['bibliotheque_geographie/index.html', 'Bibliothèque des 25 leçons de géographie'],
       histoire: ['bibliotheque_histoire/index.html', 'Leçon d’histoire : habiter autrefois et aujourd’hui'],
       recit: ['bibliotheque_recit/index.html', 'Leçon de français : raconter dans l’ordre'],
       lexique: ['bibliotheque_lexique/index.html', 'Leçon de lexique : familles, synonymes, contraires']
