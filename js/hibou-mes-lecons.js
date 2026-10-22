@@ -128,11 +128,11 @@
     'La phrase interrogative':'grammaire-phrase-interrogative.jpg',
     'Les formes de phrases':'grammaire-formes-phrases.jpg',
     'Les classes de mots':'grammaire-classes-mots.jpg',
-    'Le déterminant':'grammaire-determinant.png',
-    'Le groupe nominal':'grammaire-groupe-nominal.png',
-    'Le verbe':'grammaire-verbe.png',
-    'Le sujet du verbe':'grammaire-sujet-verbe.png',
-    'Les compléments du verbe':'grammaire-complements-verbe.png',
+    'Le déterminant':'grammaire-determinant.jpg',
+    'Le groupe nominal':'grammaire-groupe-nominal.jpg',
+    'Le verbe':'grammaire-verbe.jpg',
+    'Le sujet du verbe':'grammaire-sujet-verbe.jpg',
+    'Les compléments du verbe':'grammaire-complements-verbe.jpg',
     'Les groupes dans la phrase':'grammaire-groupes-phrase.jpg',
     'L’adverbe':'grammaire-adverbe.jpg',
     'Les mots variables et invariables':'grammaire-mots-variables-invariables.jpg',
@@ -241,7 +241,7 @@
       img.addEventListener('load',activateCover);
       img.addEventListener('error',function(){img.remove();});
       // doc est /bibliotheque_lecons/index.html : remonter à la racine.
-      img.src=isMathCatalog ? '../images-lecons/maths/miniatures/'+coverFile : '../images-lecons/francais/'+coverFile;
+      img.src=isMathCatalog ? '../images-lecons/maths/miniatures/'+coverFile : '../images-lecons/francais/miniatures/'+coverFile;
       d.appendChild(img);
       if(img.complete && img.naturalWidth) activateCover();
     }
