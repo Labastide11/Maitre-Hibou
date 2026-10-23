@@ -286,12 +286,12 @@
     return 'P5';
   }
   function storedPeriod(subject){
-    try{var value=sessionStorage.getItem('hibou-period-'+subject);
+    try{var value=sessionStorage.getItem('hibou-period-auto-v2-'+subject);
       return ['Toutes','P1','P2','P3','P4','P5'].includes(value)?value:currentSchoolPeriod();
     }catch(e){return currentSchoolPeriod();}
   }
   function rememberPeriod(subject,value){
-    try{sessionStorage.setItem('hibou-period-'+subject,value);}catch(e){}
+    try{sessionStorage.setItem('hibou-period-auto-v2-'+subject,value);}catch(e){}
   }
   function activateNativePeriod(doc){
     var pathname=doc.location.pathname;
@@ -358,6 +358,8 @@
             img.setAttribute('loading','eager');
           }
         });
+        // Activer la période scolaire en cours avant de quitter la branche Géographie.
+        activateNativePeriod(doc);
         // Conserver les filtres natifs P1-P5, en dessous de la recherche.
         // Supprimer seulement le bandeau bleu et le décompte visuel.
         if(!doc.getElementById('hibouGeoNavStyle')){
