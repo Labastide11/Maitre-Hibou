@@ -4899,6 +4899,27 @@ body.v25-7-73-simplified-home .v25821-belt-ico img{
 }
 </style>
 
+<style id="hibou-double-navigation-v1">
+/* Deux rangées compactes au-dessus de toute page de leçon. */
+#hibouLessonNav.hibou-lesson-nav{display:flex;align-items:center;gap:7px;padding:7px 14px;background:#edf4fc;border-bottom:1px solid #d5e2f2;flex:0 0 auto;min-height:47px;}
+#hibouLessonNav[hidden],#hibouLessonFilters[hidden],#hibouLessonCatalogBtn[hidden]{display:none!important}
+#hibouLessonFilters{display:flex;align-items:center;gap:6px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:thin;white-space:nowrap}
+.hibou-lesson-nav-btn{flex:0 0 auto;background:white;border:1px solid #d5e2f2;border-radius:999px;color:#153d70;padding:8px 12px;font:750 12px system-ui,sans-serif;cursor:pointer;white-space:nowrap}
+.hibou-lesson-nav-btn.active{background:#173b70;color:#fff;border-color:#173b70}
+.hibou-fullscreen-btn{margin-left:auto;background:#e7f4f6;border-color:#24b7bb;color:#09575c}
+.hibou-lessons-dialog{display:flex!important;flex-direction:column!important}
+.hibou-lessons-content{flex:1 1 auto!important;min-height:0!important;overflow:hidden!important}
+#hibouLessonsFrame{width:100%;height:100%;min-height:0}
+/* Le mode projection masque uniquement les deux navigations, pas le contenu. */
+#hibouLessonsOverlay.hibou-lesson-fullscreen .hibou-lessons-tabs{display:none!important}
+#hibouLessonsOverlay.hibou-lesson-fullscreen .hibou-lessons-header{display:none!important}
+#hibouLessonsOverlay.hibou-lesson-fullscreen #hibouLessonFilters,#hibouLessonsOverlay.hibou-lesson-fullscreen #hibouLessonCatalogBtn{display:none!important}
+#hibouLessonsOverlay.hibou-lesson-fullscreen #hibouLessonNav{justify-content:flex-end;background:#edf4fc;min-height:38px;padding:3px 10px}
+#hibouLessonsOverlay.hibou-lesson-fullscreen .hibou-fullscreen-btn{padding:5px 10px}
+#hibouLessonsOverlay.hibou-lesson-fullscreen .hibou-lessons-dialog{width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;margin:0!important;border-radius:0!important}
+#hibouLessonsOverlay.hibou-lesson-fullscreen{padding:0!important}
+@media(max-width:700px){#hibouLessonNav.hibou-lesson-nav{padding:5px;gap:4px}.hibou-lesson-nav-btn{padding:7px 9px;font-size:11px}}
+</style>
 </head>
 <body class="prenom-mode">
 <header>
@@ -33777,7 +33798,7 @@ header .logo-icon img{
 </script>
 <!-- V25.7.47 — Mes leçons, modification isolée -->
 <link href="css/hibou-mes-lecons.css?v=25895" rel="stylesheet"/>
-<script src="js/hibou-mes-lecons.js?v=25898-nav-sciences-geo"></script>
+<script src="js/hibou-mes-lecons.js?v=25899-double-nav-fullscreen"></script>
 <!-- V25.7.57 — Agrandissement isolé des icônes des 4 boutons, sans modifier leurs dimensions -->
 <style id="hibou-big-action-icons-v25749">
   .v24-advice-btn.hibou-big-action-icon{
