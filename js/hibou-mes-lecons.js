@@ -134,7 +134,11 @@
           var btn=document.createElement('button');btn.type='button';btn.className='hibou-lesson-nav-btn';btn.textContent=label;
           btn.addEventListener('click',function(){
             rememberedFilters[activeLessonSubject]=label;
-            native.click();refreshFilterActive();
+            if(isCatalogPage((function(){try{return frame.contentWindow.location.pathname;}catch(e){return '';}})())){
+              native.click();refreshFilterActive();
+            }else{
+              returnToCatalog(label);
+            }
           });
           filters.appendChild(btn);
         });

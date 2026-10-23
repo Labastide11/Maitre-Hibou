@@ -4920,6 +4920,28 @@ body.v25-7-73-simplified-home .v25821-belt-ico img{
 #hibouLessonsOverlay.hibou-lesson-fullscreen{padding:0!important}
 @media(max-width:700px){#hibouLessonNav.hibou-lesson-nav{padding:5px;gap:4px}.hibou-lesson-nav-btn{padding:7px 9px;font-size:11px}}
 </style>
+<style id="hibou-double-navigation-v2">
+/* Correctif V2 : en-tête très compact et contrôles toujours accessibles. */
+#hibouLessonsOverlay .hibou-lessons-header{
+  height:32px!important;min-height:32px!important;max-height:32px!important;
+  flex:0 0 32px!important;padding:0 8px!important;margin:0!important;
+  background:#102855!important;display:flex!important;justify-content:flex-end!important;
+  align-items:center!important;overflow:hidden!important;
+}
+#hibouLessonsOverlay .hibou-lessons-header .owl,
+#hibouLessonsOverlay .hibou-lessons-header .hibou-lessons-title{display:none!important}
+#hibouLessonsOverlay .hibou-lessons-close{
+  position:static!important;flex:0 0 27px!important;width:27px!important;height:27px!important;
+  min-height:27px!important;margin:0!important;padding:0!important;line-height:23px!important;
+  font-size:21px!important;display:flex!important;align-items:center!important;justify-content:center!important;
+}
+#hibouLessonsOverlay .hibou-lessons-dialog{min-height:0!important;overflow:hidden!important}
+#hibouLessonsOverlay #hibouLessonNav{order:2!important;min-height:38px!important;padding:4px 10px!important}
+#hibouLessonsOverlay .hibou-lessons-tabs{order:0!important;flex-shrink:0!important}
+#hibouLessonsOverlay .hibou-lessons-header{order:1!important}
+#hibouLessonsOverlay .hibou-lessons-content{order:3!important}
+#hibouLessonsOverlay .hibou-lesson-nav-btn{min-height:28px!important;padding:5px 10px!important}
+</style>
 </head>
 <body class="prenom-mode">
 <header>
