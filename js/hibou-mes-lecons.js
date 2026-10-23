@@ -272,6 +272,41 @@
       P5: ['Additionner et soustraire des fractions','Poser une multiplication par deux chiffres','Comprendre la division','Résoudre un problème en plusieurs étapes','Reconnaître et compléter une symétrie','Utiliser les euros et les centimes','Calculer avec des prix','Calculer une durée','Lire et produire un diagramme en barres']
     }
   };
+
+  // Calendrier officiel 2026-2027, zone C (Montpellier).
+  // Pendant les vacances : dernière période travaillée.
+  function currentSchoolPeriod(){
+    var d=new Date(), y=d.getFullYear(),m=d.getMonth()+1,day=d.getDate();
+    var key=y*10000+m*100+day;
+    if(key<20260901)return 'P1';
+    if(key<20261102)return 'P1';
+    if(key<20270104)return 'P2';
+    if(key<20270222)return 'P3';
+    if(key<20270419)return 'P4';
+    return 'P5';
+  }
+  function storedPeriod(subject){
+    try{var value=sessionStorage.getItem('hibou-period-'+subject);
+      return ['Toutes','P1','P2','P3','P4','P5'].includes(value)?value:currentSchoolPeriod();
+    }catch(e){return currentSchoolPeriod();}
+  }
+  function rememberPeriod(subject,value){
+    try{sessionStorage.setItem('hibou-period-'+subject,value);}catch(e){}
+  }
+  function activateNativePeriod(doc){
+    var pathname=doc.location.pathname;
+    var subject=/\/bibliotheque_geographie\/index\.html$/.test(pathname)?'geographie':/\/bibliotheque_lexique\/index\.html$/.test(pathname)?'lexique':null;
+    if(!subject||doc.documentElement.dataset.hibouAutoPeriodReady)return;
+    var buttons=Array.from(doc.querySelectorAll(subject==='geographie'?'button[data-period]':'button[data-filter]'));
+    if(buttons.length<6)return;
+    doc.documentElement.dataset.hibouAutoPeriodReady='1';
+    buttons.forEach(function(button){button.addEventListener('click',function(){
+      rememberPeriod(subject,subject==='geographie'?button.dataset.period:button.dataset.filter==='all'?'Toutes':button.dataset.filter.toUpperCase());
+    });});
+    var value=storedPeriod(subject);
+    var desired=buttons.find(function(b){return subject==='geographie'?b.dataset.period===value:b.dataset.filter===(value==='Toutes'?'all':value.toLowerCase());});
+    if(desired)desired.click();
+  }
   function normalizeLessonTitle(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’]/g,"'").toLowerCase().trim();}
   function installPeriodBar(doc){
     var pathname=doc.location.pathname;
@@ -287,7 +322,7 @@
     var mapping=periodsBySubject[subject], periods=['Toutes','P1','P2','P3','P4','P5'];
     var titlePeriod={};Object.keys(mapping).forEach(function(p){mapping[p].forEach(function(t){titlePeriod[normalizeLessonTitle(t)]=p;});});
     cards.forEach(function(card){var title=textOf(card.querySelector('h2'));card.dataset.hibouPeriod=card.dataset.period||titlePeriod[normalizeLessonTitle(title)]||'non-classee';});
-    var selected='Toutes';
+    var selected=storedPeriod(subject);
     function applyPeriod(){
       cards.forEach(function(card){card.classList.toggle('hibou-period-hidden',selected!=='Toutes'&&card.dataset.hibouPeriod!==selected);});
       // Corrige aussi l'état "aucun résultat" du catalogue français.
@@ -296,7 +331,7 @@
         empty.style.display=hasVisible?'none':'block';
       }
     }
-    periods.forEach(function(period){var button=doc.createElement('button');button.type='button';button.className='hibou-period-btn'+(period==='Toutes'?' active':'');button.textContent=period;button.setAttribute('aria-pressed',period==='Toutes'?'true':'false');button.addEventListener('click',function(){selected=period;bar.querySelectorAll('button').forEach(function(b){var on=b===button;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on));});applyPeriod();});bar.appendChild(button);});
+    periods.forEach(function(period){var button=doc.createElement('button');button.type='button';button.className='hibou-period-btn'+(period===selected?' active':'');button.textContent=period;button.setAttribute('aria-pressed',period===selected?'true':'false');button.addEventListener('click',function(){selected=period;rememberPeriod(subject,period);bar.querySelectorAll('button').forEach(function(b){var on=b===button;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on));});applyPeriod();});bar.appendChild(button);});
     toolbar.insertAdjacentElement('afterend',bar);
     // Les filtres d'origine restent maîtres : on recalcule après leurs événements.
     doc.addEventListener('input',function(e){if(e.target.matches('#search,#q'))setTimeout(applyPeriod,0);});
@@ -333,6 +368,7 @@
       }
       if(/\/bibliotheque_sciences\/index\.html$/.test(doc.location.pathname)){
         installPeriodBar(doc);
+        activateNativePeriod(doc);
         if(!doc.getElementById('hibouScienceNavStyle')){
           var sciStyle=doc.createElement('style');sciStyle.id='hibouScienceNavStyle';
           sciStyle.textContent='.shell{padding:12px 14px 24px!important}.searchbar{margin:2px 0 4px!important}.searchbar input{flex:1 1 260px!important;max-width:480px!important}.hibou-period-bar{margin:3px 0 10px!important;padding:0 0 7px!important}.cards .card.hibou-period-hidden{display:none!important}';
@@ -341,6 +377,7 @@
         return;
       }
       installPeriodBar(doc);
+        activateNativePeriod(doc);
       var cards=Array.from(doc.querySelectorAll('.lesson-grid .lesson-card,.grid .card'));
       if(!cards.length)return;
       if(!doc.getElementById('hibouCardTheme')){
