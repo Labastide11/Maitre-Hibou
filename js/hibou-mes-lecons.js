@@ -247,10 +247,16 @@
     }
     return d;
   }
-  // Barre de périodes ajoutée uniquement aux catalogues Français et Mathématiques.
+  // Barre de périodes pour Français, Mathématiques et Sciences (classement sciences provisoire).
   // Le catalogue source ne fournit pas encore data-period : classement initial explicite,
   // à ajuster à la progression annuelle lorsque les périodes sont confirmées.
   var periodsBySubject = {
+    sciences: {
+      P1: ['La démarche scientifique','L’air existe et prend de la place','L’air peut être comprimé','L’eau et l’huile ne se mélangent pas','Transparent, translucide ou opaque ?','Comment se forme une ombre ?'],
+      P2: ['Les trois états de l’eau','Les changements d’état de l’eau','Flotte ou coule ?'],
+      P3: ['Comment fonctionne un VTT ?','Le VTT : rouler en sécurité'],
+      P4: [], P5: []
+    },
     francais: {
       P1: ['La phrase et la ponctuation','Les types de phrases','Les classes de mots','Le déterminant','Le groupe nominal','Le verbe','L’ordre alphabétique','Le présent','Le pluriel des noms','Je m’installe bien','Les lettres minuscules'],
       P2: ['La phrase interrogative','Le sujet du verbe','Le présent de quelques verbes irréguliers','Le dictionnaire','La lettre G','L’accord sujet-verbe','Je soigne ma présentation','Je copie sans erreur'],
@@ -269,9 +275,9 @@
   function normalizeLessonTitle(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’]/g,"'").toLowerCase().trim();}
   function installPeriodBar(doc){
     var pathname=doc.location.pathname;
-    var subject=/\/bibliotheque_math\/index\.html$/.test(pathname)?'maths':/\/bibliotheque_lecons\/index\.html$/.test(pathname)?'francais':null;
+    var subject=/\/bibliotheque_math\/index\.html$/.test(pathname)?'maths':/\/bibliotheque_lecons\/index\.html$/.test(pathname)?'francais':/\/bibliotheque_sciences\/index\.html$/.test(pathname)?'sciences':null;
     if(!subject) return;
-    var cards=Array.from(doc.querySelectorAll(subject==='maths'?'.grid .card':'.lesson-grid .lesson-card'));
+    var cards=Array.from(doc.querySelectorAll(subject==='maths'?'.grid .card':subject==='sciences'?'.cards .card':'.lesson-grid .lesson-card'));
     var toolbar=doc.querySelector(subject==='maths'?'.search':'.searchbar');
     if(!cards.length||!toolbar||doc.getElementById('hibouPeriodBar'))return;
     var style=doc.createElement('style');style.id='hibouPeriodsCSS';
@@ -316,6 +322,22 @@
             img.setAttribute('loading','eager');
           }
         });
+        // Conserver les filtres natifs P1-P5, en dessous de la recherche.
+        // Supprimer seulement le bandeau bleu et le décompte visuel.
+        if(!doc.getElementById('hibouGeoNavStyle')){
+          var geoStyle=doc.createElement('style');geoStyle.id='hibouGeoNavStyle';
+          geoStyle.textContent='body{background:#edf4fc!important}.wrap{max-width:none!important;padding:12px 14px 24px!important}.wrap>.hero{display:none!important}.toolbar{position:static!important;display:flex!important;flex-wrap:wrap!important;gap:8px!important;padding:2px 0 8px!important;background:transparent!important}.toolbar>.search{flex:1 1 100%!important;max-width:none!important;border-radius:14px!important;min-height:43px!important}.toolbar>.filters{order:2!important;display:flex!important;flex:1 1 100%!important;flex-wrap:nowrap!important;overflow-x:auto!important;gap:6px!important;padding:1px 0 7px!important}.toolbar>.filters>.filter{flex:1 0 auto!important;min-width:54px!important;padding:8px 12px!important;font-size:13px!important;border-radius:12px!important}.toolbar>.count{display:none!important}.grid{margin-top:5px!important}';
+          doc.head.appendChild(geoStyle);
+        }
+        return;
+      }
+      if(/\/bibliotheque_sciences\/index\.html$/.test(doc.location.pathname)){
+        installPeriodBar(doc);
+        if(!doc.getElementById('hibouScienceNavStyle')){
+          var sciStyle=doc.createElement('style');sciStyle.id='hibouScienceNavStyle';
+          sciStyle.textContent='.shell{padding:12px 14px 24px!important}.searchbar{margin:2px 0 4px!important}.searchbar input{flex:1 1 260px!important;max-width:480px!important}.hibou-period-bar{margin:3px 0 10px!important;padding:0 0 7px!important}.cards .card.hibou-period-hidden{display:none!important}';
+          doc.head.appendChild(sciStyle);
+        }
         return;
       }
       installPeriodBar(doc);
