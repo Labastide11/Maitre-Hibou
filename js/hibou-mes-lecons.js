@@ -247,6 +247,56 @@
     }
     return d;
   }
+  // Barre de périodes ajoutée uniquement aux catalogues Français et Mathématiques.
+  // Le catalogue source ne fournit pas encore data-period : classement initial explicite,
+  // à ajuster à la progression annuelle lorsque les périodes sont confirmées.
+  var periodsBySubject = {
+    francais: {
+      P1: ['La phrase et la ponctuation','Les types de phrases','Les classes de mots','Le déterminant','Le groupe nominal','Le verbe','L’ordre alphabétique','Le présent','Le pluriel des noms','Je m’installe bien','Les lettres minuscules'],
+      P2: ['La phrase interrogative','Le sujet du verbe','Le présent de quelques verbes irréguliers','Le dictionnaire','La lettre G','L’accord sujet-verbe','Je soigne ma présentation','Je copie sans erreur'],
+      P3: ['Les formes de phrases','Les compléments du verbe','Le futur','Le futur de quelques verbes irréguliers','Les synonymes','La lettre C','Le pluriel des adjectifs','J’écris une phrase'],
+      P4: ['Les groupes dans la phrase','L’imparfait','L’imparfait de quelques verbes irréguliers','Familles de mots, préfixes et suffixes','Synonymes et antonymes','La lettre S','Le féminin des noms','a / à','et / est'],
+      P5: ['L’adverbe','Les mots variables et invariables','Le passé composé','Le passé composé : avoir et être','Le passé composé de quelques verbes irréguliers','Le champ lexical','Les termes génériques et spécifiques','Le sens propre et le sens figuré','Les niveaux de langue','Le féminin des adjectifs','m devant m, b et p','Je relis et j’améliore mon texte']
+    },
+    maths: {
+      P1: ['Lire, écrire et représenter les nombres jusqu’à 10 000','Comprendre la valeur des chiffres','Comparer, ranger et encadrer les nombres','Comprendre l’addition','Calculer mentalement une addition','Poser et effectuer une addition','Comprendre la multiplication','Résoudre un problème de parties et de tout','Reconnaître des points alignés','Distinguer droite, segment et milieu'],
+      P2: ['Placer des nombres sur une ligne graduée','Comprendre la soustraction','Calculer mentalement une soustraction','Poser et effectuer une soustraction','Mémoriser les tables de multiplication','Trouver des compléments','Résoudre un problème de comparaison','Se repérer et reproduire sur un quadrillage','Reconnaître et tracer un angle droit','Déterminer le périmètre d’un polygone'],
+      P3: ['Comprendre une fraction comme part d’un tout','Placer des fractions sur une bande graduée','Calculer des doubles et des moitiés','Multiplier par 10 ou par 100','Résoudre un problème de groupes égaux','Reconnaître un polygone','Reconnaître carré, rectangle et losange','Reconnaître les triangles','Mesurer et convertir des longueurs'],
+      P4: ['Reconnaître des fractions égales','Comparer des fractions inférieures ou égales à 1','Poser une multiplication par un chiffre','Résoudre un problème de partage ou de groupement','Tracer et décrire un cercle','Reconnaître et décrire des solides','Mesurer et comparer des masses','Mesurer des contenances','Lire l’heure','Lire et compléter un tableau à double entrée'],
+      P5: ['Additionner et soustraire des fractions','Poser une multiplication par deux chiffres','Comprendre la division','Résoudre un problème en plusieurs étapes','Reconnaître et compléter une symétrie','Utiliser les euros et les centimes','Calculer avec des prix','Calculer une durée','Lire et produire un diagramme en barres']
+    }
+  };
+  function normalizeLessonTitle(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’]/g,"'").toLowerCase().trim();}
+  function installPeriodBar(doc){
+    var pathname=doc.location.pathname;
+    var subject=/\/bibliotheque_math\/index\.html$/.test(pathname)?'maths':/\/bibliotheque_lecons\/index\.html$/.test(pathname)?'francais':null;
+    if(!subject) return;
+    var cards=Array.from(doc.querySelectorAll(subject==='maths'?'.grid .card':'.lesson-grid .lesson-card'));
+    var toolbar=doc.querySelector(subject==='maths'?'.search':'.searchbar');
+    if(!cards.length||!toolbar||doc.getElementById('hibouPeriodBar'))return;
+    var style=doc.createElement('style');style.id='hibouPeriodsCSS';
+    style.textContent='.hibou-period-bar{display:flex;gap:6px;align-items:center;padding:0 0 12px;margin:0 0 5px;max-width:100%;overflow-x:auto;scrollbar-width:thin}.hibou-period-btn{flex:1 0 auto;min-width:58px;padding:8px 12px;border:1px solid #d5e2f2;border-radius:12px;background:#fff;color:#244771;font:800 13px system-ui,sans-serif;cursor:pointer}.hibou-period-btn.active{background:#183d78;color:#fff;border-color:#183d78}.hibou-period-hidden{display:none!important}@media(max-width:580px){.hibou-period-btn{min-width:42px;padding:8px 6px;font-size:12px}}';
+    doc.head.appendChild(style);
+    var bar=doc.createElement('nav');bar.id='hibouPeriodBar';bar.className='hibou-period-bar';bar.setAttribute('aria-label','Filtrer les leçons par période');
+    var mapping=periodsBySubject[subject], periods=['Toutes','P1','P2','P3','P4','P5'];
+    var titlePeriod={};Object.keys(mapping).forEach(function(p){mapping[p].forEach(function(t){titlePeriod[normalizeLessonTitle(t)]=p;});});
+    cards.forEach(function(card){var title=textOf(card.querySelector('h2'));card.dataset.hibouPeriod=card.dataset.period||titlePeriod[normalizeLessonTitle(title)]||'non-classee';});
+    var selected='Toutes';
+    function applyPeriod(){
+      cards.forEach(function(card){card.classList.toggle('hibou-period-hidden',selected!=='Toutes'&&card.dataset.hibouPeriod!==selected);});
+      // Corrige aussi l'état "aucun résultat" du catalogue français.
+      var empty=doc.getElementById('empty');if(empty){
+        var hasVisible=cards.some(function(c){return !c.classList.contains('hibou-period-hidden')&&c.style.display!=='none';});
+        empty.style.display=hasVisible?'none':'block';
+      }
+    }
+    periods.forEach(function(period){var button=doc.createElement('button');button.type='button';button.className='hibou-period-btn'+(period==='Toutes'?' active':'');button.textContent=period;button.setAttribute('aria-pressed',period==='Toutes'?'true':'false');button.addEventListener('click',function(){selected=period;bar.querySelectorAll('button').forEach(function(b){var on=b===button;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on));});applyPeriod();});bar.appendChild(button);});
+    toolbar.insertAdjacentElement('afterend',bar);
+    // Les filtres d'origine restent maîtres : on recalcule après leurs événements.
+    doc.addEventListener('input',function(e){if(e.target.matches('#search,#q'))setTimeout(applyPeriod,0);});
+    doc.querySelectorAll('.filter').forEach(function(b){b.addEventListener('click',function(){setTimeout(applyPeriod,0);});});
+    applyPeriod();
+  }
   function injectLibraryCards(){
     var frame=byId('hibouLessonsFrame');if(!frame)return;
     try{
@@ -268,6 +318,7 @@
         });
         return;
       }
+      installPeriodBar(doc);
       var cards=Array.from(doc.querySelectorAll('.lesson-grid .lesson-card,.grid .card'));
       if(!cards.length)return;
       if(!doc.getElementById('hibouCardTheme')){
