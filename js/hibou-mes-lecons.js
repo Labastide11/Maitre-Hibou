@@ -345,6 +345,7 @@
       if(!doc||!doc.body)return;
       // Géographie : les cartes possèdent déjà leur miniature native.
       // Ne pas ajouter la vignette « Je découvre ! » sous les titres.
+      if(/\/bibliotheque_histoire\//.test(doc.location.pathname)){return;}
       if(/\/bibliotheque_geographie\//.test(doc.location.pathname)){
         // Les illustrations photographiques sont servies en JPG standards :
         // ne pas laisser le navigateur interpréter un JPEG embarqué dans un SVG.
