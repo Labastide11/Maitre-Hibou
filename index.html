@@ -34711,6 +34711,101 @@ window.openHibouSuitesGame=begin;
   #htg-panel *,#hsg-panel * {scroll-behavior:auto !important}
 }
 </style>
+<!-- Maître Hibou : alignement accueil PC uniquement (tablettes et téléphones inchangés) -->
+<style id="mh-pc-home-centered-v1">
+/* Seuls les postes de bureau avec souris et une largeur confortable sont concernés. */
+@media screen and (min-width: 1250px) and (hover: hover) and (pointer: fine) {
+  body.v25-7-73-simplified-home.v21-final {
+    --mh-pc-rail: min(1400px, calc(100vw - 100px));
+  }
+  body.v25-7-73-simplified-home.v21-final .v21-home {
+    padding-top: clamp(28px, 5vh, 60px) !important;
+    padding-bottom: 140px !important;
+    min-height: calc(100dvh - 112px) !important;
+  }
+  body.v25-7-73-simplified-home.v21-final #v2574MainDashboard,
+  body.v25-7-73-simplified-home.v21-final .v21-center {
+    width: var(--mh-pc-rail) !important;
+    max-width: 1400px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  body.v25-7-73-simplified-home.v21-final .v2574-title {
+    font-size: clamp(38px, 3vw, 52px) !important;
+    line-height: 1.08 !important;
+    margin: 0 auto 22px !important;
+  }
+  body.v25-7-73-simplified-home.v21-final .v2574-actions {
+    gap: 16px !important;
+    margin-bottom: 16px !important;
+  }
+  body.v25-7-73-simplified-home.v21-final .v2574-action-btn {
+    min-height: clamp(150px, 18vh, 176px) !important;
+    padding: 20px 26px !important;
+  }
+  body.v25-7-73-simplified-home.v21-final .v2574-advice-strip {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 50px !important;
+    margin-bottom: 12px !important;
+  }
+  body.v25-7-73-simplified-home.v21-final .subjects-bar,
+  body.v25-7-73-simplified-home.v24-0-3-ready .subjects-bar {
+    position: fixed !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    bottom: 12px !important;
+    width: var(--mh-pc-rail) !important;
+    max-width: 1400px !important;
+    margin: 0 !important;
+    display: grid !important;
+    grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    padding: 8px !important;
+    border-radius: 24px !important;
+    z-index: 300100 !important;
+  }
+  body.v25-7-73-simplified-home.v21-final .subjects-bar > .subject-btn,
+  body.v25-7-73-simplified-home.v21-final .subjects-bar > .v2574-bottom-btn {
+    min-width: 0 !important;
+    min-height: 98px !important;
+    padding: 10px 6px !important;
+    border-radius: 18px !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 5px !important;
+  }
+  body.v25-7-73-simplified-home.v21-final .subjects-bar .subject-icon,
+  body.v25-7-73-simplified-home.v21-final .subjects-bar .v2173-subject-icon {
+    font-size: 40px !important;
+    line-height: 1 !important;
+  }
+  body.v25-7-73-simplified-home.v21-final .subjects-bar .subject-label,
+  body.v25-7-73-simplified-home.v21-final .subjects-bar .v2173-subject-label {
+    font-size: 16px !important;
+    line-height: 1.1 !important;
+    text-align: center !important;
+    white-space: normal !important;
+  }
+  body.v25-7-73-simplified-home.v21-final .subjects-bar .v2574-grow-btn {
+    margin-left: 0 !important;
+  }
+  body.v25-7-73-simplified-home.v21-final .subjects-bar .v2574-grow-btn::before {
+    display: none !important;
+  }
+}
+/* PC à faible hauteur : préserver la visibilité du menu et des cartes. */
+@media screen and (min-width: 1250px) and (max-height: 750px) and (hover: hover) and (pointer: fine) {
+  body.v25-7-73-simplified-home.v21-final .v21-home {padding-top:16px !important;}
+  body.v25-7-73-simplified-home.v21-final .v2574-title {font-size:38px !important;margin-bottom:12px !important;}
+  body.v25-7-73-simplified-home.v21-final .v2574-action-btn {min-height:124px !important;padding:12px 18px !important;}
+  body.v25-7-73-simplified-home.v21-final .subjects-bar > .subject-btn,
+  body.v25-7-73-simplified-home.v21-final .subjects-bar > .v2574-bottom-btn {min-height:78px !important;}
+}
+</style>
+
 </body>
 </html>
 <!-- V25.7.57 — Accueil tablette : les trois cartes rejoignent le bandeau inférieur -->
