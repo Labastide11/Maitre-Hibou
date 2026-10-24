@@ -334,7 +334,8 @@
       P1: ['La démarche scientifique','L’air existe et prend de la place','L’air peut être comprimé','L’eau et l’huile ne se mélangent pas','Transparent, translucide ou opaque ?','Comment se forme une ombre ?'],
       P2: ['Les trois états de l’eau','Les changements d’état de l’eau','Flotte ou coule ?'],
       P3: ['Comment fonctionne un VTT ?','Le VTT : rouler en sécurité'],
-      P4: [], P5: []
+      P4: ['Les cinq sens','Les articulations et les mouvements','Les besoins du corps'],
+      P5: ['Vivant ou non vivant ?','Le cycle de vie du haricot','Le cycle de vie du papillon']
     },
     francais: {
       P1: ['La phrase et la ponctuation','Les types de phrases','Les classes de mots','Le déterminant','Le groupe nominal','Le verbe','L’ordre alphabétique','Le présent','Le pluriel des noms','Je m’installe bien','Les lettres minuscules'],
