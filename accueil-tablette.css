@@ -1,0 +1,12 @@
+/* Accueil tablette : confort tactile + illustration non rognée. */
+#prenomOverlay .v2567-input {min-height:62px;box-sizing:border-box;font-size:clamp(17px,1.65vw,21px);padding:12px 18px;touch-action:manipulation}
+#prenomOverlay .v2567-btn {min-height:66px;box-sizing:border-box;font-size:clamp(17px,1.5vw,20px);font-weight:750;padding:13px 18px;touch-action:manipulation;cursor:pointer}
+#prenomOverlay .v2567-card h3 {font-size:clamp(17px,1.7vw,23px);line-height:1.25}
+#prenomOverlay .hibou-accueil-hero {width:min(100%,1050px);max-width:1050px;margin:18px auto 0}
+#prenomOverlay .hibou-accueil-hero img {width:100%;height:auto;object-fit:contain;display:block}
+@media (max-width:700px) {
+ #prenomOverlay .v2567-choice-grid {grid-template-columns:minmax(0,1fr)}
+ #prenomOverlay .v2567-input {min-height:58px;font-size:18px}
+ #prenomOverlay .v2567-btn {min-height:62px;font-size:18px}
+ #prenomOverlay .hibou-accueil-hero {margin-top:12px}
+}
