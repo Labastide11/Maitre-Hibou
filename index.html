@@ -4942,6 +4942,29 @@ body.v25-7-73-simplified-home .v25821-belt-ico img{
 #hibouLessonsOverlay .hibou-lessons-content{order:3!important}
 #hibouLessonsOverlay .hibou-lesson-nav-btn{min-height:28px!important;padding:5px 10px!important}
 </style>
+<style id="hibou-accueil-entraide-responsive-20261024">
+/* Accueil uniquement : aucune modification des profils ou de la logique de connexion. */
+#prenomOverlay { overflow-y:auto !important; overscroll-behavior:contain; align-items:flex-start !important; }
+#prenomOverlay .prenom-box.v2567-start { margin: max(12px, 2vh) auto 20px !important; width:min(1080px,96vw) !important; max-width:1080px !important; }
+#prenomOverlay .v2567-input { min-height:60px !important; font-size:19px !important; padding:14px 16px !important; }
+#prenomOverlay .v2567-btn { min-height:64px !important; font-size:18px !important; padding:14px 18px !important; touch-action:manipulation; }
+#prenomOverlay .hibou-accueil-hero { display:block; margin:14px auto 0 !important; width:min(100%,980px); padding:0; border-radius:18px; overflow:hidden; background:#fff; }
+#prenomOverlay .hibou-accueil-hero img { display:block; width:100%; height:auto; max-height:min(35vh,320px); object-fit:contain; object-position:center; }
+@media (min-width:660px) and (orientation:landscape) {
+ #prenomOverlay .v2567-choice-grid { grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important; }
+}
+@media (max-width:659px), (orientation:portrait) and (max-width:850px) {
+ #prenomOverlay .v2567-choice-grid { grid-template-columns:1fr !important; }
+ #prenomOverlay .hibou-accueil-hero img { max-height:240px; }
+}
+@media (max-height:620px) and (orientation:landscape) {
+ #prenomOverlay .prenom-box.v2567-start { margin:8px auto 16px !important; }
+ #prenomOverlay .hibou-accueil-hero img { max-height:35vh; }
+}
+/* Lors de la saisie, privilégier les champs et les boutons. */
+html.hibou-keyboard-open #prenomOverlay .hibou-accueil-hero,
+body.hibou-keyboard-open #prenomOverlay .hibou-accueil-hero { display:none !important; }
+</style>
 </head>
 <body class="prenom-mode">
 <header>
@@ -5032,6 +5055,7 @@ body.v25-7-73-simplified-home .v25821-belt-ico img{
 </div>
 <div aria-live="polite" class="v2567-error" id="v2567Error" role="alert"></div>
 <div class="v2567-note"><b>Connexion stricte :</b> le prénom doit être écrit correctement.</div>
+<figure class="hibou-accueil-hero"><img src="assets/accueil-entraide-hibou.jpg" alt="Maître Hibou accompagne quatre élèves qui apprennent et s’entraident en classe" loading="eager" decoding="async"></figure>
 </div>
 </div>
 <div class="badge-toast" id="badgeToast"></div>
@@ -32467,7 +32491,8 @@ body.v21-final .birthday-top-card-v2414 .birthday-summary-v2414{
           '</section>' +
         '</div>' +
         '<div id="v2567Error" class="v2567-error" role="alert" aria-live="polite"></div>' +
-        '<div class="v2567-note"><b>Connexion stricte :</b> le prénom doit être écrit correctement.</div>';
+        '<div class="v2567-note"><b>Connexion stricte :</b> le prénom doit être écrit correctement.</div>' +
+        '<figure class="hibou-accueil-hero"><img src="assets/accueil-entraide-hibou.jpg" alt="Maître Hibou accompagne quatre élèves qui apprennent et s’entraident en classe" loading="eager" decoding="async"></figure>';
     }
     if(box.dataset) box.dataset.v25617Ready = '1';
     bindStartControls();
