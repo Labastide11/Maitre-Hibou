@@ -4965,6 +4965,19 @@ body.v25-7-73-simplified-home .v25821-belt-ico img{
 html.hibou-keyboard-open #prenomOverlay .hibou-accueil-hero,
 body.hibou-keyboard-open #prenomOverlay .hibou-accueil-hero { display:none !important; }
 </style>
+
+<style id="accueil-responsive-tactile-20261024">
+/* Accueil uniquement : boutons adaptés aux doigts des élèves. */
+@media (min-width: 721px) and (pointer: coarse) {
+  html:not(.hibou-keyboard-open) #prenomOverlay .v2567-input { min-height: 60px !important; font-size: 19px !important; padding: 13px 16px !important; }
+  html:not(.hibou-keyboard-open) #prenomOverlay .v2567-btn { min-height: 64px !important; font-size: 18px !important; padding: 14px 16px !important; }
+  #prenomOverlay .v2567-card h3 { font-size: clamp(18px, 2.3vw, 23px) !important; }
+}
+@media (max-width: 720px) and (pointer: coarse) {
+  html:not(.hibou-keyboard-open) #prenomOverlay .v2567-input { min-height: 56px !important; font-size: 18px !important; }
+  html:not(.hibou-keyboard-open) #prenomOverlay .v2567-btn { min-height: 60px !important; font-size: 17px !important; }
+}
+</style>
 </head>
 <body class="prenom-mode">
 <header>
@@ -5041,16 +5054,16 @@ body.hibou-keyboard-open #prenomOverlay .hibou-accueil-hero { display:none !impo
 <input aria-hidden="true" autocomplete="off" class="v2567-hidden-legacy" id="prenomInput" tabindex="-1"/>
 <div class="v2567-choice-grid">
 <section class="v2567-card student">
-<h3>👤 Mode élève</h3>
+<h3>👤 Je suis déjà inscrit</h3>
 <p>Écris ton prénom exactement comme dans la liste de la classe. Les majuscules ne comptent pas.</p>
 <input autocapitalize="words" autocomplete="off" class="v2567-input" id="v2567StudentName" placeholder="Ton prénom" spellcheck="false"/>
-<button class="v2567-btn student" id="v2567StudentBtn" type="button">Entrer en mode élève</button>
+<button class="v2567-btn student" id="v2567StudentBtn" type="button">Je me connecte</button>
 </section>
 <section class="v2567-card guest">
-<h3>🧪 Mode invité</h3>
+<h3>✨ Je veux essayer</h3>
 <p>Pour tester librement Maître Hibou sans être dans la liste élèves.</p>
 <input autocomplete="off" class="v2567-input" id="v2567GuestName" placeholder="Prénom invité (facultatif)"/>
-<button class="v2567-btn guest" id="v2567GuestBtn" type="button">Tester en invité</button>
+<button class="v2567-btn guest" id="v2567GuestBtn" type="button">Je découvre</button>
 </section>
 </div>
 <div aria-live="polite" class="v2567-error" id="v2567Error" role="alert"></div>
@@ -32115,7 +32128,7 @@ body.v21-final .birthday-top-card-v2414 .birthday-summary-v2414{
       button.textContent = 'Vérification du prénom…';
     }else{
       button.disabled = false;
-      button.textContent = 'Entrer en mode élève';
+      button.textContent = 'Je me connecte';
     }
   }
 
@@ -32478,16 +32491,16 @@ body.v21-final .birthday-top-card-v2414 .birthday-summary-v2414{
         '<input id="prenomInput" class="v2567-hidden-legacy" autocomplete="off" aria-hidden="true" tabindex="-1">' +
         '<div class="v2567-choice-grid">' +
           '<section class="v2567-card student">' +
-            '<h3>👤 Mode élève</h3>' +
+            '<h3>👤 Je suis déjà inscrit</h3>' +
             '<p>Écris ton prénom exactement comme dans la liste de la classe. Les majuscules ne comptent pas.</p>' +
             '<input id="v2567StudentName" class="v2567-input" placeholder="Ton prénom" autocomplete="off" autocapitalize="words" spellcheck="false">' +
-            '<button id="v2567StudentBtn" class="v2567-btn student" type="button">Entrer en mode élève</button>' +
+            '<button id="v2567StudentBtn" class="v2567-btn student" type="button">Je me connecte</button>' +
           '</section>' +
           '<section class="v2567-card guest">' +
-            '<h3>🧪 Mode invité</h3>' +
+            '<h3>✨ Je veux essayer</h3>' +
             '<p>Pour tester librement Maître Hibou sans être dans la liste élèves.</p>' +
             '<input id="v2567GuestName" class="v2567-input" placeholder="Prénom invité (facultatif)" autocomplete="off">' +
-            '<button id="v2567GuestBtn" class="v2567-btn guest" type="button">Tester en invité</button>' +
+            '<button id="v2567GuestBtn" class="v2567-btn guest" type="button">Je découvre</button>' +
           '</section>' +
         '</div>' +
         '<div id="v2567Error" class="v2567-error" role="alert" aria-live="polite"></div>' +
@@ -34257,7 +34270,7 @@ header .logo-icon img{
     var b=document.getElementById('v2567StudentBtn');
     if(!b)return;
     b.disabled=!!checking;
-    b.textContent=checking?'Vérification…':'Entrer en mode élève';
+    b.textContent=checking?'Vérification…':'Je me connecte';
   }
 
   function applyStudent(s){
