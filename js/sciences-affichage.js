@@ -304,6 +304,24 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
       imgBox.innerHTML = exo.image;
       card.appendChild(imgBox);
     }
+    if(exo.photos && exo.photos.length){
+      if(!document.getElementById('mh-science-comparison-photo-styles')){
+        var style=document.createElement('style');
+        style.id='mh-science-comparison-photo-styles';
+        style.textContent='.mh-science-comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0 16px}.mh-science-comparison figure{margin:0;min-width:0;background:#fff;border:2px solid #d7e8da;border-radius:14px;overflow:hidden;text-align:center}.mh-science-comparison img{display:block;width:100%;height:158px;object-fit:contain;background:#f8faf9}.mh-science-comparison figcaption{padding:7px 5px;font-size:14px;font-weight:800;color:#1f3b2a}@media(max-width:650px){.mh-science-comparison img{height:105px}.mh-science-comparison figcaption{font-size:12px}}';
+        document.head.appendChild(style);
+      }
+      var gallery=document.createElement('div');
+      gallery.className='mh-science-comparison';
+      exo.photos.forEach(function(photo){
+        var fig=document.createElement('figure');
+        var img=document.createElement('img');
+        img.src=photo.src;img.alt=photo.label;img.loading='lazy';
+        var caption=document.createElement('figcaption');caption.textContent=photo.label;
+        fig.appendChild(img);fig.appendChild(caption);gallery.appendChild(fig);
+      });
+      card.appendChild(gallery);
+    }
     var wrap = document.createElement('div');
     wrap.className = 'v24-english-options';
     var opts = exo.imgOptions || exo.options || [];
@@ -314,11 +332,24 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
       if(exo.imgOptions) b.innerHTML = opt; else b.textContent = opt;
       b.addEventListener('click', function(ev){
         ev.preventDefault();
+        if(card.dataset.mhScienceSolved === '1') return;
         var ok = i === exo.correct;
-        Array.prototype.forEach.call(wrap.querySelectorAll('button'), function(x){x.disabled = true;});
-        b.classList.add(ok ? 'correct' : 'wrong');
-        if(wrap.children[exo.correct]) wrap.children[exo.correct].classList.add('correct');
-        renderEnglishFeedback(card, ok, ok ? 'Bravo, c’est correct.' : 'Regarde la bonne réponse en vert.');
+        if(exo.retry){
+          Array.prototype.forEach.call(wrap.children,function(x){x.classList.remove('correct','wrong');});
+          b.classList.add(ok ? 'correct' : 'wrong');
+          if(ok){
+            card.dataset.mhScienceSolved='1';
+            Array.prototype.forEach.call(wrap.children,function(x){x.disabled=true;});
+            renderEnglishFeedback(card,true,exo.explanation || 'Bravo, c’est correct.');
+          }else{
+            renderEnglishFeedback(card,false,'Essaie encore. Bouger ne suffit pas pour être vivant : pense à ce qui grandit et se nourrit.');
+          }
+        }else{
+          Array.prototype.forEach.call(wrap.querySelectorAll('button'), function(x){x.disabled = true;});
+          b.classList.add(ok ? 'correct' : 'wrong');
+          if(wrap.children[exo.correct]) wrap.children[exo.correct].classList.add('correct');
+          renderEnglishFeedback(card, ok, ok ? 'Bravo, c’est correct.' : 'Regarde la bonne réponse en vert.');
+        }
       }, true);
       wrap.appendChild(b);
     });
@@ -400,8 +431,33 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
     card.appendChild(bank);card.appendChild(zone);card.appendChild(check);renderEnglishFeedback(card, true, '');
   }
 
+  function ensureScienceSortPhotoStyles(){
+    if(document.getElementById('mh-science-sort-photo-styles')) return;
+    var style = document.createElement('style');
+    style.id = 'mh-science-sort-photo-styles';
+    style.textContent = ''+
+      '.v24-science-sort-item.mh-photo-card{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;width:112px;min-height:128px;padding:8px 8px 10px;text-align:center;gap:7px;}' +
+      '.v24-science-sort-item.mh-photo-card img{width:92px;height:68px;object-fit:cover;border-radius:10px;border:2px solid #D9EAD9;display:block;background:#fff;}' +
+      '.v24-science-sort-item.mh-photo-card .mh-photo-label{display:block;font-size:12px;line-height:1.2;font-weight:1000;color:#1F3B2A;}' +
+      '.v24-science-sort-item.mh-photo-card.placed img,.v24-science-sort-item.mh-photo-card.placed .mh-photo-label{opacity:.55;}' +
+      '@media (max-width: 900px){.v24-science-sort-item.mh-photo-card{width:104px;min-height:122px;padding:7px 7px 9px}.v24-science-sort-item.mh-photo-card img{width:86px;height:64px}.v24-science-sort-item.mh-photo-card .mh-photo-label{font-size:11px;}}';
+    document.head.appendChild(style);
+  }
+
+  function getScienceSortItemMeta(item){
+    if(item && typeof item === 'object'){
+      return {
+        label: String(item.label || item.text || item.name || ''),
+        image: item.image || item.src || '',
+        rawText: String(item.label || item.text || item.name || '')
+      };
+    }
+    return {label: String(item), image: '', rawText: String(item)};
+  }
+
   function renderScienceSort(card, exo){
     renderScienceHelp(card, exo.help);
+    ensureScienceSortPhotoStyles();
     var bank = document.createElement('div');
     bank.className = 'v24-science-sort-bank';
     var zones = document.createElement('div');
@@ -409,9 +465,26 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
     var selected = null;
     var count = 0;
     var itemEls = [];
-    exo.items.forEach(function(txt, i){
+    exo.items.forEach(function(item, i){
+      var meta = getScienceSortItemMeta(item);
       var b = document.createElement('button');
-      b.type='button';b.className='v24-science-sort-item';b.textContent=txt;
+      b.type='button';
+      b.className='v24-science-sort-item';
+      if(meta.image){
+        b.classList.add('mh-photo-card');
+        var img = document.createElement('img');
+        img.src = meta.image;
+        img.alt = meta.label;
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        var label = document.createElement('span');
+        label.className = 'mh-photo-label';
+        label.textContent = meta.label;
+        b.appendChild(img);
+        b.appendChild(label);
+      }else{
+        b.textContent = meta.label;
+      }
       b.addEventListener('click',function(ev){ev.preventDefault();if(b.classList.contains('placed')) return;itemEls.forEach(function(x){x.classList.remove('selected');});b.classList.add('selected');selected=i;},true);
       itemEls.push(b);bank.appendChild(b);
     });
@@ -423,15 +496,19 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
         ev.preventDefault();
         if(selected == null) return;
         var ok = exo.correct[selected] === zi;
+        if(!ok){
+          renderEnglishFeedback(card, false, 'Essaie encore : cet élément est-il vivant ?');
+          return;
+        }
         var chip = document.createElement('span');
-        chip.className = 'v24-science-chip' + (ok ? '' : ' wrong');
-        chip.textContent = exo.items[selected];
+        chip.className = 'v24-science-chip';
+        chip.textContent = getScienceSortItemMeta(exo.items[selected]).label;
         z.appendChild(chip);
         itemEls[selected].classList.add('placed');
         itemEls[selected].classList.remove('selected');
         selected = null;
         count++;
-        renderEnglishFeedback(card, ok, ok ? 'Bien classé.' : 'Ce n’est pas la bonne catégorie.');
+        renderEnglishFeedback(card, true, 'Bien classé.');
         if(count === exo.items.length) renderEnglishFeedback(card, true, 'Tri terminé.');
       },true);
       zones.appendChild(z);
