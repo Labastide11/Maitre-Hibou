@@ -12,15 +12,26 @@
         renderScienceSort=deps.renderScienceSort,
         renderScienceChecklist=deps.renderScienceChecklist,
         renderEnglishFeedback=deps.renderEnglishFeedback;
+  // Styles locaux du catalogue géographie ; n'affectent pas les autres matières.
+  function ensureGeoBannerStyles(){
+    if(document.getElementById('mh-geo-banner-card-styles')) return;
+    var style = document.createElement('style');
+    style.id = 'mh-geo-banner-card-styles';
+    style.textContent = '.v24-english-sessions .geo-banner-card{display:block!important;min-width:0!important;height:auto!important;min-height:0!important;overflow:hidden!important;padding:0!important;border-radius:16px!important;cursor:pointer!important;line-height:0!important;background:#fffdf8!important;border:2px solid #ffdbac!important;box-shadow:0 5px 14px rgba(42,35,22,.07)!important;transition:transform .18s ease,box-shadow .18s ease!important}.v24-english-sessions .geo-banner-card .geo-banner-image{display:block!important;width:100%!important;height:auto!important;max-width:100%!important;object-fit:contain!important;border:0!important;border-radius:14px!important;margin:0!important;padding:0!important}.v24-english-sessions .geo-banner-card:hover,.v24-english-sessions .geo-banner-card:focus-visible{transform:translateY(-3px)!important;box-shadow:0 8px 20px rgba(42,35,22,.15)!important;outline-offset:3px}';
+    document.head.appendChild(style);
+  }
   function renderGeoHome(grid){
+    ensureGeoBannerStyles();
     grid.className = 'v24-english-shell';
     grid.innerHTML = '<div class="v24-english-intro"><div class="v24-english-panel"><h3>Géographie CE2</h3><p>Choisis une séance. Les cartes aident à lire, classer et se repérer.</p></div><div class="v24-english-panel"><h3>Cartes</h3><p>Rose des vents, légende, France simplifiée, densité et paysages.</p></div></div><div class="v24-english-sessions" id="v24GeoSessions"></div>';
     var wrap = grid.querySelector('#v24GeoSessions');
     GEO_SESSIONS.forEach(function(s){
       var b = document.createElement('button');
       b.type = 'button';
-      b.className = 'v24-english-session-card';
-      b.innerHTML = '<strong>'+esc(s.emoji+' '+s.short)+'</strong><span>'+esc(s.title)+'</span><small>'+esc(s.objective)+'</small>';
+      b.className = 'v24-english-session-card geo-banner-card';
+      b.setAttribute('aria-label', s.title + ' — ' + s.short + '. ' + s.objective);
+      // Une image complète par séance, sans superposition de textes.
+      b.innerHTML = '<img class="geo-banner-image" src="images/geographie-carte-seance-'+s.id+'.jpg" alt="'+esc(s.short+' — '+s.title+' : '+s.objective)+'" loading="lazy" decoding="async">';
       b.addEventListener('click', function(ev){ev.preventDefault();ev.stopPropagation();renderGeoSession(grid, s.id);}, true);
       wrap.appendChild(b);
     });
