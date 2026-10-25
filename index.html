@@ -4966,16 +4966,26 @@ html.hibou-keyboard-open #prenomOverlay .hibou-accueil-hero,
 body.hibou-keyboard-open #prenomOverlay .hibou-accueil-hero { display:none !important; }
 </style>
 
-<style id="accueil-responsive-tactile-20261024">
-/* Accueil uniquement : boutons adaptés aux doigts des élèves. */
-@media (min-width: 721px) and (pointer: coarse) {
-  html:not(.hibou-keyboard-open) #prenomOverlay .v2567-input { min-height: 60px !important; font-size: 19px !important; padding: 13px 16px !important; }
-  html:not(.hibou-keyboard-open) #prenomOverlay .v2567-btn { min-height: 64px !important; font-size: 18px !important; padding: 14px 16px !important; }
-  #prenomOverlay .v2567-card h3 { font-size: clamp(18px, 2.3vw, 23px) !important; }
+<style id="mh-pc-subject-cursor-fix">
+/* Sur PC, Grandir ensemble et Outils sont de véritables boutons. */
+@media (min-width:1200px) and (pointer:fine) {
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button.v2574-grow-btn,
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button.v2574-tools-btn,
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button.mh-extra {
+    cursor:pointer !important; pointer-events:auto !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button.v2574-grow-btn:hover,
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button.v2574-tools-btn:hover,
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button.mh-extra:hover {
+    transform:translateY(-3px); filter:brightness(1.04);
+  }
 }
-@media (max-width: 720px) and (pointer: coarse) {
-  html:not(.hibou-keyboard-open) #prenomOverlay .v2567-input { min-height: 56px !important; font-size: 18px !important; }
-  html:not(.hibou-keyboard-open) #prenomOverlay .v2567-btn { min-height: 60px !important; font-size: 17px !important; }
+</style>
+<style id="mh-pc-hide-duplicate-maths">
+/* Accueil Constellation PC seulement : Maths reste disponible via M’entraîner. */
+@media (min-width:1200px) and (pointer:fine) {
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button[data-subject="maths"] { display:none!important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects { grid-template-columns:repeat(7,minmax(0,1fr))!important; }
 }
 </style>
 </head>
@@ -5050,7 +5060,7 @@ body.hibou-keyboard-open #prenomOverlay .hibou-accueil-hero { display:none !impo
 <div class="prenom-box v2567-start" data-v25617-ready="1">
 <div class="owl">🦉</div>
 <h2>Bienvenue sur Maître Hibou</h2>
-<p class="v2567-intro"><strong>Version V25.8.70</strong> · Choisis ton mode de connexion.</p>
+<p class="v2567-intro">Prêt à apprendre avec Maître Hibou ? Choisis ton espace !</p>
 <input aria-hidden="true" autocomplete="off" class="v2567-hidden-legacy" id="prenomInput" tabindex="-1"/>
 <div class="v2567-choice-grid">
 <section class="v2567-card student">
@@ -5061,13 +5071,13 @@ body.hibou-keyboard-open #prenomOverlay .hibou-accueil-hero { display:none !impo
 </section>
 <section class="v2567-card guest">
 <h3>✨ Je veux essayer</h3>
-<p>Pour tester librement Maître Hibou sans être dans la liste élèves.</p>
+<p>Découvre les activités de Maître Hibou, même sans être inscrit.</p>
 <input autocomplete="off" class="v2567-input" id="v2567GuestName" placeholder="Prénom invité (facultatif)"/>
 <button class="v2567-btn guest" id="v2567GuestBtn" type="button">Je découvre</button>
 </section>
 </div>
 <div aria-live="polite" class="v2567-error" id="v2567Error" role="alert"></div>
-<div class="v2567-note"><b>Connexion stricte :</b> le prénom doit être écrit correctement.</div>
+<div class="v2567-note">Pour retrouver tes progrès, écris ton prénom comme en classe.</div>
 <figure class="hibou-accueil-hero"><img src="assets/accueil-entraide-hibou.jpg" alt="Maître Hibou accompagne quatre élèves qui apprennent et s’entraident en classe" loading="eager" decoding="async"></figure>
 </div>
 </div>
@@ -30897,7 +30907,6 @@ body.v21-final .birthday-top-card-v2414 .birthday-summary-v2414{
     setInner(headerHTML('📖 Français','Choisis un domaine.','Choisis un domaine.')+
       '<div class="fr-v2348-content"><section class="fr-v2348-panel fr-v25720-domain-panel">'+
       '<div class="fr-v25720-domain-grid">'+
-      domainCardHTML({className:'grammar',icon:'📘',title:'Grammaire',desc:'S’entraîner avec les ceintures',onclick:'renderFrenchGrammarListV25720()'})+
       domainCardHTML({className:'writing',icon:'✏️',title:'Production d’écrit',desc:'Trouver une idée et écrire',onclick:'startFrenchTrainingV2348(\'idees\')'})+
       domainCardHTML({className:'vocab',icon:'🧩',title:'Vocabulaire',desc:'Familles, synonymes, contraires, mots génériques',onclick:'openHibouVocabulaireV25724()'})+
       domainCardHTML({className:'ortho',icon:'🔤',title:'Orthographe',desc:'Accords, mots fréquents, dictées',disabled:true})+
@@ -31509,7 +31518,6 @@ body.v21-final .birthday-top-card-v2414 .birthday-summary-v2414{
   function renderDomainMenu(){
     setInner(headerHTML('📖 Français','Choisis un domaine.','Choisis un domaine.')+
       '<div class="fr-v2348-content"><section class="fr-v2348-panel fr-v25720-domain-panel"><div class="fr-v25720-domain-grid">'+
-      domainCardHTML({className:'grammar',icon:'📘',title:'Grammaire',desc:'S’entraîner avec les ceintures',onclick:'renderFrenchGrammarListV25720()'})+
       domainCardHTML({className:'writing',icon:'✏️',title:'Production d’écrit',desc:'Trouver une idée et écrire',onclick:'startFrenchTrainingV2348(\'idees\')'})+
       domainCardHTML({className:'vocab',icon:'🧩',title:'Vocabulaire',desc:'Familles, synonymes, contraires, mots génériques',onclick:'openHibouVocabulaireV25724()'})+
       domainCardHTML({className:'ortho',icon:'🔤',title:'Orthographe',desc:'Accords, mots fréquents, dictées',disabled:true})+
@@ -32128,7 +32136,7 @@ body.v21-final .birthday-top-card-v2414 .birthday-summary-v2414{
       button.textContent = 'Vérification du prénom…';
     }else{
       button.disabled = false;
-      button.textContent = 'Je me connecte';
+      button.textContent = 'Entrer en mode élève';
     }
   }
 
@@ -32491,16 +32499,16 @@ body.v21-final .birthday-top-card-v2414 .birthday-summary-v2414{
         '<input id="prenomInput" class="v2567-hidden-legacy" autocomplete="off" aria-hidden="true" tabindex="-1">' +
         '<div class="v2567-choice-grid">' +
           '<section class="v2567-card student">' +
-            '<h3>👤 Je suis déjà inscrit</h3>' +
+            '<h3>👤 Mode élève</h3>' +
             '<p>Écris ton prénom exactement comme dans la liste de la classe. Les majuscules ne comptent pas.</p>' +
             '<input id="v2567StudentName" class="v2567-input" placeholder="Ton prénom" autocomplete="off" autocapitalize="words" spellcheck="false">' +
-            '<button id="v2567StudentBtn" class="v2567-btn student" type="button">Je me connecte</button>' +
+            '<button id="v2567StudentBtn" class="v2567-btn student" type="button">Entrer en mode élève</button>' +
           '</section>' +
           '<section class="v2567-card guest">' +
-            '<h3>✨ Je veux essayer</h3>' +
+            '<h3>🧪 Mode invité</h3>' +
             '<p>Pour tester librement Maître Hibou sans être dans la liste élèves.</p>' +
             '<input id="v2567GuestName" class="v2567-input" placeholder="Prénom invité (facultatif)" autocomplete="off">' +
-            '<button id="v2567GuestBtn" class="v2567-btn guest" type="button">Je découvre</button>' +
+            '<button id="v2567GuestBtn" class="v2567-btn guest" type="button">Tester en invité</button>' +
           '</section>' +
         '</div>' +
         '<div id="v2567Error" class="v2567-error" role="alert" aria-live="polite"></div>' +
@@ -34270,7 +34278,7 @@ header .logo-icon img{
     var b=document.getElementById('v2567StudentBtn');
     if(!b)return;
     b.disabled=!!checking;
-    b.textContent=checking?'Vérification…':'Je me connecte';
+    b.textContent=checking?'Vérification…':'Entrer en mode élève';
   }
 
   function applyStudent(s){
@@ -34711,101 +34719,254 @@ window.openHibouSuitesGame=begin;
   #htg-panel *,#hsg-panel * {scroll-behavior:auto !important}
 }
 </style>
-<!-- Maître Hibou : alignement accueil PC uniquement (tablettes et téléphones inchangés) -->
-<style id="mh-pc-home-centered-v1">
-/* Seuls les postes de bureau avec souris et une largeur confortable sont concernés. */
-@media screen and (min-width: 1250px) and (hover: hover) and (pointer: fine) {
-  body.v25-7-73-simplified-home.v21-final {
-    --mh-pc-rail: min(1400px, calc(100vw - 100px));
-  }
-  body.v25-7-73-simplified-home.v21-final .v21-home {
-    padding-top: clamp(28px, 5vh, 60px) !important;
-    padding-bottom: 140px !important;
-    min-height: calc(100dvh - 112px) !important;
-  }
-  body.v25-7-73-simplified-home.v21-final #v2574MainDashboard,
-  body.v25-7-73-simplified-home.v21-final .v21-center {
-    width: var(--mh-pc-rail) !important;
-    max-width: 1400px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-  body.v25-7-73-simplified-home.v21-final .v2574-title {
-    font-size: clamp(38px, 3vw, 52px) !important;
-    line-height: 1.08 !important;
-    margin: 0 auto 22px !important;
-  }
-  body.v25-7-73-simplified-home.v21-final .v2574-actions {
-    gap: 16px !important;
-    margin-bottom: 16px !important;
-  }
-  body.v25-7-73-simplified-home.v21-final .v2574-action-btn {
-    min-height: clamp(150px, 18vh, 176px) !important;
-    padding: 20px 26px !important;
-  }
-  body.v25-7-73-simplified-home.v21-final .v2574-advice-strip {
-    width: 100% !important;
-    max-width: none !important;
-    min-height: 50px !important;
-    margin-bottom: 12px !important;
-  }
-  body.v25-7-73-simplified-home.v21-final .subjects-bar,
-  body.v25-7-73-simplified-home.v24-0-3-ready .subjects-bar {
-    position: fixed !important;
-    left: 50% !important;
-    right: auto !important;
-    transform: translateX(-50%) !important;
-    bottom: 12px !important;
-    width: var(--mh-pc-rail) !important;
-    max-width: 1400px !important;
-    margin: 0 !important;
-    display: grid !important;
-    grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
-    gap: 12px !important;
-    padding: 8px !important;
-    border-radius: 24px !important;
-    z-index: 300100 !important;
-  }
-  body.v25-7-73-simplified-home.v21-final .subjects-bar > .subject-btn,
-  body.v25-7-73-simplified-home.v21-final .subjects-bar > .v2574-bottom-btn {
-    min-width: 0 !important;
-    min-height: 98px !important;
-    padding: 10px 6px !important;
-    border-radius: 18px !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 5px !important;
-  }
-  body.v25-7-73-simplified-home.v21-final .subjects-bar .subject-icon,
-  body.v25-7-73-simplified-home.v21-final .subjects-bar .v2173-subject-icon {
-    font-size: 40px !important;
-    line-height: 1 !important;
-  }
-  body.v25-7-73-simplified-home.v21-final .subjects-bar .subject-label,
-  body.v25-7-73-simplified-home.v21-final .subjects-bar .v2173-subject-label {
-    font-size: 16px !important;
-    line-height: 1.1 !important;
-    text-align: center !important;
-    white-space: normal !important;
-  }
-  body.v25-7-73-simplified-home.v21-final .subjects-bar .v2574-grow-btn {
-    margin-left: 0 !important;
-  }
-  body.v25-7-73-simplified-home.v21-final .subjects-bar .v2574-grow-btn::before {
-    display: none !important;
-  }
+<style id="mh-constellation-pc-css">
+/* Unique PC constellation layer. Touch/tablet receives no styling. */
+@media (min-width:1200px) and (pointer:fine) {
+body.v25-7-73-simplified-home #v21Home{height:auto!important;min-height:0!important;display:block!important;padding-top:12px!important}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation{
+  width:min(1460px,calc(100% - 58px))!important;max-width:none!important;
+  margin:8px auto 22px!important;padding:22px 28px 22px!important;
+  background:#fff!important;border:2px solid #e4e0fc!important;border-radius:32px!important;
+  box-shadow:0 18px 45px rgba(30,42,108,.12)!important;height:auto!important;min-height:0!important;
+  overflow:visible!important;position:relative!important;display:flex!important;flex-direction:column!important;
 }
-/* PC à faible hauteur : préserver la visibilité du menu et des cartes. */
-@media screen and (min-width: 1250px) and (max-height: 750px) and (hover: hover) and (pointer: fine) {
-  body.v25-7-73-simplified-home.v21-final .v21-home {padding-top:16px !important;}
-  body.v25-7-73-simplified-home.v21-final .v2574-title {font-size:38px !important;margin-bottom:12px !important;}
-  body.v25-7-73-simplified-home.v21-final .v2574-action-btn {min-height:124px !important;padding:12px 18px !important;}
-  body.v25-7-73-simplified-home.v21-final .subjects-bar > .subject-btn,
-  body.v25-7-73-simplified-home.v21-final .subjects-bar > .v2574-bottom-btn {min-height:78px !important;}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-title{
+  font-size:clamp(27px,2.4vw,37px)!important;margin:0 0 3px!important;line-height:1.15!important;
 }
-</style>
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subtitle{
+  text-align:center;color:#6573a5;font:700 14px system-ui,sans-serif;margin:0 0 7px;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-universe{
+  position:relative;width:100%;height:clamp(285px,36vh,360px);
+  background:radial-gradient(ellipse at 50% 52%,#e9e5ff 0%,#f4f1ff 34%,#fff 73%);
+  border-radius:27px;flex-shrink:0;isolation:isolate;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-ring{
+  position:absolute;inset:12% 28%;border:2px dashed #d3cafa;border-radius:50%;pointer-events:none;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core{
+  position:absolute;left:50%;top:51%;transform:translate(-50%,-50%);height:min(55%,215px);aspect-ratio:1;
+  border-radius:50%;box-shadow:0 0 0 9px #dfd9fa77,0 12px 25px #6e67b528;
+  background:radial-gradient(circle,#fff 40%,#e7e1ff 100%);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:2;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core img{
+  width:min(88%,185px);height:78%;object-fit:contain;display:block;filter:drop-shadow(0 8px 14px rgba(40,61,122,.12));
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core .mh-owl-fallback{font-size:88px;line-height:1}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core b{font:900 17px 'Trebuchet MS',sans-serif;color:#283d7a;margin-top:-2px}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-actions{
+  display:contents!important;margin:0!important;padding:0!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn{
+  position:absolute!important;width:clamp(320px,32%,450px)!important;height:clamp(108px,13vh,132px)!important;
+  min-height:0!important;border-radius:24px!important;padding:13px 15px!important;
+  display:grid!important;grid-template-columns:72px minmax(0,1fr)!important;gap:14px!important;
+  box-shadow:0 9px 17px #14295a29!important;z-index:3;cursor:pointer;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-train{bottom:11%;left:4.5%}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-belt{bottom:11%;right:4.5%}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-lesson{top:11%;left:4.5%}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-question{top:11%;right:4.5%}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-ico{
+  width:68px!important;height:68px!important;font-size:40px!important;border-radius:19px!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-ico img{max-width:100%!important;max-height:100%!important;object-fit:contain!important}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-text strong{
+  font-size:clamp(14px,1.2vw,19px)!important;line-height:1.13!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-text small{
+  font-size:clamp(10px,.81vw,12px)!important;line-height:1.28!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-arrow{display:none!important}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn:hover{transform:translateY(-4px)!important;filter:brightness(1.035)!important}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subject-heading{
+  font:900 18px 'Trebuchet MS',sans-serif;color:#1c3877;margin:8px 0 10px;border-top:1px solid #eeeafa;padding-top:14px;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects{
+  position:static!important;inset:auto!important;bottom:auto!important;top:auto!important;transform:none!important;
+  width:100%!important;max-width:none!important;height:auto!important;min-height:0!important;
+  display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;
+  padding:0!important;margin:0!important;gap:9px!important;overflow:visible!important;
+  border:none!important;background:transparent!important;box-shadow:none!important;z-index:auto!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button{
+  position:relative!important;display:flex!important;flex-direction:column!important;align-items:center!important;
+  justify-content:center!important;min-width:0!important;width:100%!important;min-height:83px!important;height:auto!important;
+  padding:9px 4px!important;margin:0!important;gap:5px!important;border-radius:16px!important;
+  visibility:visible!important;opacity:1!important;box-shadow:0 5px 13px #19326620!important;
+}
+/* PC seulement : un bleu unique pour les sept raccourcis des matières. */
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button,
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > .v2574-grow-btn,
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > .v2574-tools-btn{
+  background:linear-gradient(145deg,#3C91F6 0%,#1767CE 100%)!important;
+  background-color:#2478DF!important;
+  border:2px solid #2A72D4!important;
+  color:#fff!important;
+  cursor:pointer!important;
+  transition:transform .18s ease,box-shadow .18s ease,filter .18s ease!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button .subject-label,
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button .v2574-mini{color:#fff!important}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button:hover{
+ transform:translateY(-3px)!important;filter:brightness(1.09)!important;
+ box-shadow:0 10px 20px rgba(20,80,160,.23)!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button:focus-visible{
+ outline:3px solid #102f7b!important;outline-offset:3px!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects .subject-icon{font-size:29px!important;line-height:1!important}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects .subject-label{
+  font-size:clamp(11px,.9vw,14px)!important;text-align:center!important;line-height:1.12!important;white-space:normal!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects .v2574-mini{display:none!important}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects .v2574-grow-btn{margin-left:0!important}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects .v2574-grow-btn::before{display:none!important}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-advice-strip{
+  margin:12px 0 0!important;padding:9px 15px!important;min-height:0!important;font-size:14px!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-spark{
+  position:absolute;color:#dfb52f;font-size:24px;pointer-events:none;opacity:.78;
+}
+body.v25-7-73-simplified-home .v21-center{min-height:0!important}
+@media (max-height:800px){
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation{padding-top:14px!important;padding-bottom:14px!important}
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-universe{height:315px}
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button{min-height:68px!important}
+}
 
+/* Visuels des quatre activités : PC uniquement ; les boutons et leurs actions restent en place. */
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn{
+  background-position:center center!important;
+  background-repeat:no-repeat!important;
+  background-size:100% 100%!important;
+  overflow:hidden!important;
+  border:0!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-train{
+  background-image:url("images/constellation-entrainer.png")!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-belt{
+  background-image:url("images/constellation-ceinture.png")!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-lesson{
+  background-image:url("images/constellation-lecon.png")!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-question{
+  background-image:url("images/constellation-question.png")!important;
+}
+/* Garder les libellés dans le DOM pour l'accessibilité, sans les doubler sur l'image. */
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn > *{
+  opacity:0!important;
+  pointer-events:none!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn:focus-visible{
+  outline:4px solid #243a9f!important;
+  outline-offset:4px!important;
+}
+}
+@media (prefers-reduced-motion:reduce){.mh-constellation *{transition:none!important;animation:none!important}}
+</style>
+<script id="mh-constellation-pc-js">
+(function(){
+ 'use strict';
+ var mq=window.matchMedia('(min-width:1200px) and (pointer:fine)');
+ var originalParent=null,originalNext=null;
+ var hasBuilt=false;
+ function fallbackButton(kind){
+  var b=document.createElement('button');b.type='button';b.className='v2574-utility-btn v2574-bottom-btn v2574-'+kind+'-btn mh-extra';
+  b.innerHTML=kind==='grow'?'<span class="subject-icon">🤝</span><span class="subject-label">Grandir ensemble</span>':'<span class="subject-icon">🛠️</span><span class="subject-label">Outils</span>';
+  b.addEventListener('click',function(){
+   if(kind==='tools'){
+    if(typeof window.openClassShortcutsPopup==='function')window.openClassShortcutsPopup();
+    else {var el=document.querySelector('.mh-split-zone.shortcuts,[data-open="outils"]');if(el)el.click();}
+   }else{
+    var el=document.querySelector('.mh-split-zone.grow,[data-open="grandir-ensemble"],#greatTogetherBtn,#btnGrandirEnsemble');
+    if(el)el.click();
+    else if(typeof window.openGrandirEnsemble==='function')window.openGrandirEnsemble();
+   }
+  });return b;
+ }
+ function refresh(){
+  var panel=document.getElementById('v2574MainDashboard');
+  var nav=document.querySelector('.subjects-bar');
+  if(!panel||!nav)return;
+  if(!mq.matches){
+   panel.classList.remove('mh-constellation');nav.classList.remove('mh-subjects');
+   if(originalParent&&nav.parentNode!==originalParent){
+    if(originalNext&&originalNext.parentNode===originalParent)originalParent.insertBefore(nav,originalNext);
+    else originalParent.appendChild(nav);
+   }
+   panel.querySelectorAll('.mh-extra').forEach(function(x){x.remove()});
+   var universe=panel.querySelector('.mh-universe');
+   if(universe){
+     var actions=universe.querySelector('.v2574-actions');
+     if(actions)universe.parentNode.insertBefore(actions,universe);
+     universe.remove();
+   }
+   var sub=panel.querySelector('.mh-subtitle');if(sub)sub.remove();
+   var heading=panel.querySelector('.mh-subject-heading');if(heading)heading.remove();
+   return;
+  }
+  if(!originalParent){originalParent=nav.parentNode;originalNext=nav.nextSibling;}
+  if(!panel.querySelector('.mh-universe')){
+   var actions=panel.querySelector('.v2574-actions');
+   if(!actions)return;
+   var universe=document.createElement('div');universe.className='mh-universe';
+   universe.innerHTML='<div class="mh-ring" aria-hidden="true"></div><span class="mh-spark" style="left:27%;top:15%">✦</span><span class="mh-spark" style="right:26%;top:23%">✧</span><span class="mh-spark" style="left:26%;bottom:20%">✧</span><span class="mh-spark" style="right:27%;bottom:12%">✦</span><div class="mh-core"><img src="images/maitre-hibou-attente.png" alt="Maître Hibou" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'block\';"><span class="mh-owl-fallback" aria-hidden="true" style="display:none">🦉</span><b>Maître Hibou</b></div>';
+   actions.parentNode.insertBefore(universe,actions);universe.appendChild(actions);
+   // PC only: keep the original action buttons and their click handlers intact.
+   var owlImage=universe.querySelector('.mh-core img');
+   var neutralOwl='images/maitre-hibou-attente.png';
+   var owlStates={
+    'v2574-action-train':'images/maitre-hibou-entrainer.png',
+    'v2574-action-belt':'images/maitre-hibou-ceinture.png',
+    'v2574-action-lesson':'images/maitre-hibou-lecon.png',
+    'v2574-action-question':'images/maitre-hibou-question.png'
+   };
+   var imagesToLoad=[neutralOwl].concat(Object.values(owlStates));
+   imagesToLoad.forEach(function(src){var preload=new Image();preload.src=src;});
+   var currentOwl='';
+   function showOwl(src){
+    if(!owlImage||currentOwl===src)return;
+    currentOwl=src;
+    owlImage.src=src;
+   }
+   showOwl(neutralOwl);
+   var activityButtons=actions.querySelectorAll('.v2574-action-btn');
+   activityButtons.forEach(function(button){
+    var key=Object.keys(owlStates).find(function(k){return button.classList.contains(k);});
+    if(!key)return;
+    button.addEventListener('mouseenter',function(){if(mq.matches)showOwl(owlStates[key]);});
+    button.addEventListener('mouseleave',function(){if(mq.matches)showOwl(neutralOwl);});
+    button.addEventListener('focusin',function(){if(mq.matches)showOwl(owlStates[key]);});
+    button.addEventListener('focusout',function(){if(mq.matches)showOwl(neutralOwl);});
+   });
+   universe.addEventListener('mouseleave',function(){if(mq.matches)showOwl(neutralOwl);});
+
+   var sub=document.createElement('p');sub.className='mh-subtitle';sub.textContent='Choisis une activité autour de Maître Hibou';
+   var title=panel.querySelector('.v2574-title');title.insertAdjacentElement('afterend',sub);
+   var heading=document.createElement('h3');heading.className='mh-subject-heading';heading.textContent='Explore tes matières';
+   universe.insertAdjacentElement('afterend',heading);
+   // The existing four activity buttons are moved, not cloned; their original listeners survive.
+  }
+  var heading=panel.querySelector('.mh-subject-heading');
+  if(heading&&nav.previousElementSibling!==heading)heading.insertAdjacentElement('afterend',nav);
+  nav.classList.add('mh-subjects');panel.classList.add('mh-constellation');
+  var buttons=nav.querySelectorAll(':scope > button');
+  var texts=Array.from(buttons).map(function(b){return (b.textContent||'').toLowerCase()});
+  if(!texts.some(function(t){return t.includes('grandir ensemble')}))nav.appendChild(fallbackButton('grow'));
+  if(!texts.some(function(t){return t.includes('outils')}))nav.appendChild(fallbackButton('tools'));
+ }
+ var scheduled=false;
+ function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(function(){scheduled=false;refresh()})}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',refresh,{once:true});else refresh();
+ window.addEventListener('load',refresh);window.addEventListener('resize',schedule);
+ if(mq.addEventListener)mq.addEventListener('change',schedule);
+ [100,450,1300,3000].forEach(function(t){setTimeout(refresh,t)});
+})();
+</script>
 </body>
 </html>
 <!-- V25.7.57 — Accueil tablette : les trois cartes rejoignent le bandeau inférieur -->
