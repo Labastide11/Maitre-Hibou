@@ -93,3 +93,20 @@
   }
   .geo-session1-large .geo-s1-map-card .geo-legend-map-s1 img{max-height:none!important;}
 }
+
+/* Accueil des six séances : visuels de repérage rétablis après migration. */
+#v24GeoSessions .v24-english-session-card{
+  display:flex!important;flex-direction:column!important;align-items:stretch!important;
+  overflow:hidden!important;padding:8px!important;gap:8px!important;text-align:left!important;
+  min-height:210px!important;
+}
+#v24GeoSessions .geo-session-card-photo{
+  display:block!important;width:100%!important;height:126px!important;
+  object-fit:contain!important;object-position:center!important;
+  background:#fff!important;border-radius:12px!important;border:1px solid #e8edf4!important;
+}
+#v24GeoSessions .geo-session-card-text{display:flex;flex-direction:column;gap:4px;flex:1;padding:2px 5px 5px;min-width:0;}
+#v24GeoSessions .geo-session-card-text strong{font-size:17px;line-height:1.2;white-space:normal;}
+#v24GeoSessions .geo-session-card-text span{font-size:12px;font-weight:800;}
+#v24GeoSessions .geo-session-card-text small{font-size:12px;line-height:1.35;white-space:normal;}
+@media(max-width:680px){#v24GeoSessions .geo-session-card-photo{height:110px!important;}}

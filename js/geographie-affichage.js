@@ -20,7 +20,10 @@
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'v24-english-session-card';
-      b.innerHTML = '<strong>'+esc(s.emoji+' '+s.short)+'</strong><span>'+esc(s.title)+'</span><small>'+esc(s.objective)+'</small>';
+      var geoCardPhotos = {1:'s1-rose-des-vents.jpg',2:'s2-france.jpg',3:'s3-population.jpg',4:'s4-paysages.jpg',5:'s5-ville-campagne.jpg',6:'s6-acteurs-ville.jpg'};
+      var geoPhotoName = geoCardPhotos[s.id];
+      b.innerHTML = '<img class="geo-session-card-photo" loading="lazy" decoding="async" src="images/geographie-seances/'+geoPhotoName+'" alt="Visuel de '+esc(s.short)+'">'
+        + '<div class="geo-session-card-text"><strong>'+esc(s.emoji+' '+s.short)+'</strong><span>'+esc(s.title)+'</span><small>'+esc(s.objective)+'</small></div>';
       b.addEventListener('click', function(ev){ev.preventDefault();ev.stopPropagation();renderGeoSession(grid, s.id);}, true);
       wrap.appendChild(b);
     });
