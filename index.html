@@ -5039,6 +5039,13 @@ body.v21-final .birthday-top-card-v2414 .birthday-cake-v2414 {
 }
 .v24-big-subject-popup.v24-science-popup #v24ScienceSessions .mh-science-fallback[hidden] {display:none !important;}
 </style>
+<style id="v24-subject-thumbnails-restore">
+.v24-english-session-card{display:flex!important;align-items:center!important;gap:12px!important;text-align:left!important;}
+.v24-english-session-card .v24-subject-thumb{display:block;flex:0 0 108px;width:108px;height:88px;object-fit:cover;border-radius:12px;border:2px solid rgba(120,100,170,.17);background:#fff;}
+.v24-english-session-card .v24-subject-card-body{display:flex;flex-direction:column;align-items:flex-start;min-width:0;gap:4px;}
+.v24-english-session-card .v24-subject-card-body strong,.v24-english-session-card .v24-subject-card-body span,.v24-english-session-card .v24-subject-card-body small{display:block;}
+@media(max-width:720px){.v24-english-session-card .v24-subject-thumb{flex-basis:84px;width:84px;height:75px;}}
+</style>
 </head>
 <body class="prenom-mode">
 <header>
@@ -24388,7 +24395,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'v24-english-session-card';
-      b.innerHTML = '<strong>'+s.emoji+' '+esc(s.short)+'</strong><span>'+esc(s.title)+'</span><small>'+esc(s.objective)+'</small>';
+      b.innerHTML = '<img class="v24-subject-thumb" src="images/anglais-seance-'+s.id+'.jpg" alt="Illustration de la séance '+s.id+'" loading="lazy"><span class="v24-subject-card-body"><strong>'+s.emoji+' '+esc(s.short)+'</strong><span>'+esc(s.title)+'</span><small>'+esc(s.objective)+'</small></span>';
       b.addEventListener('click', function(ev){
         ev.preventDefault();
         ev.stopPropagation();
@@ -24979,7 +24986,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'v24-english-session-card';
-      b.innerHTML = '<strong>'+esc(s.emoji+' '+s.short)+'</strong><span>'+esc(s.title)+'</span><small>'+esc(s.objective)+'</small>';
+      b.innerHTML = '<img class="v24-subject-thumb" src="images/geographie-carte-seance-'+s.id+'.jpg" alt="Carte illustrant la séance '+s.id+'" loading="lazy"><span class="v24-subject-card-body"><strong>'+esc(s.emoji+' '+s.short)+'</strong><span>'+esc(s.title)+'</span><small>'+esc(s.objective)+'</small></span>';
       b.addEventListener('click', function(ev){ev.preventDefault();ev.stopPropagation();renderGeoSession(grid, s.id);}, true);
       wrap.appendChild(b);
     });
