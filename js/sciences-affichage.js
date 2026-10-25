@@ -502,6 +502,7 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
         img.alt = meta.label;
         img.loading = 'lazy';
         img.decoding = 'async';
+        img.onerror = function(){img.hidden=true;b.classList.add('mh-photo-unavailable');};
         var label = document.createElement('span');
         label.className = 'mh-photo-label';
         label.textContent = meta.label;
