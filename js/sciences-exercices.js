@@ -39,10 +39,35 @@
       {type:"choice",title:"Que va-t-il se passer ?",instr:"Une graine de haricot commence à germer. Quelle partie apparaît en premier ?",photos:[{src:"https://commons.wikimedia.org/wiki/Special:FilePath/Bean%20germination.jpg?width=500",label:"Une graine qui germe"}],options:["Une racine","Une fleur","Une gousse"],correct:0,retry:true,hint:"Cherche la partie qui absorbe l'eau dans le sol.",explanation:"Lors de la germination, une petite racine apparaît avant la tige, les feuilles et la fleur."},
       {type:"choice",title:"Le défi de Maître Hibou",instr:"À quoi servent les graines dans une gousse de haricot ?",photos:[{src:"https://commons.wikimedia.org/wiki/Special:FilePath/Phaseolus%20vulgaris%20white%20bean%20seedpods%2C%20witte%20boon%20rijpe%20peulen.jpg?width=500",label:"Une gousse contenant des graines"}],options:["À faire naître de nouveaux plants de haricot.","À rendre les feuilles plus vertes.","À transformer les fleurs en cailloux."],correct:0,retry:true,hint:"Rappelle-toi ce qui est à l'origine d'une nouvelle plante.",explanation:"Une graine peut germer et donner naissance à une nouvelle plante : c'est le cycle de vie."}
     ]},
-    {id:3,title:"Séance 3",short:"La vie des animaux",emoji:"🐣",objective:"Je sais décrire les grandes étapes de la vie d'un animal.",criteria:["Naissance, croissance, adulte, reproduction","Ovipare et vivipare","Classer des animaux"],exos:[
-      {type:"sort",title:"Ovipare ou vivipare ?",instr:"Ovipare = naît d'un œuf. Vivipare = naît directement formé.",items:["🐔 la poule","🐄 la vache","🐍 le serpent","🐱 le chat","🐟 le poisson","🐘 l'éléphant"],zones:["Ovipare","Vivipare"],zoneIcons:["🥚","🤱"],zoneColors:["#FDEBC8","#E3D4F0"],help:[{icon:"🥚",text:"Ovipare : le bébé naît dans un œuf."},{icon:"🤱",text:"Vivipare : le bébé naît déjà formé."}],correct:[0,1,0,1,0,1]},
-      {type:"order",title:"Étapes de la vie",instr:"Clique les étapes dans l'ordre.",bank:["Il devient adulte","Il naît","Il se reproduit à son tour","Il grandit"],correctOrder:["Il naît","Il grandit","Il devient adulte","Il se reproduit à son tour"]},
-      {type:"choice",title:"Vrai ou faux",instr:"Tous les bébés animaux ressemblent exactement à leurs parents dès la naissance.",options:["Vrai","Faux"],correct:1}
+    {id:3,title:"Séance 3",short:"La vie des animaux",emoji:"🐣",objective:"Je sais décrire les grandes étapes de la vie d'un animal.",criteria:["Ordonner les étapes de la vie d'une poule","Distinguer ovipare et vivipare","Comprendre les transformations"],exos:[
+      {type:"order",title:"De l'œuf à la poule",instr:"Touche les quatre photographies dans l'ordre de croissance.",photoSteps:[
+        {label:"Un œuf",src:"https://commons.wikimedia.org/wiki/Special:FilePath/Chicken%20egg.jpg?width=500"},
+        {label:"Le poussin sort de l'œuf",src:"https://commons.wikimedia.org/wiki/Special:FilePath/Chicken%20hatching.jpg?width=500"},
+        {label:"Un jeune poulet",src:"https://commons.wikimedia.org/wiki/Special:FilePath/Young%20chicken.jpg?width=500"},
+        {label:"Une poule adulte",src:"https://commons.wikimedia.org/wiki/Special:FilePath/Hen.jpg?width=500"}
+      ],correctOrder:["Un œuf","Le poussin sort de l'œuf","Un jeune poulet","Une poule adulte"],hint:"L'animal commence dans l'œuf, naît, puis grandit jusqu'à devenir adulte.",success:"Bravo, les étapes de la vie de la poule sont dans le bon ordre."},
+      {type:"sort",title:"Ovipare ou vivipare ?",instr:"Observe la photo, puis touche le bon groupe.",items:[
+        {label:"une poule",image:"https://commons.wikimedia.org/wiki/Special:FilePath/Hen.jpg?width=500"},
+        {label:"une vache",image:"https://commons.wikimedia.org/wiki/Special:FilePath/Cow.jpg?width=500"},
+        {label:"une tortue",image:"https://commons.wikimedia.org/wiki/Special:FilePath/Testudo%20hermanni.jpg?width=500"},
+        {label:"un chat",image:"images-lecons/sciences/vivant-cartes/chat.webp"},
+        {label:"un canard",image:"https://commons.wikimedia.org/wiki/Special:FilePath/Mallard%20male%20female.jpg?width=500"},
+        {label:"un éléphant",image:"https://commons.wikimedia.org/wiki/Special:FilePath/African%20elephant.jpg?width=500"}
+      ],zones:["Ovipare","Vivipare"],zoneIcons:["🥚","🐘"],zoneColors:["#FDEBC8","#E3D4F0"],help:[{icon:"🥚",text:"Ovipare : le petit se développe dans un œuf pondu."},{icon:"🐘",text:"Vivipare : le petit se développe dans le ventre de sa mère."}],correct:[0,1,0,1,0,1]},
+      {type:"match",title:"Qui devient qui ?",instr:"Associe chaque jeune animal à l'adulte correspondant.",left:["Une chenille","Un têtard","Un poussin"],right:["Une grenouille","Une poule","Un papillon"],pairs:[2,0,1],photos:[
+        {src:"images-lecons/sciences/vivant-cartes/grenouille.webp",label:"Une grenouille"},
+        {src:"https://commons.wikimedia.org/wiki/Special:FilePath/Monarch%20Butterfly%20Danaus%20plexippus.jpg?width=500",label:"Un papillon"}
+      ]},
+      {type:"order",title:"Le cycle de vie du papillon",instr:"Remets les quatre étapes dans l'ordre.",photoSteps:[
+        {label:"Des œufs",src:"https://commons.wikimedia.org/wiki/Special:FilePath/Monarch%20butterfly%20egg.jpg?width=500"},
+        {label:"Une chenille",src:"https://commons.wikimedia.org/wiki/Special:FilePath/Monarch%20caterpillar.jpg?width=500"},
+        {label:"Une chrysalide",src:"https://commons.wikimedia.org/wiki/Special:FilePath/Monarch%20chrysalis.jpg?width=500"},
+        {label:"Un papillon",src:"https://commons.wikimedia.org/wiki/Special:FilePath/Monarch%20Butterfly%20Danaus%20plexippus.jpg?width=500"}
+      ],correctOrder:["Des œufs","Une chenille","Une chrysalide","Un papillon"],hint:"Le papillon pond des œufs. Une chenille en sort, devient chrysalide, puis papillon.",success:"Bravo, le cycle de vie du papillon est dans le bon ordre."},
+      {type:"choice",title:"Le défi de Maître Hibou",instr:"Le têtard ne ressemble pas à la grenouille. Est-ce pourtant le même animal qui grandit ?",photos:[
+        {src:"https://commons.wikimedia.org/wiki/Special:FilePath/Tadpole.jpg?width=500",label:"Un têtard"},
+        {src:"images-lecons/sciences/vivant-cartes/grenouille.webp",label:"Une grenouille"}
+      ],options:["Oui, le têtard se transforme en grenouille.","Non, ce sont deux animaux sans rapport.","Non, le têtard devient un poisson."],correct:0,retry:true,hint:"Observe ce que devient un têtard au fil du temps.",explanation:"Le têtard grandit et se transforme en grenouille. On appelle ce changement une métamorphose."}
     ]},
     {id:4,title:"Séance 4",short:"Déchets et biodiversité",emoji:"♻️",objective:"Je sais trier les déchets et protéger la biodiversité.",criteria:["Associer un déchet à la bonne poubelle","Comprendre le recyclage","Protéger la biodiversité"],exos:[
       {type:"sort",title:"Trie les déchets",instr:"Clique un déchet puis la bonne poubelle.",items:["🍾 une bouteille en verre","📦 une boîte en carton","🍌 une peau de banane","🥫 une canette","📰 un journal","🍎 un trognon de pomme"],zones:["Emballages / papier / carton","Verre","Biodéchets"],zoneIcons:["♻️","🍾","🍂"],zoneColors:["#FCEFC0","#CDE9D8","#E4D3B8"],help:[{icon:"🟡",text:"Jaune : emballages, papier, carton, métal."},{icon:"🟢",text:"Vert : verre."},{icon:"🟤",text:"Marron : biodéchets."}],correct:[1,0,2,0,0,2]},

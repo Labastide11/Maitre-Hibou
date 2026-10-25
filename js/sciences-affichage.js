@@ -422,9 +422,9 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
         selectedItems.forEach(function(photo,i){var btn=document.createElement('button');btn.type='button';btn.textContent=(i+1)+'. '+photo.label;btn.onclick=function(e){e.preventDefault();selectedItems.splice(i,1);redrawPhotos();};sequence.appendChild(btn);});
       }
       var validate=document.createElement('button');validate.type='button';validate.className='v24-english-check';validate.textContent='Vérifier l’ordre';
-      validate.onclick=function(e){e.preventDefault();if(selectedItems.length!==exo.photoSteps.length){renderEnglishFeedback(card,false,'Place les cinq étapes avant de vérifier.');return;}
+      validate.onclick=function(e){e.preventDefault();if(selectedItems.length!==exo.photoSteps.length){renderEnglishFeedback(card,false,'Place toutes les étapes avant de vérifier.');return;}
         var ok=selectedItems.every(function(x,i){return x.label===exo.correctOrder[i];});
-        renderEnglishFeedback(card,ok,ok?'Bravo, le cycle du haricot est dans le bon ordre.':(exo.hint||'Observe les étapes et réessaie.'));
+        renderEnglishFeedback(card,ok,ok?(exo.success || 'Bravo, les étapes sont dans le bon ordre.'):(exo.hint||'Observe les étapes et réessaie.'));
         if(ok){photoBank.querySelectorAll('button').forEach(function(b){b.disabled=true;});sequence.querySelectorAll('button').forEach(function(b){b.disabled=true;});validate.disabled=true;}
       };
       redrawPhotos();card.appendChild(photoBank);card.appendChild(sequence);card.appendChild(validate);renderEnglishFeedback(card,true,'');return;
