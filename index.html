@@ -5046,6 +5046,77 @@ body.v21-final .birthday-top-card-v2414 .birthday-cake-v2414 {
 .v24-english-session-card .v24-subject-card-body strong,.v24-english-session-card .v24-subject-card-body span,.v24-english-session-card .v24-subject-card-body small{display:block;}
 @media(max-width:720px){.v24-english-session-card .v24-subject-thumb{flex-basis:84px;width:84px;height:75px;}}
 </style>
+
+<style id="mh-anglais-geographie-cartes-larges-20261025">
+/* Cartes catalogue : grand visuel et légendes, comme en Histoire.
+   Limité aux deux catalogues : les écrans d'exercices ne changent pas. */
+#v24EnglishSessions, #v24GeoSessions {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+#v24EnglishSessions .v24-english-session-card,
+#v24GeoSessions .v24-english-session-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  gap: 0 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 225px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border-radius: 19px !important;
+  text-align: left !important;
+}
+#v24EnglishSessions .v24-subject-thumb,
+#v24GeoSessions .v24-subject-thumb {
+  display: block !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 164px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+}
+#v24EnglishSessions .v24-subject-card-body,
+#v24GeoSessions .v24-subject-card-body {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+  padding: 11px 15px 15px !important;
+  gap: 5px !important;
+}
+#v24EnglishSessions .v24-subject-card-body strong,
+#v24GeoSessions .v24-subject-card-body strong {
+  font-size: 20px !important;
+  line-height: 1.2 !important;
+}
+#v24EnglishSessions .v24-subject-card-body span,
+#v24GeoSessions .v24-subject-card-body span {
+  font-size: 15px !important;
+}
+#v24EnglishSessions .v24-subject-card-body small,
+#v24GeoSessions .v24-subject-card-body small {
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+}
+@media (max-width: 1050px) {
+  #v24EnglishSessions, #v24GeoSessions {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 620px) {
+  #v24EnglishSessions, #v24GeoSessions {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+</style>
 </head>
 <body class="prenom-mode">
 <header>
