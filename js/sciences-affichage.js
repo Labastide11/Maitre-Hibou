@@ -297,6 +297,21 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
     card.appendChild(panel);
   }
 
+  function renderSciencePhotos(card, photos){
+    if(!photos || !photos.length) return;
+    if(!document.getElementById('mh-science-s2-image-styles')){
+      var style=document.createElement('style'); style.id='mh-science-s2-image-styles';
+      style.textContent='.mh-science-photos{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0}.mh-science-photos figure{flex:1 1 180px;max-width:330px;min-width:0;margin:0;border:2px solid #d3ead7;border-radius:12px;overflow:hidden;background:#fff;text-align:center}.mh-science-photos img{display:block;width:100%;height:155px;object-fit:contain;background:#f6f9f7}.mh-science-photos figcaption{padding:8px;font-weight:850;font-size:14px}.mh-science-photo-step{display:flex!important;flex-direction:column!important;width:160px;min-height:155px;padding:7px!important;gap:5px!important}.mh-science-photo-step img{width:100%;height:100px;object-fit:contain;border-radius:8px;background:#fff}.mh-science-photo-step span{font-size:13px;line-height:1.2}.mh-science-photo-step.selected{outline:3px solid #2da85c}.mh-science-photo-list{display:flex;flex-wrap:wrap;gap:9px;margin:10px 0}.mh-science-photo-sequence{display:flex;flex-wrap:wrap;gap:7px;min-height:46px;margin:8px 0}.mh-science-photo-sequence button{padding:9px;border:2px solid #a9dbc0;border-radius:9px;background:#f1fff6;font-weight:800;cursor:pointer}@media(max-width:650px){.mh-science-photos img{height:120px}.mh-science-photo-step{width:130px;min-height:142px}.mh-science-photo-step img{height:85px}}';
+      document.head.appendChild(style);
+    }
+    var holder=document.createElement('div');holder.className='mh-science-photos';
+    photos.forEach(function(photo){
+      var fig=document.createElement('figure'), img=document.createElement('img'), label=document.createElement('figcaption');
+      img.src=photo.src;img.alt=photo.label;img.loading='lazy';img.onerror=function(){img.hidden=true;fig.setAttribute('data-image-unavailable','true');};
+      label.textContent=photo.label;fig.appendChild(img);fig.appendChild(label);holder.appendChild(fig);
+    }); card.appendChild(holder);
+  }
+
   function renderScienceChoice(card, exo){
     if(exo.image){
       var imgBox = document.createElement('div');
@@ -304,24 +319,7 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
       imgBox.innerHTML = exo.image;
       card.appendChild(imgBox);
     }
-    if(exo.photos && exo.photos.length){
-      if(!document.getElementById('mh-science-comparison-photo-styles')){
-        var style=document.createElement('style');
-        style.id='mh-science-comparison-photo-styles';
-        style.textContent='.mh-science-comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0 16px}.mh-science-comparison figure{margin:0;min-width:0;background:#fff;border:2px solid #d7e8da;border-radius:14px;overflow:hidden;text-align:center}.mh-science-comparison img{display:block;width:100%;height:158px;object-fit:contain;background:#f8faf9}.mh-science-comparison figcaption{padding:7px 5px;font-size:14px;font-weight:800;color:#1f3b2a}@media(max-width:650px){.mh-science-comparison img{height:105px}.mh-science-comparison figcaption{font-size:12px}}';
-        document.head.appendChild(style);
-      }
-      var gallery=document.createElement('div');
-      gallery.className='mh-science-comparison';
-      exo.photos.forEach(function(photo){
-        var fig=document.createElement('figure');
-        var img=document.createElement('img');
-        img.src=photo.src;img.alt=photo.label;img.loading='lazy';
-        var caption=document.createElement('figcaption');caption.textContent=photo.label;
-        fig.appendChild(img);fig.appendChild(caption);gallery.appendChild(fig);
-      });
-      card.appendChild(gallery);
-    }
+    renderSciencePhotos(card, exo.photos);
     var wrap = document.createElement('div');
     wrap.className = 'v24-english-options';
     var opts = exo.imgOptions || exo.options || [];
@@ -342,7 +340,7 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
             Array.prototype.forEach.call(wrap.children,function(x){x.disabled=true;});
             renderEnglishFeedback(card,true,exo.explanation || 'Bravo, c’est correct.');
           }else{
-            renderEnglishFeedback(card,false,'Essaie encore. Bouger ne suffit pas pour être vivant : pense à ce qui grandit et se nourrit.');
+            renderEnglishFeedback(card,false,exo.hint || 'Essaie encore et observe les indices.');
           }
         }else{
           Array.prototype.forEach.call(wrap.querySelectorAll('button'), function(x){x.disabled = true;});
@@ -358,6 +356,7 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
   }
 
   function renderScienceMatch(card, exo){
+    renderSciencePhotos(card, exo.photos);
     var wrap = document.createElement('div');
     wrap.className = 'v24-english-match';
     var left = document.createElement('div');
@@ -404,6 +403,32 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
   }
 
   function renderScienceOrder(card, exo){
+    if(exo.photoSteps && exo.photoSteps.length){
+      renderSciencePhotos(card, []);
+      var photoBank=document.createElement('div'); photoBank.className='mh-science-photo-list';
+      var selectedItems=[];var sequence=document.createElement('div'); sequence.className='mh-science-photo-sequence';
+      var shuffled=exo.photoSteps.slice().sort(function(){return Math.random()-.5;});
+      if(shuffled.every(function(x,i){return x.label===exo.correctOrder[i];})) shuffled.reverse();
+      function redrawPhotos(){
+        photoBank.innerHTML='';sequence.innerHTML='';
+        shuffled.forEach(function(photo){
+          if(selectedItems.indexOf(photo)>=0) return;
+          var btn=document.createElement('button');btn.type='button';btn.className='v24-english-token mh-science-photo-step';
+          var img=document.createElement('img');img.src=photo.src;img.alt=photo.label;img.loading='lazy';
+          img.onerror=function(){img.hidden=true;}; var lab=document.createElement('span');lab.textContent=photo.label;
+          btn.appendChild(img);btn.appendChild(lab);
+          btn.onclick=function(e){e.preventDefault();selectedItems.push(photo);redrawPhotos();};photoBank.appendChild(btn);
+        });
+        selectedItems.forEach(function(photo,i){var btn=document.createElement('button');btn.type='button';btn.textContent=(i+1)+'. '+photo.label;btn.onclick=function(e){e.preventDefault();selectedItems.splice(i,1);redrawPhotos();};sequence.appendChild(btn);});
+      }
+      var validate=document.createElement('button');validate.type='button';validate.className='v24-english-check';validate.textContent='Vérifier l’ordre';
+      validate.onclick=function(e){e.preventDefault();if(selectedItems.length!==exo.photoSteps.length){renderEnglishFeedback(card,false,'Place les cinq étapes avant de vérifier.');return;}
+        var ok=selectedItems.every(function(x,i){return x.label===exo.correctOrder[i];});
+        renderEnglishFeedback(card,ok,ok?'Bravo, le cycle du haricot est dans le bon ordre.':(exo.hint||'Observe les étapes et réessaie.'));
+        if(ok){photoBank.querySelectorAll('button').forEach(function(b){b.disabled=true;});sequence.querySelectorAll('button').forEach(function(b){b.disabled=true;});validate.disabled=true;}
+      };
+      redrawPhotos();card.appendChild(photoBank);card.appendChild(sequence);card.appendChild(validate);renderEnglishFeedback(card,true,'');return;
+    }
     renderScienceHelp(card, exo.help);
     var bank = document.createElement('div');
     var zone = document.createElement('div');
