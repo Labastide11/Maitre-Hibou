@@ -41,31 +41,32 @@
     ]},
     {id:3,title:"Séance 3",short:"La vie des animaux",emoji:"🐣",objective:"Je sais décrire les grandes étapes de la vie d'un animal.",criteria:["Ordonner les étapes de la vie d'une poule","Distinguer ovipare et vivipare","Comprendre les transformations"],exos:[
       {type:"order",title:"De l'œuf à la poule",instr:"Touche les quatre photographies dans l'ordre de croissance.",photoSteps:[
-        {label:"Un œuf",src:"https://commons.wikimedia.org/wiki/Special:FilePath/Chicken%20egg.jpg?width=500"},
-        {label:"Le poussin sort de l'œuf",src:"https://commons.wikimedia.org/wiki/Special:FilePath/Chicken%20hatching.jpg?width=500"},
-        {label:"Un jeune poulet",src:"https://commons.wikimedia.org/wiki/Special:FilePath/Young%20chicken.jpg?width=500"},
-        {label:"Une poule adulte",src:"https://commons.wikimedia.org/wiki/Special:FilePath/Hen.jpg?width=500"}
+        {label:"Un œuf",src:"images-lecons/sciences/seance3/oeuf-poule.jpg"},
+        {label:"Le poussin sort de l'œuf",src:"images-lecons/sciences/seance3/poussin-eclosion.jpg"},
+        {label:"Un jeune poulet",src:"images-lecons/sciences/seance3/jeune-poulet.jpg"},
+        {label:"Une poule adulte",src:"images-lecons/sciences/seance3/poule-adulte.jpg"}
       ],correctOrder:["Un œuf","Le poussin sort de l'œuf","Un jeune poulet","Une poule adulte"],hint:"L'animal commence dans l'œuf, naît, puis grandit jusqu'à devenir adulte.",success:"Bravo, les étapes de la vie de la poule sont dans le bon ordre."},
       {type:"sort",title:"Ovipare ou vivipare ?",instr:"Observe la photo, puis touche le bon groupe.",items:[
-        {label:"une poule",image:"https://commons.wikimedia.org/wiki/Special:FilePath/Hen.jpg?width=500"},
-        {label:"une vache",image:"https://commons.wikimedia.org/wiki/Special:FilePath/Cow.jpg?width=500"},
-        {label:"une tortue",image:"https://commons.wikimedia.org/wiki/Special:FilePath/Testudo%20hermanni.jpg?width=500"},
-        {label:"un chat",image:"images-lecons/sciences/vivant-cartes/chat.webp"},
-        {label:"un canard",image:"https://commons.wikimedia.org/wiki/Special:FilePath/Mallard%20male%20female.jpg?width=500"},
-        {label:"un éléphant",image:"https://commons.wikimedia.org/wiki/Special:FilePath/African%20elephant.jpg?width=500"}
+        {label:"une poule",image:"images-lecons/sciences/seance3/poule.jpg"},
+        {label:"une vache",image:"images-lecons/sciences/seance3/vache.jpg"},
+        {label:"une tortue",image:"images-lecons/sciences/seance3/tortue.jpg"},
+        {label:"un chat",image:"images-lecons/sciences/seance3/chat.jpg"},
+        {label:"un canard",image:"images-lecons/sciences/seance3/canard.jpg"},
+        {label:"un éléphant",image:"images-lecons/sciences/seance3/elephant.jpg"}
       ],zones:["Ovipare","Vivipare"],zoneIcons:["🥚","🐘"],zoneColors:["#FDEBC8","#E3D4F0"],help:[{icon:"🥚",text:"Ovipare : le petit se développe dans un œuf pondu."},{icon:"🐘",text:"Vivipare : le petit se développe dans le ventre de sa mère."}],correct:[0,1,0,1,0,1]},
       {type:"match",title:"Qui devient qui ?",instr:"Associe chaque jeune animal à l'adulte correspondant.",left:["Une chenille","Un têtard","Un poussin"],right:["Une grenouille","Une poule","Un papillon"],pairs:[2,0,1],photos:[
         {src:"images-lecons/sciences/vivant-cartes/grenouille.webp",label:"Une grenouille"},
-        {src:"https://commons.wikimedia.org/wiki/Special:FilePath/Monarch%20Butterfly%20Danaus%20plexippus.jpg?width=500",label:"Un papillon"}
+        {src:"images-lecons/sciences/seance3/papillon-adulte.jpg",label:"Un papillon"},
+        {src:"images-lecons/sciences/seance3/jeune-poulet.jpg",label:"Un jeune poulet"}
       ]},
       {type:"order",title:"Le cycle de vie du papillon",instr:"Remets les quatre étapes dans l'ordre.",photoSteps:[
-        {label:"Des œufs",src:"https://commons.wikimedia.org/wiki/Special:FilePath/Monarch%20butterfly%20egg.jpg?width=500"},
-        {label:"Une chenille",src:"https://commons.wikimedia.org/wiki/Special:FilePath/Monarch%20caterpillar.jpg?width=500"},
-        {label:"Une chrysalide",src:"https://commons.wikimedia.org/wiki/Special:FilePath/Monarch%20chrysalis.jpg?width=500"},
-        {label:"Un papillon",src:"https://commons.wikimedia.org/wiki/Special:FilePath/Monarch%20Butterfly%20Danaus%20plexippus.jpg?width=500"}
+        {label:"Des œufs",src:"images-lecons/sciences/seance3/papillon-oeufs.jpg"},
+        {label:"Une chenille",src:"images-lecons/sciences/seance3/papillon-chenille.jpg"},
+        {label:"Une chrysalide",src:"images-lecons/sciences/seance3/papillon-chrysalide.jpg"},
+        {label:"Un papillon",src:"images-lecons/sciences/seance3/papillon-adulte.jpg"}
       ],correctOrder:["Des œufs","Une chenille","Une chrysalide","Un papillon"],hint:"Le papillon pond des œufs. Une chenille en sort, devient chrysalide, puis papillon.",success:"Bravo, le cycle de vie du papillon est dans le bon ordre."},
       {type:"choice",title:"Le défi de Maître Hibou",instr:"Le têtard ne ressemble pas à la grenouille. Est-ce pourtant le même animal qui grandit ?",photos:[
-        {src:"https://commons.wikimedia.org/wiki/Special:FilePath/Tadpole.jpg?width=500",label:"Un têtard"},
+        {src:"images-lecons/sciences/seance3/tetard.jpg",label:"Un têtard"},
         {src:"images-lecons/sciences/vivant-cartes/grenouille.webp",label:"Une grenouille"}
       ],options:["Oui, le têtard se transforme en grenouille.","Non, ce sont deux animaux sans rapport.","Non, le têtard devient un poisson."],correct:0,retry:true,hint:"Observe ce que devient un têtard au fil du temps.",explanation:"Le têtard grandit et se transforme en grenouille. On appelle ce changement une métamorphose."}
     ]},
