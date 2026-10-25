@@ -24088,6 +24088,19 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
     .v24-english-sessions,
     .v24-english-exercises{grid-template-columns:1fr;}
   }
+
+/* V25.8.85 — Photos conductrices du catalogue Anglais et de ses six séances */
+.v24-english-session-card{display:grid!important;grid-template-columns:minmax(110px,38%) 1fr!important;align-items:center;gap:13px!important;padding:10px!important;min-height:135px!important;overflow:hidden}
+.v24-english-cover{width:100%;height:116px;object-fit:cover;object-position:center;border-radius:14px;display:block;background:#e9e1ff}
+.v24-english-card-copy{display:flex;flex-direction:column;gap:6px;min-width:0}
+.v24-english-card-copy strong{font-size:clamp(16px,1.3vw,22px);line-height:1.15;color:#482595}
+.v24-english-card-copy span{font-size:14px;font-weight:900;color:#211850}
+.v24-english-card-copy small{font-size:12px;line-height:1.35;font-weight:800;color:#67638B}
+.v24-english-lesson-visual{margin:12px 0 18px;padding:10px;background:#fff;border:2px solid #DFC7FF;border-radius:20px;overflow:hidden}
+.v24-english-lesson-visual img{display:block;width:100%;max-height:390px;aspect-ratio:16/9;object-fit:contain;border-radius:12px;background:#f5f1ff}
+.v24-english-lesson-visual figcaption{padding:9px 5px 3px;color:#504181;font-size:13px;font-weight:800;text-align:center}
+@media(max-width:1120px){.v24-english-sessions{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.v24-english-sessions{grid-template-columns:1fr}.v24-english-session-card{grid-template-columns:35% 1fr!important}.v24-english-cover{height:105px}.v24-english-lesson-visual img{max-height:260px}}
 </style>
 <div aria-hidden="true" class="v24-big-subject-overlay hidden" id="v24BigSubjectOverlay">
 <div aria-labelledby="v24BigSubjectTitle" aria-modal="true" class="v24-big-subject-popup" role="dialog">
@@ -24194,7 +24207,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
 
   var ENGLISH_SESSIONS = [
     {
-      id:1, title:'Séance 1', short:'Saluer', emoji:'👋',
+      id:1, photo:'images/anglais-seance-1.jpg', title:'Séance 1', short:'Saluer', emoji:'👋',
       objective:'Je sais saluer et dire au revoir en anglais.',
       criteria:['Je reconnais Hello / Goodbye','Je réponds à une salutation','Je prononce correctement'],
       exos:[
@@ -24208,7 +24221,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       ]
     },
     {
-      id:2, title:'Séance 2', short:'My name is...', emoji:'🪪',
+      id:2, photo:'images/anglais-seance-2.jpg', title:'Séance 2', short:'My name is...', emoji:'🪪',
       objective:'Je sais dire mon prénom en anglais.',
       criteria:['Je dis My name is...','Je demande What is your name?','Je comprends la question'],
       exos:[
@@ -24222,7 +24235,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       ]
     },
     {
-      id:3, title:'Séance 3', short:'How are you?', emoji:'🙂',
+      id:3, photo:'images/anglais-seance-3.jpg', title:'Séance 3', short:'How are you?', emoji:'🙂',
       objective:'Je sais demander et dire comment je vais.',
       criteria:['Je demande How are you?','Je réponds avec une émotion','J’associe une émotion à un mot'],
       exos:[
@@ -24237,7 +24250,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       ]
     },
     {
-      id:4, title:'Séance 4', short:'Numbers 1-10', emoji:'🔢',
+      id:4, photo:'images/anglais-seance-4.jpg', title:'Séance 4', short:'Numbers 1-10', emoji:'🔢',
       objective:'Je sais compter de 1 à 10 en anglais.',
       criteria:['Je reconnais les nombres à l’oral','Je les récite dans l’ordre','Je les écris en lettres'],
       exos:[
@@ -24258,7 +24271,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       ]
     },
     {
-      id:5, title:'Séance 5', short:'How old are you?', emoji:'🎂',
+      id:5, photo:'images/anglais-seance-5.jpg', title:'Séance 5', short:'How old are you?', emoji:'🎂',
       objective:'Je sais dire mon âge en anglais.',
       criteria:['Je demande How old are you?','Je réponds I am... years old','Je réutilise les nombres appris'],
       exos:[
@@ -24272,7 +24285,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       ]
     },
     {
-      id:6, title:'Séance 6', short:'Bilan', emoji:'⭐',
+      id:6, photo:'images/anglais-seance-6.jpg', title:'Séance 6', short:'Bilan', emoji:'⭐',
       objective:'Je vérifie les compétences essentielles en anglais.',
       criteria:['Je salue et je prends congé','Je me présente','Je comprends des consignes','Je connais les nombres','Je parle de moi'],
       exos:[
@@ -24335,7 +24348,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'v24-english-session-card';
-      b.innerHTML = '<strong>'+s.emoji+' '+esc(s.short)+'</strong><span>'+esc(s.title)+'</span><small>'+esc(s.objective)+'</small>';
+      b.innerHTML = '<img class="v24-english-cover" src="'+esc(s.photo)+'" alt="Photo de la séance '+s.id+' : '+esc(s.short)+'" loading="lazy"><span class="v24-english-card-copy"><strong>'+esc(s.short)+'</strong><span>'+esc(s.title)+'</span><small>'+esc(s.objective)+'</small></span>';
       b.addEventListener('click', function(ev){
         ev.preventDefault();
         ev.stopPropagation();
@@ -24354,6 +24367,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       + '<div><div class="v24-english-objective">'+esc(s.emoji+' '+s.title+' — '+s.objective)+'</div>'
       + '<div class="v24-english-criteria">'+s.criteria.map(function(c){return '<span>✓ '+esc(c)+'</span>';}).join('')+'</div></div>'
       + '</div>'
+      + '<figure class="v24-english-lesson-visual"><img src="'+esc(s.photo)+'" alt="Situation illustrée : '+esc(s.short)+'"><figcaption>Observe la scène et les paroles des personnages avant de commencer.</figcaption></figure>'
       + '<div class="v24-english-exercises" id="v24EnglishExercises"></div>';
     grid.querySelector('#v24EnglishBack').addEventListener('click', function(ev){
       ev.preventDefault();
