@@ -34819,7 +34819,25 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar
 body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button:focus-visible{
  outline:3px solid #102f7b!important;outline-offset:3px!important;
 }
-body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects .subject-icon{font-size:29px!important;line-height:1!important}
+/* Icones des sept matieres : 54px sur PC, sans changer la taille des cartes. */
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button .subject-icon{
+  font-size:54px!important;line-height:1!important;
+  width:54px!important;height:54px!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  flex:0 0 54px!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button .subject-icon img,
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button .subject-icon svg{
+  width:54px!important;height:54px!important;max-width:54px!important;max-height:54px!important;object-fit:contain!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button{
+  height:83px!important;min-height:83px!important;padding:3px 4px!important;gap:1px!important;
+}
+@media(max-height:800px){
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button{
+    height:83px!important;min-height:83px!important;
+  }
+}
 body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects .subject-label{
   font-size:clamp(11px,.9vw,14px)!important;text-align:center!important;line-height:1.12!important;white-space:normal!important;
 }
