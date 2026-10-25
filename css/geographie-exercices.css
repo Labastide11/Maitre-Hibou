@@ -39,3 +39,57 @@
 .geo-legend-map-s1{margin:12px 0 16px;padding:8px;background:#fff;border:2px solid #edc17e;border-radius:15px;overflow:hidden}
 .geo-legend-map-s1 img{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
 .geo-legend-map-s1 figcaption{text-align:center;color:#375979;font-weight:750;font-size:15px;padding:8px}
+
+/* Géographie S1 : boussole à gauche, exercice interactif à droite */
+.geo-session1-large #v24GeoExercises .geo-s1-compass-card{
+  display:grid!important;
+  grid-template-columns:minmax(180px,28%) minmax(0,1fr)!important;
+  align-items:start!important;
+  column-gap:24px!important;
+  row-gap:8px!important;
+}
+.geo-session1-large .geo-s1-compass-card>h3,
+.geo-session1-large .geo-s1-compass-card>p:not(.v24-english-feedback){
+  grid-column:1 / -1;
+}
+.geo-session1-large .geo-s1-compass-card .geo-rose-visible{
+  grid-column:1;grid-row:3;margin:0!important;padding:12px!important;align-self:start;
+}
+.geo-session1-large .geo-s1-compass-card .geo-rose-visible img{
+  width:100%!important;max-width:230px!important;max-height:230px!important;height:auto!important;
+  object-fit:contain!important;margin:auto!important;
+}
+.geo-session1-large .geo-s1-compass-card .geo-rose-visible figcaption{
+  font-size:13px!important;line-height:1.3!important;
+}
+.geo-session1-large .geo-s1-compass-card .v24-english-match{
+  grid-column:2;grid-row:3;align-self:center;display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:10px!important;
+}
+.geo-session1-large .geo-s1-compass-card .v24-english-match-col{min-width:0!important;}
+.geo-session1-large .geo-s1-compass-card .v24-english-match-item{
+  min-height:48px!important;white-space:normal!important;
+}
+.geo-session1-large .geo-s1-compass-card>.v24-english-feedback{grid-column:1 / -1!important;}
+
+/* Géographie S1 : plan + légende lisibles, sans envahir l'écran */
+.geo-session1-large .geo-s1-map-card .geo-legend-map-s1{
+  width:min(100%,640px)!important;max-width:640px!important;
+  margin:12px auto 14px!important;padding:8px!important;
+}
+.geo-session1-large .geo-s1-map-card .geo-legend-map-s1 img{
+  display:block!important;width:100%!important;max-height:375px!important;
+  height:auto!important;object-fit:contain!important;
+}
+.geo-session1-large .geo-s1-map-card .geo-legend-map-s1 figcaption{font-size:13px!important;padding:4px!important;}
+
+@media(max-width:740px){
+  .geo-session1-large #v24GeoExercises .geo-s1-compass-card{grid-template-columns:1fr!important;}
+  .geo-session1-large .geo-s1-compass-card .geo-rose-visible{
+    grid-column:1!important;grid-row:auto!important;justify-self:center;width:min(100%,280px)!important;
+  }
+  .geo-session1-large .geo-s1-compass-card .v24-english-match{
+    grid-column:1!important;grid-row:auto!important;width:100%!important;
+  }
+  .geo-session1-large .geo-s1-map-card .geo-legend-map-s1 img{max-height:none!important;}
+}

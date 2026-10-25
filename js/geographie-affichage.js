@@ -35,7 +35,7 @@
     if(s.id === 1) grid.classList.add('geo-session1-large');
     s.exos.forEach(function(exo, idx){
       var card = document.createElement('section');
-      card.className = 'v24-english-exo';
+      card.className = 'v24-english-exo' + (s.id === 1 && idx === 0 ? ' geo-s1-compass-card' : '') + (s.id === 1 && idx === 2 ? ' geo-s1-map-card' : '');
       card.innerHTML = '<h3>'+esc(exo.title)+'</h3><p>'+esc(exo.instr)+'</p>';
       if(idx === 0 && s.id === 1) card.insertAdjacentHTML('beforeend','<figure class="geo-rose-visible"><img src="images/geographie-seance1-rose-des-vents.jpg" alt="Rose des vents : Nord en haut, Sud en bas, Est à droite et Ouest à gauche"><figcaption>Observe la rose des vents avant de relier chaque direction.</figcaption></figure>');
       else if(idx === 0 && s.map) card.insertAdjacentHTML('beforeend','<div class=\"v24-geo-map-card\">'+s.map+'</div>');
