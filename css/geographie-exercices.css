@@ -34,3 +34,8 @@
 .geo-photo-choice.done,.geo-photo-answer.done{border-color:#25874e;background:#e5f6eb;cursor:default}
 .geo-photo-progress{padding:10px;background:#f0f6fb;border-radius:12px;font-weight:700}
 @media(max-width:700px){.geo-photo-match{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}.geo-photo-choice img{height:110px}.geo-photo-answer{min-height:110px;font-size:14px}.geo-photo-match-photos,.geo-photo-match-answers{grid-template-rows:repeat(4,minmax(105px,auto));gap:8px}}
+
+/* Géographie séance 1, exercice 3 : carte et légende en JPG */
+.geo-legend-map-s1{margin:12px 0 16px;padding:8px;background:#fff;border:2px solid #edc17e;border-radius:15px;overflow:hidden}
+.geo-legend-map-s1 img{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+.geo-legend-map-s1 figcaption{text-align:center;color:#375979;font-weight:750;font-size:15px;padding:8px}
