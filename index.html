@@ -4991,16 +4991,16 @@ body.hibou-keyboard-open #prenomOverlay .hibou-accueil-hero { display:none !impo
 
 <!-- HISTOIRE-CATALOGUE-6-ILLUSTRATIONS : affiches individuelles, cartes cliquables -->
 <style id="mh-history-catalogue-images-css">
-#v24HistorySessions{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important;}
+/* Catalogue : miniatures à trois colonnes ; aucune règle globale sur les autres matières. */
+#v24HistorySessions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important;}
+#v24HistorySessions .v24-history-illustrated-session{display:flex!important;flex-direction:column!important;align-items:stretch!important;width:100%!important;min-width:0!important;height:auto!important;min-height:126px!important;padding:7px!important;margin:0!important;overflow:hidden!important;border:2px solid #ded7ff!important;border-radius:16px!important;background:#fff!important;box-shadow:0 5px 14px rgba(38,29,90,.09)!important;cursor:pointer!important;}
+#v24HistorySessions .v24-history-illustrated-session img,#v24EnglishSessions .mh-catalogue-illustrated img,#v24GeoSessions .mh-catalogue-illustrated img{display:block;width:100%;height:auto;aspect-ratio:3/1;object-fit:contain;border-radius:10px;}
+#v24HistorySessions .v24-history-illustrated-session strong{font-size:14px!important;font-weight:900!important;text-align:center;padding:5px 2px!important;}
+#v24EnglishSessions .mh-catalogue-illustrated,#v24GeoSessions .mh-catalogue-illustrated{padding:8px!important;gap:5px!important;min-height:135px!important;}
+#v24EnglishSessions .mh-catalogue-illustrated strong,#v24GeoSessions .mh-catalogue-illustrated strong{font-size:15px!important;line-height:1.2!important;}
+#v24EnglishSessions .mh-catalogue-illustrated small,#v24GeoSessions .mh-catalogue-illustrated small{font-size:11px!important;line-height:1.2!important;}
 @media(max-width:1050px){#v24HistorySessions{grid-template-columns:repeat(2,minmax(0,1fr))!important;}}
-@media(max-width:620px){#v24HistorySessions{grid-template-columns:minmax(0,1fr)!important;}}
-#v24HistorySessions .v24-history-illustrated-session{display:flex!important;flex-direction:column!important;position:relative!important;width:100%!important;height:auto!important;min-height:128px!important;max-width:none!important;padding:0!important;margin:0!important;overflow:hidden!important;border:2px solid #D8D4FF!important;border-radius:18px!important;background:#fff!important;box-shadow:0 5px 14px rgba(38,29,90,.09)!important;cursor:pointer!important;text-align:left!important;}
-#v24HistorySessions .v24-history-illustrated-session img{display:block!important;width:100%!important;height:auto!important;max-width:100%!important;object-fit:contain!important;object-position:center!important;border-radius:18px!important;}
-#v24HistorySessions .v24-history-illustrated-session .mh-history-card-caption{display:block;padding:10px 12px;font:800 15px/1.25 system-ui,sans-serif;color:#4D45BF;background:#fff;}
-#v24HistorySessions .v24-history-illustrated-session img{aspect-ratio:3/1;}
-#v24HistorySessions .v24-history-illustrated-session img[hidden]{display:none!important;}
-#v24HistorySessions .v24-history-illustrated-session:hover{transform:translateY(-2px)!important;box-shadow:0 9px 21px rgba(38,29,90,.16)!important;}
-#v24HistorySessions .v24-history-illustrated-session:focus-visible{outline:3px solid #6058e8!important;outline-offset:3px!important;}
+@media(max-width:650px){#v24HistorySessions{grid-template-columns:minmax(0,1fr)!important;}}
 </style>
 <style id="anniversaire-fee-icon">
 /* Icône anniversaire : gâteau et fée (image JPG). */
@@ -24358,7 +24358,9 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'v24-english-session-card';
-      b.innerHTML = '<strong>'+s.emoji+' '+esc(s.short)+'</strong><span>'+esc(s.title)+'</span><small>'+esc(s.objective)+'</small>';
+      b.className += ' mh-catalogue-illustrated';
+      b.innerHTML = '<img src="images/anglais-seance-'+s.id+'.jpg" alt="" loading="lazy" decoding="async">' + '<strong>'+esc(s.emoji+' '+s.short)+'</strong><small>'+esc(s.objective)+'</small>';
+      b.querySelector('img').addEventListener('error', function(){this.style.display='none';});
       b.addEventListener('click', function(ev){
         ev.preventDefault();
         ev.stopPropagation();
@@ -25408,7 +25410,9 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'v24-english-session-card';
-      b.innerHTML = '<strong>'+esc(s.emoji+' '+s.short)+'</strong><span>'+esc(s.title)+'</span><small>'+esc(s.objective)+'</small>';
+      b.className += ' mh-catalogue-illustrated';
+      b.innerHTML = '<img src="images/geographie-carte-seance-'+s.id+'.jpg" alt="" loading="lazy" decoding="async">' + '<strong>'+esc(s.emoji+' '+s.short)+'</strong><small>'+esc(s.objective)+'</small>';
+      b.querySelector('img').addEventListener('error', function(){this.style.display='none';});
       b.addEventListener('click', function(ev){ev.preventDefault();ev.stopPropagation();renderGeoSession(grid, s.id);}, true);
       wrap.appendChild(b);
     });
@@ -25608,9 +25612,8 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       b.type = 'button';
       b.className = 'v24-english-session-card v24-history-illustrated-session';
       b.setAttribute('aria-label', 'Histoire — '+s.title+' : '+s.short+'. '+s.objective);
-      b.innerHTML = '<img src="images/histoire-seance-'+s.id+'.jpg" alt="'+esc(s.short+' — '+s.title+' : '+s.objective)+'" loading="lazy" decoding="async"><span class="mh-history-card-caption">Séance '+s.id+' — '+esc(s.short)+'</span>';
-      var preview=b.querySelector('img');
-      preview.addEventListener('error',function(){ preview.hidden=true; },{once:true});
+      b.innerHTML = '<img src="images/histoire-seance-'+s.id+'.jpg" alt="" loading="lazy" decoding="async">' + '<strong>'+esc(s.short)+'</strong>';
+      b.querySelector('img').addEventListener('error', function(){this.style.display='none';});
       b.addEventListener('click', function(ev){ev.preventDefault();ev.stopPropagation();renderHistorySession(grid, s.id);}, true);
       wrap.appendChild(b);
     });
