@@ -38,7 +38,15 @@
       card.className = 'v24-english-exo';
       card.innerHTML = '<h3>'+esc(exo.title)+'</h3><p>'+esc(exo.instr)+'</p>';
       if(idx === 0 && s.id === 1) card.insertAdjacentHTML('beforeend','<figure class="geo-rose-visible"><img src="images/geographie-seance1-rose-des-vents.jpg" alt="Rose des vents : Nord en haut, Sud en bas, Est à droite et Ouest à gauche"><figcaption>Observe la rose des vents avant de relier chaque direction.</figcaption></figure>');
-      else if(idx === 0 && s.map) card.insertAdjacentHTML('beforeend','<div class="v24-geo-map-card">'+s.map+'</div>');
+      else if(idx === 0 && s.map) card.insertAdjacentHTML('beforeend','<div class=\"v24-geo-map-card\">'+s.map+'</div>');
+      if(s.id === 1 && idx === 1){
+        card.insertAdjacentHTML('beforeend','<div class=\"geo-photo-grid-s1\">'
+          + '<figure class=\"geo-photo-card-s1\"><img src=\"images/geographie-seance1-ville.jpg\" alt=\"Photographie d’une ville\"><figcaption>Une ville</figcaption></figure>'
+          + '<figure class=\"geo-photo-card-s1\"><img src=\"images/geographie-seance1-foret.jpg\" alt=\"Photographie d’un espace boisé\"><figcaption>Une forêt</figcaption></figure>'
+          + '<figure class=\"geo-photo-card-s1\"><img src=\"images/geographie-seance1-route.jpg\" alt=\"Photographie d’une route\"><figcaption>Une route</figcaption></figure>'
+          + '<figure class=\"geo-photo-card-s1\"><img src=\"images/geographie-seance1-eau.jpg\" alt=\"Photographie d’une étendue d’eau\"><figcaption>Une rivière ou un lac</figcaption></figure>'
+          + '</div><p class=\"geo-observe-s1\">Observe ces 4 vraies photos avant de relier les symboles de la légende.</p>');
+      }
       if(s.id === 1 && idx === 2){
         card.insertAdjacentHTML('beforeend','<p class="geo-observe-s1">Observe les couleurs et les symboles de la carte pour répondre.</p>');
       }
