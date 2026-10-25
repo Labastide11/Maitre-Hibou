@@ -38,19 +38,13 @@
     if(s.id === 1) grid.classList.add('geo-session1-large');
     s.exos.forEach(function(exo, idx){
       var card = document.createElement('section');
-      card.className = 'v24-english-exo' + (s.id === 1 && idx === 0 ? ' geo-s1-compass-card' : '') + (s.id === 1 && idx === 2 ? ' geo-s1-map-card' : '');
+      card.className = 'v24-english-exo' + (s.id === 1 ? ' geo-s1-activity' : '');
       card.innerHTML = '<h3>'+esc(exo.title)+'</h3><p>'+esc(exo.instr)+'</p>';
-      if(idx === 0 && s.id === 1) card.insertAdjacentHTML('beforeend','<figure class="geo-rose-visible"><img src="images/geographie-seance1-rose-des-vents.jpg" alt="Rose des vents : Nord en haut, Sud en bas, Est à droite et Ouest à gauche"><figcaption>Observe la rose des vents avant de relier chaque direction.</figcaption></figure>');
-      else if(idx === 0 && s.map) card.insertAdjacentHTML('beforeend','<div class=\"v24-geo-map-card\">'+s.map+'</div>');
-      if(s.id === 1 && idx === 2){
-        card.insertAdjacentHTML('beforeend','<figure class="geo-legend-map-s1"><img src="images/geographie-seance1-carte-legende.jpg" alt="Plan imaginaire du village des Tilleuls avec sa légende : forêt verte, route grise, ville beige et lac bleu"><figcaption>Observe le plan et sa légende avant de répondre.</figcaption></figure>');
-      }
+      if(s.id === 1){ renderGeoS1(card, idx); wrap.appendChild(card); return; }
+      if(idx === 0 && s.map) card.insertAdjacentHTML('beforeend','<div class="v24-geo-map-card">'+s.map+'</div>');
       if(exo.type === 'assessment') renderHistoryAssessment(card, exo);
       if(exo.type === 'choice') renderScienceChoice(card, exo);
-      if(exo.type === 'match'){
-        if(s.id === 1 && idx === 1) renderGeoPhotoMatch(card);
-        else renderScienceMatch(card, exo);
-      }
+      if(exo.type === 'match') renderScienceMatch(card, exo);
       if(exo.type === 'order') renderScienceOrder(card, exo);
       if(exo.type === 'sort') renderScienceSort(card, exo);
       if(exo.type === 'checklist') renderScienceChecklist(card, exo);
@@ -76,7 +70,7 @@
       function refreshGeoSessionButton(){
         var finished = exerciseCards.filter(function(card){
           var feedback = card.querySelector('.v24-english-feedback');
-          return feedback && String(feedback.textContent || '').trim().length > 0;
+          return s.id === 1 ? card.dataset.geoDone === '1' : (feedback && String(feedback.textContent || '').trim().length > 0);
         }).length;
         finishButton.disabled = finished < exerciseCards.length;
         finishButton.textContent = finished < exerciseCards.length
@@ -141,6 +135,80 @@
           alert('Le journal élève n’est pas encore disponible. Recharge la page puis recommence.');
         }
       }, true);
+    }
+  }
+
+  /* Séance 1 : activités entièrement interactives, images JPG locales. */
+  function renderGeoS1(card, idx){
+    var base='images/geographie/';
+    function el(tag,cls,html,parent){var x=document.createElement(tag);if(cls)x.className=cls;if(html!==undefined)x.innerHTML=html;(parent||card).appendChild(x);return x;}
+    function feedback(ok,msg,finished){
+      var x=card.querySelector('.v24-english-feedback');
+      if(!x)x=el('div','v24-english-feedback','');
+      x.className='v24-english-feedback '+(ok?'ok':'bad'); x.textContent=msg;
+      if(finished){card.dataset.geoDone='1';card.classList.add('geo-s1-success');}
+    }
+    function button(label,parent,callback){var b=el('button','geo-s1-btn','',parent);b.type='button';b.textContent=label;b.addEventListener('click',callback);return b;}
+    function picture(file,alt,parent){var im=el('img','geo-s1-img',undefined,parent);im.src=base+file;im.alt=alt;im.loading='eager';return im;}
+    if(idx===0){
+      var panel=el('div','geo-s1-compass','');
+      picture('s1-rose.jpg','Rose des vents sans les noms des directions',panel);
+      var positions=el('div','geo-s1-directions','',panel), labels=['Nord','Sud','Est','Ouest'];
+      var places=['haut','bas','droite','gauche'];
+      var used={};
+      var controls={};
+      places.forEach(function(pos,i){var b=button('? '+pos,positions,function(){
+        var chooser=card.querySelector('.geo-s1-picker');chooser.hidden=false;
+        chooser.querySelectorAll('button').forEach(function(x){x.disabled=!!used[x.textContent] && controls[pos]!==x.textContent;});
+        chooser.dataset.position=pos;
+      });controls[pos]=null;b.dataset.place=pos;});
+      var picker=el('div','geo-s1-picker','',card);picker.hidden=true;
+      labels.forEach(function(label){button(label,picker,function(){var pos=picker.dataset.position;controls[pos]=label;picker.hidden=true;
+        positions.querySelector('[data-place="'+pos+'"]').textContent=label+' ('+pos+')';
+        if(places.every(function(p){return !!controls[p];}))verify.disabled=false;
+      });});
+      var verify=button('Vérifier mes quatre directions',card,function(){
+        var correct={haut:'Nord',bas:'Sud',droite:'Est',gauche:'Ouest'};
+        if(places.every(function(p){return controls[p]===correct[p];})){feedback(true,'Bravo ! Tu sais placer les quatre points cardinaux.',true);verify.disabled=true;}
+        else feedback(false,'Regarde la rose des vents : le nord est en haut, puis retrouve les autres directions. Corrige tes réponses.',false);
+      });verify.disabled=true;
+    }else if(idx===1){
+      picture('s1-plan.jpg','Plan avec une école au sud-ouest, un parc au sud-est, un lac au nord-est et une maison au nord-ouest');
+      el('div','geo-s1-question','Qu’y a-t-il à l’est de l’école ?');
+      var answers=el('div','geo-s1-answers','');['Le lac','Une maison','Le parc'].forEach(function(t){button(t,answers,function(){
+        if(t==='Le parc'){feedback(true,'Oui ! Le parc est à droite de l’école, donc à l’est.',true);answers.querySelectorAll('button').forEach(function(x){x.disabled=true;});}
+        else feedback(false,'Observe ce qui se trouve juste à droite de l’école. Essaie encore.',false);
+      });});
+    }else if(idx===2){
+      var row=el('div','geo-s1-match',''), chosen=null,done={};
+      var left=el('div','geo-s1-match-col','',row),right=el('div','geo-s1-match-col','',row);
+      var entries=[['🌳','Forêt'],['🌊','Lac'],['🏘️','Village'],['🛣️','Route']];
+      entries.forEach(function(e,i){var b=button(e[0]+'  Symbole '+(i+1),left,function(){if(done[e[1]])return;left.querySelectorAll('button').forEach(function(x){x.classList.remove('geo-selected');});b.classList.add('geo-selected');chosen={key:e[1],button:b};});});
+      ['Route','Village','Forêt','Lac'].forEach(function(key){var b=button(key,right,function(){
+        if(!chosen){feedback(false,'Choisis d’abord un symbole à gauche.',false);return;}
+        if(chosen.key!==key){feedback(false,'Ce symbole ne correspond pas à cette légende. Cherche encore.',false);return;}
+        done[key]=true;b.disabled=true;chosen.button.disabled=true;chosen.button.classList.remove('geo-selected');chosen=null;
+        var n=Object.keys(done).length;
+        if(n===4)feedback(true,'Bravo ! Tu as trouvé les quatre symboles.',true);
+        else feedback(true,'Bonne association ! '+n+' sur 4. Continue.',false);
+      });});
+    }else if(idx===3){
+      var imageBox=el('div','geo-s1-map-targets','');picture('s1-plan.jpg','Plan du quartier : école, parc, lac et maison',imageBox);
+      // Positions en pourcentage sur le JPG recadré, dont les quartiers sont clairement séparés.
+      [['Maison',22,24],['Lac',73,25],['École',22,64],['Parc',75,66]].forEach(function(t){
+        var b=button('',imageBox,function(){if(t[0]==='Parc'){feedback(true,'Oui ! Le parc est à l’est de l’école et au sud du lac.',true);imageBox.querySelectorAll('button').forEach(function(x){x.disabled=true;});}
+        else feedback(false,'Ce n’est pas le parc. Cherche en bas à droite du plan.',false);
+        });b.className='geo-s1-hotspot';b.style.left=t[1]+'%';b.style.top=t[2]+'%';b.setAttribute('aria-label','Choisir : '+t[0]);b.title=t[0];
+      });
+      el('div','geo-s1-question','Clique sur le lieu situé à l’est de l’école et au sud du lac.');
+    }else if(idx===4){
+      var challenge=el('div','geo-s1-map-targets geo-s1-challenge','');picture('s1-defi.jpg','Carte du village : école à gauche, parc au centre, lac en bas à droite, forêt en haut à droite',challenge);
+      [['École',28,28],['Parc',54,28],['Forêt',88,19],['Bibliothèque',13,57],['Lac',80,74]].forEach(function(t){
+        var b=button('',challenge,function(){if(t[0]==='Parc'){feedback(true,'Mission réussie ! Le parc se trouve à l’est de l’école et au nord du lac.',true);challenge.querySelectorAll('button').forEach(function(x){x.disabled=true;});}
+        else feedback(false,'Ce n’est pas le bon lieu. Regarde à droite de l’école, puis au-dessus du lac.',false);
+        });b.className='geo-s1-hotspot';b.style.left=t[1]+'%';b.style.top=t[2]+'%';b.title=t[0];b.setAttribute('aria-label','Choisir : '+t[0]);
+      });
+      el('div','geo-s1-question','Trouve le lieu secret : il est à l’est de l’école et au nord du lac. Clique dessus !');
     }
   }
 

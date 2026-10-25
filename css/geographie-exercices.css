@@ -110,3 +110,26 @@
 #v24GeoSessions .geo-session-card-text span{font-size:12px;font-weight:800;}
 #v24GeoSessions .geo-session-card-text small{font-size:12px;line-height:1.35;white-space:normal;}
 @media(max-width:680px){#v24GeoSessions .geo-session-card-photo{height:110px!important;}}
+
+/* Séance 1 CE2 : cinq vrais exercices sur tablette */
+.geo-session1-large #v24GeoExercises{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(100%,350px),1fr))!important;align-items:start!important;gap:14px!important}
+.geo-session1-large .geo-s1-activity{min-width:0!important;display:flex!important;flex-direction:column!important;gap:8px!important}
+.geo-s1-img{display:block;width:100%;height:auto;object-fit:contain;border-radius:12px;border:1px solid #f5d19c}
+.geo-s1-question{background:#efedff;border-radius:12px;padding:12px;color:#2d2b55;font-weight:900;text-align:center;line-height:1.4}
+.geo-s1-btn{min-height:46px;border:2px solid #ffc982;border-radius:12px;background:#fffaf2;color:#29234c;font:800 15px system-ui,sans-serif;padding:8px 12px;cursor:pointer;touch-action:manipulation}
+.geo-s1-btn:disabled{opacity:.65;cursor:default}
+.geo-s1-btn.geo-selected{border-color:#6c63ff;background:#eceaff}
+.geo-s1-answers,.geo-s1-directions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.geo-s1-answers{grid-template-columns:1fr}
+.geo-s1-picker{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;background:#fff1d8;padding:10px;border-radius:14px}
+.geo-s1-picker[hidden]{display:none!important}
+.geo-s1-match{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.geo-s1-match-col{display:grid;gap:9px}
+.geo-s1-map-targets{position:relative;width:100%;overflow:hidden;border-radius:12px}
+.geo-s1-map-targets .geo-s1-img{width:100%;display:block}
+.geo-s1-hotspot{position:absolute;transform:translate(-50%,-50%);width:19%;height:21%;max-width:130px;min-width:45px;border:3px solid transparent;background:rgba(255,255,255,.02);border-radius:16px;cursor:pointer;touch-action:manipulation}
+.geo-s1-hotspot:focus-visible{outline:4px solid #6c63ff;background:rgba(255,255,255,.25)}
+.geo-s1-hotspot:hover{border-color:#ff9c18;background:rgba(255,215,100,.15)}
+.geo-s1-challenge .geo-s1-hotspot{width:16%;height:24%}
+.geo-s1-success{border-color:#6bcb77!important}
+@media(max-width:780px){.geo-session1-large #v24GeoExercises{grid-template-columns:1fr!important}}

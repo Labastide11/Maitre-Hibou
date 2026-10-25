@@ -24,10 +24,12 @@
   var GEO_SPARSE = geoDotsSvg(5);
 
   var GEO_SESSIONS = [
-    {id:1,title:'Séance 1',short:'Se repérer sur une carte',emoji:'🧭',map:GEO_MAP_COMPASS,objective:'Je sais me repérer sur un plan ou une carte simple.',criteria:['Points cardinaux','Légende','Symboles simples'],exos:[
-      {type:'match',title:'Relie le point cardinal',instr:'Clique un point cardinal puis sa position sur la carte.',left:['Nord','Sud','Est','Ouest'],right:['À droite de la carte','En bas de la carte','À gauche de la carte','En haut de la carte'],pairs:[3,1,0,2],help:[{icon:'⬆️',text:'Nord = en haut'},{icon:'⬇️',text:'Sud = en bas'},{icon:'➡️',text:'Est = à droite'},{icon:'⬅️',text:'Ouest = à gauche'}]},
-      {type:'match',title:'Symbole et légende',instr:'Clique un symbole puis ce qu’il représente.',left:['🌳','🏠','🟦','🛣️'],right:['Une route','Une forêt','Une rivière ou un lac','Une ville'],pairs:[1,3,2,0]},
-      {type:'choice',title:'Vrai ou faux',instr:'La légende sert à comprendre les couleurs et les symboles.',options:['Vrai','Faux'],correct:0}
+    {id:1,title:'Séance 1',short:'Se repérer sur une carte',emoji:'🧭',objective:'Je sais me repérer sur un plan ou une carte simple.',criteria:['Points cardinaux','Légende','Symboles simples'],exos:[
+      {type:'geo-s1-compass',title:'La rose des vents',instr:'Place les quatre points cardinaux.'},
+      {type:'geo-s1-plan',title:'Je lis un plan',instr:'Observe le plan puis réponds.'},
+      {type:'geo-s1-legend',title:'Je comprends la légende',instr:'Associe chaque symbole à ce qu’il représente.'},
+      {type:'geo-s1-place',title:'Je retrouve un lieu',instr:'Clique sur le bon endroit du plan.'},
+      {type:'geo-s1-challenge',title:'Défi du géographe',instr:'Résous l’énigme pour retrouver le lieu secret.'}
     ]},
     {id:2,title:'Séance 2',short:'Repères de la France',emoji:'🇫🇷',map:GEO_MAP_FRANCE,objective:'Je connais quelques grands repères géographiques de la France.',criteria:['Fleuves','Europe','Hexagone'],exos:[
       {type:'match',title:'Fleuves de France',instr:'Relie le fleuve à sa description.',left:['La Seine','La Loire','Le Rhône'],right:['Traverse Paris','Le plus long fleuve de France','Se jette dans la mer Méditerranée'],pairs:[0,1,2]},
