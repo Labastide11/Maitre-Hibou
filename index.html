@@ -4997,6 +4997,15 @@ body.hibou-keyboard-open #prenomOverlay .hibou-accueil-hero { display:none !impo
 #v24HistorySessions .v24-history-illustrated-session:hover{transform:translateY(-2px)!important;box-shadow:0 9px 21px rgba(38,29,90,.16)!important;}
 #v24HistorySessions .v24-history-illustrated-session:focus-visible{outline:3px solid #6058e8!important;outline-offset:3px!important;}
 </style>
+<style id="anniversaire-fee-icon">
+/* Icône anniversaire : gâteau et fée (image JPG). */
+.birthday-top-card-v2414 .birthday-cake-v2414,
+body.v21-final .birthday-top-card-v2414 .birthday-cake-v2414 {
+  background:#fff url("images/anniversaire-fee.jpg") center / cover no-repeat !important;
+  overflow:hidden;
+  flex-shrink:0;
+}
+</style>
 </head>
 <body class="prenom-mode">
 <header>
@@ -27813,7 +27822,7 @@ body.v21-final .birthday-top-card-v2414{
       card.id = "birthdayTopCardV2414";
       card.className = "bandeau-info-card v21-top-card birthday-top-card-v2414";
       card.title = "Voir les anniversaires de l’année";
-      card.innerHTML = '<span class="birthday-cake-v2414" aria-hidden="true">🎂</span><span class="birthday-text-v2414"><span class="birthday-label-v2414">Anniversaires</span><span class="birthday-summary-v2414" id="birthdayTopSummaryV2414">Chargement…</span></span>';
+      card.innerHTML = '<span class="birthday-cake-v2414" aria-hidden="true"></span><span class="birthday-text-v2414"><span class="birthday-label-v2414">Anniversaires</span><span class="birthday-summary-v2414" id="birthdayTopSummaryV2414">Chargement…</span></span>';
       var sound = byId("soundBtn");
       if(sound && sound.parentNode === actions) actions.insertBefore(card, sound);
       else actions.appendChild(card);
