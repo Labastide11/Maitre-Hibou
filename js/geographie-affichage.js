@@ -39,20 +39,15 @@
       card.innerHTML = '<h3>'+esc(exo.title)+'</h3><p>'+esc(exo.instr)+'</p>';
       if(idx === 0 && s.id === 1) card.insertAdjacentHTML('beforeend','<figure class="geo-rose-visible"><img src="images/geographie-seance1-rose-des-vents.jpg" alt="Rose des vents : Nord en haut, Sud en bas, Est à droite et Ouest à gauche"><figcaption>Observe la rose des vents avant de relier chaque direction.</figcaption></figure>');
       else if(idx === 0 && s.map) card.insertAdjacentHTML('beforeend','<div class=\"v24-geo-map-card\">'+s.map+'</div>');
-      if(s.id === 1 && idx === 1){
-        card.insertAdjacentHTML('beforeend','<div class=\"geo-photo-grid-s1\">'
-          + '<figure class=\"geo-photo-card-s1\"><img src=\"images/geographie-seance1-ville.jpg\" alt=\"Photographie d’une ville\"><figcaption>Une ville</figcaption></figure>'
-          + '<figure class=\"geo-photo-card-s1\"><img src=\"images/geographie-seance1-foret.jpg\" alt=\"Photographie d’un espace boisé\"><figcaption>Une forêt</figcaption></figure>'
-          + '<figure class=\"geo-photo-card-s1\"><img src=\"images/geographie-seance1-route.jpg\" alt=\"Photographie d’une route\"><figcaption>Une route</figcaption></figure>'
-          + '<figure class=\"geo-photo-card-s1\"><img src=\"images/geographie-seance1-eau.jpg\" alt=\"Photographie d’une étendue d’eau\"><figcaption>Une rivière ou un lac</figcaption></figure>'
-          + '</div><p class=\"geo-observe-s1\">Observe ces 4 vraies photos avant de relier les symboles de la légende.</p>');
-      }
       if(s.id === 1 && idx === 2){
         card.insertAdjacentHTML('beforeend','<p class="geo-observe-s1">Observe les couleurs et les symboles de la carte pour répondre.</p>');
       }
       if(exo.type === 'assessment') renderHistoryAssessment(card, exo);
       if(exo.type === 'choice') renderScienceChoice(card, exo);
-      if(exo.type === 'match') renderScienceMatch(card, exo);
+      if(exo.type === 'match'){
+        if(s.id === 1 && idx === 1) renderGeoPhotoMatch(card);
+        else renderScienceMatch(card, exo);
+      }
       if(exo.type === 'order') renderScienceOrder(card, exo);
       if(exo.type === 'sort') renderScienceSort(card, exo);
       if(exo.type === 'checklist') renderScienceChecklist(card, exo);
@@ -144,6 +139,56 @@
         }
       }, true);
     }
+  }
+
+  /* Séance 1 – exercice 2 : les PHOTOS sont les options cliquables, pas des décorations. */
+  function renderGeoPhotoMatch(card){
+    var photos = [
+      {kind:'ville',file:'images/geographie-seance1-ville.jpg',alt:'Rue et bâtiments en ville'},
+      {kind:'foret',file:'https://commons.wikimedia.org/wiki/Special:FilePath/For%C3%AAt%20Vosgienne.jpg?width=720',alt:'Véritable forêt de feuillus'},
+      {kind:'route',file:'images/geographie-seance1-route.jpg',alt:'Route avec autobus et passage piéton'},
+      {kind:'eau',file:'https://www.randonneespourpetitsetgrands.com/images/lac-de-la-cregut9.JPG',alt:'Lac entouré de forêts'}
+    ];
+    /* Réponses mélangées : aucune photo face à la bonne réponse sur sa ligne. */
+    var answers=[
+      {kind:'eau',text:'Une rivière ou un lac'},
+      {kind:'ville',text:'Une ville'},
+      {kind:'route',text:'Une route'},
+      {kind:'foret',text:'Une forêt'}
+    ];
+    var box=document.createElement('div'); box.className='geo-photo-match';
+    var left=document.createElement('div'); left.className='geo-photo-match-photos';
+    var right=document.createElement('div'); right.className='geo-photo-match-answers';
+    var selected=null, matched=0, leftButtons=[];
+    photos.forEach(function(p){
+      var b=document.createElement('button');b.type='button';b.className='geo-photo-choice';
+      var image=document.createElement('img');image.src=p.file;image.alt=p.alt;image.loading='eager';
+      var label=document.createElement('span');label.textContent='Choisis cette photo';
+      b.appendChild(image);b.appendChild(label);
+      b.addEventListener('click',function(e){e.preventDefault();if(b.disabled)return;
+        leftButtons.forEach(function(x){x.classList.remove('selected');});
+        b.classList.add('selected');selected=p.kind;
+      });
+      left.appendChild(b);leftButtons.push(b);
+    });
+    answers.forEach(function(answer){
+      var b=document.createElement('button');b.type='button';b.className='geo-photo-answer';b.textContent=answer.text;
+      b.addEventListener('click',function(e){e.preventDefault();if(b.disabled)return;
+        if(!selected){renderEnglishFeedback(card,false,'Clique d’abord sur une photographie.');return;}
+        if(selected!==answer.kind){renderEnglishFeedback(card,false,'Ce n’est pas la bonne association. Essaie encore.');return;}
+        var selectedButton=leftButtons[photos.findIndex(function(p){return p.kind===selected;})];
+        selectedButton.classList.remove('selected'); selectedButton.classList.add('done');selectedButton.disabled=true;
+        b.classList.add('done');b.disabled=true;selected=null;matched++;
+        if(matched===4){renderEnglishFeedback(card,true,'Bravo ! Les 4 associations sont correctes.');}
+        else {feedback.textContent='Bonne association ! '+matched+' / 4';}
+      });
+      right.appendChild(b);
+    });
+    box.appendChild(left);box.appendChild(right);card.appendChild(box);
+    var feedback=document.createElement('div');feedback.className='geo-photo-progress';feedback.textContent='0 / 4 associations réussies';card.appendChild(feedback);
+    var observer=new MutationObserver(function(){feedback.textContent=matched+' / 4 associations réussies';});
+    observer.observe(box,{attributes:true,subtree:true,attributeFilter:['class']});
+    /* Ne pas valider avant la quatrième bonne réponse. */
   }
 
   function renderGeoFree(card, exo){
