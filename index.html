@@ -34870,6 +34870,20 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
 }
 }
 @media (prefers-reduced-motion:reduce){.mh-constellation *{transition:none!important;animation:none!important}}
+
+/* PC Constellation : le bandeau historique en pied de page ne doit jamais rester visible.
+   Seul le bandeau des matières déplacé DANS le tableau de bord est affiché. */
+@media (min-width:1200px) and (pointer:fine) {
+ body.v25-7-73-simplified-home .subjects-bar {
+   display:none!important;
+ }
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects {
+   display:grid!important;
+ }
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > .subject-btn[data-subject="maths"] {
+   display:none!important;
+ }
+}
 </style>
 <script id="mh-constellation-pc-js">
 (function(){
@@ -34893,7 +34907,7 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
  }
  function refresh(){
   var panel=document.getElementById('v2574MainDashboard');
-  var nav=document.querySelector('.subjects-bar');
+  var nav=panel.querySelector('.subjects-bar') || document.querySelector('.subjects-bar');
   if(!panel||!nav)return;
   if(!mq.matches){
    panel.classList.remove('mh-constellation');nav.classList.remove('mh-subjects');
@@ -34967,6 +34981,17 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',refresh,{once:true});else refresh();
  window.addEventListener('load',refresh);window.addEventListener('resize',schedule);
  if(mq.addEventListener)mq.addEventListener('change',schedule);
+ // Les anciens scripts peuvent replacer le bandeau dans son emplacement fixe.
+ // Sur PC, on restaure sa place sous « Explore tes matières » après toute mutation pertinente.
+ var navObserver=new MutationObserver(function(mutations){
+   if(!mq.matches)return;
+   var panel=document.getElementById('v2574MainDashboard');
+   if(!panel||!panel.classList.contains('mh-constellation'))return;
+   var nav=panel.querySelector('.subjects-bar') || document.querySelector('.subjects-bar');
+   var heading=panel.querySelector('.mh-subject-heading');
+   if(nav&&heading&&(nav.parentNode!==panel||nav.previousElementSibling!==heading))schedule();
+ });
+ navObserver.observe(document.body||document.documentElement,{childList:true,subtree:true});
  [100,450,1300,3000].forEach(function(t){setTimeout(refresh,t)});
 })();
 </script>
