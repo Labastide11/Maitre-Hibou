@@ -180,16 +180,21 @@
         else feedback(false,'Observe ce qui se trouve juste à droite de l’école. Essaie encore.',false);
       });});
     }else if(idx===2){
+      // Une véritable carte sans noms : chaque chiffre renvoie à un symbole de la légende.
+      el('div','geo-s1-legend-heading','Observe la carte : les numéros 1 à 4 indiquent quatre lieux.');
+      picture('s1-legende.jpg','Carte illustrée : forêt repère 1, lac repère 2, village repère 3, route repère 4. Les repères sont à identifier.',card);
+      el('div','geo-s1-legend-heading','Complète la légende : sélectionne un symbole puis ce qu’il représente.');
       var row=el('div','geo-s1-match',''), chosen=null,done={};
       var left=el('div','geo-s1-match-col','',row),right=el('div','geo-s1-match-col','',row);
-      var entries=[['🌳','Forêt'],['🌊','Lac'],['🏘️','Village'],['🛣️','Route']];
-      entries.forEach(function(e,i){var b=button(e[0]+'  Symbole '+(i+1),left,function(){if(done[e[1]])return;left.querySelectorAll('button').forEach(function(x){x.classList.remove('geo-selected');});b.classList.add('geo-selected');chosen={key:e[1],button:b};});});
+      var entries=[['1','🌳','Forêt'],['2','💧','Lac'],['3','🏘️','Village'],['4','🛣️','Route']];
+      entries.forEach(function(e){var b=button(e[0]+'  '+e[1],left,function(){if(done[e[2]])return;left.querySelectorAll('button').forEach(function(x){x.classList.remove('geo-selected');});b.classList.add('geo-selected');chosen={key:e[2],button:b};});b.setAttribute('aria-label','Repère '+e[0]+' : sélectionner ce symbole');});
+      // Les réponses sont volontairement mélangées : jamais alignées avec la bonne réponse.
       ['Route','Village','Forêt','Lac'].forEach(function(key){var b=button(key,right,function(){
-        if(!chosen){feedback(false,'Choisis d’abord un symbole à gauche.',false);return;}
-        if(chosen.key!==key){feedback(false,'Ce symbole ne correspond pas à cette légende. Cherche encore.',false);return;}
-        done[key]=true;b.disabled=true;chosen.button.disabled=true;chosen.button.classList.remove('geo-selected');chosen=null;
+        if(!chosen){feedback(false,'Choisis d’abord un repère dans la colonne de gauche.',false);return;}
+        if(chosen.key!==key){feedback(false,'Observe le dessin du repère sur la carte, puis essaie encore.',false);return;}
+        done[key]=true;b.disabled=true;chosen.button.disabled=true;chosen.button.classList.remove('geo-selected');chosen.button.classList.add('geo-matched');chosen=null;
         var n=Object.keys(done).length;
-        if(n===4)feedback(true,'Bravo ! Tu as trouvé les quatre symboles.',true);
+        if(n===4)feedback(true,'Bravo ! Tu as complété la légende de la carte.',true);
         else feedback(true,'Bonne association ! '+n+' sur 4. Continue.',false);
       });});
     }else if(idx===3){

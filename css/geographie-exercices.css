@@ -133,3 +133,10 @@
 .geo-s1-challenge .geo-s1-hotspot{width:16%;height:24%}
 .geo-s1-success{border-color:#6bcb77!important}
 @media(max-width:780px){.geo-session1-large #v24GeoExercises{grid-template-columns:1fr!important}}
+
+/* Séance 1 — légende : carte complète puis associations tactiles. */
+.geo-s1-legend-heading{font-weight:850;color:#554780;font-size:14px;line-height:1.4;margin:3px 0}
+.geo-s1-activity .geo-s1-match{margin-top:3px;align-items:start}
+.geo-s1-activity .geo-s1-match-col .geo-s1-btn{min-height:53px;font-size:16px}
+.geo-s1-match-col:first-child .geo-s1-btn{font-size:23px!important;letter-spacing:1px}
+.geo-s1-match-col .geo-s1-btn.geo-matched{background:#e7f8e9;border-color:#6bcb77;color:#185c2e;opacity:1}
