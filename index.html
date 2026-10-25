@@ -34751,7 +34751,7 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core{
   display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:2;
 }
 body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core img{
-  width:min(88%,185px);height:78%;object-fit:contain;display:block;filter:drop-shadow(0 8px 14px rgba(40,61,122,.12));
+  width:min(88%,185px);height:78%;object-fit:contain;display:block;transform:scale(1.18);transform-origin:center 47%;filter:drop-shadow(0 8px 14px rgba(40,61,122,.12));
 }
 body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core .mh-owl-fallback{font-size:88px;line-height:1}
 body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core b{font:900 17px 'Trebuchet MS',sans-serif;color:#283d7a;margin-top:-2px}
@@ -34810,8 +34810,11 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar
 body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button .subject-label,
 body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button .v2574-mini{color:#fff!important}
 body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button:hover{
- transform:translateY(-3px)!important;filter:brightness(1.09)!important;
- box-shadow:0 10px 20px rgba(20,80,160,.23)!important;
+ transform:translateY(-5px) scale(1.025)!important;filter:brightness(.94)!important;
+ box-shadow:0 12px 22px rgba(20,80,160,.30)!important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button:active{
+ transform:translateY(-1px)!important;filter:brightness(.9)!important;
 }
 body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button:focus-visible{
  outline:3px solid #102f7b!important;outline-offset:3px!important;
@@ -35680,7 +35683,11 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
       else if(t.indexOf('entrain') !== -1) tip = 'M’entraîner';
     }
 
-    strip.innerHTML = '<span class="tag">💡 Conseil de Maître Hibou :</span> <span class="tip">'+tip+'</span> <span class="note">Curieux, c’est apprendre ! 🦉</span>';
+    if (window.matchMedia && window.matchMedia('(min-width:1200px) and (pointer:fine)').matches) {
+      strip.innerHTML = '<span class="tag">💡 Le conseil de Maître Hibou :</span> <span class="tip">Une question, c’est déjà le début d’une découverte !</span>';
+    } else {
+      strip.innerHTML = '<span class="tag">💡 Conseil de Maître Hibou :</span> <span class="tip">'+tip+'</span> <span class="note">Curieux, c’est apprendre ! 🦉</span>';
+    }
   }
 
   function ensureBottomUtilities(){
