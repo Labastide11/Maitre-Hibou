@@ -1,0 +1,15 @@
+/* Géographie CE2 — styles propres aux exercices. */
+
+/* Séance géographie 1 : grands exercices tablette */
+.geo-session1-large #v24GeoExercises{display:flex!important;flex-direction:column!important;gap:16px!important;align-items:stretch!important;}
+.geo-session1-large #v24GeoExercises>.v24-english-exo{width:100%!important;max-width:none!important;min-height:0!important;}
+.geo-session1-large #v24GeoExercises .v24-geo-map-card img{max-height:330px!important;object-fit:contain!important;}
+.geo-session1-large #v24GeoExercises button{min-height:42px;}
+
+.geo-observe-s1{padding:12px;border-radius:12px;background:#fff6dc;color:#6a4b14;font-weight:750;}
+@media(max-width:700px){.geo-session1-large #v24GeoExercises{gap:12px!important}.geo-photo-s1 figcaption{font-size:13px}}
+
+
+.geo-session1-large .geo-rose-visible{margin:12px 0 18px;padding:12px;border:2px solid #f2c879;border-radius:16px;background:#fff;text-align:center}
+.geo-session1-large .geo-rose-visible img{display:block;width:min(100%,350px);height:auto;max-height:none;object-fit:contain;margin:0 auto}
+.geo-session1-large .geo-rose-visible figcaption{color:#30557c;font-size:15px;font-weight:750;margin:7px 0 0}
