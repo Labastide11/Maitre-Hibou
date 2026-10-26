@@ -144,23 +144,23 @@
   function renderGeoS2(card, idx){
     var imageBase='images/geographie/';
     function node(tag,cls,text,parent){var e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;(parent||card).appendChild(e);return e;}
-    function photo(name,alt){var im=node('img','geo-s2-map');im.src=imageBase+name;im.alt=alt;return im;}
+    function photo(name,alt){var im=node('img','geo-s2-map');im.src=imageBase+name+'?v=20261026-s2-photos';im.alt=alt;return im;}
     function btn(label,fn,parent){var b=node('button','geo-s2-btn',label,parent);b.type='button';b.addEventListener('click',fn);return b;}
     function say(ok,message,complete){var f=card.querySelector('.geo-s2-feedback');if(!f)f=node('div','geo-s2-feedback','');f.textContent=message;f.className='geo-s2-feedback '+(ok?'ok':'retry');if(complete){card.dataset.geoDone='1';card.classList.add('geo-s2-success');}}
     function choice(question,options,answer,help){node('div','geo-s2-question',question);var zone=node('div','geo-s2-options','');options.forEach(function(o){btn(o,function(){if(card.dataset.geoDone==='1')return;if(o===answer){say(true,'Bravo ! '+help,true);zone.querySelectorAll('button').forEach(function(x){x.disabled=true;});}else say(false,'Ce n’est pas encore cela. Observe la carte et essaie une autre réponse.',false);},zone);});}
     if(idx===0){
-      photo('s2-fleuves.jpg','Carte schématique de la France avec la Seine, la Loire et le Rhône.');
+      photo('s2-fleuves.jpg','Carte de France sur fond satellitaire montrant la Seine, la Loire et le Rhône.');
       node('div','geo-s2-question','Choisis un fleuve, puis son indice.');
       var left=node('div','geo-s2-match',''),a=node('div','geo-s2-match-col','',left),b=node('div','geo-s2-match-col','',left),selected=null,done={};
       var rows=[['La Seine','Traverse Paris'],['La Loire','Le plus long fleuve de France'],['Le Rhône','Se jette dans la mer Méditerranée']];
       rows.forEach(function(row){var x=btn(row[0],function(){if(done[row[0]])return;a.querySelectorAll('button').forEach(function(z){z.classList.remove('geo-s2-selected');});x.classList.add('geo-s2-selected');selected={name:row[0],answer:row[1],button:x};},a);});
       // Aucune bonne réponse ne se trouve directement en face de son fleuve.
       ['Se jette dans la mer Méditerranée','Traverse Paris','Le plus long fleuve de France'].forEach(function(label){var x=btn(label,function(){if(!selected){say(false,'Choisis d’abord un fleuve.',false);return;}if(label!==selected.answer){say(false,'Relis l’indice du fleuve. Essaie encore.',false);return;}done[selected.name]=true;selected.button.disabled=true;selected.button.classList.remove('geo-s2-selected');x.disabled=true;selected=null;var count=Object.keys(done).length;say(true,count===3?'Bravo ! Tu connais les trois fleuves.':'Bonne association ! '+count+' sur 3.',count===3);},b);});
-    }else if(idx===1){photo('s2-europe.jpg','Carte du monde simplifiée : France repérée en Europe.');choice('Sur quel continent se trouve la France ?',['En Afrique','En Amérique','En Europe'],'En Europe','La France se trouve en Europe.');
-    }else if(idx===2){photo('s2-hexagone.jpg','Schéma d’un hexagone avec ses six sommets numérotés.');choice('Combien de côtés compte un hexagone ?',['5 côtés','6 côtés','4 côtés'],'6 côtés','Hexa signifie six : un hexagone a six côtés.');
+    }else if(idx===1){photo('s2-europe.jpg','Vue satellite de l’Europe avec la France mise en évidence.');choice('Sur quel continent se trouve la France ?',['En Afrique','En Amérique','En Europe'],'En Europe','La France se trouve en Europe.');
+    }else if(idx===2){photo('s2-hexagone.jpg','Vue satellite de la France avec un hexagone à six sommets numérotés.');choice('Combien de côtés compte un hexagone ?',['5 côtés','6 côtés','4 côtés'],'6 côtés','Hexa signifie six : un hexagone a six côtés.');
     }else if(idx===3){photo('s2-fleuves.jpg','Carte des trois grands fleuves : Seine, Loire et Rhône.');choice('Quel fleuve se jette dans la mer Méditerranée ?',['La Loire','Le Rhône','La Seine'],'Le Rhône','Le Rhône coule vers le sud et rejoint la Méditerranée.');
     }else{
-      photo('s2-europe.jpg','France située en Europe sur une carte du monde simplifiée.');
+      photo('s2-europe.jpg','France mise en évidence sur une carte satellite de l’Europe.');
       node('div','geo-s2-question','Mission : trouve les trois bons repères de la France.');
       var steps=[{q:'1. La France se trouve…',options:['En Europe','En Afrique','En Asie'],a:'En Europe'},
         {q:'2. On compare souvent sa forme à…',options:['Un triangle','Un cercle','Un hexagone'],a:'Un hexagone'},
