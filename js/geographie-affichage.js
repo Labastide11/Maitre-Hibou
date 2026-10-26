@@ -182,7 +182,7 @@
     }else if(idx===2){
       // Une véritable carte sans noms : chaque chiffre renvoie à un symbole de la légende.
       el('div','geo-s1-legend-heading','Observe la carte : les numéros 1 à 4 indiquent quatre lieux.');
-      picture('s1-legende.jpg','Carte illustrée : forêt repère 1, lac repère 2, village repère 3, route repère 4. Les repères sont à identifier.',card);
+      picture('s1-legende.jpg?v=20261026-correctif2','Carte illustrée : forêt repère 1, lac repère 2, village repère 3, route repère 4. Les repères sont à identifier.',card);
       el('div','geo-s1-legend-heading','Complète la légende : sélectionne un symbole puis ce qu’il représente.');
       var row=el('div','geo-s1-match',''), chosen=null,done={};
       var left=el('div','geo-s1-match-col','',row),right=el('div','geo-s1-match-col','',row);
