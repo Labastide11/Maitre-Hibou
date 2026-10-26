@@ -98,12 +98,25 @@
  {type:"choice",title:"D’où viennent les gouttes ?",instr:"Un verre très froid se couvre de gouttes à l'extérieur. D'où vient cette eau ?",photos:[{src:"images-lecons/sciences/seance5/verre-froid.jpg",label:"Des gouttes sur un verre froid"}],options:["De l'eau liquide s'échappe à travers le verre.","La vapeur d'eau présente dans l'air se transforme en gouttes sur le verre.","Les gouttes sont toujours des gouttes de pluie."],correct:1,retry:true,hint:"Il y a de la vapeur d'eau invisible dans l'air.",explanation:"Au contact du verre froid, une partie de la vapeur d'eau dans l'air devient de petites gouttes d'eau liquide : c'est la condensation."},
  {type:"choice",title:"Le défi de Maître Hibou",instr:"Une flaque sur le sol disparaît après une journée ensoleillée. Où est passée une partie de son eau ?",photos:[{src:"images-lecons/sciences/seance5/flaque-soleil.jpg",label:"Une flaque éclairée par le soleil"}],options:["Elle s'est transformée en glace.","Elle est devenue de la vapeur d'eau invisible dans l'air.","Elle a disparu de la nature pour toujours."],correct:1,retry:true,hint:"Quand l'eau liquide s'évapore, elle rejoint l'air sous forme de gaz.",explanation:"Une partie de l'eau de la flaque s'évapore. Elle rejoint l'air sous forme de vapeur d'eau invisible."}
  ]},
-    {id:6,title:"Séance 6",short:"Circuit électrique",emoji:"💡",objective:"Je sais faire circuler le courant dans un circuit simple.",criteria:["Pile, fil, ampoule, interrupteur","Circuit fermé","Reconnaître un circuit qui fonctionne"],exos:[
-      {type:"choice",title:"Quel circuit allume l'ampoule ?",instr:"Observe les deux schémas et choisis celui qui fonctionne.",imgOptions:[SCIENCE_SVG_CLOSED_LIT,SCIENCE_SVG_OPEN_DARK],correct:0},
-      {type:"match",title:"Relie le composant à son nom",instr:"Clique un composant puis son nom.",left:["🔋","💡","🔌","🔘"],right:["La pile","L'ampoule","Le fil électrique","L'interrupteur"],pairs:[0,1,2,3]},
-      {type:"checklist",title:"Bilan sciences",instr:"Coche ce que tu sais faire.",items:["Distinguer vivant / non-vivant","Expliquer la vie d'une plante","Expliquer la vie d'un animal","Trier les déchets","Nommer les états de l'eau","Fermer un circuit électrique"]}
-    ]}
-  ];
+    {id:6,title:"Séance 6",short:"Circuit électrique",emoji:"💡",objective:"Je sais faire circuler le courant dans un circuit simple.",criteria:["Identifier les éléments d'un circuit","Comprendre qu'un circuit doit être fermé","Reconnaître un montage qui fonctionne"],exos:[
+      {type:"match",title:"Je reconnais les éléments d'un circuit",instr:"Observe les images A, B, C et D, puis associe chaque nom à la bonne lettre.",photos:[
+        {src:"images-lecons/sciences/seance6/pile.jpg",label:"A"},
+        {src:"images-lecons/sciences/seance6/ampoule.jpg",label:"B"},
+        {src:"images-lecons/sciences/seance6/fil.jpg",label:"C"},
+        {src:"images-lecons/sciences/seance6/interrupteur.jpg",label:"D"}
+      ],left:["La pile","L'ampoule","Le fil électrique","L'interrupteur"],right:["A","B","C","D"],pairs:[0,1,2,3]},
+      {type:"choice",title:"Pourquoi l'ampoule s'allume-t-elle ?",instr:"Observe les deux montages. Quel circuit fonctionne ?",photos:[
+        {src:"images-lecons/sciences/seance6/circuit-ferme.jpg",label:"Montage 1"},
+        {src:"images-lecons/sciences/seance6/circuit-ouvert.jpg",label:"Montage 2"}
+      ],options:["Le montage 1, parce que le circuit est fermé.","Le montage 2, parce que le circuit est ouvert.","Aucun montage ne peut fonctionner."],correct:0,retry:true,hint:"Une ampoule s'allume seulement si le courant peut faire tout le tour du circuit.",explanation:"Le montage 1 fonctionne parce que la pile, les fils et l'ampoule forment une boucle fermée."},
+      {type:"circuitPredictions",title:"Que se passe-t-il si… ?",instr:"Pour chaque situation, prévois si l'ampoule s'allume ou reste éteinte.",photos:[{src:"images-lecons/sciences/seance6/interrupteur.jpg",label:"Un interrupteur à levier"}],situations:[
+        {question:"Le circuit est fermé. On ouvre l'interrupteur.",correct:1,hint:"Quand on ouvre l'interrupteur, la boucle est interrompue."},
+        {question:"Le circuit est ouvert. On ferme l'interrupteur et tous les fils sont bien reliés.",correct:0,hint:"Le courant peut-il maintenant faire tout le tour ?"},
+        {question:"L'ampoule est allumée. On débranche l'un des fils.",correct:1,hint:"Une connexion manquante empêche la circulation du courant."}
+      ],answers:["L'ampoule s'allume.","L'ampoule reste éteinte ou s'éteint."],explanation:"Un circuit fermé et correctement relié permet à l'ampoule de s'allumer. Dès qu'il est ouvert ou qu'un fil est débranché, elle s'éteint."},
+      {type:"choice",title:"Je complète le circuit",instr:"Observe le montage. Pourquoi l'ampoule ne s'allume-t-elle pas ?",photos:[{src:"images-lecons/sciences/seance6/circuit-incomplet.jpg",label:"Un fil est débranché"}],options:["Il faut reconnecter le fil débranché pour fermer le circuit.","Il faudrait deux ampoules.","Le rouge ne sert à rien."],correct:0,retry:true,hint:"Regarde bien l'espace entre les deux extrémités rouges.",explanation:"Les extrémités du fil rouge ne se touchent pas. Il faut les reconnecter pour fermer le circuit."},
+      {type:"choice",title:"Le défi de Maître Hibou",instr:"Parmi les trois montages A, B et C, lequel peut allumer l'ampoule ?",photos:[{src:"images-lecons/sciences/seance6/trois-montages.jpg",label:"Trois montages différents"}],options:["Le montage A.","Le montage B.","Le montage C."],correct:0,retry:true,hint:"Cherche le montage où la boucle est complète et où l'ampoule est reliée à la pile sans coupure.",explanation:"Le montage A fonctionne : le circuit est fermé. Dans B, l'interrupteur est ouvert. Dans C, un fil n'est pas relié."}
+    ]}  ];
 
 
 window.MHScienceSessions = SCIENCE_SESSIONS;

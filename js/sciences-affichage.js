@@ -51,6 +51,7 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
       if(exo.type === 'order') renderScienceOrder(card, exo);
       if(exo.type === 'sort') renderScienceSort(card, exo);
       if(exo.type === 'checklist') renderScienceChecklist(card, exo);
+      if(exo.type === 'circuitPredictions') renderScienceCircuitPredictions(card, exo);
       if(exo.type === 'scienceAssessment') renderScienceAssessmentV25740(card, exo);
       wrap.appendChild(card);
     });
@@ -324,6 +325,64 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
       img.src=photo.src;img.alt=photo.label;img.loading='lazy';img.onerror=function(){img.hidden=true;fig.setAttribute('data-image-unavailable','true');};
       label.textContent=photo.label;fig.appendChild(img);fig.appendChild(label);holder.appendChild(fig);
     }); card.appendChild(holder);
+  }
+
+  function renderScienceCircuitPredictions(card, exo){
+    renderSciencePhotos(card, exo.photos);
+    var answers = exo.answers || ["Elle s'allume.", "Elle s'éteint."];
+    var state = {};
+    var list = document.createElement('div');
+    list.className = 'mh-science-circuit-predictions';
+    (exo.situations || []).forEach(function(item, index){
+      var group = document.createElement('div');
+      group.className = 'mh-science-circuit-situation';
+      var question = document.createElement('p');
+      question.textContent = (index + 1) + '. ' + item.question;
+      var choices = document.createElement('div');
+      choices.className = 'v24-english-options';
+      answers.forEach(function(answer, ai){
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'v24-english-option';
+        button.textContent = answer;
+        button.addEventListener('click', function(ev){
+          ev.preventDefault();
+          if(card.dataset.mhScienceSolved === '1') return;
+          state[index] = ai;
+          Array.prototype.forEach.call(choices.children, function(b){b.classList.remove('selected','correct','wrong');});
+          button.classList.add('selected');
+        });
+        choices.appendChild(button);
+      });
+      group.appendChild(question);
+      group.appendChild(choices);
+      list.appendChild(group);
+    });
+    card.appendChild(list);
+    var check = document.createElement('button');
+    check.type = 'button';
+    check.className = 'v24-english-check';
+    check.textContent = 'Vérifier mes trois réponses';
+    var attempts = 0;
+    check.addEventListener('click', function(ev){
+      ev.preventDefault();
+      if(Object.keys(state).length !== exo.situations.length){
+        renderEnglishFeedback(card,false,'Réponds aux trois situations avant de vérifier.');
+        return;
+      }
+      var wrong = exo.situations.map(function(item,i){return state[i] === item.correct ? -1 : i;}).filter(function(i){return i >= 0;});
+      if(wrong.length){
+        attempts++;
+        renderEnglishFeedback(card,false,'Regarde la situation '+(wrong[0]+1)+'. '+(exo.situations[wrong[0]].hint || 'Réessaie.'));
+        return;
+      }
+      card.dataset.mhScienceSolved = '1';
+      Array.prototype.forEach.call(list.querySelectorAll('button'), function(b){b.disabled=true;});
+      check.disabled = true;
+      renderEnglishFeedback(card,true,exo.explanation || 'Bravo, les trois réponses sont correctes.');
+    });
+    card.appendChild(check);
+    renderEnglishFeedback(card,true,'');
   }
 
   function renderScienceChoice(card, exo){
