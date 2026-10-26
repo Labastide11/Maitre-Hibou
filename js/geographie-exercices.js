@@ -31,10 +31,12 @@
       {type:'geo-s1-place',title:'Je retrouve un lieu',instr:'Clique sur le bon endroit du plan.'},
       {type:'geo-s1-challenge',title:'Défi du géographe',instr:'Résous l’énigme pour retrouver le lieu secret.'}
     ]},
-    {id:2,title:'Séance 2',short:'Repères de la France',emoji:'🇫🇷',map:GEO_MAP_FRANCE,objective:'Je connais quelques grands repères géographiques de la France.',criteria:['Fleuves','Europe','Hexagone'],exos:[
-      {type:'match',title:'Fleuves de France',instr:'Relie le fleuve à sa description.',left:['La Seine','La Loire','Le Rhône'],right:['Traverse Paris','Le plus long fleuve de France','Se jette dans la mer Méditerranée'],pairs:[0,1,2]},
-      {type:'choice',title:'Continent',instr:'Sur quel continent se trouve la France ?',image:GEO_MAP_CONTINENTS,options:['En Europe','En Afrique','En Amérique'],correct:0},
-      {type:'choice',title:'Forme de la France',instr:'À quelle forme compare-t-on souvent la France ?',options:['Un hexagone','Un cercle','Un triangle'],correct:0}
+    {id:2,title:'Séance 2',short:'Repères de la France',emoji:'🇫🇷',objective:'Je connais quelques grands repères géographiques de la France.',criteria:['Fleuves','Europe','Hexagone'],exos:[
+      {type:'geo-s2',title:'Les fleuves de France',instr:'Observe la carte, puis associe chaque fleuve à son indice.'},
+      {type:'geo-s2',title:'Sur quel continent ?',instr:'Observe la carte du monde et retrouve le continent de la France.'},
+      {type:'geo-s2',title:'La forme de la France',instr:'Observe la figure et retrouve son nombre de côtés.'},
+      {type:'geo-s2',title:'Le bon fleuve',instr:'Utilise les indices pour retrouver les fleuves.'},
+      {type:'geo-s2',title:'Défi du géographe',instr:'Réunis trois indices pour compléter ta mission.'}
     ]},
     {id:3,title:'Séance 3',short:'Population',emoji:'👥',objective:'Je comprends que la population n’est pas répartie partout pareil.',criteria:['Forte densité','Faible densité','Km²'],exos:[
       {type:'choice',title:'Forte densité',instr:'Quel dessin montre une forte densité de population ?',imgOptions:[GEO_DENSE,GEO_SPARSE],correct:0},

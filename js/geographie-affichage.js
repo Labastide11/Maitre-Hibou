@@ -36,11 +36,13 @@
     grid.querySelector('#v24GeoBack').addEventListener('click', function(ev){ev.preventDefault();ev.stopPropagation();renderGeoHome(grid);}, true);
     var wrap = grid.querySelector('#v24GeoExercises');
     if(s.id === 1) grid.classList.add('geo-session1-large');
+    if(s.id === 2) grid.classList.add('geo-session2-large');
     s.exos.forEach(function(exo, idx){
       var card = document.createElement('section');
-      card.className = 'v24-english-exo' + (s.id === 1 ? ' geo-s1-activity' : '');
+      card.className = 'v24-english-exo' + (s.id === 1 ? ' geo-s1-activity' : (s.id === 2 ? ' geo-s2-activity' : ''));
       card.innerHTML = '<h3>'+esc(exo.title)+'</h3><p>'+esc(exo.instr)+'</p>';
       if(s.id === 1){ renderGeoS1(card, idx); wrap.appendChild(card); return; }
+      if(s.id === 2){ renderGeoS2(card, idx); wrap.appendChild(card); return; }
       if(idx === 0 && s.map) card.insertAdjacentHTML('beforeend','<div class="v24-geo-map-card">'+s.map+'</div>');
       if(exo.type === 'assessment') renderHistoryAssessment(card, exo);
       if(exo.type === 'choice') renderScienceChoice(card, exo);
@@ -70,7 +72,7 @@
       function refreshGeoSessionButton(){
         var finished = exerciseCards.filter(function(card){
           var feedback = card.querySelector('.v24-english-feedback');
-          return s.id === 1 ? card.dataset.geoDone === '1' : (feedback && String(feedback.textContent || '').trim().length > 0);
+          return (s.id === 1 || s.id === 2) ? card.dataset.geoDone === '1' : (feedback && String(feedback.textContent || '').trim().length > 0);
         }).length;
         finishButton.disabled = finished < exerciseCards.length;
         finishButton.textContent = finished < exerciseCards.length
@@ -135,6 +137,36 @@
           alert('Le journal élève n’est pas encore disponible. Recharge la page puis recommence.');
         }
       }, true);
+    }
+  }
+
+  /* Séance 2 : cinq activités CE2. Cartes JPG locales, vérification explicite. */
+  function renderGeoS2(card, idx){
+    var imageBase='images/geographie/';
+    function node(tag,cls,text,parent){var e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;(parent||card).appendChild(e);return e;}
+    function photo(name,alt){var im=node('img','geo-s2-map');im.src=imageBase+name;im.alt=alt;return im;}
+    function btn(label,fn,parent){var b=node('button','geo-s2-btn',label,parent);b.type='button';b.addEventListener('click',fn);return b;}
+    function say(ok,message,complete){var f=card.querySelector('.geo-s2-feedback');if(!f)f=node('div','geo-s2-feedback','');f.textContent=message;f.className='geo-s2-feedback '+(ok?'ok':'retry');if(complete){card.dataset.geoDone='1';card.classList.add('geo-s2-success');}}
+    function choice(question,options,answer,help){node('div','geo-s2-question',question);var zone=node('div','geo-s2-options','');options.forEach(function(o){btn(o,function(){if(card.dataset.geoDone==='1')return;if(o===answer){say(true,'Bravo ! '+help,true);zone.querySelectorAll('button').forEach(function(x){x.disabled=true;});}else say(false,'Ce n’est pas encore cela. Observe la carte et essaie une autre réponse.',false);},zone);});}
+    if(idx===0){
+      photo('s2-fleuves.jpg','Carte schématique de la France avec la Seine, la Loire et le Rhône.');
+      node('div','geo-s2-question','Choisis un fleuve, puis son indice.');
+      var left=node('div','geo-s2-match',''),a=node('div','geo-s2-match-col','',left),b=node('div','geo-s2-match-col','',left),selected=null,done={};
+      var rows=[['La Seine','Traverse Paris'],['La Loire','Le plus long fleuve de France'],['Le Rhône','Se jette dans la mer Méditerranée']];
+      rows.forEach(function(row){var x=btn(row[0],function(){if(done[row[0]])return;a.querySelectorAll('button').forEach(function(z){z.classList.remove('geo-s2-selected');});x.classList.add('geo-s2-selected');selected={name:row[0],answer:row[1],button:x};},a);});
+      // Aucune bonne réponse ne se trouve directement en face de son fleuve.
+      ['Se jette dans la mer Méditerranée','Traverse Paris','Le plus long fleuve de France'].forEach(function(label){var x=btn(label,function(){if(!selected){say(false,'Choisis d’abord un fleuve.',false);return;}if(label!==selected.answer){say(false,'Relis l’indice du fleuve. Essaie encore.',false);return;}done[selected.name]=true;selected.button.disabled=true;selected.button.classList.remove('geo-s2-selected');x.disabled=true;selected=null;var count=Object.keys(done).length;say(true,count===3?'Bravo ! Tu connais les trois fleuves.':'Bonne association ! '+count+' sur 3.',count===3);},b);});
+    }else if(idx===1){photo('s2-europe.jpg','Carte du monde simplifiée : France repérée en Europe.');choice('Sur quel continent se trouve la France ?',['En Afrique','En Amérique','En Europe'],'En Europe','La France se trouve en Europe.');
+    }else if(idx===2){photo('s2-hexagone.jpg','Schéma d’un hexagone avec ses six sommets numérotés.');choice('Combien de côtés compte un hexagone ?',['5 côtés','6 côtés','4 côtés'],'6 côtés','Hexa signifie six : un hexagone a six côtés.');
+    }else if(idx===3){photo('s2-fleuves.jpg','Carte des trois grands fleuves : Seine, Loire et Rhône.');choice('Quel fleuve se jette dans la mer Méditerranée ?',['La Loire','Le Rhône','La Seine'],'Le Rhône','Le Rhône coule vers le sud et rejoint la Méditerranée.');
+    }else{
+      photo('s2-europe.jpg','France située en Europe sur une carte du monde simplifiée.');
+      node('div','geo-s2-question','Mission : trouve les trois bons repères de la France.');
+      var steps=[{q:'1. La France se trouve…',options:['En Europe','En Afrique','En Asie'],a:'En Europe'},
+        {q:'2. On compare souvent sa forme à…',options:['Un triangle','Un cercle','Un hexagone'],a:'Un hexagone'},
+        {q:'3. Quel fleuve traverse Paris ?',options:['Le Rhône','La Seine','La Loire'],a:'La Seine'}],step=0;
+      var q=node('div','geo-s2-question',''),choices=node('div','geo-s2-options','');
+      function draw(){q.textContent=steps[step].q;choices.replaceChildren();steps[step].options.forEach(function(o){btn(o,function(){if(o!==steps[step].a){say(false,'Cherche encore : utilise les cartes des exercices précédents.',false);return;}step++;if(step===steps.length){choices.replaceChildren();q.textContent='Mission réussie !';say(true,'Bravo ! Tu sais situer la France, reconnaître sa forme et nommer un fleuve.',true);}else{say(true,'Bonne réponse ! Continue le défi.',false);draw();}},choices);});}draw();
     }
   }
 
