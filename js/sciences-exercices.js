@@ -10,20 +10,20 @@
         {label:"un caillou",image:"images-lecons/sciences/vivant-cartes/pierre.webp"},
         {label:"un arbre",image:"images-lecons/sciences/vivant-cartes/arbre.webp"},
         {label:"une voiture",image:"images-lecons/sciences/vivant-cartes/voiture.webp"},
-        {label:"une chenille",image:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Caterpillar_on_a_green_leaf.jpg/640px-Caterpillar_on_a_green_leaf.jpg"},
-        {label:"un champignon",image:"https://upload.wikimedia.org/wikipedia/commons/c/c6/Champignon_Mushroom_%282925054398%29.jpg"},
+        {label:"une chenille",image:"images-lecons/sciences/seance1/chenille.jpg"},
+        {label:"un champignon",image:"images-lecons/sciences/seance1/champignon.jpg"},
         {label:"une chaise",image:"images-lecons/sciences/vivant-cartes/chaise.webp"},
         {label:"un ballon",image:"images-lecons/sciences/vivant-cartes/ballon.webp"}
       ],zones:["Vivant","Non-vivant"],zoneIcons:["🌱","🪨"],zoneColors:["#D9EDD1","#E6E1D3"],correct:[0,1,0,1,0,0,1,1]},
       {type:"choice",title:"Vrai ou faux",instr:"Un caillou grandit tout seul comme une plante.",options:["Vrai","Faux"],correct:1},
       {type:"choice",title:"Complète",instr:"Un être vivant peut...",options:["se reproduire","rester identique pour toujours","ne jamais avoir besoin de nourriture"],correct:0},
       {type:"choice",title:"Qui grandit ?",instr:"Observe les deux photographies. Pourquoi l'arbre est-il vivant ?",photos:[
-        {src:"https://commons.wikimedia.org/wiki/Special:FilePath/Oak_sapling.jpg?width=480",label:"Un jeune chêne"},
+        {src:"images-lecons/sciences/seance1/jeune-chene.jpg",label:"Un jeune chêne"},
         {src:"images-lecons/sciences/vivant-cartes/arbre.webp",label:"Un grand arbre"}
       ],options:["Parce qu'il grandit et a besoin d'eau.","Parce qu'il est vert.","Parce qu'il ne bouge pas."],correct:0,retry:true,explanation:"Un arbre est vivant : il grandit et il a besoin d'eau. Être vert ne suffit pas pour être vivant."},
       {type:"choice",title:"Le défi de Maître Hibou",instr:"Le nuage se déplace, le champignon ne marche pas. Lequel est vivant ?",photos:[
-        {src:"https://commons.wikimedia.org/wiki/Special:FilePath/Cumulus%20cloud%20-2025.jpg?width=480",label:"Un nuage"},
-        {src:"https://upload.wikimedia.org/wikipedia/commons/c/c6/Champignon_Mushroom_%282925054398%29.jpg",label:"Un champignon"}
+        {src:"images-lecons/sciences/seance1/nuage.jpg",label:"Un nuage"},
+        {src:"images-lecons/sciences/seance1/champignon.jpg",label:"Un champignon"}
       ],options:["Le nuage, parce qu'il bouge.","Le champignon, parce qu'il grandit et se nourrit.","Les deux sont vivants."],correct:1,retry:true,explanation:"Le champignon est vivant : il grandit et se nourrit. Un nuage bouge, mais il n'est pas vivant."}
     ]},
     {id:2,title:"Séance 2",short:"La vie d'une plante",emoji:"🌿",objective:"Je sais expliquer les étapes de la vie d'une plante.",criteria:["Observer les cinq étapes du haricot","Nommer les parties d'une plante","Comprendre ses besoins"],exos:[
