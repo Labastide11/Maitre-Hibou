@@ -25077,10 +25077,12 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       {type:'geo-s2',title:'Le bon fleuve',instr:'Utilise les indices pour retrouver les fleuves.'},
       {type:'geo-s2',title:'Défi du géographe',instr:'Réunis trois indices pour compléter ta mission.'}
     ]},
-    {id:3,title:'Séance 3',short:'Population',emoji:'👥',objective:'Je comprends que la population n’est pas répartie partout pareil.',criteria:['Forte densité','Faible densité','Km²'],exos:[
-      {type:'choice',title:'Forte densité',instr:'Quel dessin montre une forte densité de population ?',imgOptions:[GEO_DENSE,GEO_SPARSE],correct:0},
-      {type:'sort',title:'Trie les lieux',instr:'Clique un lieu puis la bonne catégorie.',items:['🏙️ une grande ville','⛰️ un village de montagne isolé','🏛️ Paris','🌾 une campagne peu habitée'],zones:['Forte densité','Faible densité'],zoneIcons:['🏙️','🌾'],zoneColors:['#F6DDBE','#DCEAD9'],correct:[0,1,0,1],help:[{icon:'👥',text:'Densité = nombre d’habitants sur un espace.'},{icon:'🏙️',text:'Forte densité = beaucoup de monde.'},{icon:'🌾',text:'Faible densité = peu de monde.'}]},
-      {type:'choice',title:'Vrai ou faux',instr:'Tous les endroits de France ont le même nombre d’habitants au km².',options:['Vrai','Faux'],correct:1}
+    {id:3,title:'Séance 3',short:'Population',emoji:'👥',objective:'Je comprends que les habitants ne vivent pas partout en même nombre.',criteria:['Observer','Comparer','Habitants'],exos:[
+      {type:'geo-s3',title:'Beaucoup ou peu d’habitants ?',instr:'Observe les deux paysages. Où voit-on le plus de logements rapprochés ?'},
+      {type:'geo-s3',title:'Je classe les paysages',instr:'Classe les cinq lieux du plus grand au plus petit nombre d’habitants.'},
+      {type:'geo-s3',title:'Je lis une carte de population',instr:'Observe la légende, puis réponds aux questions.'},
+      {type:'geo-s3',title:'Je compare deux lieux',instr:'Compare deux espaces de même taille.'},
+      {type:'geo-s3',title:'Défi du géographe',instr:'Résous trois énigmes sur les habitants.'}
     ]},
     {id:4,title:'Séance 4',short:'Paysages de France',emoji:'🏞️',map:GEO_MAP_LANDSCAPES,objective:'Je sais reconnaître différents paysages de France.',criteria:['Littoral','Montagne','Campagne','Ville'],exos:[
       {type:'match',title:'Paysage et caractéristique',instr:'Relie le paysage à sa description.',left:['La montagne','Le littoral','La campagne','La ville'],right:['Des sommets','Le bord de la mer','Des champs et villages','Des immeubles et rues'],pairs:[0,1,2,3]},
@@ -25121,10 +25123,11 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
     var wrap = grid.querySelector('#v24GeoExercises');
     s.exos.forEach(function(exo, idx){
       var card = document.createElement('section');
-      card.className = 'v24-english-exo' + (s.id === 1 ? ' geo-s1-activity' : (s.id === 2 ? ' geo-s2-activity' : ''));
+      card.className = 'v24-english-exo' + (s.id === 1 ? ' geo-s1-activity' : (s.id === 2 ? ' geo-s2-activity' : (s.id === 3 ? ' geo-s3-activity' : '')));
       card.innerHTML = '<h3>'+esc(exo.title)+'</h3><p>'+esc(exo.instr)+'</p>';
       if(s.id === 1){ renderGeoS1(card, idx); wrap.appendChild(card); return; }
       if(s.id === 2){ renderGeoS2(card, idx); wrap.appendChild(card); return; }
+      if(s.id === 3){ renderGeoS3(card, idx); wrap.appendChild(card); return; }
       if(idx === 0 && s.map) card.insertAdjacentHTML('beforeend','<div class="v24-geo-map-card">'+s.map+'</div>');
       if(exo.type === 'assessment') renderHistoryAssessment(card, exo);
       if(exo.type === 'choice') renderScienceChoice(card, exo);
@@ -25154,7 +25157,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       function refreshGeoSessionButton(){
         var finished = exerciseCards.filter(function(card){
           var feedback = card.querySelector('.v24-english-feedback');
-          return (s.id === 1 || s.id === 2) ? card.dataset.geoDone === '1' : (feedback && String(feedback.textContent || '').trim().length > 0);
+          return (s.id === 1 || s.id === 2 || s.id === 3) ? card.dataset.geoDone === '1' : (feedback && String(feedback.textContent || '').trim().length > 0);
         }).length;
         finishButton.disabled = finished < exerciseCards.length;
         finishButton.textContent = finished < exerciseCards.length
@@ -25219,6 +25222,56 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
           alert('Le journal élève n’est pas encore disponible. Recharge la page puis recommence.');
         }
       }, true);
+    }
+  }
+
+  /* Séance 3 : cinq activités interactives, supports JPG intégrés au dépôt. */
+  function renderGeoS3(card, idx){
+    var locations=[
+      {label:'Centre-ville',count:2500,img:1},
+      {label:'Quartier d’immeubles',count:900,img:2},
+      {label:'Quartier de maisons',count:300,img:3},
+      {label:'Village',count:100,img:4},
+      {label:'Campagne',count:20,img:5}
+    ];
+    function make(tag, cls, content, into){var n=document.createElement(tag);if(cls)n.className=cls;if(content!==undefined)n.textContent=content;(into||card).appendChild(n);return n;}
+    function photo(i,into,label){var fig=make('figure','geo-s3-photo',undefined,into);var im=make('img','',undefined,fig);im.src='images/geographie/s3-paysage-'+i+'.jpg';im.alt=label||'Vue aérienne de paysage '+i;im.loading='lazy';if(label)make('figcaption','',label,fig);return fig;}
+    function action(label, cb,into){var b=make('button','geo-s3-btn',label,into);b.type='button';b.addEventListener('click',cb);return b;}
+    var feedback=make('div','geo-s3-feedback',undefined,card);feedback.setAttribute('aria-live','polite');
+    function tell(ok, msg){feedback.textContent=msg;feedback.className='geo-s3-feedback '+(ok?'ok':'retry');if(ok){card.dataset.geoDone='1';card.classList.add('geo-s3-success');}}
+    function question(text){return make('div','geo-s3-question',text,card);}
+    if(idx===0){
+      var row=make('div','geo-s3-images',undefined,card);photo(1,row,'A — Centre-ville');photo(5,row,'B — Campagne');
+      question('Dans quel paysage voit-on le plus de logements rapprochés ?');
+      action('Paysage A',function(){tell(true,'Oui ! Les bâtiments sont plus nombreux et plus rapprochés dans le paysage A.')});
+      action('Paysage B',function(){tell(false,'Observe les bâtiments : dans quel paysage sont-ils plus rapprochés ?')});
+    }
+    if(idx===1){
+      make('p','geo-s3-explain','Les cinq lieux représentent chacun un espace de même taille. Les nombres d’habitants sont des exemples pour cet exercice.',card);
+      var shuffled=[locations[3],locations[0],locations[4],locations[2],locations[1]];
+      var place=make('div','geo-s3-sort-items',undefined,card);var order=[];
+      var reset=action('Recommencer',function(){order=[];draw();feedback.textContent='';feedback.className='geo-s3-feedback'});
+      function draw(){place.innerHTML='';shuffled.forEach(function(loc){var selected=order.indexOf(loc)>=0;var b=document.createElement('button');b.type='button';b.className='geo-s3-item'+(selected?' chosen':'');b.disabled=selected;var im=document.createElement('img');im.src='images/geographie/s3-paysage-'+loc.img+'.jpg';im.alt=loc.label;b.appendChild(im);var txt=document.createElement('span');txt.textContent=loc.label+' — '+loc.count+' habitants';b.appendChild(txt);b.addEventListener('click',function(){order.push(loc);draw()});place.appendChild(b);});var steps=make('div','geo-s3-current',undefined,place);steps.textContent='Ton classement : '+(order.map(function(x){return x.label}).join(' → ')||'Choisis le lieu qui compte le plus d’habitants.');}
+      draw();action('Vérifier mon classement',function(){if(order.length!==5){tell(false,'Classe les cinq paysages avant de vérifier.');return;}if(order.every(function(x,i){return x===locations[i]}))tell(true,'Bravo ! Pour une même surface, 2 500 habitants, c’est plus que 900, 300, 100 ou 20.');else tell(false,'Regarde les nombres d’habitants et commence par le plus grand.');});
+    }
+    if(idx===2){
+      make('div','geo-s3-map-title','Carte d’entraînement — nombre d’habitants dans cinq espaces de même taille',card);
+      var map=make('div','geo-s3-schematic',undefined,card);
+      [['A',2500],['B',100],['C',900],['D',20],['E',300]].forEach(function(pair){var t=make('div','geo-s3-region',undefined,map);t.style.background=pair[1]>=900?'#a94c55':pair[1]>=300?'#edaa66':'#b9ddb5';make('strong','',pair[0],t);make('small','',pair[1]+' hab.',t)});
+      make('p','geo-s3-explain','Légende : rouge = beaucoup d’habitants ; orange = un nombre moyen ; vert = peu d’habitants.',card);
+      var qs=[['Dans quel espace vivent le plus d’habitants ?','A'],['Quel espace compte 20 habitants ?','D'],['Quel espace compte 300 habitants ?','E']];var qn=0;
+      function render(){if(qn>=qs.length){tell(true,'Bravo ! Tu sais lire la légende et comparer des nombres d’habitants.');return;}var old=card.querySelector('.geo-s3-question');if(old)old.remove();card.querySelectorAll('.geo-s3-qbtn').forEach(function(b){b.remove()});question((qn+1)+'/3 — '+qs[qn][0]);['C','A','E','D','B'].forEach(function(v){var b=action(v,function(){if(v===qs[qn][1]){qn++;render();}else tell(false,'Relis la carte et sa légende : chaque case porte une lettre et un nombre.');});b.classList.add('geo-s3-qbtn');});}render();
+    }
+    if(idx===3){
+      var comparison=make('div','geo-s3-compare',undefined,card);[['Lieu A',50,5],['Lieu B',500,2]].forEach(function(item){var c=make('div','geo-s3-compare-item',undefined,comparison);photo(item[2],c,item[0]);make('strong','',item[1]+' habitants',c);});
+      make('p','geo-s3-explain','Les deux espaces ont exactement la même taille. Les nombres d’habitants sont donnés pour comparer.',card);
+      question('Dans quel espace vivent le plus d’habitants ?');
+      action('Lieu A',function(){tell(false,'50 est plus petit que 500. Réessaie.')});action('Lieu B',function(){tell(true,'Exact ! 500 habitants, c’est plus que 50 pour un espace de même taille.')});
+    }
+    if(idx===4){
+      var mission=[['Je suis un lieu avec très peu de maisons éloignées les unes des autres.','Campagne',['Village','Campagne','Centre-ville']],['Dans deux espaces de même taille, où vit-on le plus nombreux ?','800 habitants',['80 habitants','800 habitants','8 habitants']],['Sur notre carte d’entraînement, quelle couleur montre peu d’habitants ?','Vert',['Rouge','Orange','Vert']]];var step=0;
+      var holder=make('div','geo-s3-challenge',undefined,card);photo(5,holder,'Observe les paysages et les indices.');
+      function show(){holder.querySelectorAll('.geo-s3-task').forEach(function(e){e.remove()});if(step===3){tell(true,'Mission réussie ! Tu sais observer, lire une légende et comparer des habitants.');return;}var block=make('div','geo-s3-task',undefined,holder);make('strong','',(step+1)+'/3 — '+mission[step][0],block);mission[step][2].forEach(function(v){action(v,function(){if(v===mission[step][1]){step++;feedback.textContent='';feedback.className='geo-s3-feedback';show();}else tell(false,'Ce n’est pas encore ça. Observe ou compare les indices.');},block)});}show();
     }
   }
 
