@@ -55,18 +55,3 @@
 #frenchTrainingOverlayV2348 .mh-choice-settings label{font-weight:800;font-size:14px;}
 #frenchTrainingOverlayV2348 .mh-choice-settings select{display:block;width:100%;max-width:100%;padding:9px;margin-top:5px;border:2px solid #ded8ed;border-radius:10px;background:#fff;color:#2d2b55;font:inherit;}
 #frenchTrainingOverlayV2348 .mh-wr-level2 #mh-l2-hint,#frenchTrainingOverlayV2348 .mh-wr-level3 .mh-wr-starter{white-space:pre-line;}
-
-/* Atelier DRAS - tablette et ordinateur, un seul ascenseur de page */
-.mh-dras-intro{background:#f2f6ff;border:2px solid #d8e7ff;padding:14px;border-radius:15px;margin-bottom:14px}
-.mh-dras-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}
-.mh-dras-tab{border:2px solid #d6e4ff;border-radius:15px;padding:14px 7px;background:#f2f8ff;font-size:clamp(14px,1.5vw,19px);font-weight:900;color:#24417a}
-.mh-dras-tab.active{outline:3px solid #376df3;outline-offset:1px}
-.mh-dras-tab.dras-remplacer{background:#edfff1;border-color:#bdeccc;color:#187a3c}
-.mh-dras-tab.dras-ajouter{background:#fff4e9;border-color:#ffd9b8;color:#9b4b0d}
-.mh-dras-tab.dras-supprimer{background:#fff0f5;border-color:#ffc7d8;color:#bb244d}
-.mh-dras-panel{display:grid;grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr);gap:17px;border:2px solid #dbe9ff;border-radius:22px;padding:18px;background:#fff}
-.mh-dras-art img{width:100%;max-height:410px;object-fit:contain;border-radius:16px;background:#f7f8fc}.mh-dras-art p{font-size:14px;margin-top:8px}
-.mh-dras-task{min-width:0}.mh-dras-task h3{margin:0 0 12px}.mh-dras-before{padding:13px;background:#fff9eb;border:2px solid #ffe5ad;border-radius:14px;margin-bottom:14px}.mh-dras-before small{display:block;color:#7f6b53;font-size:12px;font-weight:900;margin-bottom:6px}.mh-dras-before strong{display:block;font-size:clamp(19px,2vw,26px)}
-.mh-dras-instruction{font-size:clamp(16px,1.65vw,20px);margin-bottom:12px}.mh-dras-task>label{display:block;font-weight:850;margin-bottom:6px}.mh-dras-task textarea{width:100%;min-height:155px;border:2px solid #ddd9e9;border-radius:15px;padding:15px;font:600 19px/1.6 inherit;resize:vertical;font-size:19px;line-height:1.6}
-.mh-dras-review{display:grid;gap:8px;margin-top:14px}.mh-dras-review label{display:flex;gap:9px;align-items:center;background:#faf7ff;padding:10px;border-radius:11px;font-weight:700}.mh-dras-review input{width:23px;height:23px;flex-shrink:0}.mh-dras-task #mh-dras-feedback{font-weight:850;margin:10px 0}.mh-dras-progress{background:#edf8ff;border-radius:12px;margin-top:12px;padding:12px;font-weight:800}.mh-dras-start{background:#357cf6!important}
-@media(max-width:780px){.mh-dras-panel{grid-template-columns:1fr}.mh-dras-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.mh-dras-art img{max-height:300px}}
