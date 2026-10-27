@@ -34847,6 +34847,7 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
  'use strict';
  var mq=window.matchMedia('(min-width:1200px) and (pointer:fine)');
  var originalParent=null,originalNext=null;
+ var stableNav=null; // Conserve la barre réelle et ses gestionnaires de clics.
  var hasBuilt=false;
  function fallbackButton(kind){
   var b=document.createElement('button');b.type='button';b.className='v2574-utility-btn v2574-bottom-btn v2574-'+kind+'-btn mh-extra';
@@ -34865,8 +34866,10 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
  function refresh(){
   var panel=document.getElementById('v2574MainDashboard');
   if(!panel)return;
-  var nav=panel.querySelector('.subjects-bar') || document.querySelector('.subjects-bar');
+  var nav=panel.querySelector('.subjects-bar') || document.querySelector('.subjects-bar') || stableNav;
   if(!nav)return;
+  // Les autres scripts peuvent reconstruire l'accueil : ne jamais perdre la barre existante.
+  if(!stableNav || (nav.isConnected && stableNav!==nav)) stableNav=nav;
   if(!mq.matches){
    panel.classList.remove('mh-constellation');nav.classList.remove('mh-subjects');
    if(originalParent&&nav.parentNode!==originalParent){
@@ -34927,7 +34930,13 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
    // The existing four activity buttons are moved, not cloned; their original listeners survive.
   }
   var heading=panel.querySelector('.mh-subject-heading');
-  if(heading&&nav.previousElementSibling!==heading)heading.insertAdjacentElement('afterend',nav);
+  if(heading && (nav.parentNode!==panel || nav.previousElementSibling!==heading)) {
+    heading.insertAdjacentElement('afterend',nav);
+  }
+  // Réafficher la même barre, sans la recréer ni modifier ses boutons.
+  nav.hidden=false;
+  nav.style.removeProperty('display');
+  nav.style.removeProperty('visibility');
   nav.classList.add('mh-subjects');panel.classList.add('mh-constellation');
   var buttons=nav.querySelectorAll(':scope > button');
   var texts=Array.from(buttons).map(function(b){return (b.textContent||'').toLowerCase()});
@@ -34945,9 +34954,9 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
    if(!mq.matches)return;
    var panel=document.getElementById('v2574MainDashboard');
    if(!panel||!panel.classList.contains('mh-constellation'))return;
-   var nav=panel.querySelector('.subjects-bar') || document.querySelector('.subjects-bar');
+   var nav=panel.querySelector('.subjects-bar') || document.querySelector('.subjects-bar') || stableNav;
    var heading=panel.querySelector('.mh-subject-heading');
-   if(nav&&heading&&(nav.parentNode!==panel||nav.previousElementSibling!==heading))schedule();
+   if(heading && nav && (nav.parentNode!==panel || nav.previousElementSibling!==heading || nav.hidden || nav.style.display==='none')) schedule();
  });
  navObserver.observe(document.body||document.documentElement,{childList:true,subtree:true});
  [100,450,1300,3000].forEach(function(t){setTimeout(refresh,t)});
