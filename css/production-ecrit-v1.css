@@ -49,3 +49,9 @@
 /* Amorces facultatives qui suivent les images choisies */
 #frenchTrainingOverlayV2348 .mh-wr-starter{white-space:pre-line;border:2px solid #f5d36a;color:#43365b;font-size:clamp(16px,1.4vw,20px);line-height:1.55;padding:16px;margin:10px 0;}
 #frenchTrainingOverlayV2348 .mh-wr-starter[hidden]{display:none!important;}
+
+/* Niveaux 2 et 3 : choix et amorces accessibles */
+#frenchTrainingOverlayV2348 .mh-choice-settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;background:#fff8eb;padding:12px;border:1px solid #ffe0ac;border-radius:15px;margin:12px 0;}
+#frenchTrainingOverlayV2348 .mh-choice-settings label{font-weight:800;font-size:14px;}
+#frenchTrainingOverlayV2348 .mh-choice-settings select{display:block;width:100%;max-width:100%;padding:9px;margin-top:5px;border:2px solid #ded8ed;border-radius:10px;background:#fff;color:#2d2b55;font:inherit;}
+#frenchTrainingOverlayV2348 .mh-wr-level2 #mh-l2-hint,#frenchTrainingOverlayV2348 .mh-wr-level3 .mh-wr-starter{white-space:pre-line;}
