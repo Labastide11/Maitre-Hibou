@@ -5202,6 +5202,10 @@ body.v21-final .birthday-top-card-v2414 .birthday-cake-v2414 {
 .en1-discovery{grid-column:1/-1;border:2px solid #d9d4fa;border-radius:14px;padding:12px;background:#f5f3ff}.en1-discovery summary{cursor:pointer;font-weight:700}.en1-intro-photo{display:block;max-width:500px;width:100%;max-height:240px;object-fit:contain;margin:10px auto}.en1-btn{font:inherit;font-weight:700;color:#252052;background:#fffaf1;border:2px solid #ffdaad;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.en1-btn:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.en1-options{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.en1-progress{font-weight:700;color:#62428a}.en1-match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.en1-match-col{display:grid;grid-template-rows:repeat(3,minmax(60px,auto));gap:10px}.en1-btn.selected{border-color:#6846ce;box-shadow:0 0 0 2px #6846ce}.en1-btn.matched,.en1-photo-scene.matched{border-color:#378346;background:#edf8ed;opacity:1}.en1-photo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.en1-photo-scene{border:2px solid #ffdaad;border-radius:14px;padding:8px;min-width:0}.en1-scene-img{width:100%;height:170px;object-fit:contain;background:#fff;border-radius:9px;display:block}.en1-caption{font-size:17px;line-height:1.4;margin:8px 0}.en1-photo-options{display:grid;gap:8px}.en1-activity .v24-english-feedback{margin-top:12px}.en1-bubble{border-radius:14px;background:#eee8ff;padding:14px;font-size:22px;font-weight:700}.en1-activity .en1-oral button{margin:6px 6px 6px 0}.en1-activity .en1-btn:disabled{cursor:default}.en1-activity .en1-btn:disabled:not(.matched){opacity:.7}#v24EnglishExercises:has(.en1-activity){grid-template-columns:repeat(2,minmax(0,1fr))}#v24EnglishExercises .en1-activity:nth-of-type(2){grid-column:1/-1}@media(max-width:700px){#v24EnglishExercises:has(.en1-activity){grid-template-columns:1fr}.en1-photo-grid{grid-template-columns:1fr}.en1-scene-img{height:200px}.en1-btn{font-size:17px}}
 
 </style>
+<style id="anglais-s2-cinq-exercices">
+.en2-discovery{grid-column:1/-1;border:2px solid #d9d4fa;border-radius:14px;padding:12px;background:#f5f3ff}.en2-discovery summary{cursor:pointer;font-weight:700}.en2-btn{font:inherit;font-weight:700;color:#252052;background:#fffaf1;border:2px solid #ffdaad;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.en2-btn:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.en2-options{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.en2-progress{font-weight:700;color:#62428a}.en2-portraits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}.en2-portrait{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:center}.en2-portrait-img{width:100%;height:190px;object-fit:contain;background:#fff;border-radius:9px;display:block}.en2-btn.matched{border-color:#378346;background:#edf8ed;opacity:1}.en2-slots{border:2px dashed #b5a6e8;border-radius:12px;background:#f7f4ff;min-height:65px;padding:12px;box-sizing:border-box;display:flex;align-items:center;font-size:22px;font-weight:700;overflow-wrap:anywhere}.en2-bubble{border-radius:14px;background:#eee8ff;padding:14px;font-size:22px;font-weight:700}.en2-answer-options{display:grid;gap:8px}.en2-activity .v24-english-feedback{margin-top:12px}.en2-activity .en2-oral button{margin:6px 6px 6px 0}.en2-activity .en2-btn:disabled{cursor:default}.en2-activity .en2-btn:disabled:not(.matched){opacity:.7}#v24EnglishExercises:has(.en2-activity){grid-template-columns:repeat(2,minmax(0,1fr))}#v24EnglishExercises .en2-activity:nth-of-type(2){grid-column:1/-1}@media(max-width:700px){#v24EnglishExercises:has(.en2-activity){grid-template-columns:1fr}.en2-btn{font-size:17px}.en2-portrait-img{height:140px}.en2-portraits{gap:6px}}@media(max-width:380px){.en2-portraits{grid-template-columns:1fr}.en2-portrait-img{height:175px}}
+
+</style>
 </head>
 <body class="prenom-mode">
 <header>
@@ -24423,16 +24427,14 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
     },
     {
       id:2, title:'Séance 2', short:'My name is...', emoji:'🪪',
-      objective:'Je sais dire mon prénom en anglais.',
-      criteria:['Je dis My name is...','Je demande What is your name?','Je comprends la question'],
+      objective:'Je sais demander et dire mon prénom en anglais.',
+      criteria:['Je reconnais la question','Je dis My name is…','Je m’entraîne à parler'],
       exos:[
-        {type:'listenSeries', title:'Écoute et reconnais', instr:'Écoute les phrases, puis choisis celle que tu entends.', items:[
-          {audio:'My name is Emma.', options:['My name is Emma','What is your name?','Goodbye Emma'], correct:0},
-          {audio:'What is your name?', options:['My name is Emma','What is your name?','Goodbye Emma'], correct:1},
-          {audio:'Good bye Emma.', options:['My name is Emma','What is your name?','Goodbye Emma'], correct:2}
-        ]},
-        {type:'order', title:'Remets la phrase dans l’ordre', instr:'Clique les mots dans le bon ordre.', bank:['is','My','name','Léo'], correctOrder:['My','name','is','Léo']},
-        {type:'free', title:'À toi de jouer', instr:'Écris une phrase pour te présenter.', hint:'My name is ___.', sample:'My name is Lina.'}
+        {type:'englishS2',title:'J’écoute et je reconnais',instr:'Écoute, puis choisis la phrase entendue.'},
+        {type:'englishS2',title:'Qui parle ?',instr:'Écoute le prénom, puis choisis le bon personnage.'},
+        {type:'englishS2',title:'Je remets les mots dans l’ordre',instr:'Clique les mots pour construire la phrase.'},
+        {type:'englishS2',title:'Je complète le dialogue',instr:'Lis la situation, puis choisis la phrase qui manque.'},
+        {type:'englishS2',title:'À moi de parler !',instr:'Entraîne-toi à demander et à dire ton prénom.'}
       ]
     },
     {
@@ -24576,12 +24578,14 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
     }, true);
     var wrap = grid.querySelector('#v24EnglishExercises');
     if(s.id === 1) renderEnglishS1Intro(wrap);
+    if(s.id === 2) renderEnglishS2Intro(wrap);
     s.exos.forEach(function(exo, idx){
       var card = document.createElement('section');
       card.className = 'v24-english-exo';
       card.setAttribute('data-english-exercise-type', exo.type || '');
       card.innerHTML = '<h3>'+esc(exo.title)+'</h3><p>'+esc(exo.instr)+'</p>';
       if(s.id === 1){renderEnglishS1(card,idx);wrap.appendChild(card);return;}
+      if(s.id === 2){renderEnglishS2(card,idx);wrap.appendChild(card);return;}
       if(exo.type === 'listenSeries'){
         card.classList.add('v24-english-listen-card');
         renderEnglishListenSeries(card, exo);
@@ -24611,7 +24615,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       wrap.appendChild(finishBox);
 
       function englishExerciseFinished(card){
-        if(s.id === 1) return card.dataset.englishDone === '1';
+        if(s.id === 1 || s.id === 2) return card.dataset.englishDone === '1';
         var type = card.getAttribute('data-english-exercise-type') || '';
         var feedback = card.querySelector('.v24-english-feedback');
         var text = String(feedback && feedback.textContent || '').trim();
@@ -24696,6 +24700,56 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
   }
 
   /* Anglais, séance 1 : écoute, situations photographiées, vocabulaire et oral. */
+  /* Séance 2 : demander et dire son prénom. Prénoms fictifs pour les portraits. */
+  function renderEnglishS2Intro(wrap){
+    var box=document.createElement('details');box.className='en2-discovery';
+    var summary=document.createElement('summary');summary.textContent='🦉 Les phrases à connaître';box.appendChild(summary);
+    var p=document.createElement('p');p.textContent='What is your name? = Comment t’appelles-tu ? My name is… = Je m’appelle…';box.appendChild(p);
+    var example=document.createElement('p');example.textContent='Exemple : My name is Emma. Les trois personnages des photos portent des prénoms fictifs.';box.appendChild(example);wrap.appendChild(box);
+  }
+  function renderEnglishS2(card,idx){
+    card.classList.add('en2-activity');
+    var audioTicket=0;
+    function el(tag,cls,text,parent){var n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;(parent||card).appendChild(n);return n;}
+    function btn(text,parent,fn){var b=el('button','en2-btn',text,parent);b.type='button';b.addEventListener('click',fn);return b;}
+    function say(ok,text,finished){var n=card.querySelector('.v24-english-feedback');if(!n)n=el('div','v24-english-feedback','');n.className='v24-english-feedback '+(ok?'ok':'ko');n.setAttribute('role','status');n.textContent=text;if(finished){card.dataset.englishDone='1';card.classList.add('en2-success');}}
+    function mix(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),v=a[i];a[i]=a[j];a[j]=v;}return a;}
+    function audio(text,after){
+      var ticket=++audioTicket;
+      if(!window.speechSynthesis||typeof window.SpeechSynthesisUtterance!=='function'){say(false,'La lecture audio n’est pas disponible sur ce navigateur. Utilise un navigateur avec une voix anglaise pour cet exercice.');return;}
+      try{window.speechSynthesis.cancel();var u=new window.SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=0.78;var voices=window.speechSynthesis.getVoices()||[];var voice=voices.filter(function(v){return /^en-GB/i.test(v.lang||'');})[0]||voices.filter(function(v){return /^en/i.test(v.lang||'');})[0];if(voice)u.voice=voice;
+        u.onend=function(){if(ticket===audioTicket&&card.isConnected&&after)after();};u.onerror=function(e){if(ticket===audioTicket&&e.error!=='canceled'&&e.error!=='interrupted')say(false,'Le son n’a pas pu être lu. Vérifie le son de ton appareil, puis réessaie.');};window.speechSynthesis.speak(u);
+      }catch(error){say(false,'Le son n’a pas pu être lu. Réessaie avec le bouton Écouter.');}
+    }
+    if(idx===0){
+      var items=mix(['My name is Emma.','What is your name?','My name is Emma.','What is your name?']),step=0;
+      var progress=el('p','en2-progress',''),area=el('div','en2-listen','');
+      function draw(){area.replaceChildren();progress.textContent='Écoute '+(step+1)+' sur 4';var heard=false,solved=false,options,item=items[step];btn('🔊 Écouter',area,function(){audio(item,function(){heard=true;if(!solved)options.querySelectorAll('button').forEach(function(b){b.disabled=false;});});});options=el('div','en2-options','',area);mix(['My name is Emma.','What is your name?']).forEach(function(phrase){var b=btn(phrase,options,function(){if(!heard||solved)return;if(phrase!==item){say(false,'Réécoute : entends-tu une question ou une présentation ?');return;}solved=true;options.querySelectorAll('button').forEach(function(x){x.disabled=true;});step++;if(step===4){progress.textContent='4 écoutes réussies sur 4';say(true,'Bravo ! Tu reconnais la question et la présentation.',true);}else{say(true,'Bonne réponse !');btn('Écoute suivante',area,draw);}});b.disabled=true;});}draw();
+    }else if(idx===1){
+      el('p','en2-help','Les prénoms Emma, Léo et Lina sont inventés pour ces personnages.');
+      var people=[{key:'emma',name:'Emma',spoken:'Emma'},{key:'leo',name:'Léo',spoken:'Leo'},{key:'lina',name:'Lina',spoken:'Lina'}];
+      var previousPeopleOrder='',rounds=mix([people[0],people[1],people[2],people[1]]),step=0,progress=el('p','en2-progress',''),area=el('div','en2-who','');
+      function drawPeople(){area.replaceChildren();progress.textContent='Portrait '+(step+1)+' sur 4';var heard=false,solved=false,options,personForRound=rounds[step];btn('🔊 Écouter',area,function(){audio('My name is '+personForRound.spoken+'.',function(){heard=true;if(!solved)options.querySelectorAll('button').forEach(function(b){b.disabled=false;});});});options=el('div','en2-portraits','',area);var peopleOrder=mix(people);if(peopleOrder.map(function(p){return p.key;}).join(',')===previousPeopleOrder)peopleOrder.push(peopleOrder.shift());previousPeopleOrder=peopleOrder.map(function(p){return p.key;}).join(',');peopleOrder.forEach(function(person){var b=btn(person.name,options,function(){if(!heard||solved)return;if(person.key!==personForRound.key){say(false,'Réécoute et cherche le prénom entendu sous les portraits.');return;}solved=true;b.classList.add('matched');options.querySelectorAll('button').forEach(function(x){x.disabled=true;});step++;if(step===rounds.length){progress.textContent='4 portraits trouvés sur 4';say(true,'Bravo ! Tu sais qui se présente.',true);}else{say(true,'C’est le bon personnage !');btn('Portrait suivant',area,drawPeople);}});b.classList.add('en2-portrait');b.disabled=true;var image=el('img','en2-portrait-img',undefined);image.src='images/anglais/s2/'+person.key+'.jpg';image.alt='Portrait du personnage fictif '+person.name;image.loading='eager';b.prepend(image);});}drawPeople();
+    }else if(idx===2){
+      var phrases=[['My','name','is','Emma.'],['What','is','your','name?'],['My','name','is','Lina.']],step=0;
+      var progress=el('p','en2-progress',''),area=el('div','en2-order','');
+      function drawOrder(){area.replaceChildren();progress.textContent='Phrase '+(step+1)+' sur 3';el('p','en2-help',step===1?'Construis la question pour demander un prénom.':'Construis la phrase pour se présenter.',area);var chosen=[],bank,slots=el('div','en2-slots','',area);slots.setAttribute('aria-label','Ma phrase');slots.setAttribute('aria-live','polite');var words=phrases[step];var order=mix([0,1,2,3]);if(order.every(function(v,n){return v===n;}))order=[2,0,3,1];bank=el('div','en2-options en2-bank','',area);
+        function refresh(){slots.textContent=chosen.length?chosen.map(function(item){return item.text;}).join(' '):'Ta phrase apparaîtra ici.';check.disabled=chosen.length!==words.length;undo.disabled=!chosen.length;}
+        order.forEach(function(n){var b=btn(words[n],bank,function(){chosen.push({text:words[n],button:b});b.disabled=true;refresh();});});
+        var controls=el('div','en2-options','',area);var undo=btn('Annuler le dernier mot',controls,function(){var last=chosen.pop();if(last)last.button.disabled=false;refresh();});var check=btn('Vérifier ma phrase',controls,function(){if(!chosen.every(function(item,n){return item.text===words[n];})){say(false,'Ce n’est pas encore le bon ordre. Annule des mots et essaie encore.');return;}bank.querySelectorAll('button').forEach(function(b){b.disabled=true;});check.disabled=true;undo.disabled=true;step++;if(step===phrases.length){progress.textContent='3 phrases réussies sur 3';say(true,'Bravo ! Tu sais construire les deux phrases utiles.',true);}else{say(true,'La phrase est correcte !');btn('Phrase suivante',area,drawOrder);}});refresh();
+      }drawOrder();
+    }else if(idx===3){
+      var rounds=[{context:'Emma demande son prénom à Léo.',line:'Emma : What is your name?',options:['What is your name?','My name is Leo.','Goodbye!'],answer:1},{context:'Tu veux demander son prénom à Lina.',line:'Toi : …',options:['My name is Lina.','Hello!','What is your name?'],answer:2},{context:'Léo demande son prénom à Emma.',line:'Léo : What is your name?',options:['My name is Emma.','What is your name?','Goodbye!'],answer:0}],step=0;
+      var progress=el('p','en2-progress',''),area=el('div','en2-dialogue','');
+      function drawDialogue(){area.replaceChildren();progress.textContent='Échange '+(step+1)+' sur 3';var round=rounds[step];el('p','en2-context',round.context,area);el('p','en2-bubble',round.line,area);if(step!==1)btn('🔊 Écouter la question',area,function(){audio('What is your name?');});var options=el('div','en2-answer-options','',area);round.options.forEach(function(text,n){btn(text,options,function(){if(n!==round.answer){say(false,'Relis la situation : faut-il demander le prénom ou répondre ?');return;}options.querySelectorAll('button').forEach(function(b){b.disabled=true;});step++;if(step===rounds.length){progress.textContent='3 échanges réussis sur 3';say(true,'Bravo ! Tu sais demander et dire un prénom.',true);}else{say(true,'Bonne réponse !');btn('Échange suivant',area,drawDialogue);}});});}drawDialogue();
+    }else{
+      el('p','en2-help','Réponds à voix haute. Le logiciel ne vérifie pas ta prononciation.');
+      var rounds=[{text:'Demande son prénom à un camarade.',model:'What is your name?'},{text:'Présente-toi : dis My name is… puis ton propre prénom.',model:'My name is Emma.'},{text:'Avec un camarade, demandez vos prénoms puis répondez chacun votre tour.',model:'What is your name? My name is Leo.'}],step=0;
+      var progress=el('p','en2-progress',''),area=el('div','en2-oral','');
+      function drawOral(){area.replaceChildren();var current=rounds[step];progress.textContent='Situation '+(step+1)+' sur 3';el('p','en2-context',current.text,area);if(step>0)el('p','en2-help','Le modèle utilise un prénom fictif. Remplace-le par le tien.',area);btn('🔊 Écouter un modèle',area,function(){audio(current.model);});var confirm=btn('J’ai parlé à voix haute',area,function(){confirm.disabled=true;audioTicket++;if(window.speechSynthesis)window.speechSynthesis.cancel();step++;if(step===rounds.length){progress.textContent='3 situations pratiquées sur 3';say(true,'Tu as terminé ton entraînement oral. Tu peux rejouer le dialogue avec un camarade.',true);}else{say(true,'Continue avec la situation suivante.');drawOral();}});}drawOral();
+    }
+  }
+
   function renderEnglishS1Intro(wrap){
     var box=document.createElement('details');box.className='en1-discovery';
     var summary=document.createElement('summary');summary.textContent='🦉 Je découvre les trois mots';box.appendChild(summary);
