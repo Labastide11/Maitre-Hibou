@@ -35999,3 +35999,35 @@ body.v21-final.v25-7-73-simplified-home.mh-home-header-expanded > header {displa
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true}); else init();
 })();
 </script>
+
+
+<style id="mh-compact-header-final-v11">
+/* Règle définitive, après les anciens correctifs : seule la barre du haut est ciblée. */
+body.v21-final:not(.prenom-mode) header:first-of-type,
+body.v21-final:not(.prenom-mode) header.mockup-header,
+body.v21-final:not(.prenom-mode) header.v21-header {
+ display:flex !important; visibility:visible !important; opacity:1 !important;
+ flex-direction:row !important; align-items:center !important; justify-content:space-between !important;
+ grid-template-columns:none !important; position:relative !important;
+ height:48px !important; min-height:48px !important; max-height:48px !important;
+ padding:4px 14px !important; margin:0 !important; gap:12px !important;
+ overflow:hidden !important; box-sizing:border-box !important;
+}
+body.v21-final header .logo-area {display:flex !important; flex-direction:row !important; align-items:center !important; gap:5px !important; width:auto !important; min-width:0 !important; height:38px !important; flex:0 1 auto !important;}
+body.v21-final header .logo-icon {display:flex !important; width:32px !important; height:32px !important; min-width:32px !important; min-height:32px !important; overflow:hidden !important; align-items:center !important;justify-content:center !important; font-size:0 !important; background:none !important;box-shadow:none !important;border:0 !important;padding:0 !important;}
+body.v21-final header .logo-icon img {display:none !important;}
+body.v21-final header .logo-icon::after {content:'🦉' !important;display:block !important;font-size:23px !important; line-height:1 !important;}
+body.v21-final header .logo-text {font:800 17px/1.05 system-ui,sans-serif !important;white-space:nowrap !important; color:white !important; margin:0 !important; padding:0 !important;}
+body.v21-final header .logo-text br {display:none !important;}
+body.v21-final header .logo-text::after {content:none !important;display:none !important;}
+body.v21-final header .header-actions {display:flex !important; flex:0 1 auto !important; width:auto !important;min-width:0 !important; align-items:center !important;justify-content:flex-end !important;gap:8px !important; padding:0 !important;margin:0 !important;height:40px !important;}
+body.v21-final header #bandeauLastCard,
+body.v21-final header .birthday-top-card-v2414 {display:inline-flex !important;position:relative !important;align-items:center !important;justify-content:center !important; flex:0 0 auto !important; width:auto !important; min-width:0 !important;max-width:none !important; height:36px !important; min-height:36px !important; max-height:36px !important; padding:5px 13px !important; margin:0 !important; gap:0 !important;border-radius:11px !important;background:rgba(255,255,255,.12) !important; box-shadow:none !important;overflow:hidden !important;white-space:nowrap !important;cursor:pointer !important;}
+body.v21-final header #bandeauLastCard > *,
+body.v21-final header .birthday-top-card-v2414 > * {display:none !important;}
+body.v21-final header #bandeauLastCard::before {content:'🏆  Parcours' !important;font:800 13px/1 system-ui,sans-serif !important;color:white !important;}
+body.v21-final header .birthday-top-card-v2414::before {content:'🎂  Anniversaires' !important;font:800 13px/1 system-ui,sans-serif !important;color:white !important;}
+body.v21-final header .birthday-top-card-v2414::after {display:none !important;content:none !important;}
+body.v21-final header #eleveBadge,body.v21-final header #scoreBadge,body.v21-final header #mockupCompetencesCard,body.v21-final header .competence-header-btn,body.v21-final header #soundBtn {display:none !important;}
+@media(max-width:600px){body.v21-final header:first-of-type{gap:4px !important;padding:3px 6px !important;}body.v21-final header .logo-text{font-size:13px !important;}body.v21-final header .logo-icon{width:23px !important;min-width:23px !important;}body.v21-final header .header-actions{gap:4px !important;}body.v21-final header #bandeauLastCard,body.v21-final header .birthday-top-card-v2414{padding:5px 7px !important;}body.v21-final header #bandeauLastCard::before{content:'🏆 Parcours' !important;font-size:11px !important;}body.v21-final header .birthday-top-card-v2414::before{content:'🎂 Anniv.' !important;font-size:11px !important;}}
+</style>
