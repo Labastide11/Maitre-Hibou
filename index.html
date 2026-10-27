@@ -34945,66 +34945,6 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
 }
 </style>
 
-<script id="hibou-compact-home-v6">
-(function(){
-  if (window.__hibouCompactHomeV6) return;
-  window.__hibouCompactHomeV6 = true;
-  function init(){
-    if(document.getElementById('hibouCompactMenu'))return;
-    const menu=document.createElement('div');
-    menu.id='hibouCompactMenu';
-    menu.innerHTML='<button type="button" class="hc-trigger" aria-expanded="false" aria-controls="hcMenuPanel">☰ Menu</button>'+
-      '<div class="hc-panel" id="hcMenuPanel"><button type="button" data-go="parcours">🏆 Mon parcours et mes progrès</button>'+
-      '<button type="button" data-go="anniv">🎂 Anniversaires</button>'+
-      '<button type="button" data-go="enseignant" title="Maintenir 3 secondes">🔒 Enseignant (appui 3 s)</button></div>';
-    document.body.appendChild(menu);
-    const trigger=menu.querySelector('.hc-trigger');
-    function close(){menu.dataset.open='false';trigger.setAttribute('aria-expanded','false');}
-    trigger.addEventListener('click',function(){const open=menu.dataset.open!=='true';menu.dataset.open=String(open);trigger.setAttribute('aria-expanded',String(open));});
-    menu.querySelector('[data-go="parcours"]').addEventListener('click',function(){
-      close();
-      const target=document.querySelector('#bandeauLastCard, .hp75-top-card, .hp77-top-card');
-      if(target) target.click(); else if(typeof window.openProgressModal==='function') window.openProgressModal();
-    });
-    menu.querySelector('[data-go="anniv"]').addEventListener('click',function(){
-      close();
-      const target=document.querySelector('.birthday-top-card-v2414, .birthday-top-card');
-      if(target) target.click();
-    });
-    const teacher=menu.querySelector('[data-go="enseignant"]');
-    let hold=null;
-    function clear(){ if(hold!==null){clearTimeout(hold); hold=null;} }
-    teacher.addEventListener('pointerdown',function(e){
-      if(e.button!==0)return;
-      clear();
-      hold=setTimeout(function(){
-        hold=null;close();
-        try{sessionStorage.setItem('hibou_teacher_gate_v260','ok');}catch(e){}
-        if(typeof window.hibouShowLocalTeacherPanel==='function')window.hibouShowLocalTeacherPanel('enseignant.html?v=25870&from=hibou');
-        else window.location.assign('enseignant.html?v=25870&from=hibou');
-      },3000);
-    });
-    ['pointerup','pointercancel','pointerleave'].forEach(name=>teacher.addEventListener(name,clear));
-    document.addEventListener('click',function(e){if(!menu.contains(e.target))close();});
-    function update(){
-      const dash=document.getElementById('v2574MainDashboard');
-      const isHome=!!(dash && dash.getClientRects().length && !document.body.classList.contains('prenom-mode'));
-      document.body.classList.toggle('hibou-compact-home',isHome);
-      if(!isHome)close();
-    }
-    update();
-    // Observer only home visibility and mode changes without observing our own menu subtree.
-    const obs=new MutationObserver(update);
-    obs.observe(document.body,{attributes:true,attributeFilter:['class']});
-    const dash=document.getElementById('v2574MainDashboard');
-    if(dash) obs.observe(dash,{attributes:true,attributeFilter:['class','style']});
-    window.addEventListener('pageshow',update);
-    window.hibouUpdateCompactHome=update;
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true}); else init();
-})();
-</script>
-
 </body>
 </html>
 <!-- V25.7.57 — Accueil tablette : les trois cartes rejoignent le bandeau inférieur -->
@@ -35972,5 +35912,80 @@ body.v25-7-74-simplified-home .subjects-bar > .v2574-bottom-btn .v2574-mini{disp
 
   [80,180,350,700,1200,2200,4000].forEach(function(ms){ setTimeout(apply, ms); });
   setInterval(apply, 700);
+})();
+</script>
+
+
+<!-- Accueil : masquage effectif du bandeau d'origine, sans reconstituer les boutons -->
+<style id="mh-home-header-repair-v7">
+body.mh-home-header-hidden > header:first-of-type,
+body.mh-home-header-hidden > header.mockup-header,
+body.mh-home-header-hidden > header.v21-header { display:none !important; }
+body.mh-home-header-hidden #mhHomeTopMenu { display:block !important; }
+#mhHomeTopMenu { display:none; position:fixed; top:8px; right:12px; z-index:9900; }
+#mhHomeTopMenu > button { cursor:pointer; min-height:44px; border:2px solid #ded9ff; border-radius:14px; padding:9px 14px; background:#fff; color:#28236e; font:800 14px system-ui,sans-serif; box-shadow:0 4px 15px #12123b27; }
+body.mh-home-header-expanded > header:first-of-type { display:flex !important; position:fixed !important; top:62px !important; right:12px !important; left:12px !important; width:calc(100% - 24px) !important; z-index:9899 !important; box-shadow:0 15px 40px #10204c55 !important; border-radius:18px !important; }
+body.mh-home-header-hidden #v21Home { padding-top:4px !important; }
+@media (min-width:1200px) and (pointer:fine) {
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-universe { height:300px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn {
+    height:116px !important; min-height:0 !important; padding:0 !important;
+    overflow:hidden !important; background-position:center !important;
+    background-size:100% 100% !important; background-repeat:no-repeat !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-lesson,
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-question { top:15px !important; bottom:auto !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-train,
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-belt { top:auto !important; bottom:15px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-lesson { background-image:url('images/constellation-lecon.png') !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-question { background-image:url('images/constellation-question.png') !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-train { background-image:url('images/constellation-entrainer.png') !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-belt { background-image:url('images/constellation-ceinture.png') !important; }
+}
+@media (max-width:650px) { #mhHomeTopMenu { right:6px; top:5px; } body.mh-home-header-expanded > header:first-of-type {top:54px !important;flex-wrap:wrap !important;} }
+</style>
+<script id="mh-home-header-repair-v7">
+(function(){
+  function init(){
+    if(document.getElementById('mhHomeTopMenu')) return;
+    const home=document.getElementById('v21Home');
+    const header=document.querySelector('body > header');
+    if(!home||!header) return;
+    const menu=document.createElement('div');
+    menu.id='mhHomeTopMenu';
+    const toggle=document.createElement('button');
+    toggle.type='button';toggle.textContent='☰ Menu';toggle.setAttribute('aria-expanded','false');
+    toggle.setAttribute('aria-label','Afficher le bandeau : parcours, anniversaires et accès enseignant');
+    menu.appendChild(toggle);document.body.appendChild(menu);
+    function isHome(){
+      if(document.body.classList.contains('prenom-mode')) return false;
+      if(getComputedStyle(home).display==='none' || getComputedStyle(home).visibility==='hidden') return false;
+      return home.getClientRects().length>0;
+    }
+    function update(){
+      const active=isHome();
+      document.body.classList.toggle('mh-home-header-hidden',active);
+      if(!active){document.body.classList.remove('mh-home-header-expanded');toggle.setAttribute('aria-expanded','false');}
+    }
+    toggle.addEventListener('click',function(ev){
+      ev.stopPropagation();
+      const next=!document.body.classList.contains('mh-home-header-expanded');
+      document.body.classList.toggle('mh-home-header-expanded',next);
+      toggle.setAttribute('aria-expanded',String(next));
+    });
+    document.addEventListener('click',function(ev){
+      if(!menu.contains(ev.target) && !header.contains(ev.target)){
+        document.body.classList.remove('mh-home-header-expanded');toggle.setAttribute('aria-expanded','false');
+      }
+    });
+    document.addEventListener('keydown',function(ev){if(ev.key==='Escape'){document.body.classList.remove('mh-home-header-expanded');toggle.setAttribute('aria-expanded','false');}});
+    const observer=new MutationObserver(update);
+    observer.observe(document.body,{attributes:true,attributeFilter:['class']});
+    observer.observe(home,{attributes:true,attributeFilter:['class','style','hidden']});
+    window.addEventListener('pageshow',update);
+    window.addEventListener('resize',update);
+    update();
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true}); else init();
 })();
 </script>
