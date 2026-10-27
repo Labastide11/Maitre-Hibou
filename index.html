@@ -5188,6 +5188,10 @@ body.v21-final .birthday-top-card-v2414 .birthday-cake-v2414 {
 .geo-s5-match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.geo-s5-col{display:grid;grid-template-rows:repeat(3,175px);gap:10px}.geo-s5-btn{font:inherit;font-weight:700;color:#252052;background:#fffaf1;border:2px solid #ffdaad;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.geo-s5-btn:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.geo-s5-photo{display:flex;flex-direction:column;align-items:stretch;padding:6px;gap:5px;overflow:hidden}.geo-s5-img{width:100%;height:180px;object-fit:cover;border-radius:9px;display:block}.geo-s5-photo .geo-s5-img{height:125px}.geo-s5-btn.selected{border-color:#6846ce;box-shadow:0 0 0 2px #6846ce}.geo-s5-btn.matched{border-color:#378346;background:#edf8ed;opacity:1}.geo-s5-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.geo-s5-answers{display:grid;gap:10px}.geo-s5-riddle-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.geo-s5-riddle-options .geo-s5-img{height:110px}.geo-s5-question{font-weight:700}.geo-s5-progress{color:#62428a}.geo-s5-activity textarea{width:100%;box-sizing:border-box;min-height:140px}.geo-s5-result{color:#246531}.geo-s5-activity .v24-english-feedback{margin-top:12px}@media(max-width:600px){.geo-s5-col{grid-template-rows:repeat(3,165px)}.geo-s5-btn{font-size:16px;padding:6px}.geo-s5-riddle-options{grid-template-columns:1fr}.geo-s5-riddle-options .geo-s5-img{height:150px}}
 
 </style>
+<style id="geo-s6-photos-locales">
+.geo-s6-match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.geo-s6-col{display:grid;grid-template-rows:repeat(3,175px);gap:10px}.geo-s6-btn{font:inherit;font-weight:700;color:#252052;background:#fffaf1;border:2px solid #ffdaad;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.geo-s6-btn:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.geo-s6-photo{display:flex;flex-direction:column;align-items:stretch;padding:6px;gap:5px;overflow:hidden}.geo-s6-img{width:100%;height:220px;object-fit:contain;background:#fff;border-radius:9px;display:block}.geo-s6-photo .geo-s6-img{height:120px;order:-1}.geo-s6-btn.selected{border-color:#6846ce;box-shadow:0 0 0 2px #6846ce}.geo-s6-btn.matched{border-color:#378346;background:#edf8ed;opacity:1}.geo-s6-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.geo-s6-zones{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.geo-s6-zones button{border-style:dashed}.geo-s6-answers{display:grid;gap:10px}.geo-s6-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.geo-s6-choices .geo-s6-img{height:110px}.geo-s6-question{font-weight:700}.geo-s6-progress{color:#62428a}.geo-s6-result{color:#246531}.geo-s6-activity .v24-english-feedback{margin-top:12px}@media(max-width:600px){.geo-s6-col{grid-template-rows:repeat(3,175px)}.geo-s6-btn{font-size:16px;padding:6px}.geo-s6-choices{grid-template-columns:1fr}.geo-s6-choices .geo-s6-img{height:160px}}
+
+</style>
 </head>
 <body class="prenom-mode">
 <header>
@@ -25121,10 +25125,12 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       {type:'geo-s5',title:'J’observe les indices',instr:'Observe chaque photo et choisis l’indice visible.'},
       {type:'geo-s5',title:'Le défi du géographe',instr:'Lis la description, puis choisis la bonne photo.'}
     ]},
-    {id:6,title:'Séance 6',short:'La ville et ses acteurs',emoji:'🏙️',objective:'Je sais expliquer à quoi sert une ville et qui y participe.',criteria:['Habiter','Travailler','Se déplacer','Se nourrir'],exos:[
-      {type:'match',title:'Acteur et rôle',instr:'Relie l’acteur à son rôle.',left:['La municipalité','Les habitants','Les commerçants'],right:['Gère la ville','Vivent dans la ville','Vendent des produits'],pairs:[0,1,2]},
-      {type:'sort',title:'À quoi sert la ville ?',instr:'Classe ces activités.',items:['🏠 dormir chez soi','🛒 faire les courses','🚌 prendre le bus','💼 aller au travail'],zones:['Habiter / se nourrir','Se déplacer / travailler'],zoneIcons:['🏠','🚌'],zoneColors:['#DCEAD9','#F6DDBE'],correct:[0,0,1,1]},
-      {type:'checklist',title:'Bilan géographie',instr:'Coche ce que tu sais faire.',items:['Me repérer sur un plan','Nommer des repères de France','Expliquer la densité','Reconnaître des paysages','Comparer ville et campagne','Expliquer à quoi sert une ville']}
+    {id:6,title:'Séance 6',short:'La ville et ses acteurs',emoji:'🏙️',objective:'Je sais expliquer à quoi sert une ville et qui y participe.',criteria:['Acteurs','Lieux','Besoins','Observer'],exos:[
+      {type:'geo-s6',title:'Qui fait quoi ?',instr:'Choisis un acteur, puis son rôle.'},
+      {type:'geo-s6',title:'À quoi sert ce lieu ?',instr:'Choisis une action, puis le besoin correspondant.'},
+      {type:'geo-s6',title:'Où dois-je aller ?',instr:'Choisis le lieu qui répond au besoin.'},
+      {type:'geo-s6',title:'J’observe les indices',instr:'Observe la photo, puis choisis l’indice visible.'},
+      {type:'geo-s6',title:'Le défi du géographe',instr:'Lis la situation et choisis la bonne réponse.'}
     ]}
   ];
 
@@ -25157,6 +25163,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       if(s.id === 3){ renderGeoS3(card, idx); wrap.appendChild(card); return; }
       if(s.id === 4){ renderGeoS4(card, idx); wrap.appendChild(card); return; }
       if(s.id === 5){ renderGeoS5(card, idx); wrap.appendChild(card); return; }
+      if(s.id === 6){ renderGeoS6(card, idx); wrap.appendChild(card); return; }
       if(idx === 0 && s.map) card.insertAdjacentHTML('beforeend','<div class="v24-geo-map-card">'+s.map+'</div>');
       if(exo.type === 'assessment') renderHistoryAssessment(card, exo);
       if(exo.type === 'choice') renderScienceChoice(card, exo);
@@ -25186,7 +25193,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       function refreshGeoSessionButton(){
         var finished = exerciseCards.filter(function(card){
           var feedback = card.querySelector('.v24-english-feedback');
-          return (s.id === 1 || s.id === 2 || s.id === 3 || s.id === 4 || s.id === 5) ? card.dataset.geoDone === '1' : (feedback && String(feedback.textContent || '').trim().length > 0);
+          return (s.id >= 1 && s.id <= 6) ? card.dataset.geoDone === '1' : (feedback && String(feedback.textContent || '').trim().length > 0);
         }).length;
         finishButton.disabled = finished < exerciseCards.length;
         finishButton.textContent = finished < exerciseCards.length
@@ -25257,6 +25264,54 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
   /* Séance 3 : cinq activités interactives, supports JPG intégrés au dépôt. */
   /* Séance 4 : photographies locales, associations mélangées et tri en quatre paysages. */
   /* Séance 5 : cinq activités d'observation, photographies locales. */
+  /* Séance 6 : lieux, acteurs et besoins de la ville. Toutes les photos sont locales. */
+  function renderGeoS6(card, idx){
+    card.classList.add('geo-s6-activity');
+    var photos={mairie:'La mairie',boulangerie:'La boulangerie',bibliotheque:'La bibliothèque',bus:'L’arrêt de bus',immeuble:'L’immeuble d’habitation',marche:'Le marché'};
+    function el(tag,cls,text,parent){var n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;(parent||card).appendChild(n);return n;}
+    function btn(text,parent,action){var b=el('button','geo-s6-btn',text,parent);b.type='button';b.addEventListener('click',action);return b;}
+    function picture(parent,key){var i=el('img','geo-s6-img',undefined,parent);i.src='images/geographie/s6/'+key+'.jpg';i.alt=photos[key];i.loading='eager';return i;}
+    function say(ok,text,done){var f=card.querySelector('.v24-english-feedback');if(!f)f=el('div','v24-english-feedback','');f.className='v24-english-feedback '+(ok?'ok':'bad');f.setAttribute('role','status');f.textContent=text;if(done){card.dataset.geoDone='1';card.classList.add('geo-s6-success');}}
+    function select(button,parent){parent.querySelectorAll('button').forEach(function(b){b.classList.remove('selected');b.setAttribute('aria-pressed','false');});button.classList.add('selected');button.setAttribute('aria-pressed','true');}
+    if(idx===0){
+      el('p','geo-s6-help','La municipalité, c’est le maire et son équipe. Elle s’occupe par exemple des écoles et des rues.');
+      var row=el('div','geo-s6-match',''),left=el('div','geo-s6-col','',row),right=el('div','geo-s6-col','',row),chosen=null,count=0;
+      var entries=[['habitants','Les habitants','immeuble','Vivent dans la ville.'],['commercants','Les commerçants','boulangerie','Vendent des produits dans les magasins ou au marché.'],['municipalite','La municipalité','mairie','S’occupe de la ville, par exemple des écoles et des rues.']];
+      entries.forEach(function(e){var b=btn(e[1],left,function(){select(b,left);chosen={button:b,key:e[0]};});b.classList.add('geo-s6-photo');b.setAttribute('aria-pressed','false');picture(b,e[2]);});
+      // Aucune bonne réponse n'est sur la même ligne que l'acteur associé.
+      [2,0,1].forEach(function(n){var e=entries[n],b=btn(e[3],right,function(){if(!chosen){say(false,'Choisis d’abord un acteur.');return;}if(chosen.key!==e[0]){say(false,'Relis le rôle et essaie une autre association.');return;}chosen.button.disabled=true;chosen.button.classList.remove('selected');chosen.button.classList.add('matched');chosen.button.setAttribute('aria-pressed','false');b.disabled=true;b.classList.add('matched');chosen=null;count++;say(true,count===3?'Bravo ! Tu connais le rôle des trois acteurs.':'Bonne association ! '+count+' sur 3.',count===3);});});
+    }else if(idx===1){
+      el('p','geo-s6-help','Un lieu peut servir à plusieurs choses. Ici, classe l’action écrite sous chaque photo.');
+      var options=el('div','geo-s6-options',''),zones=el('div','geo-s6-options',''),chosen=null,count=0;
+      [['immeuble','habiter','Dormir chez soi'],['boulangerie','nourrir','Acheter du pain pour manger'],['bus','deplacer','Prendre le bus'],['mairie','travailler','Travailler dans les bureaux de la mairie']].forEach(function(e){var b=btn(e[2],options,function(){select(b,options);chosen={button:b,key:e[1]};});b.classList.add('geo-s6-photo');b.setAttribute('aria-pressed','false');picture(b,e[0]);});
+      var zoneBox=el('div','geo-s6-zones','',zones);
+      [['deplacer','Se déplacer'],['travailler','Travailler'],['nourrir','Se nourrir'],['habiter','Habiter']].forEach(function(e){btn(e[1],zoneBox,function(){if(!chosen){say(false,'Choisis d’abord une action sous une photo.');return;}if(chosen.key!==e[0]){say(false,'Relis l’action : quel besoin permet-elle de satisfaire ?');return;}chosen.button.disabled=true;chosen.button.classList.remove('selected');chosen.button.classList.add('matched');chosen.button.setAttribute('aria-pressed','false');el('span','geo-s6-result',e[1],chosen.button);chosen=null;count++;say(true,count===4?'Bravo ! Tu connais quatre activités de la ville.':'Bien classé ! '+count+' sur 4.',count===4);});});
+    }else if(idx===2){
+      sequence([
+        {q:'Je veux emprunter un livre. Où dois-je aller ?',options:['mairie','bibliotheque','boulangerie'],answer:1},
+        {q:'Je veux acheter une baguette. Où dois-je aller ?',options:['boulangerie','immeuble','bibliotheque'],answer:0},
+        {q:'Je veux prendre le bus. Où dois-je attendre ?',options:['marche','mairie','bus'],answer:2}
+      ],true,'Mission');
+    }else if(idx===3){
+      sequence([
+        {photo:'marche',q:'Quel indice montre que l’on peut acheter de quoi manger ?',options:['Les livres sur les étagères','Les fruits et les légumes sur les étals','Les balcons des logements'],answer:1},
+        {photo:'bibliotheque',q:'Quel indice montre que ce lieu permet de lire ?',options:['Les livres rangés sur les rayons','Les véhicules dans la rue','Les paniers de légumes'],answer:0},
+        {photo:'bus',q:'Quel indice permet de reconnaître un arrêt de bus ?',options:['Les étals de nourriture','Les fenêtres des logements','Le panneau ou l’abri pour les voyageurs'],answer:2}
+      ],false,'Observation');
+    }else{
+      sequence([
+        {q:'Amel veut acheter des fruits pour le repas. Quel lieu peut-elle choisir ?',options:['bibliotheque','bus','marche'],answer:2},
+        {photo:'mairie',q:'Noé remarque un lampadaire de la rue cassé. Qui peut-il prévenir avec un adulte ?',options:['La municipalité','Les commerçants','Les habitants d’une autre ville'],answer:0},
+        {q:'Lou habite dans un appartement. Quelle photo montre son lieu de vie ?',options:['mairie','immeuble','boulangerie'],answer:1}
+      ],true,'Énigme');
+    }
+    function sequence(rounds,pictures,label){
+      var step=0,progress=el('p','geo-s6-progress',''),area=el('div','geo-s6-sequence','');
+      function draw(){area.replaceChildren();progress.textContent=label+' '+(step+1)+' sur '+rounds.length;var r=rounds[step];if(r.photo)picture(area,r.photo);el('p','geo-s6-question',r.q,area);var hasPhotos=pictures&&r.options.every(function(k){return !!photos[k];});var choices=el('div',hasPhotos?'geo-s6-choices':'geo-s6-answers','',area);r.options.forEach(function(option,n){var b=btn(hasPhotos?photos[option]:option,choices,function(){if(n!==r.answer){say(false,'Observe les indices et essaie une autre réponse.');return;}step++;if(step===rounds.length){choices.querySelectorAll('button').forEach(function(x){x.disabled=true;});progress.textContent=rounds.length+' sur '+rounds.length+' réussies';say(true,'Bravo ! Tu as réussi les trois situations.',true);}else{say(true,'Bonne réponse ! Continue.');draw();}});if(hasPhotos){b.classList.add('geo-s6-photo');picture(b,option);}});}
+      draw();
+    }
+  }
+
   function renderGeoS5(card, idx){
     card.classList.add('geo-s5-activity');
     function el(tag,cls,text,parent){var n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;(parent||card).appendChild(n);return n;}
