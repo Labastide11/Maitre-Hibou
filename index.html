@@ -5159,7 +5159,7 @@ body.v21-final .birthday-top-card-v2414 .birthday-cake-v2414 {
 }
 </style>
 <link rel="stylesheet" href="css/geographie-exercices.css?v=20261026-s2-2colonnes"/>
-<link rel="stylesheet" href="css/hibou-all-responsive.css?v=20261027-5" />
+<link rel="stylesheet" href="css/hibou-all-responsive.css?v=20261027-6" />
 <style id="hibou-v25-connexion-centrage-final-20261027">
 /* Correction en dernière position : le cadre et son image sont réellement centrés. */
 #prenomOverlay { background:linear-gradient(135deg,#F7F6FF,#FFFFFF) !important; }
@@ -34944,6 +34944,67 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
  #frenchTrainingOverlayV2348 .fr-v25720-domain-grid{grid-template-columns:1fr !important;}
 }
 </style>
+
+<script id="hibou-compact-home-v6">
+(function(){
+  if (window.__hibouCompactHomeV6) return;
+  window.__hibouCompactHomeV6 = true;
+  function init(){
+    if(document.getElementById('hibouCompactMenu'))return;
+    const menu=document.createElement('div');
+    menu.id='hibouCompactMenu';
+    menu.innerHTML='<button type="button" class="hc-trigger" aria-expanded="false" aria-controls="hcMenuPanel">☰ Menu</button>'+
+      '<div class="hc-panel" id="hcMenuPanel"><button type="button" data-go="parcours">🏆 Mon parcours et mes progrès</button>'+
+      '<button type="button" data-go="anniv">🎂 Anniversaires</button>'+
+      '<button type="button" data-go="enseignant" title="Maintenir 3 secondes">🔒 Enseignant (appui 3 s)</button></div>';
+    document.body.appendChild(menu);
+    const trigger=menu.querySelector('.hc-trigger');
+    function close(){menu.dataset.open='false';trigger.setAttribute('aria-expanded','false');}
+    trigger.addEventListener('click',function(){const open=menu.dataset.open!=='true';menu.dataset.open=String(open);trigger.setAttribute('aria-expanded',String(open));});
+    menu.querySelector('[data-go="parcours"]').addEventListener('click',function(){
+      close();
+      const target=document.querySelector('#bandeauLastCard, .hp75-top-card, .hp77-top-card');
+      if(target) target.click(); else if(typeof window.openProgressModal==='function') window.openProgressModal();
+    });
+    menu.querySelector('[data-go="anniv"]').addEventListener('click',function(){
+      close();
+      const target=document.querySelector('.birthday-top-card-v2414, .birthday-top-card');
+      if(target) target.click();
+    });
+    const teacher=menu.querySelector('[data-go="enseignant"]');
+    let hold=null;
+    function clear(){ if(hold!==null){clearTimeout(hold); hold=null;} }
+    teacher.addEventListener('pointerdown',function(e){
+      if(e.button!==0)return;
+      clear();
+      hold=setTimeout(function(){
+        hold=null;close();
+        try{sessionStorage.setItem('hibou_teacher_gate_v260','ok');}catch(e){}
+        if(typeof window.hibouShowLocalTeacherPanel==='function')window.hibouShowLocalTeacherPanel('enseignant.html?v=25870&from=hibou');
+        else window.location.assign('enseignant.html?v=25870&from=hibou');
+      },3000);
+    });
+    ['pointerup','pointercancel','pointerleave'].forEach(name=>teacher.addEventListener(name,clear));
+    document.addEventListener('click',function(e){if(!menu.contains(e.target))close();});
+    function update(){
+      const dash=document.getElementById('v2574MainDashboard');
+      const isHome=!!(dash && dash.getClientRects().length && !document.body.classList.contains('prenom-mode'));
+      document.body.classList.toggle('hibou-compact-home',isHome);
+      if(!isHome)close();
+    }
+    update();
+    // Observer only home visibility and mode changes without observing our own menu subtree.
+    const obs=new MutationObserver(update);
+    obs.observe(document.body,{attributes:true,attributeFilter:['class']});
+    const dash=document.getElementById('v2574MainDashboard');
+    if(dash) obs.observe(dash,{attributes:true,attributeFilter:['class','style']});
+    window.addEventListener('pageshow',update);
+    window.hibouUpdateCompactHome=update;
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true}); else init();
+})();
+</script>
+
 </body>
 </html>
 <!-- V25.7.57 — Accueil tablette : les trois cartes rejoignent le bandeau inférieur -->

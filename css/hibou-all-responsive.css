@@ -185,3 +185,17 @@
 #prenomOverlay {background:linear-gradient(135deg,#F7F6FF,#FFFFFF) !important;}
 #prenomOverlay .prenom-box.v2567-start .hibou-accueil-hero {display:flex !important;justify-content:center !important;align-items:center !important;width:100% !important;max-width:100% !important;margin:12px auto 0 !important;}
 #prenomOverlay .prenom-box.v2567-start .hibou-accueil-hero img {display:block !important;margin:0 auto !important;width:min(540px,90%) !important;max-width:90% !important;height:auto !important;object-fit:contain !important;}
+
+
+/* V6 : bandeau masqué uniquement sur l'accueil constellation.
+   Un bouton Menu fixe donne accès au parcours et aux anniversaires. */
+body.hibou-compact-home > header { display:none !important; }
+body.hibou-compact-home #hibouCompactMenu { display:block !important; }
+#hibouCompactMenu { display:none; position:fixed; top:10px; right:12px; z-index:900; }
+#hibouCompactMenu button { cursor:pointer; font:800 14px system-ui,sans-serif; }
+#hibouCompactMenu .hc-trigger { border:2px solid #dedaff; border-radius:14px; padding:9px 15px; color:#272466; background:white; box-shadow:0 3px 12px #2222; min-height:44px; }
+#hibouCompactMenu .hc-panel { position:absolute; top:52px; right:0; width:min(310px,calc(100vw - 24px)); background:white; border:2px solid #e5e2ff; border-radius:16px; padding:10px; box-shadow:0 10px 30px #15234e33; display:none; }
+#hibouCompactMenu[data-open="true"] .hc-panel { display:grid; gap:8px; }
+#hibouCompactMenu .hc-panel button { background:#f5f4ff; color:#272466; padding:12px 10px; text-align:left; border:0; border-radius:10px; min-height:44px; }
+body.hibou-compact-home #v2574MainDashboard { margin-top:8px !important; }
+@media(max-width:700px){#hibouCompactMenu {top:6px;right:7px;} #hibouCompactMenu .hc-trigger { padding:8px 10px;font-size:12px;}}
