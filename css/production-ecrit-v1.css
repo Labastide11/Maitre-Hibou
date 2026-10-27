@@ -25,3 +25,23 @@
 .mh-l3-hint-btn{border:1px solid #ddd4ea;border-radius:10px;background:white;padding:8px 11px;margin-top:8px;font-weight:750}
 .mh-wr-level3 .mh-wr-checks input{width:21px;height:21px;accent-color:#ff426c}
 @media(max-width:600px){.mh-l3-plan span{font-size:13px;padding:9px 3px}}
+
+/* Correctif du 27/10 : défilement de la page d'écriture, sans second ascenseur. */
+#frenchTrainingOverlayV2348 #frenchPopupInnerV2348:has(> .mh-wr){
+  display:block !important; flex:1 1 auto !important; min-height:0 !important;
+  overflow-y:auto !important; overflow-x:hidden !important;
+  scrollbar-width:auto; scrollbar-color:#fa758c #fff3f6;
+  overscroll-behavior-y:contain; -webkit-overflow-scrolling:touch; touch-action:pan-y !important;
+}
+#frenchTrainingOverlayV2348 #frenchPopupInnerV2348:has(> .mh-wr)::-webkit-scrollbar{width:13px}
+#frenchTrainingOverlayV2348 #frenchPopupInnerV2348:has(> .mh-wr)::-webkit-scrollbar-thumb{background:#fa758c;border-radius:15px;border:3px solid #fff3f6}
+#frenchTrainingOverlayV2348 #frenchPopupInnerV2348:has(> .mh-wr)::-webkit-scrollbar-track{background:#fff3f6;border-radius:15px}
+#frenchTrainingOverlayV2348 .mh-wr-choice img{display:block;aspect-ratio:4/3;height:auto;min-height:62px;max-height:94px;object-fit:cover}
+#frenchTrainingOverlayV2348 .mh-wr-inline-choices{margin:12px 0 16px}
+#frenchTrainingOverlayV2348 .mh-wr-inline-choices .mh-wr-group{margin-top:9px;padding:9px}
+#frenchTrainingOverlayV2348 .mh-wr-inline-choices .mh-wr-group h3{font-size:17px;margin:0 0 8px}
+#frenchTrainingOverlayV2348 .mh-wr-inline-choices .mh-wr-choices{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+#frenchTrainingOverlayV2348 .mh-wr-inline-choices .mh-wr-choice{padding:4px;border-width:2px}
+#frenchTrainingOverlayV2348 .mh-wr-inline-choices .mh-wr-choice span{font-size:11px;line-height:1.2}
+@media(max-width:1050px){#frenchTrainingOverlayV2348 .mh-wr-inline-choices .mh-wr-choices{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:780px){#frenchTrainingOverlayV2348 .mh-wr-inline-choices .mh-wr-choices{grid-template-columns:repeat(3,minmax(0,1fr))}}
