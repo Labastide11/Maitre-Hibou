@@ -32469,6 +32469,7 @@ body.v21-final .birthday-top-card-v2414 .birthday-summary-v2414{
 
     var nom = byId('eleveNom');
     if(nom) nom.textContent = name;
+    if(typeof window.hibouUpdateWelcomeTitle === 'function') window.hibouUpdateWelcomeTitle();
     var badge = byId('eleveBadge');
     if(badge){
       badge.style.display = 'flex';
@@ -34412,6 +34413,7 @@ header .logo-icon img{
     document.documentElement.classList.remove('hibou-login-pending');
     document.body.classList.remove('prenom-mode');
     var nom=document.getElementById('eleveNom');if(nom)nom.textContent=name;
+    if(typeof window.hibouUpdateWelcomeTitle === 'function') window.hibouUpdateWelcomeTitle();
     var badge=document.getElementById('eleveBadge');
     if(badge){badge.style.display='flex';badge.innerHTML='👤 '+name;}
     [
@@ -35809,6 +35811,22 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
     clickNeedle(['grandir ensemble']);
   }
 
+  // Titre d'accueil : les invités n'affichent jamais de prénom, même s'ils en saisissent un.
+  window.hibouUpdateWelcomeTitle = function(){
+    var title = document.getElementById('hibouWelcomeTitle');
+    if(!title) return;
+    var mode = '';
+    var name = '';
+    try {
+      mode = localStorage.getItem('hibou_mode') || '';
+      name = (window.prenomActuel || localStorage.getItem('hibou_prenom') || '').trim();
+    } catch(e) { name = String(window.prenomActuel || '').trim(); }
+    var signedIn = document.documentElement.classList.contains('hibou-authenticated');
+    title.textContent = signedIn && mode === 'eleve' && name
+      ? 'Bonjour ' + name + ' ! Que veux-tu faire aujourd\'hui ?'
+      : 'Bienvenue chez Maître Hibou ! Que veux-tu faire aujourd\'hui ?';
+  };
+
   function ensureDashboard(){
     var home = byId('v21Home');
     var center = document.querySelector('.v21-center');
@@ -35818,7 +35836,7 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
       block = document.createElement('section');
       block.id = 'v2574MainDashboard';
       block.innerHTML =
-        '<h2 class="v2574-title"><span class="spark" aria-hidden="true">✨</span><span>Que veux-tu faire maintenant ?</span><span class="spark" aria-hidden="true">✨</span></h2>'+
+        '<h2 class="v2574-title"><span class="spark" aria-hidden="true">✨</span><span id="hibouWelcomeTitle">Bienvenue chez Maître Hibou ! Que veux-tu faire aujourd'hui ?</span><span class="spark" aria-hidden="true">✨</span></h2>'+
         '<div class="v2574-actions">'+
           '<button type="button" class="v2574-action-btn v2574-action-train" id="v2574TrainBtn" aria-label="M’entraîner">'+
             '<span class="v2574-action-ico" aria-hidden="true">🧠</span>'+
@@ -35888,6 +35906,7 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
     document.body.classList.add('v25-7-73-simplified-home');
     setTitle();
     ensureDashboard();
+    if(typeof window.hibouUpdateWelcomeTitle === 'function') window.hibouUpdateWelcomeTitle();
     ensureBottomUtilities();
   }
 
