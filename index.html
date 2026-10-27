@@ -35986,5 +35986,38 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 
+
+<style id="mh-home-buttons-compact-v16">
+/* Réduction ciblée des quatre activités : aucun changement au bandeau V15. */
+@media (min-width: 900px) {
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-universe {
+   height:270px !important; min-height:270px !important;
+ }
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn {
+   box-sizing:border-box !important;
+   width:clamp(250px,29%,380px) !important;
+   height:98px !important; min-height:98px !important; max-height:98px !important;
+   padding:0 !important;
+   background-size:100% 100% !important;
+   background-position:center !important;
+   border-radius:20px !important;
+ }
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-lesson,
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-question {
+   top:7% !important;bottom:auto !important;
+ }
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-train,
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-belt {
+   top:auto !important;bottom:7% !important;
+ }
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-lesson,
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-train {left:4.5% !important;right:auto !important;}
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-question,
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-belt {right:4.5% !important;left:auto !important;}
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core {height:125px !important;}
+ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core img {max-height:100% !important;}
+}
+/* Sur tablette ou fenêtre étroite, les règles responsive existantes sont conservées. */
+</style>
 </body>
 </html>
