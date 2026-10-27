@@ -34945,8 +34945,7 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
 }
 </style>
 
-</body>
-</html>
+
 <!-- V25.7.57 — Accueil tablette : les trois cartes rejoignent le bandeau inférieur -->
 <style id="hibou-home-cards-fill-bottom-v25749">
 @media (orientation:landscape) and (min-width:900px){
@@ -35917,205 +35916,75 @@ body.v25-7-74-simplified-home .subjects-bar > .v2574-bottom-btn .v2574-mini{disp
 
 
 <!-- Accueil : masquage effectif du bandeau d'origine, sans reconstituer les boutons -->
-<style id="mh-home-header-repair-v8">
-body.v21-final.mh-home-header-hidden > header,
-body.mh-home-header-hidden > header:first-of-type,
-body.mh-home-header-hidden > header.mockup-header,
-body.mh-home-header-hidden > header.v21-header { display:none !important; }
-body.mh-home-header-hidden #mhHomeTopMenu { display:block !important; }
-#mhHomeTopMenu { display:none; position:fixed; top:8px; right:12px; z-index:9900; }
-#mhHomeTopMenu > button { cursor:pointer; min-height:44px; border:2px solid #ded9ff; border-radius:14px; padding:9px 14px; background:#fff; color:#28236e; font:800 14px system-ui,sans-serif; box-shadow:0 4px 15px #12123b27; }
-body.mh-home-header-expanded > header:first-of-type { display:flex !important; position:fixed !important; top:62px !important; right:12px !important; left:12px !important; width:calc(100% - 24px) !important; z-index:9899 !important; box-shadow:0 15px 40px #10204c55 !important; border-radius:18px !important; }
-body.mh-home-header-hidden .v21-home { padding-top:4px !important; }
-@media (min-width:1200px) and (pointer:fine) {
-  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-universe { height:300px !important; }
-  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn {
-    height:116px !important; min-height:0 !important; padding:0 !important;
-    overflow:hidden !important; background-position:center !important;
-    background-size:100% 100% !important; background-repeat:no-repeat !important;
-  }
-  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-lesson,
-  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-question { top:15px !important; bottom:auto !important; }
-  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-train,
-  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-belt { top:auto !important; bottom:15px !important; }
-  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-lesson { background-image:url('images/constellation-lecon.png') !important; }
-  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-question { background-image:url('images/constellation-question.png') !important; }
-  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-train { background-image:url('images/constellation-entrainer.png') !important; }
-  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-belt { background-image:url('images/constellation-ceinture.png') !important; }
-}
-@media (max-width:650px) { #mhHomeTopMenu { right:6px; top:5px; } body.mh-home-header-expanded > header:first-of-type {top:54px !important;flex-wrap:wrap !important;} }
 
-/* Masquage de secours basé sur les vraies classes activées à l'accueil. */
-body.v21-final.v25-7-73-simplified-home:not(.prenom-mode):not(.v21-learning-open):not(.competence-mode) > header {display:none !important;}
-body.v21-final.v25-7-73-simplified-home:not(.prenom-mode):not(.v21-learning-open):not(.competence-mode) #mhHomeTopMenu {display:block !important;}
-body.v21-final.v25-7-73-simplified-home.mh-home-header-expanded > header {display:flex !important;}
+
+
+
+
+
+
+<style id="mh-compact-header-v15">
+/* Barre compacte : ne dépend pas d'une classe ajoutée à body. */
+body:not(.prenom-mode) header.v21-header {
+  display:flex !important;align-items:center !important;justify-content:stretch !important;
+  height:48px !important;min-height:48px !important;max-height:48px !important;
+  padding:0 12px !important;margin:0 !important;overflow:visible !important;
+  box-sizing:border-box !important;
+}
+body:not(.prenom-mode) header.v21-header > .logo-area,
+body:not(.prenom-mode) header.v21-header > .header-actions {display:none !important;}
+body:not(.prenom-mode) header.v21-header > .mh-compact-v15 {
+  display:grid !important;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) !important;
+  align-items:center !important;gap:8px !important;width:100% !important;height:48px !important;
+  padding:0 !important;min-width:0 !important;
+}
+.mh-compact-v15 {display:none;}
+.mh-compact-v15 .mh-brand {grid-column:1;justify-self:start;display:flex;align-items:center;gap:7px;min-width:0;color:#fff;font:800 17px/1 system-ui,sans-serif;white-space:nowrap;}
+.mh-compact-v15 .mh-brand .logo-area {display:flex !important;align-items:center !important;gap:5px !important;height:38px !important;}
+.mh-compact-v15 .mh-brand .logo-icon {display:none !important;}
+.mh-compact-v15 .mh-brand .logo-text {font:800 17px/1 system-ui,sans-serif !important; color:#fff !important;white-space:nowrap !important;}
+.mh-compact-v15 .mh-brand .logo-text::before {content:'🦉 ';}
+.mh-compact-v15 .mh-brand .logo-text::after, .mh-compact-v15 .mh-brand .v21-version-badge {display:none !important;}
+.mh-compact-v15 .mh-button {height:35px !important;min-height:35px !important;width:auto !important;min-width:0 !important;max-height:35px !important; padding:0 12px !important;border:1px solid rgba(255,255,255,.18) !important;border-radius:10px !important;background:rgba(255,255,255,.10) !important;color:white !important;font:800 14px/1 system-ui,sans-serif !important;white-space:nowrap !important;cursor:pointer !important;box-shadow:none !important;transform:none !important;}
+.mh-compact-v15 .mh-parcours {grid-column:2;justify-self:center;}
+.mh-compact-v15 .mh-anniversaires {grid-column:3;justify-self:end;}
+.mh-compact-v15 .mh-button:focus-visible {outline:3px solid #FFD93D;outline-offset:2px;}
+@media(max-width:620px){
+ body:not(.prenom-mode) header.v21-header {padding:0 6px !important;}
+ body:not(.prenom-mode) header.v21-header > .mh-compact-v15 {gap:3px !important;}
+ .mh-compact-v15 .mh-brand .logo-text {font-size:11px !important;}
+ .mh-compact-v15 .mh-button {font-size:10px !important;padding:0 5px !important;}
+}
+@media(max-width:380px){.mh-compact-v15 .mh-brand .logo-text {font-size:0 !important;}.mh-compact-v15 .mh-brand .logo-text::before {font-size:21px !important;}}
 </style>
-<script id="mh-home-header-repair-v8">
+<script id="mh-compact-header-v15-script">
 (function(){
-  function init(){
-    if(document.getElementById('mhHomeTopMenu')) return;
-    const header=document.querySelector('body > header');
-    if(!header) return;
-    document.getElementById('hibouCompactMenu')?.remove();
-    const menu=document.createElement('div');
-    menu.id='mhHomeTopMenu';
-    const toggle=document.createElement('button');
-    toggle.type='button';toggle.textContent='☰ Menu';toggle.setAttribute('aria-expanded','false');
-    toggle.setAttribute('aria-label','Afficher le bandeau : parcours, anniversaires et accès enseignant');
-    menu.appendChild(toggle);document.body.appendChild(menu);
-    function isHome(){
-      if(document.body.classList.contains('prenom-mode')) return false;
-      if(!document.body.classList.contains('v21-final')) return false;
-      if(!document.body.classList.contains('v25-7-73-simplified-home')) return false;
-      if(document.body.classList.contains('v21-learning-open') || document.body.classList.contains('competence-mode')) return false;
-      const activeHome=document.querySelector('.v21-home');
-      return !!(activeHome && activeHome.getClientRects().length && getComputedStyle(activeHome).display!=='none');
-    }
-    function update(){
-      const active=isHome();
-      document.body.classList.toggle('mh-home-header-hidden',active);
-      if(!active){document.body.classList.remove('mh-home-header-expanded');toggle.setAttribute('aria-expanded','false');}
-    }
-    toggle.addEventListener('click',function(ev){
-      ev.stopPropagation();
-      const next=!document.body.classList.contains('mh-home-header-expanded');
-      document.body.classList.toggle('mh-home-header-expanded',next);
-      toggle.setAttribute('aria-expanded',String(next));
-    });
-    document.addEventListener('click',function(ev){
-      if(!menu.contains(ev.target) && !header.contains(ev.target)){
-        document.body.classList.remove('mh-home-header-expanded');toggle.setAttribute('aria-expanded','false');
-      }
-    });
-    document.addEventListener('keydown',function(ev){if(ev.key==='Escape'){document.body.classList.remove('mh-home-header-expanded');toggle.setAttribute('aria-expanded','false');}});
-    const observer=new MutationObserver(update);
-    observer.observe(document.body,{attributes:true,attributeFilter:['class']});
-    const home=document.querySelector('.v21-home');
-    if(home) observer.observe(home,{attributes:true,attributeFilter:['class','style','hidden']});
-    window.addEventListener('pageshow',update);
-    window.addEventListener('resize',update);
-    update();
+'use strict';
+function init(){
+  var header=document.querySelector('header');
+  if(!header)return;
+  var busy=false;
+  function build(){
+    if(busy || !header.classList.contains('v21-header'))return;
+    if(header.querySelector(':scope > .mh-compact-v15'))return;
+    var originalLogo=header.querySelector(':scope > .logo-area');
+    if(!originalLogo)return;
+    busy=true;
+    var bar=document.createElement('div');bar.className='mh-compact-v15';
+    var brand=document.createElement('div');brand.className='mh-brand';brand.appendChild(originalLogo);
+    var progress=document.createElement('button');progress.type='button';progress.className='mh-button mh-parcours';progress.textContent='🏆 Mon parcours';
+    var birthday=document.createElement('button');birthday.type='button';birthday.className='mh-button mh-anniversaires';birthday.textContent='🎂 Anniversaires';
+    progress.addEventListener('click',function(){var el=document.getElementById('bandeauLastCard');if(el)el.click();});
+    birthday.addEventListener('click',function(){var el=document.getElementById('birthdayTopCardV2414');if(el)el.click();else if(typeof window.openBirthdaysPopupV2414==='function')window.openBirthdaysPopupV2414();});
+    bar.append(brand,progress,birthday);header.appendChild(bar);
+    busy=false;
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true}); else init();
+  new MutationObserver(function(){if(!busy && header.classList.contains('v21-header') && !header.querySelector(':scope > .mh-compact-v15'))build();}).observe(header,{childList:true,attributes:true,attributeFilter:['class']});
+  build();
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
 </script>
 
-
-<style id="mh-compact-header-final-v11">
-/* Règle définitive, après les anciens correctifs : seule la barre du haut est ciblée. */
-body.v21-final:not(.prenom-mode) header:first-of-type,
-body.v21-final:not(.prenom-mode) header.mockup-header,
-body.v21-final:not(.prenom-mode) header.v21-header {
- display:flex !important; visibility:visible !important; opacity:1 !important;
- flex-direction:row !important; align-items:center !important; justify-content:space-between !important;
- grid-template-columns:none !important; position:relative !important;
- height:48px !important; min-height:48px !important; max-height:48px !important;
- padding:4px 14px !important; margin:0 !important; gap:12px !important;
- overflow:hidden !important; box-sizing:border-box !important;
-}
-body.v21-final header .logo-area {display:flex !important; flex-direction:row !important; align-items:center !important; gap:5px !important; width:auto !important; min-width:0 !important; height:38px !important; flex:0 1 auto !important;}
-body.v21-final header .logo-icon {display:flex !important; width:32px !important; height:32px !important; min-width:32px !important; min-height:32px !important; overflow:hidden !important; align-items:center !important;justify-content:center !important; font-size:0 !important; background:none !important;box-shadow:none !important;border:0 !important;padding:0 !important;}
-body.v21-final header .logo-icon img {display:none !important;}
-body.v21-final header .logo-icon::after {content:'🦉' !important;display:block !important;font-size:23px !important; line-height:1 !important;}
-body.v21-final header .logo-text {font:800 17px/1.05 system-ui,sans-serif !important;white-space:nowrap !important; color:white !important; margin:0 !important; padding:0 !important;}
-body.v21-final header .logo-text br {display:none !important;}
-body.v21-final header .logo-text::after {content:none !important;display:none !important;}
-body.v21-final header .header-actions {display:flex !important; flex:0 1 auto !important; width:auto !important;min-width:0 !important; align-items:center !important;justify-content:flex-end !important;gap:8px !important; padding:0 !important;margin:0 !important;height:40px !important;}
-body.v21-final header #bandeauLastCard,
-body.v21-final header .birthday-top-card-v2414 {display:inline-flex !important;position:relative !important;align-items:center !important;justify-content:center !important; flex:0 0 auto !important; width:auto !important; min-width:0 !important;max-width:none !important; height:36px !important; min-height:36px !important; max-height:36px !important; padding:5px 13px !important; margin:0 !important; gap:0 !important;border-radius:11px !important;background:rgba(255,255,255,.12) !important; box-shadow:none !important;overflow:hidden !important;white-space:nowrap !important;cursor:pointer !important;}
-body.v21-final header #bandeauLastCard > *,
-body.v21-final header .birthday-top-card-v2414 > * {display:none !important;}
-body.v21-final header #bandeauLastCard::before {content:'🏆  Parcours' !important;font:800 13px/1 system-ui,sans-serif !important;color:white !important;}
-body.v21-final header .birthday-top-card-v2414::before {content:'🎂  Anniversaires' !important;font:800 13px/1 system-ui,sans-serif !important;color:white !important;}
-body.v21-final header .birthday-top-card-v2414::after {display:none !important;content:none !important;}
-body.v21-final header #eleveBadge,body.v21-final header #scoreBadge,body.v21-final header #mockupCompetencesCard,body.v21-final header .competence-header-btn,body.v21-final header #soundBtn {display:none !important;}
-@media(max-width:600px){body.v21-final header:first-of-type{gap:4px !important;padding:3px 6px !important;}body.v21-final header .logo-text{font-size:13px !important;}body.v21-final header .logo-icon{width:23px !important;min-width:23px !important;}body.v21-final header .header-actions{gap:4px !important;}body.v21-final header #bandeauLastCard,body.v21-final header .birthday-top-card-v2414{padding:5px 7px !important;}body.v21-final header #bandeauLastCard::before{content:'🏆 Parcours' !important;font-size:11px !important;}body.v21-final header .birthday-top-card-v2414::before{content:'🎂 Anniv.' !important;font-size:11px !important;}}
-</style>
-
-
-<style id="mh-header-v13-only">
-/* V13 : corrige UNIQUEMENT la barre supérieure de la V11. */
-body.v21-final:not(.prenom-mode) > header:first-of-type {
-  display:grid !important;
-  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) !important;
-  align-items:center !important;
-  height:48px !important; min-height:48px !important; max-height:48px !important;
-  padding:0 12px !important; gap:8px !important; overflow:visible !important;
-}
-body.v21-final:not(.prenom-mode) > header:first-of-type > .logo-area {
-  grid-column:1 !important; grid-row:1 !important; justify-self:start !important;
-}
-body.v21-final:not(.prenom-mode) > header:first-of-type > .header-actions {
-  display:contents !important;
-}
-body.v21-final:not(.prenom-mode) > header:first-of-type #bandeauLastCard {
-  grid-column:2 !important; grid-row:1 !important; justify-self:center !important;
-  position:static !important; transform:none !important;
-  width:auto !important; height:34px !important; min-height:34px !important;
-  max-height:34px !important; min-width:0 !important;
-  padding:0 12px !important; margin:0 !important;
-  display:flex !important; align-items:center !important; justify-content:center !important;
-  overflow:visible !important; white-space:nowrap !important;
-}
-body.v21-final:not(.prenom-mode) > header:first-of-type .birthday-top-card-v2414 {
-  grid-column:3 !important; grid-row:1 !important; justify-self:end !important;
-  position:static !important; transform:none !important;
-  width:auto !important; height:34px !important; min-height:34px !important;
-  max-height:34px !important; min-width:0 !important;
-  padding:0 12px !important; margin:0 !important;
-  display:flex !important; align-items:center !important; justify-content:center !important;
-  overflow:visible !important; white-space:nowrap !important;
-}
-body.v21-final:not(.prenom-mode) > header:first-of-type #bandeauLastCard > :not(.mh-v13-caption),
-body.v21-final:not(.prenom-mode) > header:first-of-type .birthday-top-card-v2414 > :not(.mh-v13-caption) {
-  display:none !important;
-}
-body.v21-final:not(.prenom-mode) > header:first-of-type #bandeauLastCard::before,
-body.v21-final:not(.prenom-mode) > header:first-of-type .birthday-top-card-v2414::before,
-body.v21-final:not(.prenom-mode) > header:first-of-type .birthday-top-card-v2414::after {
-  content:none !important; display:none !important;
-}
-body.v21-final:not(.prenom-mode) > header:first-of-type .mh-v13-caption {
-  display:inline !important; visibility:visible !important; opacity:1 !important;
-  font:800 13px/1.1 system-ui,sans-serif !important; color:#fff !important;
-  white-space:nowrap !important; position:static !important;
-}
-@media(max-width:600px) {
-  body.v21-final:not(.prenom-mode) > header:first-of-type {padding:0 5px !important;gap:3px !important;}
-  body.v21-final:not(.prenom-mode) > header:first-of-type #bandeauLastCard,
-  body.v21-final:not(.prenom-mode) > header:first-of-type .birthday-top-card-v2414 {padding:0 4px !important;}
-  body.v21-final:not(.prenom-mode) > header:first-of-type .mh-v13-caption {font-size:10px !important;}
-}
-</style>
-<script id="mh-header-v13-labels">
-(function(){
-  function apply(){
-    var header=document.querySelector('body.v21-final > header');
-    if(!header) return;
-    var pairs=[
-      [header.querySelector('#bandeauLastCard'),'🏆 Mon parcours'],
-      [header.querySelector('.birthday-top-card-v2414'),'🎂 Anniversaires']
-    ];
-    pairs.forEach(function(pair){
-      var el=pair[0]; if(!el) return;
-      var label=el.querySelector('.mh-v13-caption');
-      if(!label){label=document.createElement('span'); label.className='mh-v13-caption'; el.appendChild(label);}
-      if(label.textContent!==pair[1]) label.textContent=pair[1];
-    });
-  }
-  function init(){
-    apply();
-    var header=document.querySelector('body > header');
-    if(header){
-      var pending=false;
-      new MutationObserver(function(){
-        if(pending) return;
-        pending=true;
-        queueMicrotask(function(){pending=false;apply();});
-      }).observe(header,{subtree:true,childList:true});
-    }
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
-  else init();
-})();
-</script>
+</body>
+</html>
