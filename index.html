@@ -35917,7 +35917,8 @@ body.v25-7-74-simplified-home .subjects-bar > .v2574-bottom-btn .v2574-mini{disp
 
 
 <!-- Accueil : masquage effectif du bandeau d'origine, sans reconstituer les boutons -->
-<style id="mh-home-header-repair-v7">
+<style id="mh-home-header-repair-v8">
+body.v21-final.mh-home-header-hidden > header,
 body.mh-home-header-hidden > header:first-of-type,
 body.mh-home-header-hidden > header.mockup-header,
 body.mh-home-header-hidden > header.v21-header { display:none !important; }
@@ -35925,7 +35926,7 @@ body.mh-home-header-hidden #mhHomeTopMenu { display:block !important; }
 #mhHomeTopMenu { display:none; position:fixed; top:8px; right:12px; z-index:9900; }
 #mhHomeTopMenu > button { cursor:pointer; min-height:44px; border:2px solid #ded9ff; border-radius:14px; padding:9px 14px; background:#fff; color:#28236e; font:800 14px system-ui,sans-serif; box-shadow:0 4px 15px #12123b27; }
 body.mh-home-header-expanded > header:first-of-type { display:flex !important; position:fixed !important; top:62px !important; right:12px !important; left:12px !important; width:calc(100% - 24px) !important; z-index:9899 !important; box-shadow:0 15px 40px #10204c55 !important; border-radius:18px !important; }
-body.mh-home-header-hidden #v21Home { padding-top:4px !important; }
+body.mh-home-header-hidden .v21-home { padding-top:4px !important; }
 @media (min-width:1200px) and (pointer:fine) {
   body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-universe { height:300px !important; }
   body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn {
@@ -35943,14 +35944,19 @@ body.mh-home-header-hidden #v21Home { padding-top:4px !important; }
   body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-belt { background-image:url('images/constellation-ceinture.png') !important; }
 }
 @media (max-width:650px) { #mhHomeTopMenu { right:6px; top:5px; } body.mh-home-header-expanded > header:first-of-type {top:54px !important;flex-wrap:wrap !important;} }
+
+/* Masquage de secours basé sur les vraies classes activées à l'accueil. */
+body.v21-final.v25-7-73-simplified-home:not(.prenom-mode):not(.v21-learning-open):not(.competence-mode) > header {display:none !important;}
+body.v21-final.v25-7-73-simplified-home:not(.prenom-mode):not(.v21-learning-open):not(.competence-mode) #mhHomeTopMenu {display:block !important;}
+body.v21-final.v25-7-73-simplified-home.mh-home-header-expanded > header {display:flex !important;}
 </style>
-<script id="mh-home-header-repair-v7">
+<script id="mh-home-header-repair-v8">
 (function(){
   function init(){
     if(document.getElementById('mhHomeTopMenu')) return;
-    const home=document.getElementById('v21Home');
     const header=document.querySelector('body > header');
-    if(!home||!header) return;
+    if(!header) return;
+    document.getElementById('hibouCompactMenu')?.remove();
     const menu=document.createElement('div');
     menu.id='mhHomeTopMenu';
     const toggle=document.createElement('button');
@@ -35959,8 +35965,11 @@ body.mh-home-header-hidden #v21Home { padding-top:4px !important; }
     menu.appendChild(toggle);document.body.appendChild(menu);
     function isHome(){
       if(document.body.classList.contains('prenom-mode')) return false;
-      if(getComputedStyle(home).display==='none' || getComputedStyle(home).visibility==='hidden') return false;
-      return home.getClientRects().length>0;
+      if(!document.body.classList.contains('v21-final')) return false;
+      if(!document.body.classList.contains('v25-7-73-simplified-home')) return false;
+      if(document.body.classList.contains('v21-learning-open') || document.body.classList.contains('competence-mode')) return false;
+      const activeHome=document.querySelector('.v21-home');
+      return !!(activeHome && activeHome.getClientRects().length && getComputedStyle(activeHome).display!=='none');
     }
     function update(){
       const active=isHome();
@@ -35981,7 +35990,8 @@ body.mh-home-header-hidden #v21Home { padding-top:4px !important; }
     document.addEventListener('keydown',function(ev){if(ev.key==='Escape'){document.body.classList.remove('mh-home-header-expanded');toggle.setAttribute('aria-expanded','false');}});
     const observer=new MutationObserver(update);
     observer.observe(document.body,{attributes:true,attributeFilter:['class']});
-    observer.observe(home,{attributes:true,attributeFilter:['class','style','hidden']});
+    const home=document.querySelector('.v21-home');
+    if(home) observer.observe(home,{attributes:true,attributeFilter:['class','style','hidden']});
     window.addEventListener('pageshow',update);
     window.addEventListener('resize',update);
     update();
