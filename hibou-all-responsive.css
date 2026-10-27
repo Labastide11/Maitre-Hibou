@@ -1,0 +1,124 @@
+/* ALL RESPONSIVE – connexion et accueil compact, 2026-10-27.
+   Ciblage sur la hauteur CSS réelle (1920x1080 en échelle 150% ~= 1280x720 CSS).
+   Un seul ascenseur vertical natif, sans transformer la structure HTML. */
+@media (min-width: 900px) and (max-height: 800px) {
+  /* Connexion : deux blocs côte à côte, tous les contrôles visibles. */
+  #prenomOverlay { align-items:flex-start !important; overflow-x:hidden !important; overflow-y:auto !important; padding:8px 14px 12px !important; }
+  #prenomOverlay .prenom-box.v2567-start { width:min(1120px,98%) !important; max-width:1120px !important; margin:2px auto 12px !important; padding:10px 18px 12px !important; }
+  #prenomOverlay .v2567-start .owl { font-size:40px !important; margin:0 0 1px !important; line-height:1 !important; }
+  #prenomOverlay .v2567-start h2 { font-size:clamp(25px,2.4vw,32px) !important; margin:0 0 2px !important; line-height:1.15 !important; }
+  #prenomOverlay .v2567-intro { margin:0 0 6px !important; font-size:14px !important; }
+  #prenomOverlay .v2567-choice-grid { grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:12px !important; margin:6px 0 !important; }
+  #prenomOverlay .v2567-card { padding:12px 14px !important; gap:7px !important; min-height:0 !important; }
+  #prenomOverlay .v2567-card h3 { font-size:20px !important; margin:0 !important; }
+  #prenomOverlay .v2567-card p { font-size:12px !important; line-height:1.25 !important; margin:0 !important; }
+  #prenomOverlay .v2567-input { min-height:44px !important; height:44px !important; padding:8px 12px !important; font-size:16px !important; }
+  #prenomOverlay .v2567-btn { min-height:46px !important; padding:9px 12px !important; font-size:16px !important; }
+  #prenomOverlay .v2567-note { padding:6px 10px !important; margin:6px 0 !important; font-size:12px !important; }
+  #prenomOverlay .hibou-accueil-hero { margin:6px auto 0 !important; }
+  #prenomOverlay .hibou-accueil-hero img { max-height:clamp(110px,22vh,185px) !important; width:auto !important; max-width:100% !important; object-fit:contain !important; }
+  /* Accueil constellation : on rétrécit sans casser la logique des quatre activités. */
+  body.v25-7-73-simplified-home .v21-home { padding-top:5px !important; padding-bottom:3px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard { margin-bottom:4px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-title { font-size:clamp(22px,2.35vw,29px) !important; margin:0 0 1px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subtitle { margin:0 0 3px !important; font-size:12px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-universe { height:clamp(218px,34vh,265px) !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn { height:clamp(80px,12vh,96px) !important; width:clamp(255px,34%,410px) !important; grid-template-columns:54px minmax(0,1fr) !important; gap:8px !important; padding:8px 10px !important; border-radius:20px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-ico { width:52px !important; height:52px !important; font-size:29px !important; border-radius:14px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-text strong { font-size:clamp(13px,1.35vw,17px) !important; margin-bottom:1px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-text small { font-size:11px !important; line-height:1.13 !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core { height:min(51%,135px) !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core b { font-size:12px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subject-heading { margin:3px 0 5px !important; padding-top:5px !important; font-size:15px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects { gap:6px !important; margin:0 !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button { min-height:58px !important; padding:5px 3px !important; gap:2px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button .subject-icon { font-size:30px !important; width:32px !important; height:32px !important; flex-basis:32px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button .subject-icon img,
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button .subject-icon svg { width:32px !important; height:32px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button .subject-label { font-size:12px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button .v2574-mini { display:none !important; }
+  /* Évite les ascenseurs imbriqués sur l'accueil. */
+  body.v25-7-73-simplified-home .v21-home { overflow:visible !important; }
+}
+@media (min-width:900px) and (max-height:800px) and (max-width:1150px) {
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn { width:36% !important; }
+}
+@media (max-width:899px) {
+  #prenomOverlay { overflow-y:auto !important; overflow-x:hidden !important; }
+  #prenomOverlay .v2567-start { max-width:96vw !important; }
+  #prenomOverlay .hibou-accueil-hero img { max-width:100% !important; object-fit:contain !important; }
+}
+
+
+/* Correctif V2 - 2026-10-27 : boutons constellation sans chevauchement.
+   Le défaut provenait de top/bottom 11% avec une hauteur de boutons
+   réduite insuffisamment par rapport à la hauteur de l'univers. */
+@media (min-width:1200px) and (pointer:fine) and (max-height:900px) {
+  body.v21-final header.v21-header,
+  body.v21-final header.mockup-header { padding:6px 14px !important; min-height:72px !important; gap:12px !important; }
+  body.v21-final header .logo-icon { width:64px !important; height:64px !important; border-radius:17px !important; font-size:40px !important; }
+  body.v21-final header .logo-icon img { max-width:100% !important; max-height:100% !important; object-fit:contain !important; }
+  body.v21-final header .logo-text { font-size:29px !important; line-height:1 !important; }
+  body.v21-final header .logo-text::after { font-size:12px !important; margin-top:4px !important; }
+  body.v21-final header .header-actions { gap:10px !important; min-width:0 !important; }
+  body.v21-final header #bandeauLastCard.hp75-top-card,
+  body.v21-final header #bandeauLastCard.hp77-top-card { min-height:64px !important; min-width:0 !important; padding:6px 10px !important; }
+  body.v21-final header .birthday-top-card-v2414 { min-height:64px !important; padding:6px 10px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation { padding:10px 22px 12px !important; margin-top:4px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-title { font-size:clamp(22px,2.3vw,29px) !important; margin-bottom:1px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subtitle { margin-bottom:4px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-universe { height:236px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn {
+    box-sizing:border-box !important;
+    height:92px !important;
+    min-height:0 !important;
+    width:clamp(260px,35%,430px) !important;
+    background-size:100% 100% !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-lesson,
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-question {
+    top:10px !important; bottom:auto !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-train,
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-belt {
+    top:auto !important; bottom:10px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core { height:125px !important; max-width:125px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subject-heading { margin-top:2px !important; padding-top:5px !important; }
+}
+/* Sécurisation petite fenêtre desktop : aucun bouton superposé. */
+@media (min-width:1200px) and (pointer:fine) and (max-height:570px) {
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-universe { height:198px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn { height:78px !important; }
+}
+
+
+/* Correctif V3 - 2026-10-27 : page de connexion plus propre.
+   - centre l'image du bas
+   - supprime les ronds décoratifs en haut à gauche et à droite */
+.prenom-overlay {
+  background: linear-gradient(135deg, #F7F6FF 0%, #FFFFFF 100%) !important;
+}
+#prenomOverlay .hibou-accueil-hero {
+  display:block !important;
+  width:100% !important;
+  max-width:100% !important;
+  margin:10px auto 0 !important;
+  text-align:center !important;
+  background:transparent !important;
+}
+#prenomOverlay .hibou-accueil-hero img {
+  display:block !important;
+  margin:0 auto !important;
+  width:min(540px, 92%) !important;
+  max-width:92% !important;
+  height:auto !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+}
+@media (max-width: 900px) {
+  #prenomOverlay .hibou-accueil-hero img {
+    width:min(440px, 96%) !important;
+    max-width:96% !important;
+  }
+}
