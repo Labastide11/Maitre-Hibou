@@ -48,3 +48,140 @@
   #prenomOverlay .v2567-start { max-width:96vw !important; }
   #prenomOverlay .hibou-accueil-hero img { max-width:100% !important; object-fit:contain !important; }
 }
+
+
+/* Correctif V2 - 2026-10-27 : boutons constellation sans chevauchement.
+   Le défaut provenait de top/bottom 11% avec une hauteur de boutons
+   réduite insuffisamment par rapport à la hauteur de l'univers. */
+@media (min-width:1200px) and (pointer:fine) and (max-height:900px) {
+  body.v21-final header.v21-header,
+  body.v21-final header.mockup-header { padding:6px 14px !important; min-height:72px !important; gap:12px !important; }
+  body.v21-final header .logo-icon { width:64px !important; height:64px !important; border-radius:17px !important; font-size:40px !important; }
+  body.v21-final header .logo-icon img { max-width:100% !important; max-height:100% !important; object-fit:contain !important; }
+  body.v21-final header .logo-text { font-size:29px !important; line-height:1 !important; }
+  body.v21-final header .logo-text::after { font-size:12px !important; margin-top:4px !important; }
+  body.v21-final header .header-actions { gap:10px !important; min-width:0 !important; }
+  body.v21-final header #bandeauLastCard.hp75-top-card,
+  body.v21-final header #bandeauLastCard.hp77-top-card { min-height:64px !important; min-width:0 !important; padding:6px 10px !important; }
+  body.v21-final header .birthday-top-card-v2414 { min-height:64px !important; padding:6px 10px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation { padding:10px 22px 12px !important; margin-top:4px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-title { font-size:clamp(22px,2.3vw,29px) !important; margin-bottom:1px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subtitle { margin-bottom:4px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-universe { height:236px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn {
+    box-sizing:border-box !important;
+    height:92px !important;
+    min-height:0 !important;
+    width:clamp(260px,35%,430px) !important;
+    background-size:100% 100% !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-lesson,
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-question {
+    top:10px !important; bottom:auto !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-train,
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-belt {
+    top:auto !important; bottom:10px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core { height:125px !important; max-width:125px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subject-heading { margin-top:2px !important; padding-top:5px !important; }
+}
+/* Sécurisation petite fenêtre desktop : aucun bouton superposé. */
+@media (min-width:1200px) and (pointer:fine) and (max-height:570px) {
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-universe { height:198px !important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn { height:78px !important; }
+}
+
+
+/* Correctif V3 - 2026-10-27 : page de connexion plus propre.
+   - centre l'image du bas
+   - supprime les ronds décoratifs en haut à gauche et à droite */
+.prenom-overlay {
+  background: linear-gradient(135deg, #F7F6FF 0%, #FFFFFF 100%) !important;
+}
+#prenomOverlay .hibou-accueil-hero {
+  display:block !important;
+  width:100% !important;
+  max-width:100% !important;
+  margin:10px auto 0 !important;
+  text-align:center !important;
+  background:transparent !important;
+}
+#prenomOverlay .hibou-accueil-hero img {
+  display:block !important;
+  margin:0 auto !important;
+  width:min(540px, 92%) !important;
+  max-width:92% !important;
+  height:auto !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+}
+@media (max-width: 900px) {
+  #prenomOverlay .hibou-accueil-hero img {
+    width:min(440px, 96%) !important;
+    max-width:96% !important;
+  }
+}
+
+
+/* Correctif V4 - 2026-10-27 : bandeau supérieur encore plus compact sur PC portable. */
+@media (min-width:1200px) and (pointer:fine) {
+  body.v21-final header.v21-header,
+  body.v21-final header.mockup-header {
+    padding:4px 12px !important;
+    min-height:60px !important;
+    gap:10px !important;
+  }
+  body.v21-final header .logo-icon {
+    width:52px !important;
+    height:52px !important;
+    border-radius:15px !important;
+    font-size:32px !important;
+  }
+  body.v21-final header .logo-text {
+    font-size:22px !important;
+    line-height:1 !important;
+  }
+  body.v21-final header .logo-text::after {
+    font-size:10px !important;
+    margin-top:2px !important;
+    line-height:1.05 !important;
+  }
+  body.v21-final header .header-actions {
+    gap:8px !important;
+    align-items:stretch !important;
+  }
+  body.v21-final header #bandeauLastCard.hp75-top-card,
+  body.v21-final header #bandeauLastCard.hp77-top-card,
+  body.v21-final header .birthday-top-card-v2414 {
+    min-height:50px !important;
+    padding:4px 8px !important;
+    border-radius:18px !important;
+  }
+  body.v21-final header #bandeauLastCard .top-card-avatar,
+  body.v21-final header .birthday-top-card-v2414 .top-card-avatar,
+  body.v21-final header #bandeauLastCard .top-card-icon,
+  body.v21-final header .birthday-top-card-v2414 .top-card-icon {
+    width:36px !important;
+    height:36px !important;
+    min-width:36px !important;
+    min-height:36px !important;
+  }
+  body.v21-final header #bandeauLastCard .top-card-title,
+  body.v21-final header .birthday-top-card-v2414 .top-card-title {
+    font-size:11px !important;
+    line-height:1.05 !important;
+  }
+  body.v21-final header #bandeauLastCard .top-card-text,
+  body.v21-final header .birthday-top-card-v2414 .top-card-text,
+  body.v21-final header #bandeauLastCard .top-card-value,
+  body.v21-final header .birthday-top-card-v2414 .top-card-value {
+    font-size:15px !important;
+    line-height:1.05 !important;
+  }
+}
+
+/* V5 : correctif final du fond et centrage strict de l’image sur connexion. */
+#prenomOverlay {background:linear-gradient(135deg,#F7F6FF,#FFFFFF) !important;}
+#prenomOverlay .prenom-box.v2567-start .hibou-accueil-hero {display:flex !important;justify-content:center !important;align-items:center !important;width:100% !important;max-width:100% !important;margin:12px auto 0 !important;}
+#prenomOverlay .prenom-box.v2567-start .hibou-accueil-hero img {display:block !important;margin:0 auto !important;width:min(540px,90%) !important;max-width:90% !important;height:auto !important;object-fit:contain !important;}

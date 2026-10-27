@@ -2887,8 +2887,6 @@ body.fullscreen-active .mockup-right-panel .mockup-full-progress-btn{
 .prenom-overlay {
   z-index: 9999 !important;
   background:
-    radial-gradient(circle at 18% 16%, rgba(255,217,61,.28) 0 125px, transparent 126px),
-    radial-gradient(circle at 84% 18%, rgba(108,99,255,.18) 0 145px, transparent 146px),
     linear-gradient(135deg, #F7F6FF 0%, #FFFFFF 100%) !important;
 }
 
@@ -4651,8 +4649,6 @@ body.prenom-mode .class-motivation-panel{display:none!important;}
   -webkit-overflow-scrolling:touch!important;
   padding:clamp(12px,4vh,34px) 18px calc(22px + env(safe-area-inset-bottom))!important;
   background:
-    radial-gradient(circle at 18% 16%,rgba(255,217,61,.28) 0 125px,transparent 126px),
-    radial-gradient(circle at 84% 18%,rgba(108,99,255,.18) 0 145px,transparent 146px),
     linear-gradient(135deg,#F7F6FF 0%,#FFFFFF 100%)!important;
 }
 #prenomOverlay.hidden{display:none!important;}
@@ -5163,7 +5159,26 @@ body.v21-final .birthday-top-card-v2414 .birthday-cake-v2414 {
 }
 </style>
 <link rel="stylesheet" href="css/geographie-exercices.css?v=20261026-s2-2colonnes"/>
-<link rel="stylesheet" href="css/hibou-all-responsive.css?v=20261027-4" />
+<link rel="stylesheet" href="css/hibou-all-responsive.css?v=20261027-5" />
+<style id="hibou-v25-connexion-centrage-final-20261027">
+/* Correction en dernière position : le cadre et son image sont réellement centrés. */
+#prenomOverlay { background:linear-gradient(135deg,#F7F6FF,#FFFFFF) !important; }
+#prenomOverlay .prenom-box.v2567-start .hibou-accueil-hero {
+  display:flex !important; justify-content:center !important; align-items:center !important;
+  width:100% !important; max-width:100% !important;
+  margin:12px auto 0 !important; padding:0 !important;
+  background:transparent !important; text-align:center !important;
+}
+#prenomOverlay .prenom-box.v2567-start .hibou-accueil-hero img {
+  display:block !important; flex:0 1 auto !important;
+  width:min(540px,90%) !important; max-width:90% !important;
+  height:auto !important; margin:0 auto !important;
+  object-fit:contain !important; object-position:center center !important;
+}
+@media (max-width:600px) {
+ #prenomOverlay .prenom-box.v2567-start .hibou-accueil-hero img {width:min(420px,96%) !important;max-width:96% !important;}
+}
+</style>
 </head>
 <body class="prenom-mode">
 <header>
