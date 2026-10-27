@@ -122,3 +122,61 @@
     max-width:96% !important;
   }
 }
+
+
+/* Correctif V4 - 2026-10-27 : bandeau supérieur encore plus compact sur PC portable. */
+@media (min-width:1200px) and (pointer:fine) {
+  body.v21-final header.v21-header,
+  body.v21-final header.mockup-header {
+    padding:4px 12px !important;
+    min-height:60px !important;
+    gap:10px !important;
+  }
+  body.v21-final header .logo-icon {
+    width:52px !important;
+    height:52px !important;
+    border-radius:15px !important;
+    font-size:32px !important;
+  }
+  body.v21-final header .logo-text {
+    font-size:22px !important;
+    line-height:1 !important;
+  }
+  body.v21-final header .logo-text::after {
+    font-size:10px !important;
+    margin-top:2px !important;
+    line-height:1.05 !important;
+  }
+  body.v21-final header .header-actions {
+    gap:8px !important;
+    align-items:stretch !important;
+  }
+  body.v21-final header #bandeauLastCard.hp75-top-card,
+  body.v21-final header #bandeauLastCard.hp77-top-card,
+  body.v21-final header .birthday-top-card-v2414 {
+    min-height:50px !important;
+    padding:4px 8px !important;
+    border-radius:18px !important;
+  }
+  body.v21-final header #bandeauLastCard .top-card-avatar,
+  body.v21-final header .birthday-top-card-v2414 .top-card-avatar,
+  body.v21-final header #bandeauLastCard .top-card-icon,
+  body.v21-final header .birthday-top-card-v2414 .top-card-icon {
+    width:36px !important;
+    height:36px !important;
+    min-width:36px !important;
+    min-height:36px !important;
+  }
+  body.v21-final header #bandeauLastCard .top-card-title,
+  body.v21-final header .birthday-top-card-v2414 .top-card-title {
+    font-size:11px !important;
+    line-height:1.05 !important;
+  }
+  body.v21-final header #bandeauLastCard .top-card-text,
+  body.v21-final header .birthday-top-card-v2414 .top-card-text,
+  body.v21-final header #bandeauLastCard .top-card-value,
+  body.v21-final header .birthday-top-card-v2414 .top-card-value {
+    font-size:15px !important;
+    line-height:1.05 !important;
+  }
+}
