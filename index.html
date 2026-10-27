@@ -5206,6 +5206,10 @@ body.v21-final .birthday-top-card-v2414 .birthday-cake-v2414 {
 .en2-discovery{grid-column:1/-1;border:2px solid #d9d4fa;border-radius:14px;padding:12px;background:#f5f3ff}.en2-discovery summary{cursor:pointer;font-weight:700}.en2-btn{font:inherit;font-weight:700;color:#252052;background:#fffaf1;border:2px solid #ffdaad;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.en2-btn:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.en2-options{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.en2-progress{font-weight:700;color:#62428a}.en2-portraits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}.en2-portrait{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:center}.en2-portrait-img{width:100%;height:190px;object-fit:contain;background:#fff;border-radius:9px;display:block}.en2-btn.matched{border-color:#378346;background:#edf8ed;opacity:1}.en2-slots{border:2px dashed #b5a6e8;border-radius:12px;background:#f7f4ff;min-height:65px;padding:12px;box-sizing:border-box;display:flex;align-items:center;font-size:22px;font-weight:700;overflow-wrap:anywhere}.en2-bubble{border-radius:14px;background:#eee8ff;padding:14px;font-size:22px;font-weight:700}.en2-answer-options{display:grid;gap:8px}.en2-activity .v24-english-feedback{margin-top:12px}.en2-activity .en2-oral button{margin:6px 6px 6px 0}.en2-activity .en2-btn:disabled{cursor:default}.en2-activity .en2-btn:disabled:not(.matched){opacity:.7}#v24EnglishExercises:has(.en2-activity){grid-template-columns:repeat(2,minmax(0,1fr))}#v24EnglishExercises .en2-activity:nth-of-type(2){grid-column:1/-1}@media(max-width:700px){#v24EnglishExercises:has(.en2-activity){grid-template-columns:1fr}.en2-btn{font-size:17px}.en2-portrait-img{height:140px}.en2-portraits{gap:6px}}@media(max-width:380px){.en2-portraits{grid-template-columns:1fr}.en2-portrait-img{height:175px}}
 
 </style>
+<style id="anglais-s3-cinq-exercices">
+.en3-discovery{grid-column:1/-1;border:2px solid #d9d4fa;border-radius:14px;padding:12px;background:#f5f3ff}.en3-discovery summary{cursor:pointer;font-weight:700}.en3-btn{font:inherit;font-weight:700;color:#252052;background:#fffaf1;border:2px solid #ffdaad;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.en3-btn:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.en3-progress{font-weight:700;color:#62428a}.en3-photo-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.en3-photo-btn{display:flex;flex-direction:column;align-items:stretch;gap:8px;text-align:center}.en3-photo{display:block;width:100%;height:230px;object-fit:contain;background:#fff;border-radius:9px}.en3-photo-btn .en3-photo{height:140px;order:-1}.en3-caption{font-weight:700;margin:10px 0;line-height:1.4}.en3-word-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.en3-match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;max-width:950px;margin:auto}.en3-match-col{display:grid;grid-template-rows:repeat(4,195px);gap:10px}.en3-btn.selected{border-color:#6846ce;box-shadow:0 0 0 2px #6846ce}.en3-btn.matched{border-color:#378346;background:#edf8ed;opacity:1}.en3-activity .v24-english-feedback{margin-top:12px}.en3-bubble{border-radius:14px;background:#eee8ff;padding:14px;font-size:22px;font-weight:700;white-space:pre-line}.en3-oral>.en3-btn{margin:8px 6px 8px 0}.en3-activity .en3-btn:disabled{cursor:default}.en3-activity .en3-btn:disabled:not(.matched){opacity:.7}#v24EnglishExercises:has(.en3-activity){grid-template-columns:repeat(2,minmax(0,1fr))}#v24EnglishExercises .en3-activity:nth-of-type(3){grid-column:1/-1}@media(max-width:700px){#v24EnglishExercises:has(.en3-activity){grid-template-columns:1fr}.en3-btn{font-size:17px}.en3-match-col{grid-template-rows:repeat(4,195px)}.en3-photo-btn .en3-photo{height:120px}}@media(max-width:380px){.en3-photo-options,.en3-word-options{grid-template-columns:1fr}}
+
+</style>
 </head>
 <body class="prenom-mode">
 <header>
@@ -24439,17 +24443,14 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
     },
     {
       id:3, title:'Séance 3', short:'How are you?', emoji:'🙂',
-      objective:'Je sais demander et dire comment je vais.',
-      criteria:['Je demande How are you?','Je réponds avec une émotion','J’associe une émotion à un mot'],
+      objective:'Je sais demander et dire comment je me sens en anglais.',
+      criteria:['happy / sad / tired / hungry','Je réponds à How are you?','Je m’entraîne à parler'],
       exos:[
-        {type:'match', title:'Relie l’émoji au mot', instr:'Clique un émoji puis le bon mot.', left:['🙂','😢','😴','🍽️'], right:['sad','hungry','happy','tired'], pairs:[2,0,3,1]},
-        {type:'listenSeries', title:'Écoute et reconnais', instr:'Écoute la phrase, puis choisis l’émoji correspondant.', items:[
-          {audio:"I'm happy!", options:['🙂','😢','😴','🍽️'], correct:0},
-          {audio:"I'm sad.", options:['🙂','😢','😴','🍽️'], correct:1},
-          {audio:"I'm tired.", options:['🙂','😢','😴','🍽️'], correct:2},
-          {audio:"I'm hungry.", options:['🙂','😢','😴','🍽️'], correct:3}
-        ]},
-        {type:'choice', title:'Complète le dialogue', instr:'— How are you? — I’m ___, thank you!', options:['fine','goodbye','name'], correct:0}
+        {type:'englishS3',title:'J’écoute et je reconnais',instr:'Écoute la phrase, puis choisis la situation correspondante.'},
+        {type:'englishS3',title:'J’observe les photos',instr:'Observe la photo et lis la légende. Choisis la phrase anglaise.'},
+        {type:'englishS3',title:'J’associe les mots',instr:'Choisis une photo, puis le bon mot anglais.'},
+        {type:'englishS3',title:'Je complète le dialogue',instr:'Choisis la réponse qui correspond à la situation.'},
+        {type:'englishS3',title:'À moi de parler !',instr:'Entraîne-toi à demander et à dire comment tu vas.'}
       ]
     },
     {
@@ -24579,6 +24580,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
     var wrap = grid.querySelector('#v24EnglishExercises');
     if(s.id === 1) renderEnglishS1Intro(wrap);
     if(s.id === 2) renderEnglishS2Intro(wrap);
+    if(s.id === 3) renderEnglishS3Intro(wrap);
     s.exos.forEach(function(exo, idx){
       var card = document.createElement('section');
       card.className = 'v24-english-exo';
@@ -24586,6 +24588,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       card.innerHTML = '<h3>'+esc(exo.title)+'</h3><p>'+esc(exo.instr)+'</p>';
       if(s.id === 1){renderEnglishS1(card,idx);wrap.appendChild(card);return;}
       if(s.id === 2){renderEnglishS2(card,idx);wrap.appendChild(card);return;}
+      if(s.id === 3){renderEnglishS3(card,idx);wrap.appendChild(card);return;}
       if(exo.type === 'listenSeries'){
         card.classList.add('v24-english-listen-card');
         renderEnglishListenSeries(card, exo);
@@ -24615,7 +24618,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       wrap.appendChild(finishBox);
 
       function englishExerciseFinished(card){
-        if(s.id === 1 || s.id === 2) return card.dataset.englishDone === '1';
+        if(s.id >= 1 && s.id <= 3) return card.dataset.englishDone === '1';
         var type = card.getAttribute('data-english-exercise-type') || '';
         var feedback = card.querySelector('.v24-english-feedback');
         var text = String(feedback && feedback.textContent || '').trim();
@@ -24701,6 +24704,64 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
 
   /* Anglais, séance 1 : écoute, situations photographiées, vocabulaire et oral. */
   /* Séance 2 : demander et dire son prénom. Prénoms fictifs pour les portraits. */
+  /* Séance 3 : comprendre et utiliser How are you? avec des situations illustrées. */
+  function renderEnglishS3Intro(wrap){
+    var box=document.createElement('details');box.className='en3-discovery';
+    var title=document.createElement('summary');title.textContent='🦉 Comment je me sens : les mots à connaître';box.appendChild(title);
+    var p=document.createElement('p');p.textContent='How are you? = Comment vas-tu ? I’m… = Je suis…';box.appendChild(p);
+    var words=document.createElement('p');words.textContent='happy = content ; sad = triste ; tired = fatigué ; hungry = qui a faim. I’m hungry = J’ai faim.';box.appendChild(words);
+    var note=document.createElement('p');note.textContent='Les photos et leurs légendes illustrent des situations pour apprendre ces mots.';box.appendChild(note);wrap.appendChild(box);
+  }
+  function renderEnglishS3(card,idx){
+    card.classList.add('en3-activity');
+    var states=[
+      {key:'happy',phrase:"I'm happy.",label:'Cet enfant est content.'},
+      {key:'sad',phrase:"I'm sad.",label:'Cet enfant se sent triste.'},
+      {key:'tired',phrase:"I'm tired.",label:'Cet enfant est fatigué.'},
+      {key:'hungry',phrase:"I'm hungry.",label:'Cet enfant a faim et attend son repas.'}
+    ];
+    var ticket=0;
+    function el(tag,cls,text,parent){var n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;(parent||card).appendChild(n);return n;}
+    function btn(text,parent,fn){var b=el('button','en3-btn',text,parent);b.type='button';b.addEventListener('click',fn);return b;}
+    function say(ok,text,done){var n=card.querySelector('.v24-english-feedback');if(!n)n=el('div','v24-english-feedback','');n.className='v24-english-feedback '+(ok?'ok':'ko');n.setAttribute('role','status');n.textContent=text;if(done){card.dataset.englishDone='1';card.classList.add('en3-success');}}
+    function mix(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),v=a[i];a[i]=a[j];a[j]=v;}return a;}
+    function photo(parent,state){var n=el('img','en3-photo',undefined,parent);n.src='images/anglais/s3/'+state.key+'.jpg';n.alt=state.label;n.loading='eager';return n;}
+    function audio(text,after){
+      var current=++ticket;
+      if(!window.speechSynthesis||typeof window.SpeechSynthesisUtterance!=='function'){say(false,'La lecture audio n’est pas disponible sur ce navigateur. Utilise un navigateur avec une voix anglaise pour cet exercice.');return;}
+      try{window.speechSynthesis.cancel();var u=new window.SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=0.78;var voices=window.speechSynthesis.getVoices()||[];var voice=voices.filter(function(v){return /^en-GB/i.test(v.lang||'');})[0]||voices.filter(function(v){return /^en/i.test(v.lang||'');})[0];if(voice)u.voice=voice;
+        u.onend=function(){if(current===ticket&&card.isConnected&&after)after();};u.onerror=function(e){if(current===ticket&&e.error!=='canceled'&&e.error!=='interrupted')say(false,'Le son n’a pas pu être lu. Vérifie le son de ton appareil, puis réessaie.');};window.speechSynthesis.speak(u);
+      }catch(error){say(false,'Le son n’a pas pu être lu. Réessaie avec le bouton Écouter.');}
+    }
+    if(idx===0){
+      var rounds=mix(states),step=0,previous='',progress=el('p','en3-progress',''),area=el('div','en3-listen','');
+      function drawListen(){
+        area.replaceChildren();progress.textContent='Écoute '+(step+1)+' sur 4';var state=rounds[step],heard=false,solved=false,options;
+        btn('🔊 Écouter',area,function(){audio(state.phrase,function(){heard=true;if(!solved)options.querySelectorAll('button').forEach(function(b){b.disabled=false;});});});
+        options=el('div','en3-photo-options','',area);var order=mix(states);if(order.map(function(s){return s.key;}).join(',')===previous)order.push(order.shift());previous=order.map(function(s){return s.key;}).join(',');
+        order.forEach(function(choice){var b=btn(choice.label,options,function(){if(!heard||solved)return;if(choice.key!==state.key){say(false,'Réécoute et cherche la situation qui correspond.');return;}solved=true;b.classList.add('matched');options.querySelectorAll('button').forEach(function(x){x.disabled=true;});step++;if(step===rounds.length){progress.textContent='4 écoutes réussies sur 4';say(true,'Bravo ! Tu reconnais les quatre expressions.',true);}else{say(true,'Bonne réponse !');btn('Écoute suivante',area,drawListen);}});b.classList.add('en3-photo-btn');b.disabled=true;photo(b,choice);});
+      }drawListen();
+    }else if(idx===1){
+      var rounds=mix(states),step=0,progress=el('p','en3-progress',''),area=el('div','en3-observe','');
+      function drawObserve(){
+        area.replaceChildren();progress.textContent='Situation '+(step+1)+' sur 4';var state=rounds[step];photo(area,state);el('p','en3-caption',state.label,area);var solved=false,options=el('div','en3-word-options','',area);
+        mix(states).forEach(function(choice){btn(choice.phrase,options,function(){if(solved)return;if(choice.key!==state.key){say(false,'Relis la légende, puis choisis la phrase anglaise qui correspond.');return;}solved=true;options.querySelectorAll('button').forEach(function(b){b.disabled=true;});step++;if(step===rounds.length){progress.textContent='4 situations réussies sur 4';say(true,'Bravo ! Tu sais décrire les quatre situations en anglais.',true);}else{say(true,'Bonne réponse !');btn('Situation suivante',area,drawObserve);}});});
+      }drawObserve();
+    }else if(idx===2){
+      var row=el('div','en3-match',''),left=el('div','en3-match-col','',row),right=el('div','en3-match-col','',row),selected=null,count=0;
+      states.forEach(function(state){var b=btn(state.label,left,function(){left.querySelectorAll('button').forEach(function(x){x.classList.remove('selected');x.setAttribute('aria-pressed','false');});b.classList.add('selected');b.setAttribute('aria-pressed','true');selected={state:state,button:b};});b.classList.add('en3-photo-btn');b.setAttribute('aria-pressed','false');photo(b,state);});
+      // Permutation sans réponse correcte directement en face de son image.
+      [2,3,1,0].forEach(function(i){var state=states[i],b=btn(state.key,right,function(){if(!selected){say(false,'Choisis d’abord une photo.');return;}if(selected.state.key!==state.key){say(false,'Relis la légende de la photo et essaie un autre mot.');return;}selected.button.disabled=true;selected.button.classList.remove('selected');selected.button.setAttribute('aria-pressed','false');selected.button.classList.add('matched');b.disabled=true;b.classList.add('matched');selected=null;count++;say(true,count===4?'Bravo ! Les quatre associations sont correctes.':'Bonne association ! '+count+' sur 4.',count===4);});});
+    }else if(idx===3){
+      var rounds=[states[0],states[2],states[3]],step=0,progress=el('p','en3-progress',''),area=el('div','en3-dialogue','');
+      function drawDialogue(){area.replaceChildren();progress.textContent='Dialogue '+(step+1)+' sur 3';var state=rounds[step],solved=false;photo(area,state);el('p','en3-caption',state.label,area);el('p','en3-bubble','— How are you?\n— …',area);btn('🔊 Écouter la question',area,function(){audio('How are you?');});var options=el('div','en3-word-options','',area);mix(states).forEach(function(choice){btn(choice.phrase,options,function(){if(solved)return;if(choice.key!==state.key){say(false,'Choisis la réponse qui correspond à la légende de cette scène.');return;}solved=true;options.querySelectorAll('button').forEach(function(b){b.disabled=true;});step++;if(step===rounds.length){progress.textContent='3 dialogues réussis sur 3';say(true,'Bravo ! Tu sais répondre à How are you?',true);}else{say(true,'Bonne réponse !');btn('Dialogue suivant',area,drawDialogue);}});});}drawDialogue();
+    }else{
+      el('p','en3-help','Entraîne-toi à parler. Le logiciel ne vérifie pas ta prononciation.');
+      var rounds=[{q:'Demande à un camarade comment il va.',model:'How are you?'},{q:'Réponds à How are you? Choisis une réponse parmi les quatre expressions apprises.',choose:true},{q:'Dans le jeu, tu as faim. Réponds en anglais à How are you?',model:"I'm hungry."}],step=0,progress=el('p','en3-progress',''),area=el('div','en3-oral','');
+      function drawOral(){area.replaceChildren();progress.textContent='Situation '+(step+1)+' sur 3';var round=rounds[step];el('p','en3-context',round.q,area);if(round.choose){var models=el('div','en3-word-options','',area);states.forEach(function(state){btn('🔊 '+state.phrase,models,function(){audio(state.phrase);});});}else btn('🔊 Écouter un modèle',area,function(){audio(round.model);});var confirm=btn('J’ai parlé à voix haute',area,function(){confirm.disabled=true;ticket++;if(window.speechSynthesis)window.speechSynthesis.cancel();step++;if(step===rounds.length){progress.textContent='3 situations pratiquées sur 3';say(true,'Tu as terminé ton entraînement oral. Rejoue les échanges avec un camarade si tu le souhaites.',true);}else{say(true,'Continue avec la situation suivante.');drawOral();}});}drawOral();
+    }
+  }
+
   function renderEnglishS2Intro(wrap){
     var box=document.createElement('details');box.className='en2-discovery';
     var summary=document.createElement('summary');summary.textContent='🦉 Les phrases à connaître';box.appendChild(summary);
