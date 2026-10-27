@@ -34797,8 +34797,11 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
 /* PC Constellation : le bandeau historique en pied de page ne doit jamais rester visible.
    Seul le bandeau des matières déplacé DANS le tableau de bord est affiché. */
 @media (min-width:1200px) and (pointer:fine) {
+ /* La barre reste visible même pendant la reconstruction asynchrone de l’accueil.
+    Ancienne règle display:none supprimée : elle cachait parfois les matières
+    quand les classes du tableau de bord étaient réinitialisées. */
  body.v25-7-73-simplified-home .subjects-bar {
-   display:none!important;
+   display:grid!important;
  }
  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects {
    display:grid!important;
@@ -34830,8 +34833,9 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
  }
  function refresh(){
   var panel=document.getElementById('v2574MainDashboard');
+  if(!panel)return;
   var nav=panel.querySelector('.subjects-bar') || document.querySelector('.subjects-bar');
-  if(!panel||!nav)return;
+  if(!nav)return;
   if(!mq.matches){
    panel.classList.remove('mh-constellation');nav.classList.remove('mh-subjects');
    if(originalParent&&nav.parentNode!==originalParent){
