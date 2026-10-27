@@ -5198,6 +5198,10 @@ body.v21-final .birthday-top-card-v2414 .birthday-cake-v2414 {
 .geo-s6-match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.geo-s6-col{display:grid;grid-template-rows:repeat(3,175px);gap:10px}.geo-s6-btn{font:inherit;font-weight:700;color:#252052;background:#fffaf1;border:2px solid #ffdaad;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.geo-s6-btn:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.geo-s6-photo{display:flex;flex-direction:column;align-items:stretch;padding:6px;gap:5px;overflow:hidden}.geo-s6-img{width:100%;height:220px;object-fit:contain;background:#fff;border-radius:9px;display:block}.geo-s6-photo .geo-s6-img{height:120px;order:-1}.geo-s6-btn.selected{border-color:#6846ce;box-shadow:0 0 0 2px #6846ce}.geo-s6-btn.matched{border-color:#378346;background:#edf8ed;opacity:1}.geo-s6-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.geo-s6-zones{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.geo-s6-zones button{border-style:dashed}.geo-s6-answers{display:grid;gap:10px}.geo-s6-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.geo-s6-choices .geo-s6-img{height:110px}.geo-s6-question{font-weight:700}.geo-s6-progress{color:#62428a}.geo-s6-result{color:#246531}.geo-s6-activity .v24-english-feedback{margin-top:12px}@media(max-width:600px){.geo-s6-col{grid-template-rows:repeat(3,175px)}.geo-s6-btn{font-size:16px;padding:6px}.geo-s6-choices{grid-template-columns:1fr}.geo-s6-choices .geo-s6-img{height:160px}}
 
 </style>
+<style id="anglais-s1-cinq-exercices">
+.en1-discovery{grid-column:1/-1;border:2px solid #d9d4fa;border-radius:14px;padding:12px;background:#f5f3ff}.en1-discovery summary{cursor:pointer;font-weight:700}.en1-intro-photo{display:block;max-width:500px;width:100%;max-height:240px;object-fit:contain;margin:10px auto}.en1-btn{font:inherit;font-weight:700;color:#252052;background:#fffaf1;border:2px solid #ffdaad;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.en1-btn:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.en1-options{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.en1-progress{font-weight:700;color:#62428a}.en1-match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.en1-match-col{display:grid;grid-template-rows:repeat(3,minmax(60px,auto));gap:10px}.en1-btn.selected{border-color:#6846ce;box-shadow:0 0 0 2px #6846ce}.en1-btn.matched,.en1-photo-scene.matched{border-color:#378346;background:#edf8ed;opacity:1}.en1-photo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.en1-photo-scene{border:2px solid #ffdaad;border-radius:14px;padding:8px;min-width:0}.en1-scene-img{width:100%;height:170px;object-fit:contain;background:#fff;border-radius:9px;display:block}.en1-caption{font-size:17px;line-height:1.4;margin:8px 0}.en1-photo-options{display:grid;gap:8px}.en1-activity .v24-english-feedback{margin-top:12px}.en1-bubble{border-radius:14px;background:#eee8ff;padding:14px;font-size:22px;font-weight:700}.en1-activity .en1-oral button{margin:6px 6px 6px 0}.en1-activity .en1-btn:disabled{cursor:default}.en1-activity .en1-btn:disabled:not(.matched){opacity:.7}#v24EnglishExercises:has(.en1-activity){grid-template-columns:repeat(2,minmax(0,1fr))}#v24EnglishExercises .en1-activity:nth-of-type(2){grid-column:1/-1}@media(max-width:700px){#v24EnglishExercises:has(.en1-activity){grid-template-columns:1fr}.en1-photo-grid{grid-template-columns:1fr}.en1-scene-img{height:200px}.en1-btn{font-size:17px}}
+
+</style>
 </head>
 <body class="prenom-mode">
 <header>
@@ -24408,15 +24412,13 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
     {
       id:1, title:'Séance 1', short:'Saluer', emoji:'👋',
       objective:'Je sais saluer et dire au revoir en anglais.',
-      criteria:['Je reconnais Hello / Goodbye','Je réponds à une salutation','Je prononce correctement'],
+      criteria:['Hello / Hi / Goodbye','Je choisis selon la situation','Je m’entraîne à parler'],
       exos:[
-        {type:'listenSeries', title:'Écoute et reconnais', instr:'Écoute les 3 mots dans le désordre, puis choisis ce que tu entends.', items:[
-          {audio:'Hello!', options:['Hello','Goodbye','Thank you'], correct:0},
-          {audio:'Good bye.', options:['Hello','Goodbye','Thank you'], correct:1},
-          {audio:'Thank you!', options:['Hello','Goodbye','Thank you'], correct:2}
-        ]},
-        {type:'match', title:'Relie la situation', instr:'Clique une situation puis le bon mot.', left:['On arrive le matin','On quitte la classe','On croise un ami'], right:['Goodbye','Hi','Hello'], pairs:[2,0,1]},
-        {type:'choice', title:'Vrai ou faux', instr:'« Goodbye » veut dire bonjour.', options:['Vrai','Faux'], correct:1}
+        {type:'englishS1',title:'J’écoute et je reconnais',instr:'Écoute, puis choisis le mot entendu.'},
+        {type:'englishS1',title:'Bonjour ou au revoir ?',instr:'Observe la photo et lis la légende. Choisis ce que tu peux dire.'},
+        {type:'englishS1',title:'J’associe les mots',instr:'Choisis un mot anglais, puis sa traduction.'},
+        {type:'englishS1',title:'Je choisis la bonne réponse',instr:'Lis la situation, puis réponds au personnage.'},
+        {type:'englishS1',title:'À moi de parler !',instr:'Entraîne-toi à répondre à voix haute.'}
       ]
     },
     {
@@ -24573,11 +24575,13 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       renderEnglishHome(grid);
     }, true);
     var wrap = grid.querySelector('#v24EnglishExercises');
+    if(s.id === 1) renderEnglishS1Intro(wrap);
     s.exos.forEach(function(exo, idx){
       var card = document.createElement('section');
       card.className = 'v24-english-exo';
       card.setAttribute('data-english-exercise-type', exo.type || '');
       card.innerHTML = '<h3>'+esc(exo.title)+'</h3><p>'+esc(exo.instr)+'</p>';
+      if(s.id === 1){renderEnglishS1(card,idx);wrap.appendChild(card);return;}
       if(exo.type === 'listenSeries'){
         card.classList.add('v24-english-listen-card');
         renderEnglishListenSeries(card, exo);
@@ -24607,6 +24611,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       wrap.appendChild(finishBox);
 
       function englishExerciseFinished(card){
+        if(s.id === 1) return card.dataset.englishDone === '1';
         var type = card.getAttribute('data-english-exercise-type') || '';
         var feedback = card.querySelector('.v24-english-feedback');
         var text = String(feedback && feedback.textContent || '').trim();
@@ -24687,6 +24692,72 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
           alert('Le journal élève n’est pas encore disponible. Recharge la page puis recommence.');
         }
       }, true);
+    }
+  }
+
+  /* Anglais, séance 1 : écoute, situations photographiées, vocabulaire et oral. */
+  function renderEnglishS1Intro(wrap){
+    var box=document.createElement('details');box.className='en1-discovery';
+    var summary=document.createElement('summary');summary.textContent='🦉 Je découvre les trois mots';box.appendChild(summary);
+    var img=document.createElement('img');img.src='images/anglais-seance-1.jpg';img.alt='Deux enfants se saluent : Hello et Hi.';img.className='en1-intro-photo';box.appendChild(img);
+    var p=document.createElement('p');p.textContent='Hello = Bonjour. Hi = Salut. Goodbye = Au revoir. Hello et Hi servent tous les deux à saluer.';box.appendChild(p);
+    var notice=document.createElement('p');notice.textContent='Pour les écoutes, active le son de ton appareil.';box.appendChild(notice);wrap.appendChild(box);
+  }
+
+  function renderEnglishS1(card,idx){
+    card.classList.add('en1-activity');
+    var done=false,audioVersion=0;
+    function el(tag,cls,text,parent){var n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;(parent||card).appendChild(n);return n;}
+    function btn(text,parent,action){var b=el('button','en1-btn',text,parent);b.type='button';b.addEventListener('click',action);return b;}
+    function say(ok,text,complete){var n=card.querySelector('.v24-english-feedback');if(!n)n=el('div','v24-english-feedback','');n.className='v24-english-feedback '+(ok?'ok':'ko');n.setAttribute('role','status');n.textContent=text;if(complete){done=true;card.dataset.englishDone='1';card.classList.add('en1-success');}}
+    function shuffled(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=a[i];a[i]=a[j];a[j]=x;}return a;}
+    function play(word,after){
+      var ticket=++audioVersion;
+      if(!window.speechSynthesis||typeof window.SpeechSynthesisUtterance!=='function'){say(false,'La lecture audio n’est pas disponible sur ce navigateur. Utilise un navigateur avec une voix anglaise pour cet exercice.');return;}
+      try{
+        window.speechSynthesis.cancel();
+        var speech=new window.SpeechSynthesisUtterance(word);speech.lang='en-GB';speech.rate=0.78;
+        var voices=window.speechSynthesis.getVoices()||[];
+        var voice=voices.filter(function(v){return /^en-GB/i.test(v.lang||'');})[0]||voices.filter(function(v){return /^en/i.test(v.lang||'');})[0];if(voice)speech.voice=voice;
+        speech.onend=function(){if(ticket===audioVersion&&card.isConnected&&after)after();};
+        speech.onerror=function(e){if(ticket===audioVersion&&e.error!=='canceled'&&e.error!=='interrupted')say(false,'Le son n’a pas pu être lu. Vérifie le son de ton appareil, puis réessaie.');};
+        window.speechSynthesis.speak(speech);
+      }catch(error){say(false,'Le son n’a pas pu être lu. Réessaie avec le bouton Écouter.');}
+    }
+    if(idx===0){
+      var words=shuffled(['Hello!','Hi!','Goodbye!','Hello!']),step=0;
+      var progress=el('p','en1-progress',''),zone=el('div','en1-listen','');
+      function drawListen(){
+        zone.replaceChildren();progress.textContent='Écoute '+(step+1)+' sur '+words.length;
+        var heard=false,solved=false,answers;
+        btn('🔊 Écouter',zone,function(){play(words[step],function(){heard=true;if(!solved)answers.querySelectorAll('button').forEach(function(b){b.disabled=false;});});});
+        answers=el('div','en1-options','',zone);
+        shuffled(['Hello!','Hi!','Goodbye!']).forEach(function(word){var b=btn(word,answers,function(){if(!heard||solved)return;if(word!==words[step]){say(false,'Réécoute et essaie un autre mot.');return;}solved=true;answers.querySelectorAll('button').forEach(function(x){x.disabled=true;});step++;if(step===words.length){say(true,'Bravo ! Tu as reconnu les quatre mots entendus.',true);progress.textContent='4 écoutes réussies sur 4';}else{say(true,'Bonne réponse ! Passe à l’écoute suivante.');btn('Écoute suivante',zone,function(){audioVersion++;drawListen();});}});b.disabled=true;});
+      }drawListen();
+    }else if(idx===1){
+      var count=0,grid=el('div','en1-photo-grid','');
+      var scenes=[
+        {file:'arrive-classe',caption:'J’arrive à l’école. Je salue la personne qui m’accueille.',kind:'hello'},
+        {file:'depart-classe',caption:'Je pars de l’école. Je dis au revoir.',kind:'goodbye'},
+        {file:'retrouvailles',caption:'Je retrouve mes amis à l’école. Je les salue.',kind:'hello'},
+        {file:'sortie-ecole',caption:'Des élèves disent au revoir à des visiteurs qui partent.',kind:'goodbye'}
+      ];
+      scenes.forEach(function(scene,n){var box=el('div','en1-photo-scene','',grid),img=el('img','en1-scene-img',undefined,box);img.src='images/anglais/s1/'+scene.file+'.jpg';img.alt=scene.caption;img.loading='eager';el('p','en1-caption',scene.caption,box);var options=el('div','en1-photo-options','',box),solved=false;var choices=n%2?[['goodbye','Goodbye!'],['hello','Hello! / Hi!']]:[['hello','Hello! / Hi!'],['goodbye','Goodbye!']];choices.forEach(function(choice){btn(choice[1],options,function(){if(solved)return;if(choice[0]!==scene.kind){say(false,'Relis la légende : est-ce que tu arrives ou est-ce que tu pars ?');return;}solved=true;count++;box.classList.add('matched');options.querySelectorAll('button').forEach(function(b){b.disabled=true;});say(true,count===4?'Bravo ! Tu sais saluer et dire au revoir.':'Bonne réponse ! '+count+' photos sur 4.',count===4);});});});
+    }else if(idx===2){
+      var row=el('div','en1-match',''),left=el('div','en1-match-col','',row),right=el('div','en1-match-col','',row),chosen=null,count=0;
+      var pairs=[['Hello!','Bonjour'],['Hi!','Salut'],['Goodbye!','Au revoir']];
+      pairs.forEach(function(pair){var b=btn(pair[0],left,function(){left.querySelectorAll('button').forEach(function(x){x.classList.remove('selected');x.setAttribute('aria-pressed','false');});b.classList.add('selected');b.setAttribute('aria-pressed','true');chosen={pair:pair,button:b};});b.setAttribute('aria-pressed','false');});
+      // Aucun mot ne fait face à sa bonne traduction.
+      [2,0,1].forEach(function(n){var pair=pairs[n],b=btn(pair[1],right,function(){if(!chosen){say(false,'Choisis d’abord un mot anglais.');return;}if(chosen.pair[0]!==pair[0]){say(false,'Relis les mots et essaie une autre association.');return;}chosen.button.disabled=true;chosen.button.classList.remove('selected');chosen.button.setAttribute('aria-pressed','false');chosen.button.classList.add('matched');b.disabled=true;b.classList.add('matched');chosen=null;count++;say(true,count===3?'Bravo ! Les trois associations sont correctes.':'Bonne association ! '+count+' sur 3.',count===3);});});
+    }else if(idx===3){
+      var rounds=[{context:'Tu rencontres Emma le matin.',line:'Emma : Hello!',valid:['Hello!','Hi!']},{context:'Tu quittes la classe pour rentrer chez toi.',line:'Ton enseignant : Goodbye!',valid:['Goodbye!']},{context:'Tu retrouves un ami dans la cour.',line:'Ton ami : Hi!',valid:['Hello!','Hi!']}],step=0;
+      var progress=el('p','en1-progress',''),area=el('div','en1-dialogue','');
+      function drawDialogue(){area.replaceChildren();var round=rounds[step];progress.textContent='Échange '+(step+1)+' sur 3';el('p','en1-context',round.context,area);el('p','en1-bubble',round.line,area);btn('🔊 Écouter la réplique',area,function(){play(round.line.slice(round.line.indexOf(':')+1).trim());});var choices=el('div','en1-options','',area);shuffled(['Hello!','Hi!','Goodbye!']).forEach(function(word){btn(word,choices,function(){if(round.valid.indexOf(word)<0){say(false,'Regarde le contexte : on se rencontre ou on se quitte ?');return;}choices.querySelectorAll('button').forEach(function(b){b.disabled=true;});step++;if(step===rounds.length){say(true,'Bravo ! Tu sais répondre à une salutation.',true);progress.textContent='3 échanges réussis sur 3';}else{say(true,word==='Goodbye!'?'Bonne réponse !':'Hello et Hi conviennent tous les deux ici.');btn('Échange suivant',area,drawDialogue);}});});}drawDialogue();
+    }else{
+      el('p','en1-help','Dis ta réponse à voix haute. Tu peux écouter un modèle. Le logiciel ne vérifie pas ta prononciation.');
+      var situations=[{text:'Tu arrives en classe. Salue ton enseignant.',model:'Hello!'},{text:'Tu retrouves un ami. Salue-le.',model:'Hi!'},{text:'Tu pars de l’école. Dis au revoir.',model:'Goodbye!'}],step=0;
+      var progress=el('p','en1-progress',''),area=el('div','en1-oral','');
+      function drawOral(){area.replaceChildren();progress.textContent='Situation '+(step+1)+' sur 3';el('p','en1-context',situations[step].text,area);btn('🔊 Écouter un modèle',area,function(){play(situations[step].model);});var confirm=btn('J’ai dit ma réponse à voix haute',area,function(){confirm.disabled=true;audioVersion++;if(window.speechSynthesis)window.speechSynthesis.cancel();step++;if(step===situations.length){say(true,'Tu as terminé ton entraînement oral. Tu peux refaire ces échanges avec un camarade.',true);progress.textContent='3 situations pratiquées sur 3';}else{say(true,'Continue avec la situation suivante.');drawOral();}});}drawOral();
     }
   }
 
