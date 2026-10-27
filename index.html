@@ -36031,3 +36031,91 @@ body.v21-final header .birthday-top-card-v2414::after {display:none !important;c
 body.v21-final header #eleveBadge,body.v21-final header #scoreBadge,body.v21-final header #mockupCompetencesCard,body.v21-final header .competence-header-btn,body.v21-final header #soundBtn {display:none !important;}
 @media(max-width:600px){body.v21-final header:first-of-type{gap:4px !important;padding:3px 6px !important;}body.v21-final header .logo-text{font-size:13px !important;}body.v21-final header .logo-icon{width:23px !important;min-width:23px !important;}body.v21-final header .header-actions{gap:4px !important;}body.v21-final header #bandeauLastCard,body.v21-final header .birthday-top-card-v2414{padding:5px 7px !important;}body.v21-final header #bandeauLastCard::before{content:'🏆 Parcours' !important;font-size:11px !important;}body.v21-final header .birthday-top-card-v2414::before{content:'🎂 Anniv.' !important;font-size:11px !important;}}
 </style>
+
+
+<style id="mh-header-v13-only">
+/* V13 : corrige UNIQUEMENT la barre supérieure de la V11. */
+body.v21-final:not(.prenom-mode) > header:first-of-type {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) !important;
+  align-items:center !important;
+  height:48px !important; min-height:48px !important; max-height:48px !important;
+  padding:0 12px !important; gap:8px !important; overflow:visible !important;
+}
+body.v21-final:not(.prenom-mode) > header:first-of-type > .logo-area {
+  grid-column:1 !important; grid-row:1 !important; justify-self:start !important;
+}
+body.v21-final:not(.prenom-mode) > header:first-of-type > .header-actions {
+  display:contents !important;
+}
+body.v21-final:not(.prenom-mode) > header:first-of-type #bandeauLastCard {
+  grid-column:2 !important; grid-row:1 !important; justify-self:center !important;
+  position:static !important; transform:none !important;
+  width:auto !important; height:34px !important; min-height:34px !important;
+  max-height:34px !important; min-width:0 !important;
+  padding:0 12px !important; margin:0 !important;
+  display:flex !important; align-items:center !important; justify-content:center !important;
+  overflow:visible !important; white-space:nowrap !important;
+}
+body.v21-final:not(.prenom-mode) > header:first-of-type .birthday-top-card-v2414 {
+  grid-column:3 !important; grid-row:1 !important; justify-self:end !important;
+  position:static !important; transform:none !important;
+  width:auto !important; height:34px !important; min-height:34px !important;
+  max-height:34px !important; min-width:0 !important;
+  padding:0 12px !important; margin:0 !important;
+  display:flex !important; align-items:center !important; justify-content:center !important;
+  overflow:visible !important; white-space:nowrap !important;
+}
+body.v21-final:not(.prenom-mode) > header:first-of-type #bandeauLastCard > :not(.mh-v13-caption),
+body.v21-final:not(.prenom-mode) > header:first-of-type .birthday-top-card-v2414 > :not(.mh-v13-caption) {
+  display:none !important;
+}
+body.v21-final:not(.prenom-mode) > header:first-of-type #bandeauLastCard::before,
+body.v21-final:not(.prenom-mode) > header:first-of-type .birthday-top-card-v2414::before,
+body.v21-final:not(.prenom-mode) > header:first-of-type .birthday-top-card-v2414::after {
+  content:none !important; display:none !important;
+}
+body.v21-final:not(.prenom-mode) > header:first-of-type .mh-v13-caption {
+  display:inline !important; visibility:visible !important; opacity:1 !important;
+  font:800 13px/1.1 system-ui,sans-serif !important; color:#fff !important;
+  white-space:nowrap !important; position:static !important;
+}
+@media(max-width:600px) {
+  body.v21-final:not(.prenom-mode) > header:first-of-type {padding:0 5px !important;gap:3px !important;}
+  body.v21-final:not(.prenom-mode) > header:first-of-type #bandeauLastCard,
+  body.v21-final:not(.prenom-mode) > header:first-of-type .birthday-top-card-v2414 {padding:0 4px !important;}
+  body.v21-final:not(.prenom-mode) > header:first-of-type .mh-v13-caption {font-size:10px !important;}
+}
+</style>
+<script id="mh-header-v13-labels">
+(function(){
+  function apply(){
+    var header=document.querySelector('body.v21-final > header');
+    if(!header) return;
+    var pairs=[
+      [header.querySelector('#bandeauLastCard'),'🏆 Mon parcours'],
+      [header.querySelector('.birthday-top-card-v2414'),'🎂 Anniversaires']
+    ];
+    pairs.forEach(function(pair){
+      var el=pair[0]; if(!el) return;
+      var label=el.querySelector('.mh-v13-caption');
+      if(!label){label=document.createElement('span'); label.className='mh-v13-caption'; el.appendChild(label);}
+      if(label.textContent!==pair[1]) label.textContent=pair[1];
+    });
+  }
+  function init(){
+    apply();
+    var header=document.querySelector('body > header');
+    if(header){
+      var pending=false;
+      new MutationObserver(function(){
+        if(pending) return;
+        pending=true;
+        queueMicrotask(function(){pending=false;apply();});
+      }).observe(header,{subtree:true,childList:true});
+    }
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})();
+</script>
