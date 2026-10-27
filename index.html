@@ -5179,6 +5179,11 @@ body.v21-final .birthday-top-card-v2414 .birthday-cake-v2414 {
  #prenomOverlay .prenom-box.v2567-start .hibou-accueil-hero img {width:min(420px,96%) !important;max-width:96% !important;}
 }
 </style>
+<style id="geo-s4-photos-locales">
+/* Séance 4 : règles limitées à ses exercices. */
+.geo-s4-match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.geo-s4-column{display:grid;grid-template-rows:repeat(4,150px);gap:10px}.geo-s4-button{font:inherit;font-weight:700;color:#252052;background:#fffaf1;border:2px solid #ffdaad;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.geo-s4-button:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.geo-s4-photo{display:flex;flex-direction:column;align-items:stretch;justify-content:center;padding:5px;gap:5px;overflow:hidden}.geo-s4-photo img{width:100%;height:110px;object-fit:cover;border-radius:9px;display:block}.geo-s4-button.selected{border-color:#6846ce;box-shadow:0 0 0 2px #6846ce}.geo-s4-button.matched{border-color:#378346;background:#edf8ed;opacity:1}.geo-s4-elements,.geo-s4-zones{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:10px 0}.geo-s4-elements img{height:140px}.geo-s4-zones button{border-style:dashed;min-height:65px}.geo-s4-intrus{display:flex;gap:8px;flex-wrap:wrap}.geo-s4-sorted{color:#246531}.geo-s4-activity .v24-english-feedback{margin-top:12px}@media(max-width:600px){.geo-s4-column{grid-template-rows:repeat(4,140px)}.geo-s4-photo img{height:95px}.geo-s4-elements img{height:115px}.geo-s4-button{font-size:16px;padding:6px}}
+
+</style>
 </head>
 <body class="prenom-mode">
 <header>
@@ -25144,6 +25149,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       if(s.id === 1){ renderGeoS1(card, idx); wrap.appendChild(card); return; }
       if(s.id === 2){ renderGeoS2(card, idx); wrap.appendChild(card); return; }
       if(s.id === 3){ renderGeoS3(card, idx); wrap.appendChild(card); return; }
+      if(s.id === 4){ renderGeoS4(card, idx); wrap.appendChild(card); return; }
       if(idx === 0 && s.map) card.insertAdjacentHTML('beforeend','<div class="v24-geo-map-card">'+s.map+'</div>');
       if(exo.type === 'assessment') renderHistoryAssessment(card, exo);
       if(exo.type === 'choice') renderScienceChoice(card, exo);
@@ -25173,7 +25179,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       function refreshGeoSessionButton(){
         var finished = exerciseCards.filter(function(card){
           var feedback = card.querySelector('.v24-english-feedback');
-          return (s.id === 1 || s.id === 2 || s.id === 3) ? card.dataset.geoDone === '1' : (feedback && String(feedback.textContent || '').trim().length > 0);
+          return (s.id === 1 || s.id === 2 || s.id === 3 || s.id === 4) ? card.dataset.geoDone === '1' : (feedback && String(feedback.textContent || '').trim().length > 0);
         }).length;
         finishButton.disabled = finished < exerciseCards.length;
         finishButton.textContent = finished < exerciseCards.length
@@ -25242,6 +25248,31 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
   }
 
   /* Séance 3 : cinq activités interactives, supports JPG intégrés au dépôt. */
+  /* Séance 4 : photographies locales, associations mélangées et tri en quatre paysages. */
+  function renderGeoS4(card, idx){
+    card.classList.add('geo-s4-activity');
+    var base='images/geographie/s4/';
+    function el(tag,cls,text,parent){var n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;(parent||card).appendChild(n);return n;}
+    function button(text,parent,action){var b=el('button','geo-s4-button',text,parent);b.type='button';b.addEventListener('click',action);return b;}
+    function photo(b,file,alt){var i=document.createElement('img');i.src=base+file+'.jpg';i.alt=alt;i.loading='eager';b.prepend(i);}
+    function feedback(ok,text,done){var f=card.querySelector('.v24-english-feedback');if(!f)f=el('div','v24-english-feedback','');f.className='v24-english-feedback '+(ok?'ok':'bad');f.setAttribute('role','status');f.textContent=text;if(done){card.dataset.geoDone='1';card.classList.add('geo-s4-success');}}
+    if(idx===0){
+      card.querySelector('p').textContent='Choisis une photo, puis sa description.';
+      var row=el('div','geo-s4-match',''),left=el('div','geo-s4-column','',row),right=el('div','geo-s4-column','',row),selected=null,count=0;
+      var entries=[['montagne','La montagne','Des sommets'],['littoral','Le littoral','Le bord de la mer'],['campagne','La campagne','Des champs et des villages'],['ville','La ville','Des immeubles et des rues']];
+      entries.forEach(function(e){var b=button(e[1],left,function(){left.querySelectorAll('button').forEach(function(x){x.classList.remove('selected');x.setAttribute('aria-pressed','false');});b.classList.add('selected');b.setAttribute('aria-pressed','true');selected={entry:e,button:b};});b.classList.add('geo-s4-photo');b.setAttribute('aria-pressed','false');photo(b,e[0],e[1]+' : photographie à observer');});
+      // Permutation sans aucune bonne réponse directement en face.
+      [2,3,1,0].forEach(function(index){var e=entries[index];var b=button(e[2],right,function(){if(!selected){feedback(false,'Choisis d’abord une photo.');return;}if(selected.entry[0]!==e[0]){feedback(false,'Observe la photo et essaie une autre description.');return;}selected.button.disabled=true;selected.button.classList.remove('selected');selected.button.classList.add('matched');selected.button.setAttribute('aria-pressed','false');b.disabled=true;b.classList.add('matched');selected=null;count++;feedback(true,count===4?'Bravo ! Tu reconnais les quatre paysages.':'Bonne association ! '+count+' sur 4.',count===4);});});
+    }else if(idx===1){
+      card.querySelector('p').textContent='Choisis une photo, puis son paysage.';
+      var options=el('div','geo-s4-elements',''),zones=el('div','geo-s4-zones',''),selected=null,count=0;
+      [['sommet','montagne','Un sommet enneigé'],['plage','littoral','Une plage'],['champ','campagne','Un champ cultivé'],['immeuble','ville','Un grand immeuble']].forEach(function(e,i){var b=button('Photo '+(i+1),options,function(){options.querySelectorAll('button').forEach(function(x){x.classList.remove('selected');x.setAttribute('aria-pressed','false');});b.classList.add('selected');b.setAttribute('aria-pressed','true');selected={kind:e[1],button:b};});b.classList.add('geo-s4-photo');b.setAttribute('aria-pressed','false');photo(b,e[0],e[2]);});
+      [['ville','Ville'],['campagne','Campagne'],['littoral','Littoral'],['montagne','Montagne']].forEach(function(e){button(e[1],zones,function(){if(!selected){feedback(false,'Choisis d’abord une photo.');return;}if(selected.kind!==e[0]){feedback(false,'Observe les indices de la photo et essaie encore.');return;}selected.button.disabled=true;selected.button.classList.remove('selected');selected.button.classList.add('matched');selected.button.setAttribute('aria-pressed','false');var label=el('span','geo-s4-sorted',e[1],selected.button);selected=null;count++;feedback(true,count===4?'Bravo ! Les quatre éléments sont bien classés.':'Bien classé ! '+count+' sur 4.',count===4);});});
+    }else{
+      var options=el('div','geo-s4-intrus','');['La montagne','Le littoral','Le mercredi'].forEach(function(text){button(text,options,function(){if(text==='Le mercredi'){feedback(true,'Bravo ! Le mercredi est un jour de la semaine.',true);options.querySelectorAll('button').forEach(function(b){b.disabled=true;});}else feedback(false,'Cherche le mot qui désigne autre chose qu’un paysage.');});});
+    }
+  }
+
   function renderGeoS3(card, idx){
     var locations=[
       {label:'Centre-ville',count:2500,img:1},
