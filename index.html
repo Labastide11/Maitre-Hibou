@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 
-<html lang="fr">
+<html lang="fr" class="hibou-login-pending">
 <head>
 <meta charset="utf-8"/>
+<style id="hibou-login-gate-v25884">
+/* Navigation interdite avant une authentification réussie, dès le premier rendu. */
+html:not(.hibou-authenticated) .subjects-bar,
+html:not(.hibou-authenticated) #v2574MainDashboard .subjects-bar,
+html:not(.hibou-authenticated) body .subjects-bar { display:none !important; visibility:hidden !important; }
+</style>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
 <title>🦉 Maître Hibou V25.8.84</title>
 <script>window.MAITRE_HIBOU_TITLE = "🦉 Maître Hibou V25.8.84"; window.MAITRE_HIBOU_VERSION = "V25.8.84";</script>
@@ -32386,6 +32392,8 @@ body.v21-final .birthday-top-card-v2414 .birthday-summary-v2414{
 
     var overlay = byId('prenomOverlay');
     if(overlay) overlay.classList.add('hidden');
+    document.documentElement.classList.add('hibou-authenticated');
+    document.documentElement.classList.remove('hibou-login-pending');
     document.body.classList.remove('prenom-mode');
 
     var nom = byId('eleveNom');
@@ -32552,6 +32560,8 @@ body.v21-final .birthday-top-card-v2414 .birthday-summary-v2414{
   }
 
   function showStart(){
+    document.documentElement.classList.remove('hibou-authenticated');
+    document.documentElement.classList.add('hibou-login-pending');
     var overlay = byId('prenomOverlay');
     if(overlay) overlay.classList.remove('hidden');
     document.body.classList.add('prenom-mode');
@@ -34327,6 +34337,8 @@ header .logo-icon img{
     }catch(e){}
     var overlay=document.getElementById('prenomOverlay');
     if(overlay) overlay.classList.add('hidden');
+    document.documentElement.classList.add('hibou-authenticated');
+    document.documentElement.classList.remove('hibou-login-pending');
     document.body.classList.remove('prenom-mode');
     var nom=document.getElementById('eleveNom');if(nom)nom.textContent=name;
     var badge=document.getElementById('eleveBadge');
