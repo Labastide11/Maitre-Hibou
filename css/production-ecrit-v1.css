@@ -45,3 +45,7 @@
 #frenchTrainingOverlayV2348 .mh-wr-inline-choices .mh-wr-choice span{font-size:11px;line-height:1.2}
 @media(max-width:1050px){#frenchTrainingOverlayV2348 .mh-wr-inline-choices .mh-wr-choices{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:780px){#frenchTrainingOverlayV2348 .mh-wr-inline-choices .mh-wr-choices{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* Amorces facultatives qui suivent les images choisies */
+#frenchTrainingOverlayV2348 .mh-wr-starter{white-space:pre-line;border:2px solid #f5d36a;color:#43365b;font-size:clamp(16px,1.4vw,20px);line-height:1.55;padding:16px;margin:10px 0;}
+#frenchTrainingOverlayV2348 .mh-wr-starter[hidden]{display:none!important;}
