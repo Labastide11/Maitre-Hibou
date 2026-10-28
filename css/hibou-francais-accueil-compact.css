@@ -1,0 +1,48 @@
+/* Maître Hibou — Menu Français compact (28/10/2026).
+   Portée limitée au panneau de sélection des domaines. */
+#frenchTrainingOverlayV2348 .fr-v2348-header:has(+ .fr-v2348-content .fr-v25720-domain-grid){
+  margin:0 !important;
+  padding:8px 12px !important;
+  min-height:0 !important;
+  gap:8px !important;
+}
+#frenchTrainingOverlayV2348 .fr-v2348-header:has(+ .fr-v2348-content .fr-v25720-domain-grid) .fr-v2348-owl{display:none !important;}
+#frenchTrainingOverlayV2348 .fr-v2348-header:has(+ .fr-v2348-content .fr-v25720-domain-grid) h2{font-size:clamp(23px,2.2vw,30px) !important; margin:0 !important; line-height:1.2 !important;}
+#frenchTrainingOverlayV2348 .fr-v2348-header:has(+ .fr-v2348-content .fr-v25720-domain-grid) .fr-v2348-title p,
+#frenchTrainingOverlayV2348 .fr-v2348-header:has(+ .fr-v2348-content .fr-v25720-domain-grid) .fr-v23411-grammar-note{display:none !important;}
+#frenchTrainingOverlayV2348 .fr-v2348-content:has(.fr-v25720-domain-grid){padding:6px 10px 12px !important;margin:0 !important;}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-panel{padding:10px !important; min-height:0 !important;}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-grid{
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+  gap:12px !important;
+  justify-items:stretch !important;
+  align-items:start !important;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-grid > .fr-v25720-domain-card{
+  box-sizing:border-box !important;
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+  min-height:0 !important;
+  height:auto !important;
+  aspect-ratio:3.1 / 1 !important;
+  background-size:contain !important;
+  background-color:#fff !important;
+  background-position:center center !important;
+  border-radius:16px !important;
+  box-shadow:0 5px 15px rgba(35,38,85,.10) !important;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-grid > .fr-v25720-domain-card:focus-visible{
+ outline:3px solid #593bbb !important; outline-offset:3px !important;
+}
+@media(max-width:1050px){
+ #frenchTrainingOverlayV2348 .fr-v25720-domain-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+}
+@media(max-width:630px){
+ #frenchTrainingOverlayV2348 .fr-v25720-domain-grid{grid-template-columns:minmax(0,1fr) !important;gap:10px !important;}
+ #frenchTrainingOverlayV2348 .fr-v25720-domain-panel{padding:7px !important;}
+}
