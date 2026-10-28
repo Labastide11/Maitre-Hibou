@@ -8,3 +8,8 @@
 #frenchTrainingOverlayV2348 .mh-help-phrase{font-size:17px;font-weight:800;line-height:1.45;margin:7px 0;color:#2d2b55}
 #frenchTrainingOverlayV2348 .mh-help-next{padding:9px 12px;background:white;border:2px solid #edca69;border-radius:11px;color:#6b4c02;font:inherit;font-weight:800;cursor:pointer}
 #frenchTrainingOverlayV2348 .mh-help-note{font-size:12px;font-weight:650;margin-top:8px}
+
+/* Aide immédiatement sous la rangée d'images choisies */
+#frenchTrainingOverlayV2348 .mh-help-under-images {margin:12px 0 0; width:100%;}
+#frenchTrainingOverlayV2348 .mh-help-under-images[hidden] {display:none !important;}
+#frenchTrainingOverlayV2348 .mh-help-under-images .mh-help-phrase {font-size:clamp(16px,1.5vw,20px);}
