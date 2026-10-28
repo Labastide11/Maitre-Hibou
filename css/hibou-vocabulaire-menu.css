@@ -24,3 +24,25 @@
 }
 @media(max-width:370px){#frenchTrainingOverlayV2348 .vocab-v25729-menu{grid-template-columns:1fr!important}#frenchTrainingOverlayV2348 .vocab-v25729-card{min-height:82px!important}}
 @media(max-height:750px){#frenchTrainingOverlayV2348 .vocab-v25729-card{min-height:103px!important}}
+
+/* Cartes illustrées — images JPG locales ; le contenu HTML du bouton reste accessible. */
+#frenchTrainingOverlayV2348 .vocab-v25729-menu {max-width:1160px;margin-inline:auto!important;gap:12px!important}
+#frenchTrainingOverlayV2348 .vocab-v25729-card {
+  position:relative; aspect-ratio:1942 / 809; min-height:0!important;
+  padding:0!important; border-radius:18px!important;
+  background-repeat:no-repeat!important; background-position:center!important;
+  background-size:100% 100%!important; overflow:hidden;
+  transition:transform .15s ease,box-shadow .15s ease;
+}
+#frenchTrainingOverlayV2348 .vocab-v25729-card:nth-child(1){background-image:url('../images/vocabulaire/familles.jpg')!important}
+#frenchTrainingOverlayV2348 .vocab-v25729-card:nth-child(2){background-image:url('../images/vocabulaire/synonymes.jpg')!important}
+#frenchTrainingOverlayV2348 .vocab-v25729-card:nth-child(3){background-image:url('../images/vocabulaire/contraires.jpg')!important}
+#frenchTrainingOverlayV2348 .vocab-v25729-card:nth-child(4){background-image:url('../images/vocabulaire/generiques.jpg')!important}
+/* On conserve le texte original pour les lecteurs d'écran, sans le doubler visuellement. */
+#frenchTrainingOverlayV2348 .vocab-v25729-card > *{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;opacity:0!important;pointer-events:none!important}
+#frenchTrainingOverlayV2348 .vocab-v25729-card:hover{transform:translateY(-2px);box-shadow:0 6px 17px #25245a21!important}
+#frenchTrainingOverlayV2348 .vocab-v25729-card:focus-visible{outline:4px solid #f49c1d!important;outline-offset:3px}
+@media(max-width:720px){
+ #frenchTrainingOverlayV2348 .vocab-v25729-menu{grid-template-columns:1fr!important;max-width:570px}
+ #frenchTrainingOverlayV2348 .vocab-v25729-card{aspect-ratio:1942 / 809;min-height:0!important}
+}
