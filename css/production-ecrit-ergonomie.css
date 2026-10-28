@@ -1,0 +1,18 @@
+/* Ergonomie de rédaction : image et banque accessibles, aucun défilement imbriqué. */
+#frenchTrainingOverlayV2348 .mh-ergonomic-writing .mh-wr-editor textarea#mh-wr-text{box-sizing:border-box;min-height:260px;max-height:none;overflow-y:auto;resize:vertical}
+#frenchTrainingOverlayV2348 .mh-ergonomic-writing .mh-erg-proofreading{font-size:14px;font-weight:750;margin:8px 0 14px;color:#48546a;text-align:center}
+#frenchTrainingOverlayV2348 .mh-ergonomic-writing .mh-erg-word-tools{margin:8px 0 12px}
+#frenchTrainingOverlayV2348 .mh-ergonomic-writing .mh-erg-show-words{display:none;border:2px solid #99c8e4;border-radius:12px;background:#eef8ff;color:#205077;font:inherit;font-weight:850;padding:10px 14px;min-height:44px;cursor:pointer}
+#frenchTrainingOverlayV2348 .mh-ergonomic-writing .mh-erg-word-copy[hidden]{display:none!important}
+#frenchTrainingOverlayV2348 .mh-ergonomic-writing .mh-erg-word-copy .mh-vocab-bank{margin:10px 0}
+@media(min-width:900px) and (min-height:590px){
+ #frenchTrainingOverlayV2348 .mh-ergonomic-writing .mh-wr-columns>.mh-wr-image{position:sticky;top:10px;align-self:start;max-height:calc(100dvh - 35px);overflow-y:visible}
+}
+@media(max-width:899px){
+ #frenchTrainingOverlayV2348 .mh-ergonomic-writing .mh-erg-show-words{display:inline-flex;align-items:center}
+ #frenchTrainingOverlayV2348 .mh-ergonomic-writing .mh-wr-columns>.mh-wr-image{position:static;max-height:none}
+}
+@media(max-width:620px){
+ #frenchTrainingOverlayV2348 .mh-ergonomic-writing .mh-erg-show-words{width:100%;justify-content:center}
+ #frenchTrainingOverlayV2348 .mh-ergonomic-writing .mh-wr-editor textarea#mh-wr-text{min-height:225px}
+}
