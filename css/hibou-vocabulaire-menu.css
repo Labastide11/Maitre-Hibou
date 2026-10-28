@@ -54,3 +54,50 @@
   #frenchTrainingOverlayV2348 .vocab-v25729-menu{grid-template-columns:1fr!important;max-width:570px}
   #frenchTrainingOverlayV2348 .vocab-v25729-card{min-height:125px!important}
 }
+
+
+/* Correctif 28/10 : le menu doit occuper la largeur de la fenêtre.
+   Les conteneurs hérités en flex créaient un rétrécissement min-content. */
+#frenchTrainingOverlayV2348:has(.vocab-v25729-menu) #frenchPopupInnerV2348,
+#frenchTrainingOverlayV2348:has(.vocab-v25729-menu) .fr-v2348-content,
+#frenchTrainingOverlayV2348:has(.vocab-v25729-menu) .fr-v2348-panel{
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  align-self:stretch!important;
+  flex:1 1 auto!important;
+}
+#frenchTrainingOverlayV2348:has(.vocab-v25729-menu) .fr-v2348-content{
+  display:block!important;
+}
+#frenchTrainingOverlayV2348:has(.vocab-v25729-menu) .fr-v2348-panel{
+  display:block!important;
+  box-sizing:border-box!important;
+}
+#frenchTrainingOverlayV2348 .vocab-v25729-menu{
+  display:grid!important;
+  width:100%!important;
+  max-width:1320px!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  justify-content:stretch!important;
+  align-items:stretch!important;
+  margin:0 auto!important;
+}
+#frenchTrainingOverlayV2348 .vocab-v25729-menu .vocab-v25729-card{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  min-height:170px!important;
+  flex:none!important;
+  justify-self:stretch!important;
+  white-space:normal!important;
+}
+#frenchTrainingOverlayV2348 .vocab-v25729-card .vocab-image-loaded{
+  object-fit:contain!important;
+  background:transparent!important;
+}
+@media(max-width:680px){
+ #frenchTrainingOverlayV2348 .vocab-v25729-menu{grid-template-columns:1fr!important}
+ #frenchTrainingOverlayV2348 .vocab-v25729-menu .vocab-v25729-card{min-height:120px!important}
+}
