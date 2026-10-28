@@ -29,8 +29,8 @@ function updateMhDirectHelp(root,group){
  var panel=root.querySelector('.mh-direct-help[data-help-group="'+group+'"]');if(!panel)return;
  var id=selected[group];panel.hidden=!id;if(!id)return;
  var stage=mhHelpStages[group]||0, phrases=mhDirectPhrases(group,id);
- panel.querySelector('.mh-direct-phrase').textContent=phrases[stage];
- panel.querySelector('.mh-direct-next').textContent=['Une phrase complète','Une idée pour continuer','Revenir à la petite aide'][stage];
+ panel.querySelector('.mh-direct-phrase').textContent=stage===0?phrases[1]:phrases[2];
+ panel.querySelector('.mh-direct-next').textContent=stage===0?'Comment continuer ?':'Masquer l’amorce suivante';
 }
 
 function recap(){return groups.map(function(g){var match=g.items.find(function(it){return it[0]===selected[g.key];});return '<span>'+esc(match?match[1]:'À inventer')+'</span>';}).join('');}
@@ -53,7 +53,7 @@ root.querySelectorAll('.mh-wr-choice').forEach(function(b){b.addEventListener('c
 ['who','where','what'].forEach(function(g){
  updateMhDirectHelp(root,g);
  var panel=root.querySelector('.mh-direct-help[data-help-group="'+g+'"]');
- if(panel)panel.querySelector('.mh-direct-next').addEventListener('click',function(){mhHelpStages[g]=(mhHelpStages[g]+1)%3;updateMhDirectHelp(root,g);});
+ if(panel)panel.querySelector('.mh-direct-next').addEventListener('click',function(){mhHelpStages[g]=(mhHelpStages[g]+1)%2;updateMhDirectHelp(root,g);});
 });
 root.querySelector('#mh-wr-text').addEventListener('input',function(e){draft=e.target.value;var st=root.querySelector('#mh-write-status');if(st)st.textContent='En cours d’écriture…';clearTimeout(timer);timer=setTimeout(save,650);});
 root.querySelector('#mh-wr-save').addEventListener('click',save);

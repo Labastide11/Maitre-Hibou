@@ -43,7 +43,7 @@
       ['Enfin, elle…','Enfin, elle demande de l’aide à une adulte.','Que va devenir le chaton ?']
     ]
   };
-  function aide(target, getPhrases, initial) {
+  function aide(target, getPhrases, initial, mode) {
     if (!target || target.dataset.aideInit) return;
     target.dataset.aideInit = '1';
     const panel = document.createElement('section');
@@ -53,13 +53,13 @@
       '<button type="button" class="mh-help-next">Une phrase complète</button>' +
       '<p class="mh-help-note">Tu peux utiliser cette idée ou inventer la tienne. Rien ne s’écrit automatiquement.</p>';
     target.insertAdjacentElement('afterend',panel);
-    let stage = initial || 0;
+    let stage = 0;
     function update() {
       const examples = getPhrases();
-      panel.querySelector('.mh-help-phrase').textContent = examples[Math.min(stage,2)];
-      panel.querySelector('.mh-help-next').textContent = ['Une phrase complète','Une idée pour continuer','Revenir à la petite aide'][stage];
+      panel.querySelector('.mh-help-phrase').textContent = mode==='no-answer' ? (stage===0 ? examples[0] : examples[2]) : (mode==='starter' ? (stage===0 ? examples[1] : examples[2]) : (stage===0 ? examples[0] : examples[2]));
+      panel.querySelector('.mh-help-next').textContent = stage===0 ? 'Comment continuer ?' : 'Masquer l’indice';
     }
-    panel.querySelector('.mh-help-next').addEventListener('click', function () { stage=(stage+1)%3; update(); });
+    panel.querySelector('.mh-help-next').addEventListener('click', function () { stage=(stage+1)%2; update(); });
     panel.refreshCE2 = update;
     update();
   }
@@ -86,7 +86,7 @@
       if (area) {
         const unit=area.closest('.mh-dras-panel');
         const id=['deplacer','remplacer','ajouter','supprimer'].find(x=>unit && unit.classList.contains('dras-'+x)) || 'deplacer';
-        aide(area,()=>dras[id]);
+        aide(area,()=>dras[id],0,'no-answer');
       }
       return;
     }
@@ -97,13 +97,13 @@
         title.includes('décris')?['Ce dragon est…','Ce dragon est petit et très curieux.','Il aime…']:
         title.includes('dialogue')?['— Regarde…','— Regarde cette porte ! dit la fille.','— Et si nous…']:
         ['Un jour, un coffre…','Un jour, un coffre apparaît dans la forêt.','Mais soudain…'];
-      aide(root.querySelector('#mh-defi-writing'),()=>vals);
+      aide(root.querySelector('#mh-defi-writing'),()=>vals,0,'starter');
       return;
     }
     const seq=['mh-paquet','mh-chien','mh-graine'].find(k=>main.classList.contains(k));
     if(seq) {
       root.querySelectorAll('textarea[data-graine-text],textarea[data-chien-text],textarea[data-paquet-text]').forEach((area,i)=>{
-        aide(area.closest('label') || area,()=>sequences[seq][Math.min(i,sequences[seq].length-1)]);
+        aide(area.closest('label') || area,()=>sequences[seq][Math.min(i,sequences[seq].length-1)],0,i===0?'starter':'continuation');
       });
       return;
     }
@@ -119,7 +119,7 @@
         ['Soudain…','Soudain, une lumière sort du coffre.','L’enfant décide de…'],
         ['Enfin…','Enfin, l’enfant referme le coffre.','Il raconte sa découverte à…']
       ];
-      root.querySelectorAll('textarea').forEach((area,i)=>aide(area,()=>phrases[Math.min(i,2)]));
+      root.querySelectorAll('textarea').forEach((area,i)=>aide(area,()=>phrases[Math.min(i,2)],0,i===0?'starter':'continuation'));
     }
   }
   // Après chaque nouveau rendu, ajoute les aides aux zones encore non équipées.
