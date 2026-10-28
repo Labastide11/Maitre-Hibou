@@ -1,0 +1,79 @@
+/* Maître Hibou — Vocabulaire : fenêtre responsive PC portable / tablette.
+   Feuille externe : ne modifie pas les données ni le moteur des exercices. */
+#frenchTrainingOverlayV2348:has(.vocab-v25729-box) {
+  padding: clamp(4px, 0.8vh, 10px) !important;
+  align-items: stretch;
+}
+#frenchTrainingOverlayV2348:has(.vocab-v25729-box) .fr-v2348-popup {
+  width: min(1440px, 100%) !important;
+  height: auto !important;
+  max-height: calc(100dvh - 12px) !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  border-radius: 20px;
+}
+#frenchTrainingOverlayV2348:has(.vocab-v25729-box) .fr-v2348-topbar {
+  min-height: 48px !important;
+  padding: 5px 12px !important;
+  gap: 8px;
+}
+#frenchTrainingOverlayV2348:has(.vocab-v25729-box) .fr-v2348-close {
+  width: 39px; height: 39px; font-size: 27px;
+}
+/* Un seul défilement : celui du contenu de la fenêtre. */
+#frenchTrainingOverlayV2348:has(.vocab-v25729-box) #frenchPopupInnerV2348 {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  display: block !important;
+}
+#frenchTrainingOverlayV2348:has(.vocab-v25729-box) .fr-v2348-content,
+#frenchTrainingOverlayV2348:has(.vocab-v25729-box) .fr-v2348-panel {
+  overflow: visible !important;
+  min-height: auto !important;
+  height: auto !important;
+  max-height: none !important;
+  flex: initial !important;
+}
+#frenchTrainingOverlayV2348:has(.vocab-v25729-box) .fr-v2348-content {
+  display: block !important;
+  padding: 8px clamp(9px, 1.5vw, 18px) 18px !important;
+}
+#frenchTrainingOverlayV2348:has(.vocab-v25729-box) .fr-v2348-panel {
+  display: block !important;
+  padding: clamp(9px, 1vw, 15px) !important;
+  border-width: 2px;
+}
+#frenchTrainingOverlayV2348 .vocab-v25729-box {
+  margin-top: 6px !important;
+  padding: clamp(9px, 1.3vw, 14px) !important;
+}
+#frenchTrainingOverlayV2348 .vocab-v25729-question {
+  margin: 7px 0 !important;
+  padding: 10px 13px !important;
+  font-size: clamp(17px, 1.7vw, 21px) !important;
+}
+#frenchTrainingOverlayV2348 .vocab-v25729-options {gap: 7px !important; margin-top: 8px !important;}
+#frenchTrainingOverlayV2348 .vocab-v25729-option {
+  min-height: 45px;
+  padding: 9px 12px !important;
+  font-size: clamp(15px, 1.35vw, 17px) !important;
+  line-height: 1.25;
+}
+#frenchTrainingOverlayV2348 .vocab-v25729-hint-row {margin: 7px 0 3px !important;}
+#frenchTrainingOverlayV2348 .vocab-v25729-hint-btn {min-height: 42px; padding: 7px 11px !important;}
+#frenchTrainingOverlayV2348 .vocab-v25729-hint-box {margin: 6px 0 !important; padding: 8px 10px !important;}
+#frenchTrainingOverlayV2348 .vocab-v25729-actions {margin-top: 9px !important;}
+@media(max-height: 800px) {
+  #frenchTrainingOverlayV2348:has(.vocab-v25729-box) .fr-v2348-panel {border-radius: 16px;}
+  #frenchTrainingOverlayV2348:has(.vocab-v25729-box) .fr-v2348-topbar {min-height: 44px !important;}
+}
+@media(max-width: 700px) {
+  #frenchTrainingOverlayV2348:has(.vocab-v25729-box) .fr-v2348-popup {border-width: 2px; border-radius: 13px;}
+  #frenchTrainingOverlayV2348:has(.vocab-v25729-box) .fr-v2348-topbar {padding: 5px 7px !important;}
+  #frenchTrainingOverlayV2348 .vocab-v25729-topbar-title {font-size: 12px !important;}
+  #frenchTrainingOverlayV2348 .vocab-v25729-topbar-return {font-size: 11px !important; padding: 5px 7px !important;}
+}
