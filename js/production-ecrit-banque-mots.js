@@ -1,0 +1,31 @@
+/* PE-01 — Banque de mots obligatoire dans les ateliers de production d'écrit. */
+(function(){'use strict';
+const banks={
+ porte:{n:['arbre','château','chemin','coffre','dragon','enfant','fille','forêt','garçon','lac','montagne','porte','rivière','village'],v:['admirer','avancer','chercher','découvrir','entrer','explorer','observer','ouvrir','regarder','traverser'],a:['ancien','grand','immense','magique','mystérieux','sombre']},
+ coffre:{n:['arbre','carte','château','coffre','dragon','forêt','grotte','lumière','secret','trésor'],v:['briller','cacher','chercher','découvrir','éclairer','explorer','observer','ouvrir'],a:['ancien','brillant','caché','étrange','magique','mystérieux']},
+ ile:{n:['bateau','cascade','enfant','explorateur','grotte','île','jungle','mer','plage','tempête'],v:['arriver','chercher','découvrir','explorer','naviguer','observer','protéger','traverser'],a:['abandonné','désert','immense','inconnu','mystérieux','tropical']},
+ deplacer:{n:['arbre','balle','chien','fleur','jardin'],v:['courir','jouer','lancer','regarder','sauter'],a:['amusant','fleuri','joyeux','vert']},
+ remplacer:{n:['forêt','montagne','pelage','renard','rocher'],v:['admirer','avancer','observer','regarder'],a:['agile','élégant','majestueux','rapide','roux']},
+ ajouter:{n:['ciel','fille','lac','montagne','neige','sac'],v:['admirer','marcher','observer','regarder'],a:['blanc','élevé','froid','immense','lointain']},
+ supprimer:{n:['eau','mer','nageoire','océan','tortue'],v:['avancer','nager','observer','plonger'],a:['bleu','calme','marin','rapide']},
+ graine:{n:['arrosoir','eau','fleur','graine','jardin','plante','soleil','terre'],v:['arroser','grandir','planter','pousser','regarder'],a:['grand','jaune','petit','vert']},
+ chien:{n:['affiche','chien','collier','famille','garçon','maison','rue'],v:['afficher','aider','chercher','retrouver','rassurer'],a:['content','inquiet','perdu','rassuré']},
+ paquet:{n:['adulte','carton','chaton','fille','maison','paquet','porte'],v:['aider','découvrir','ouvrir','protéger','rassurer'],a:['doux','fragile','mystérieux','petit']},
+ fin:{n:['aventure','château','enfant','porte','secret','sortie'],v:['décider','découvrir','entrer','retrouver','sortir'],a:['heureux','magique','mystérieux','surpris']},
+ portrait:{n:['aile','dragon','écaille','feu','patte','queue'],v:['aimer','dormir','jouer','voler'],a:['courageux','curieux','doux','gentil','rouge']},
+ dialogue:{n:['ami','enfant','garçon','fille','porte','question'],v:['demander','écouter','parler','proposer','répondre'],a:['curieux','étonné','inquiet','surpris']},
+ objet:{n:['coffre','forêt','lumière','objet','pouvoir','trésor'],v:['briller','découvrir','imaginer','ouvrir','transformer'],a:['ancien','étrange','magique','mystérieux','précieux']}
+};
+function create(bank){const panel=document.createElement('aside');panel.className='mh-vocab-bank';panel.setAttribute('aria-label','Ma banque de mots');const heading=document.createElement('h3');heading.textContent='📖 Ma banque de mots';panel.appendChild(heading);const note=document.createElement('p');note.className='mh-vocab-intro';note.textContent='Je peux utiliser ces mots pour écrire. Ils sont classés par ordre alphabétique.';panel.appendChild(note);
+[['n','Les noms'],['v','Les verbes'],['a','Les adjectifs']].forEach(([key,label])=>{const sect=document.createElement('section');sect.className='mh-vocab-cat mh-vocab-'+key;const h=document.createElement('h4');h.textContent=label;sect.appendChild(h);const wrap=document.createElement('div');wrap.className='mh-vocab-terms';bank[key].slice().sort((a,b)=>a.localeCompare(b,'fr')).forEach(word=>{const el=document.createElement('span');el.className='mh-vocab-word';el.textContent=word;wrap.appendChild(el)});sect.appendChild(wrap);panel.appendChild(sect)});return panel}
+function attach(el,key,placement){if(!el || el.querySelector(':scope > .mh-vocab-bank'))return; const panel=create(banks[key]);if(placement==='after-image'){const img=el.querySelector('img');if(img)img.insertAdjacentElement('afterend',panel);else el.appendChild(panel)}else el.appendChild(panel)}
+function refresh(){const root=document.getElementById('frenchPopupInnerV2348');if(!root)return;const main=root.querySelector('main.mh-wr');if(!main)return;
+if(main.classList.contains('mh-dras')){const art=main.querySelector('.mh-dras-art');const panel=main.querySelector('.mh-dras-panel');if(art&&panel){const key=['deplacer','remplacer','ajouter','supprimer'].find(k=>panel.classList.contains('dras-'+k));if(key)attach(art,key)}return}
+if(main.classList.contains('mh-defis')){const img=main.querySelector('.mh-defi-hero');if(img){const src=img.getAttribute('src')||'';const title=(main.querySelector('h2')||{}).textContent||'';const key=title.includes('fin')?'fin':title.includes('personnage')?'portrait':title.includes('dialogue')?'dialogue':'objet';attach(img.parentElement,key)}return}
+if(main.classList.contains('mh-graine')){const photos=main.querySelector('.mh-graine-photos');if(photos){const key=main.classList.contains('mh-paquet')?'paquet':main.classList.contains('mh-chien')?'chien':'graine';attach(photos.parentElement,key,'after-gallery')}return}
+const image=main.querySelector('.mh-wr-image');if(image){const key=main.classList.contains('mh-wr-level3')?'ile':main.classList.contains('mh-wr-level2')?'coffre':'porte';const img=image.querySelector(':scope > img');if(img&&!image.querySelector(':scope > .mh-vocab-bank')){const panel=create(banks[key]);const p=img.nextElementSibling;if(p && p.tagName==='P')p.insertAdjacentElement('afterend',panel);else img.insertAdjacentElement('afterend',panel)}}
+}
+let pending=false;function schedule(){if(pending)return;pending=true;queueMicrotask(()=>{pending=false;refresh()})}
+function begin(){const root=document.getElementById('frenchPopupInnerV2348');if(!root){const watcher=new MutationObserver(()=>{if(document.getElementById('frenchPopupInnerV2348')){watcher.disconnect();begin()}});watcher.observe(document.documentElement,{subtree:true,childList:true});return;}new MutationObserver(schedule).observe(root,{childList:true,subtree:true});refresh()}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',begin);else begin();
+})();

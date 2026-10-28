@@ -1,0 +1,16 @@
+/* PE-01 : banque sous illustration, sans scroll imbriqué */
+#frenchTrainingOverlayV2348 .mh-vocab-bank{box-sizing:border-box;width:100%;margin:13px 0 18px;padding:12px;border:2px solid #e5d6b6;border-radius:15px;background:#fffdf7;color:#293342;min-width:0}
+#frenchTrainingOverlayV2348 .mh-vocab-bank h3{font-size:clamp(17px,1.5vw,21px);line-height:1.25;margin:0 0 7px;font-weight:850}
+#frenchTrainingOverlayV2348 .mh-vocab-intro{margin:0 0 10px;font-size:13px;line-height:1.4}
+#frenchTrainingOverlayV2348 .mh-vocab-cat{margin-top:10px}
+#frenchTrainingOverlayV2348 .mh-vocab-cat h4{font-size:15px;margin:0 0 6px;font-weight:800}
+#frenchTrainingOverlayV2348 .mh-vocab-terms{display:flex;flex-wrap:wrap;gap:5px}
+#frenchTrainingOverlayV2348 .mh-vocab-word{padding:5px 7px;border-radius:7px;font-size:clamp(12px,1.05vw,15px);line-height:1.25;font-weight:650;white-space:normal;overflow-wrap:anywhere}
+#frenchTrainingOverlayV2348 .mh-vocab-n .mh-vocab-word{background:#dcecff;color:#15497c}
+#frenchTrainingOverlayV2348 .mh-vocab-v .mh-vocab-word{background:#def2e0;color:#225c36}
+#frenchTrainingOverlayV2348 .mh-vocab-a .mh-vocab-word{background:#fce2ed;color:#863e5d}
+#frenchTrainingOverlayV2348 .mh-vocab-n h4{color:#15497c}
+#frenchTrainingOverlayV2348 .mh-vocab-v h4{color:#225c36}
+#frenchTrainingOverlayV2348 .mh-vocab-a h4{color:#863e5d}
+#frenchTrainingOverlayV2348 .mh-graine-stage .mh-vocab-bank{max-width:100%}
+@media(max-width:650px){#frenchTrainingOverlayV2348 .mh-vocab-bank{padding:10px}#frenchTrainingOverlayV2348 .mh-vocab-word{font-size:13px;padding:6px}}
