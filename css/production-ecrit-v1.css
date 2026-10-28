@@ -78,3 +78,11 @@
 .mh-chien .mh-graine-photos{grid-template-columns:repeat(4,minmax(0,1fr))}
 .mh-chien .mh-graine-photo img{aspect-ratio:4/3;object-fit:cover}
 @media(max-width:850px){.mh-chien .mh-graine-photos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Atelier 4 - défis d'écrivain */
+.mh-defi-back,.mh-defi-line button,.mh-defi-review button{border:2px solid #ffd4aa;border-radius:14px;padding:11px 16px;background:#fff8ee;color:#80470a;font:inherit;font-weight:850;cursor:pointer}
+.mh-defi-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0}
+.mh-defi-tile{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:12px;background:#fff8ed;border:2px solid #ffd8a5;border-radius:20px;color:#2d2b55;font:inherit;cursor:pointer}
+.mh-defi-tile img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px}.mh-defi-tile strong{font-size:20px}.mh-defi-tile span{font-size:15px}
+.mh-defi-task{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;margin-top:18px}.mh-defi-hero{width:100%;height:auto;max-height:480px;object-fit:contain;border-radius:20px}.mh-defi-compose,.mh-defi-review{padding:18px;background:#fff9f0;border:2px solid #ffe1bb;border-radius:20px}.mh-defi-compose h3,.mh-defi-review h3{margin:10px 0;color:#87420b}.mh-defi-compose p{line-height:1.5;margin:8px 0 16px}.mh-defi-compose label{display:block;font-weight:850;margin:10px 0 6px}.mh-defi-compose textarea{display:block;width:100%;min-height:190px;border:2px solid #e0dbe9;border-radius:14px;padding:14px;font:inherit;font-size:18px;resize:vertical}.mh-defi-line{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}.mh-defi-line span{font-size:13px}.mh-defi-hint{background:#fff4cd;border:2px solid #f4cf54;border-radius:12px;padding:12px;margin-top:12px}.mh-defi-review{margin:18px 0}.mh-defi-review label{display:flex;align-items:center;gap:10px;margin:12px 0;font-weight:700}.mh-defi-review input{width:22px;height:22px}.mh-defi-review button{background:#ff791f;color:white;border-color:#ff791f;margin-top:12px}.mh-defi-review button:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:750px){.mh-defi-task{grid-template-columns:1fr}.mh-defi-grid{gap:8px}.mh-defi-tile{padding:8px}.mh-defi-tile strong{font-size:16px}}
