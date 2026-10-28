@@ -16,6 +16,13 @@ function enhance(){
   if(area.dataset.mhErgReady==='1')return;
   area.dataset.mhErgReady='1';
   area.classList.add('mh-erg-textarea');
+  // Agrandir le champ en fonction du texte saisi (sans barre de défilement interne).
+  function fitHeight(){
+   area.style.height='auto';
+   area.style.height=Math.max(225,area.scrollHeight+4)+'px';
+  }
+  area.addEventListener('input',fitHeight);
+  requestAnimationFrame(fitHeight);
   const id='mh-erg-words-'+(++serial);
   const controls=document.createElement('div');
   controls.className='mh-erg-word-tools';
