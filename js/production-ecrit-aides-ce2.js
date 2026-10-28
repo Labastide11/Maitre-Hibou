@@ -110,16 +110,43 @@
     // Histoires ★★ et ★★★ : amorces à chaque partie, sans modifier le brouillon.
     if (main.classList.contains('mh-wr-level2') || main.classList.contains('mh-wr-level3')) {
       const lev3=main.classList.contains('mh-wr-level3');
-      const phrases=lev3?[
-        ['Un matin…','Un matin, deux enfants arrivent sur une île inconnue.','Ils aperçoivent…'],
-        ['Mais soudain…','Mais soudain, une tempête se lève.','Pour se protéger, ils…'],
-        ['Finalement…','Finalement, les enfants trouvent un abri.','Ils décident ensuite de…']
-      ]:[
-        ['Un jour…','Un jour, un enfant découvre un coffre dans une forêt.','Il se demande…'],
-        ['Soudain…','Soudain, une lumière sort du coffre.','L’enfant décide de…'],
-        ['Enfin…','Enfin, l’enfant referme le coffre.','Il raconte sa découverte à…']
-      ];
-      root.querySelectorAll('textarea').forEach((area,i)=>aide(area,()=>phrases[Math.min(i,2)],0,i===0?'starter':'continuation'));
+      const phraseSets=()=>{
+        if (!lev3) {
+          const place=(root.querySelector('#mh-l2-place')||{}).value||'foret';
+          const surprise=(root.querySelector('#mh-l2-surprise')||{}).value||'dragon';
+          const loc={foret:'dans une forêt',chateau:'dans un château',grotte:'dans une grotte'}[place]||'dans une forêt';
+          const evt={dragon:'un petit dragon',lumiere:'une lumière mystérieuse',carte:'une carte au trésor'}[surprise]||'une surprise';
+          return [
+            ['Un jour…','Un jour, un enfant découvre un coffre '+loc+'.','Il se demande ce qui se cache dedans…'],
+            ['Puis…','Puis…','Il décide alors de…'],
+            ['Soudain…','Soudain…','À sa grande surprise, '+evt+' apparaît…']
+          ];
+        }
+        const who=(root.querySelector('#mh-l3-who')||{}).value||'enfants';
+        const problem=(root.querySelector('#mh-l3-problem')||{}).value||'tempete';
+        const ending=(root.querySelector('#mh-l3-end')||{}).value||'abri';
+        const subject={enfants:'Deux enfants',exploratrice:'Une exploratrice',pirate:'Un pirate'}[who]||'Deux enfants';
+        const verb=who==='enfants'?'arrivent':'arrive';
+        const obstacle={tempete:'une tempête',grotte:'une grotte mystérieuse',bateau:'un bateau échoué'}[problem]||'un danger';
+        const solution={abri:'un abri',passage:'un passage secret',secours:'de l’aide'}[ending]||'une solution';
+        return [
+          ['Un matin…','Un matin, '+subject+' '+verb+' sur une île inconnue.','Au loin, ils aperçoivent…'],
+          ['Mais soudain…','Mais soudain…','Un problème survient : '+obstacle+'…'],
+          ['Finalement…','Finalement…','Pour s’en sortir, ils cherchent '+solution+'…']
+        ];
+      };
+      root.querySelectorAll('textarea').forEach((area,i)=>{
+        // Une seule phrase entièrement rédigée : celle du début.
+        // Les parties suivantes n'affichent jamais une réponse complète.
+        aide(area,()=>phraseSets()[Math.min(i,2)],0,i===0?'starter':'continuation');
+      });
+      if(!main.dataset.mhCE2ChoiceRefresh){
+        main.dataset.mhCE2ChoiceRefresh='1';
+        main.addEventListener('change',event=>{
+          if(!event.target.matches('#mh-l2-place,#mh-l2-surprise,#mh-l3-who,#mh-l3-problem,#mh-l3-end'))return;
+          root.querySelectorAll('.mh-help-ce2').forEach(panel=>panel.refreshCE2?.());
+        });
+      }
     }
   }
   // Après chaque nouveau rendu, ajoute les aides aux zones encore non équipées.
