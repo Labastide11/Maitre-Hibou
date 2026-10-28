@@ -1,0 +1,26 @@
+/* Maître Hibou — Lexique CE2 P1 : ergonomie, sans modification des exercices */
+html{scroll-behavior:smooth}
+body{overflow-x:hidden}
+body>header{padding:12px clamp(12px,2vw,24px);}
+body>header h1{font-size:clamp(23px,2.3vw,31px);line-height:1.18;margin:7px 0;}
+body>header p{font-size:clamp(13px,1.15vw,16px);line-height:1.45}
+body>main{max-width:1460px;padding:clamp(9px,1.4vw,19px)}
+.stage{grid-template-columns:minmax(0,1.04fr) minmax(0,1fr);align-items:start;gap:clamp(10px,1.5vw,20px)}
+.stage>.panel{min-width:0;padding:clamp(12px,1.5vw,21px);border-radius:19px}
+.stage>.panel>h2{margin:0 0 10px;font-size:clamp(20px,1.7vw,25px)}
+.illustration{margin:8px 0 12px;overflow:hidden;border-radius:15px;background:#f0f5fb}
+.illustration img{display:block;width:100%;height:auto;max-height:min(49vh,430px);object-fit:contain;border-radius:14px}
+.lesson{font-size:clamp(16px,1.3vw,19px);padding:12px 15px;line-height:1.45}
+.tip{font-size:13px;line-height:1.45;margin:9px 0 0}
+.question{font-size:clamp(18px,1.5vw,22px);line-height:1.4}
+.answers{gap:10px;margin:12px 0}
+.option{min-height:54px;font-size:clamp(16px,1.3vw,19px);line-height:1.4;padding:13px 16px;touch-action:manipulation}
+.option:focus-visible,.action:focus-visible{outline:3px solid #e8a42d;outline-offset:3px}
+.actions{gap:9px}.actions .action{min-height:48px;touch-action:manipulation}
+.progress{margin:8px 0 15px}
+.feedback{min-height:30px;overflow-wrap:anywhere}
+.foot{font-size:12px;line-height:1.5}
+@media(min-width:1080px){.stage>.panel:first-child{position:sticky;top:12px;align-self:start}}
+@media(max-width:900px){.stage{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.illustration img{max-height:330px}}
+@media(max-width:760px){.stage{grid-template-columns:minmax(0,1fr)}.illustration img{max-height:400px}.stage>.panel{padding:13px}.option{min-height:50px}.actions .action{flex:1 1 120px}}
+@media(max-width:420px){body>header{padding:11px 12px}body>main{padding:9px}.stage>.panel{border-radius:15px}.illustration img{max-height:310px}.lesson{padding:11px}.actions .action{flex:1 1 100%}}
