@@ -13,3 +13,11 @@
 #frenchTrainingOverlayV2348 .mh-help-under-images {margin:12px 0 0; width:100%;}
 #frenchTrainingOverlayV2348 .mh-help-under-images[hidden] {display:none !important;}
 #frenchTrainingOverlayV2348 .mh-help-under-images .mh-help-phrase {font-size:clamp(16px,1.5vw,20px);}
+
+/* L'aide apparaît juste après chaque cadre d'écriture, sans changer les brouillons. */
+#frenchTrainingOverlayV2348 .mh-graine-text + .mh-help-ce2 {
+  margin: 0 0 16px; background:#fff9e8; border-color:#edda98;
+}
+#frenchTrainingOverlayV2348 .mh-graine-text + .mh-help-ce2 .mh-help-phrase {
+  font-size: clamp(16px,1.6vw,19px); line-height:1.45;
+}

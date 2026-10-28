@@ -24,23 +24,25 @@
     ajouter:['La fille regarde la montagne…','La fille regarde la montagne enneigée.','Tu peux ajouter un autre détail sur la montagne.'],
     supprimer:['Une tortue…','Une tortue nage.','Relis : la phrase garde-t-elle le même sens ?']
   };
+  // Seule la première scène fournit une phrase complète.
+  // Les autres scènes n'offrent que des amorces à compléter par l'élève.
   const sequences = {
     'mh-graine': [
-      ['D’abord, un enfant…','D’abord, un enfant plante une graine.','Qui plante la graine ?'],
-      ['Ensuite, il…','Ensuite, il arrose la jeune plante.','Que fait-il avec son arrosoir ?'],
-      ['Enfin, une…','Enfin, une grande fleur apparaît.','Que devient la plante ?']
+      ['D’abord…','D’abord, un garçon plante une graine dans la terre.','Pour continuer : Ensuite…'],
+      ['Ensuite…','Ensuite…','Avec son arrosoir, il…'],
+      ['Enfin…','Enfin…','Après quelques jours, une…']
     ],
     'mh-chien': [
-      ['D’abord, un garçon…','D’abord, un garçon rencontre un chien perdu.','Où se trouvent-ils ?'],
-      ['Ensuite, il…','Ensuite, il regarde le collier du chien.','Comment peut-il aider ce chien ?'],
-      ['Puis, le garçon…','Puis, le garçon affiche une annonce.','Qui pourrait voir cette annonce ?'],
-      ['Enfin, le chien…','Enfin, le chien retrouve sa famille.','Comment se termine cette histoire ?']
+      ['D’abord…','D’abord, un garçon découvre un chien perdu.','Pour continuer : Ensuite…'],
+      ['Ensuite…','Ensuite…','Pour aider le chien, le garçon…'],
+      ['Puis…','Puis…','Il décide de…'],
+      ['Enfin…','Enfin…','Le chien retrouve…']
     ],
     'mh-paquet': [
-      ['D’abord, une fille…','D’abord, une fille découvre un paquet.','Où se trouve le paquet ?'],
-      ['Ensuite, elle…','Ensuite, elle découvre un chaton dans le carton.','Qu’y a-t-il à l’intérieur ?'],
-      ['Puis, la fille…','Puis, la fille rassure le chaton.','Comment prend-elle soin de lui ?'],
-      ['Enfin, elle…','Enfin, elle demande de l’aide à une adulte.','Que va devenir le chaton ?']
+      ['D’abord…','D’abord, une fille trouve un mystérieux paquet devant sa maison.','Pour continuer : Ensuite…'],
+      ['Ensuite…','Ensuite…','Quand elle ouvre le carton, elle…'],
+      ['Puis…','Puis…','Pour rassurer le petit animal, elle…'],
+      ['Enfin…','Enfin…','La fille demande de l’aide à…']
     ]
   };
   function aide(target, getPhrases, initial, mode) {
@@ -48,7 +50,7 @@
     target.dataset.aideInit = '1';
     const panel = document.createElement('section');
     panel.className = 'mh-help-ce2';
-    panel.innerHTML = '<div class="mh-help-heading">💡 Une idée pour commencer</div>' +
+    panel.innerHTML = '<div class="mh-help-heading">💡 '+(mode==='continuation'?'Une amorce pour continuer':'Une phrase pour commencer')+'</div>' +
       '<p class="mh-help-phrase" aria-live="polite"></p>' +
       '<button type="button" class="mh-help-next">Une phrase complète</button>' +
       '<p class="mh-help-note">Tu peux utiliser cette idée ou inventer la tienne. Rien ne s’écrit automatiquement.</p>';
@@ -57,7 +59,9 @@
     function update() {
       const examples = getPhrases();
       panel.querySelector('.mh-help-phrase').textContent = mode==='no-answer' ? (stage===0 ? examples[0] : examples[2]) : (mode==='starter' ? (stage===0 ? examples[1] : examples[2]) : (stage===0 ? examples[0] : examples[2]));
-      panel.querySelector('.mh-help-next').textContent = stage===0 ? 'Comment continuer ?' : 'Masquer l’indice';
+      panel.querySelector('.mh-help-next').textContent = stage===0
+        ? (mode==='continuation'?'Un indice pour continuer':'Comment continuer ?')
+        : 'Revenir à la première aide';
     }
     panel.querySelector('.mh-help-next').addEventListener('click', function () { stage=(stage+1)%2; update(); });
     panel.refreshCE2 = update;
