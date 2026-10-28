@@ -52,7 +52,7 @@
       '<p class="mh-help-phrase" aria-live="polite"></p>' +
       '<button type="button" class="mh-help-next">Une phrase complète</button>' +
       '<p class="mh-help-note">Tu peux utiliser cette idée ou inventer la tienne. Rien ne s’écrit automatiquement.</p>';
-    target.appendChild(panel);
+    target.insertAdjacentElement('afterend',panel);
     let stage = initial || 0;
     function update() {
       const examples = getPhrases();
@@ -84,10 +84,9 @@
     if (main.classList.contains('mh-dras')) {
       const area=root.querySelector('#mh-dras-answer');
       if (area) {
-        let which=(root.querySelector('.mh-dras-tab.active') || {}).textContent || '';
-        let key=which.trim().charAt(0).toUpperCase();
-        let id={D:'deplacer',R:'remplacer',A:'ajouter',S:'supprimer'}[key] || 'deplacer';
-        aide(area.parentElement,()=>dras[id]);
+        const unit=area.closest('.mh-dras-panel');
+        const id=['deplacer','remplacer','ajouter','supprimer'].find(x=>unit && unit.classList.contains('dras-'+x)) || 'deplacer';
+        aide(area,()=>dras[id]);
       }
       return;
     }
@@ -99,7 +98,7 @@
           choices.dataset.aideEvents='1';
           choices.addEventListener('click',e=>{
             if(e.target.closest('.mh-wr-choice')) {
-              const fn=()=>{if(choices.querySelector('.mh-help-ce2'))choices.querySelector('.mh-help-ce2').parentElement.refreshCE2();};
+              const fn=()=>{if(choices.nextElementSibling && choices.nextElementSibling.classList.contains('mh-help-ce2'))choices.nextElementSibling.refreshCE2();};
               queueMicrotask(fn);
             }
           });
@@ -113,13 +112,13 @@
         title.includes('décris')?['Ce dragon est…','Ce dragon est petit et très curieux.','Il aime…']:
         title.includes('dialogue')?['— Regarde…','— Regarde cette porte ! dit la fille.','— Et si nous…']:
         ['Un jour, un coffre…','Un jour, un coffre apparaît dans la forêt.','Mais soudain…'];
-      aide(targetForTextarea(root.querySelector('#mh-defi-writing')),()=>vals);
+      aide(root.querySelector('#mh-defi-writing'),()=>vals);
       return;
     }
-    const seq=Object.keys(sequences).find(k=>main.classList.contains(k));
+    const seq=['mh-paquet','mh-chien','mh-graine'].find(k=>main.classList.contains(k));
     if(seq) {
       root.querySelectorAll('textarea[data-graine-text],textarea[data-chien-text],textarea[data-paquet-text]').forEach((area,i)=>{
-        aide(targetForTextarea(area),()=>sequences[seq][Math.min(i,sequences[seq].length-1)]);
+        aide(area.closest('label') || area,()=>sequences[seq][Math.min(i,sequences[seq].length-1)]);
       });
       return;
     }
@@ -135,22 +134,14 @@
         ['Soudain…','Soudain, une lumière sort du coffre.','L’enfant décide de…'],
         ['Enfin…','Enfin, l’enfant referme le coffre.','Il raconte sa découverte à…']
       ];
-      root.querySelectorAll('textarea').forEach((area,i)=>aide(targetForTextarea(area),()=>phrases[Math.min(i,2)]));
+      root.querySelectorAll('textarea').forEach((area,i)=>aide(area,()=>phrases[Math.min(i,2)]));
     }
   }
-  let prevMain=null;
+  // Après chaque nouveau rendu, ajoute les aides aux zones encore non équipées.
+  // Les ajouts déclenchent l'observateur une seule fois : chaque cible est marquée.
   const observer=new MutationObserver(()=>{
     const root=document.getElementById(rootId);
-    if(!root) return;
-    const main=root.querySelector('main.mh-wr');
-    if (!main) {prevMain=null;return;}
-    // Also detect DRAS tab changes, where only the task panel is replaced.
-    const unit=root.querySelector('.mh-dras-task');
-    const current = unit || main;
-    if (prevMain!==current || (main.classList.contains('mh-graine') && root.querySelector('textarea:not([data-aide-init])'))) {
-      prevMain=current;
-      setup(root);
-    }
+    if(root && root.querySelector('main.mh-wr')) setup(root);
   });
   function start() {
     const root=document.getElementById(rootId);
