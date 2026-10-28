@@ -1,0 +1,26 @@
+/* Maître Hibou : menu vocabulaire compact, styles séparés du index. */
+#frenchTrainingOverlayV2348:has(.vocab-v25729-menu) .fr-v2348-header{display:none!important}
+#frenchTrainingOverlayV2348:has(.vocab-v25729-menu) .fr-v2348-content{padding:8px 14px 16px!important}
+#frenchTrainingOverlayV2348:has(.vocab-v25729-menu) .fr-v2348-panel{padding:12px!important;min-width:0}
+#frenchTrainingOverlayV2348:has(.vocab-v25729-menu) .fr-v2348-training-head{display:flex!important;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px!important;padding:0!important;min-height:38px}
+#frenchTrainingOverlayV2348:has(.vocab-v25729-menu) .fr-v2348-training-head .fr-v2348-training-title{font-size:clamp(19px,2vw,25px)!important;margin:0!important;line-height:1.2;order:0}
+#frenchTrainingOverlayV2348:has(.vocab-v25729-menu) .fr-v2348-training-head .fr-v2348-back{order:2;min-height:38px!important;padding:7px 10px!important;font-size:clamp(12px,1vw,14px)!important;margin:0!important;width:auto!important;max-width:50%;white-space:normal}
+#frenchTrainingOverlayV2348 .vocab-v25729-menu{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;margin-top:0!important}
+#frenchTrainingOverlayV2348 .vocab-v25729-card{min-height:120px!important;padding:12px 14px!important;border-radius:16px!important;display:flex!important;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left!important;gap:3px;min-width:0;box-shadow:none!important}
+#frenchTrainingOverlayV2348 .vocab-v25729-icon{font-size:26px!important;line-height:1.1;margin:0 0 3px!important}
+#frenchTrainingOverlayV2348 .vocab-v25729-title{font-size:clamp(17px,1.6vw,21px)!important;line-height:1.2!important}
+#frenchTrainingOverlayV2348 .vocab-v25729-desc{font-size:clamp(12px,1vw,14px)!important;line-height:1.3!important;margin:0!important}
+#frenchTrainingOverlayV2348 .vocab-v25729-card:nth-child(1){background:#f1eaff!important;border-color:#cab5f5!important}
+#frenchTrainingOverlayV2348 .vocab-v25729-card:nth-child(2){background:#e7f3ff!important;border-color:#b3d5f3!important}
+#frenchTrainingOverlayV2348 .vocab-v25729-card:nth-child(3){background:#e6f6ec!important;border-color:#a9dfbb!important}
+#frenchTrainingOverlayV2348 .vocab-v25729-card:nth-child(4){background:#fff1dd!important;border-color:#f6d49c!important}
+#frenchTrainingOverlayV2348 .vocab-v25729-card:focus-visible{outline:3px solid #e5a631!important;outline-offset:2px}
+@media(max-width:650px){
+ #frenchTrainingOverlayV2348 .vocab-v25729-menu{gap:7px!important}
+ #frenchTrainingOverlayV2348 .vocab-v25729-card{min-height:112px!important;padding:10px!important}
+ #frenchTrainingOverlayV2348 .vocab-v25729-icon{font-size:23px!important}
+ #frenchTrainingOverlayV2348 .vocab-v25729-title{font-size:16px!important}
+ #frenchTrainingOverlayV2348 .vocab-v25729-desc{font-size:12px!important}
+}
+@media(max-width:370px){#frenchTrainingOverlayV2348 .vocab-v25729-menu{grid-template-columns:1fr!important}#frenchTrainingOverlayV2348 .vocab-v25729-card{min-height:82px!important}}
+@media(max-height:750px){#frenchTrainingOverlayV2348 .vocab-v25729-card{min-height:103px!important}}
