@@ -96,3 +96,13 @@
 #frenchTrainingOverlayV2348 .mh-direct-help small{display:block;margin-top:8px;font-size:12px;}
 
 .mh-defi-steps{margin:10px 0 14px;padding-left:25px;line-height:1.6;font-weight:650}.mh-defi-steps li{margin:4px 0}.mh-defi-review #mh-defi-criteria{font-size:14px;font-weight:750;color:#653e13}.mh-defi-compose textarea{min-height:235px;overflow-y:hidden}
+
+/* Navigation directe en quatre actions, identique au modèle des ateliers 1 et 3 */
+#frenchTrainingOverlayV2348 .mh-wr-direct-links{display:flex;flex-direction:column;gap:9px;margin-top:2px;width:100%}
+#frenchTrainingOverlayV2348 .mh-wr-direct{display:block;width:100%;border:2px solid #ffb9cb;border-radius:16px;min-height:54px;padding:10px 14px;background:#fff;color:#c02a5a;font-weight:850;font-size:clamp(14px,1.2vw,17px);text-align:center;line-height:1.35;cursor:pointer;touch-action:manipulation}
+#frenchTrainingOverlayV2348 .mh-wr-direct.primary{background:#ff3e66;color:white;border-color:#ff3e66}
+#frenchTrainingOverlayV2348 .mh-wr-workshop.blue .mh-wr-direct.primary{background:#367bf4;border-color:#367bf4}
+#frenchTrainingOverlayV2348 .mh-wr-workshop.blue .mh-wr-direct:not(.primary){border-color:#a7c7f4;color:#23549d}
+#frenchTrainingOverlayV2348 .mh-wr-direct.last{border-color:#f3bd57;background:#fffaf0;color:#a15b13}
+#frenchTrainingOverlayV2348 .mh-wr-direct:hover{filter:brightness(.97)}
+#frenchTrainingOverlayV2348 .mh-wr-direct:focus-visible{outline:3px solid #202b79;outline-offset:3px}
