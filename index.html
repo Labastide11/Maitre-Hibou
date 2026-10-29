@@ -36613,6 +36613,42 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     gap:10px !important;
   }
 }
+<!-- Maître Hibou — Harmonisation des 4 grandes illustrations Français — 2026-10-29 -->
+<style id="hibou-francais-images-egalisees-20261029">
+/* Une carte = une illustration occupant la carte complète, au format de Lecture. */
+#frenchTrainingOverlayV2348 .fr-v25720-domain-grid {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  align-items:stretch !important;
+  gap:14px !important;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-grid > .fr-v25720-domain-card {
+  box-sizing:border-box !important;
+  width:100% !important;
+  height:auto !important;
+  min-height:0 !important;
+  aspect-ratio:3.1 / 1 !important;
+  margin:0 !important;
+  padding:0 !important;
+  background-repeat:no-repeat !important;
+  background-position:center center !important;
+  background-size:cover !important;
+  border:0 !important;
+  border-radius:20px !important;
+  box-shadow:0 7px 16px rgba(35,36,77,.10) !important;
+  overflow:hidden !important;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-grid > .fr-v25720-domain-card:focus-visible {
+  outline:4px solid #2563eb !important;
+  outline-offset:3px;
+}
+@media(max-width:700px){
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-grid {
+    grid-template-columns:minmax(0,1fr) !important;
+    gap:10px !important;
+  }
+}
+</style>
 </style>
 </body>
 </html>
