@@ -139,14 +139,14 @@
     return shuffle([item.bonne_reponse,item.erreur_1,item.erreur_2,item.erreur_3].filter(function(x){return clean(x);})).map(function(x){return {text:x,ok:norm(x)===norm(item.bonne_reponse)};});
   }
 
-  // NAV-02 : photographies locales individuelles contrôlées (25 mots).
+  // NAV-02 : photographies locales individuelles contrôlées (29 mots).
   var MOT_IMAGES_400 = {
     important:'important.jpg', peinture:'peinture.jpg', pharmacie:'pharmacie.jpg', taxi:'taxi.jpg', addition:'addition.jpg',
     malheureux:'malheureux.jpg', kangourou:'kangourou.jpg',
     tambour:'tambour.jpg', poussin:'poussin.jpg', girafe:'girafe.jpg',
     champignon:'champignon.jpg', foret:'foret.jpg', chorale:'chorale.jpg',
     emmener:'emmener.jpg', facteur:'facteur.jpg', femme:'femme.jpg',
-    monsieur:'monsieur.jpg', joyeux:'joyeux.jpg', maison:'maison.jpg', marcher:'marcher.jpg', cherchez:'cherchez.jpg', action:'action.jpg', attention:'attention.jpg', bosquet:'bosquet.jpg', chameau:'chameau.jpg'
+    monsieur:'monsieur.jpg', joyeux:'joyeux.jpg', maison:'maison.jpg', marcher:'marcher.jpg', cherchez:'cherchez.jpg', action:'action.jpg', attention:'attention.jpg', bosquet:'bosquet.jpg', chameau:'chameau.jpg', nageoire:'nageoire.jpg', garcon:'garcon.jpg', guirlande:'guirlande.jpg', musicien:'musicien.jpg'
   };
   function renderMotImage(item){
     if(state.activity !== 'mot_correct') return '';
