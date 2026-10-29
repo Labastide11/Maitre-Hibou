@@ -25415,11 +25415,74 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
     });
   }
 
+  /* NAV-01 : consultation des leçons sans démonter les exercices en cours. */
+  var GEO_LESSON_LINKS = {
+    1:[['P2-04','Utiliser un plan et se repérer']],
+    2:[['P1-01','Localiser la France']],
+    3:[['P1-02','Carte de population'],['P1-04','Espaces plus ou moins peuplés']],
+    4:[['P2-01','Paysage urbain'],['P3-01','Espace rural'],['P3-02','Littoral et montagne']],
+    5:[['P2-02','Les formes d’habitat'],['P2-01','Paysage urbain'],['P3-01','Espace rural']],
+    6:[['P2-03','Les fonctions du quartier'],['P2-06','Déplacements et aménagements']]
+  };
+  function showGeoLessons(sessionId, trigger){
+    var entries=GEO_LESSON_LINKS[sessionId] || [];
+    if(!entries.length) return;
+    var lastFocus=document.activeElement;
+    var veil=document.createElement('div');
+    veil.className='mh-geo-nav01-overlay';
+    veil.setAttribute('role','dialog');veil.setAttribute('aria-modal','true');
+    veil.setAttribute('aria-label','Leçons de géographie');
+    veil.style.cssText='position:fixed;inset:0;z-index:2147483000;background:rgba(21,35,45,.72);display:flex;align-items:center;justify-content:center;padding:12px;box-sizing:border-box';
+    var panel=document.createElement('div');
+    panel.style.cssText='background:white;border-radius:17px;width:min(980px,100%);height:min(92vh,900px);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 15px 55px #0005';
+    var bar=document.createElement('div');
+    bar.style.cssText='display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:10px 14px;background:#eef8f4;border-bottom:1px solid #c7ded4';
+    var heading=document.createElement('strong');heading.textContent='Mes leçons de géographie';heading.style.cssText='margin-right:auto;color:#205447';bar.appendChild(heading);
+    var close=document.createElement('button');close.type='button';close.textContent='← Retour aux exercices';close.style.cssText='cursor:pointer;border:0;border-radius:10px;background:#256f5a;color:white;font-weight:700;padding:10px 14px';bar.appendChild(close);
+    var choices=document.createElement('div');choices.style.cssText='display:flex;gap:7px;flex-wrap:wrap;padding:9px 12px';
+    var frame=document.createElement('iframe');frame.title='Leçon de géographie';frame.style.cssText='width:100%;border:0;flex:1;min-height:0;background:white';
+    var buttons=[];
+    entries.forEach(function(item){
+      var code=item[0],label=item[1];
+      var b=document.createElement('button');b.type='button';b.textContent=code+' · '+label;
+      b.style.cssText='cursor:pointer;border:1px solid #bbd8cb;border-radius:9px;padding:9px 11px;background:white;color:#205447;font-weight:600';
+      b.addEventListener('click',function(){
+        buttons.forEach(function(x){x.style.background='white';x.setAttribute('aria-pressed','false');});
+        b.style.background='#d9f3e9';b.setAttribute('aria-pressed','true');
+        frame.src='bibliotheque_geographie/lecons/geographie-'+code.toLowerCase()+'.html';
+      });
+      buttons.push(b);choices.appendChild(b);
+    });
+    var hint=document.createElement('span');hint.textContent='Tes réponses restent enregistrées dans cette séance.';hint.style.cssText='font-size:12px;color:#48665d;padding:0 12px 8px';
+    panel.appendChild(bar);panel.appendChild(choices);panel.appendChild(hint);panel.appendChild(frame);veil.appendChild(panel);
+    function dismiss(){document.removeEventListener('keydown',onKey,true);veil.remove();if(lastFocus && lastFocus.focus)lastFocus.focus();else if(trigger)trigger.focus();}
+    function onKey(ev){if(ev.key==='Escape'){ev.preventDefault();dismiss();}else if(ev.key==='Tab'){
+      var focusables=Array.prototype.slice.call(panel.querySelectorAll('button'));
+      if(!focusables.length)return;
+      if(ev.shiftKey && document.activeElement===focusables[0]){ev.preventDefault();focusables[focusables.length-1].focus();}
+      else if(!ev.shiftKey && document.activeElement===focusables[focusables.length-1]){ev.preventDefault();focusables[0].focus();}
+    }}
+    close.addEventListener('click',dismiss);
+    veil.addEventListener('click',function(ev){if(ev.target===veil)dismiss();});
+    document.body.appendChild(veil);document.addEventListener('keydown',onKey,true);
+    buttons[0].click();close.focus();
+  }
+
   function renderGeoSession(grid, id){
     var s = GEO_SESSIONS.filter(function(x){return x.id === id;})[0] || GEO_SESSIONS[0];
     grid.className = 'v24-english-shell';
     grid.innerHTML = '<div class="v24-english-toolbar"><button type="button" class="v24-english-back" id="v24GeoBack">← Séances</button><div><div class="v24-english-objective">'+esc(s.emoji+' '+s.title+' — '+s.objective)+'</div><div class="v24-english-criteria">'+s.criteria.map(function(c){return '<span>✓ '+esc(c)+'</span>';}).join('')+'</div></div></div><div class="v24-english-exercises" id="v24GeoExercises"></div>';
     grid.querySelector('#v24GeoBack').addEventListener('click', function(ev){ev.preventDefault();ev.stopPropagation();renderGeoHome(grid);}, true);
+
+    /* NAV-01 : le bouton est placé dans la barre de séance, sans reconstruire les exercices. */
+    var nav01Button=document.createElement('button');
+    nav01Button.type='button';
+    nav01Button.className='v24-english-back mh-geo-nav01-button';
+    nav01Button.textContent='📖 Voir la leçon';
+    nav01Button.style.cssText='margin-left:8px;background:#e0f4eb;color:#195943;border:1px solid #8bc8af;cursor:pointer;white-space:nowrap';
+    nav01Button.addEventListener('click',function(ev){ev.preventDefault();ev.stopPropagation();showGeoLessons(s.id,nav01Button);});
+    grid.querySelector('#v24GeoBack').insertAdjacentElement('afterend',nav01Button);
+
     var wrap = grid.querySelector('#v24GeoExercises');
     s.exos.forEach(function(exo, idx){
       var card = document.createElement('section');
