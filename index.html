@@ -36561,5 +36561,58 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <script defer src="js/nav01-anglais.js?v=1"></script>
 <link rel="stylesheet" href="css/nav01-sciences.css?v=1">
 <script defer src="js/nav01-sciences.js?v=1"></script>
+
+<!-- Maître Hibou — Français 2×2, carte lecture illustrée — 2026-10-29 -->
+<style id="hibou-francais-2x2-lecture-20261029">
+#frenchTrainingOverlayV2348 .fr-v25720-domain-grid {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  align-items:stretch !important;
+  gap:14px !important;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-grid > .fr-v25720-domain-card {
+  width:100% !important;
+  min-width:0 !important;
+  height:auto !important;
+  min-height:0 !important;
+  aspect-ratio:3.1 / 1 !important;
+  padding:0 !important;
+  margin:0 !important;
+  border:0 !important;
+  border-radius:20px !important;
+  background-position:center !important;
+  background-size:100% 100% !important;
+  background-repeat:no-repeat !important;
+  overflow:hidden !important;
+  display:block !important;
+  box-shadow:0 7px 16px rgba(35,36,77,.10) !important;
+  position:relative !important;
+  flex:none !important;
+  grid-column:auto !important;
+  grid-row:auto !important;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-card.fr-v25763-reading-card {
+  background-image:url('images/francais-lecture-comprehension.jpg') !important;
+  opacity:1 !important;
+}
+/* Texte déjà présent dans les bannières : le conserver accessible sans le doubler visuellement. */
+#frenchTrainingOverlayV2348 .fr-v25720-domain-grid > .fr-v25720-domain-card > * {
+  position:absolute !important;
+  width:1px !important;
+  height:1px !important;
+  overflow:hidden !important;
+  clip-path:inset(50%) !important;
+  white-space:nowrap !important;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-panel {
+  padding:14px !important;
+}
+@media(max-width:700px){
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-grid {
+    grid-template-columns:1fr !important;
+    gap:10px !important;
+  }
+}
+</style>
 </body>
 </html>
