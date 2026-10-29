@@ -111,6 +111,22 @@
     '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-dictee-write[hidden]{display:none!important}'+
     '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-dictee-model[hidden]{display:none!important}'+
     '@media(max-width:650px){#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-dictee-compose.has-image{grid-template-columns:1fr}#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-dictee-compose img{max-width:135px;display:block;margin:auto}}';
+    // NAV-02 : menu Orthographe resserré, sans recadrage des 3 illustrations.
+    css += '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-popup{height:min(96dvh,1000px);max-height:96dvh}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-topbar{min-height:48px!important;padding:4px 10px!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-close{width:36px;height:36px;font-size:25px}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact #frenchPopupInnerV2348{flex:1 1 auto;min-height:0;overflow-y:scroll!important;overflow-x:hidden!important;scrollbar-width:thin;-webkit-overflow-scrolling:touch;touch-action:pan-y}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-menu-head{padding:7px 12px 5px!important;gap:8px!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-menu-heading{gap:7px!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-menu-heading h2{font-size:clamp(22px,2.2vw,29px)!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-menu-heading .ortho-owl{font-size:24px!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-menu-head .fr-v2348-back{padding:7px 12px!important;font-size:14px!important;min-height:36px!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-content{padding:0 8px 8px!important;margin:0!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-panel{padding:6px!important;margin:0!important;border-radius:16px!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-menu{gap:8px!important;margin:0!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-card{border-width:2px!important;border-radius:16px!important;line-height:0!important;padding:0!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-card img{display:block;width:100%;height:auto!important;aspect-ratio:2/1;object-fit:contain!important}'+
+    '@media(max-width:700px){#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-menu-head{padding:7px 8px 5px!important}#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-menu{grid-template-columns:1fr!important;gap:8px!important}}';
     var style=document.createElement('style'); style.id='hibouOrthographeV25730Style'; style.textContent=css; document.head.appendChild(style);
   }
 
