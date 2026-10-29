@@ -24,7 +24,7 @@
     if(!chip) return;
     chip.classList.add('vocab-v25729-topbar-chip');
     var label=activity ? activityLabel(activity) : '';
-    chip.innerHTML='<span class="vocab-v25729-topbar-title">📖 Français <b>—</b> 🧩 Vocabulaire'+(label?' <b>—</b> '+esc(label):'')+'</span>'+(showReturn?'<button type="button" class="vocab-v25729-topbar-return" onclick="openHibouVocabulaireV25729()">← Retour Vocabulaire</button>':'');
+    chip.innerHTML='<span class="vocab-v25729-topbar-title">📖 Français <b>—</b> 🧩 Vocabulaire'+(label?' <b>—</b> '+esc(label):'')+'</span>'+(showReturn?'<button type="button" class="vocab-v25729-topbar-return" onclick="openHibouVocabulaireV25729()">← Retour Vocabulaire</button>':(activity?'':'<button type="button" class="vocab-v25729-topbar-return" onclick="renderFrenchDomainMenuV25720()">← Retour au menu Français</button>'));
   }
 
   function resetFrenchTopbar(){
@@ -114,8 +114,7 @@
   function renderMenu(){
     setVocabTopbar('', false);
     var count = activeItems().length;
-    setInner(header('🧩 Vocabulaire','Choisis un entraînement.','Contenu chargé depuis le fichier JSON externe : '+count+' exercice(s) disponible(s).')+
-      '<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v2348-training-head"><button type="button" class="fr-v2348-back" onclick="renderFrenchDomainMenuV25720()">← Retour au menu Français</button><div class="fr-v2348-training-title">Vocabulaire</div><div></div></div>'+
+    setInner('<div class="fr-v2348-content"><section class="fr-v2348-panel">'+
       '<div class="vocab-v25729-menu">'+
       '<button class="vocab-v25729-card" type="button" onclick="startHibouVocabulaireV25729(\'famille\')"><div class="vocab-v25729-icon">🌳</div><div class="vocab-v25729-title">Familles de mots</div><div class="vocab-v25729-desc">Reconnaître les mots qui appartiennent à la même famille.</div></button>'+
       '<button class="vocab-v25729-card" type="button" onclick="startHibouVocabulaireV25729(\'synonyme\')"><div class="vocab-v25729-icon">🔁</div><div class="vocab-v25729-title">Synonymes</div><div class="vocab-v25729-desc">Trouver un mot de sens proche.</div></button>'+
