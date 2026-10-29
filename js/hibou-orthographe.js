@@ -42,7 +42,7 @@
   }
 
   function header(title, subtitle, note){
-    return '<div class="fr-v2348-header"><div class="fr-v2348-owl">🦉</div><div class="fr-v2348-title"><h2>'+esc(title||'🔤 Orthographe')+'</h2><p>'+esc(subtitle||'Choisis un entraînement.')+'</p><div class="fr-v23411-grammar-note">'+esc(note||'Les exercices sont chargés depuis un fichier JSON externe.')+'</div></div></div>';
+    return '<div class="fr-v2348-header"><div class="fr-v2348-owl">🦉</div><div class="fr-v2348-title"><h2>'+esc(title||'🔤 Orthographe')+'</h2><p>'+esc(subtitle||'Choisis un entraînement.')+'</p>'+(note===null?'':'<div class="fr-v23411-grammar-note">'+esc(note||'Les exercices sont chargés depuis un fichier JSON externe.')+'</div>')+'</div></div>';
   }
 
   function injectStyle(){
@@ -65,6 +65,15 @@
     '#frenchTrainingOverlayV2348 .fr-v2348-chip.ortho-v25730-topbar-chip{flex:1;max-width:none;background:transparent!important;box-shadow:none!important;border:0!important;padding:0!important;display:flex;align-items:center;justify-content:space-between;gap:14px;color:#fff!important;font-weight:1000}'+
     '.ortho-v25730-topbar-title{font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ortho-v25730-topbar-title b{opacity:.78;margin:0 4px}.ortho-v25730-topbar-return{border:2px solid rgba(255,255,255,.8);background:rgba(255,255,255,.18);color:#fff;border-radius:999px;padding:7px 12px;font:inherit;font-size:14px;font-weight:1000;cursor:pointer;white-space:nowrap}.ortho-v25730-topbar-return:hover{background:rgba(255,255,255,.28)}'+
     '@media(max-width:820px){.ortho-v25730-topbar-title{font-size:15px}.ortho-v25730-topbar-return{font-size:12px;padding:6px 9px}.ortho-v25730-menu{grid-template-columns:1fr}.ortho-v25730-card{padding:14px}.ortho-v25730-icon{font-size:34px}.ortho-v25730-box{padding:12px;margin-top:6px}.ortho-v25730-question{font-size:18px;margin:7px 0}.ortho-v25730-option{font-size:16px}}';
+    css += '.ortho-v25730-menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start;margin:14px 0 0}'+
+    '.ortho-v25730-card{display:block;width:100%;padding:0!important;overflow:hidden;line-height:0;background:#fff!important;border-radius:24px;box-shadow:none;transition:box-shadow .18s,transform .18s}'+
+    '.ortho-v25730-card-mot{border:3px solid #c4b5fd!important;background:#f3edff!important}'+
+    '.ortho-v25730-card-erreur{border:3px solid #93c5fd!important;background:#e8f3ff!important}'+
+    '.ortho-v25730-card-dictee{border:3px solid #86efac!important;background:#e9f9ee!important}'+
+    '.ortho-v25730-card img{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:contain}'+
+    '.ortho-v25730-card:hover{transform:translateY(-2px);box-shadow:0 8px 16px rgba(25,50,80,.12)}'+
+    '.ortho-v25730-card:focus-visible{outline:4px solid #2563eb;outline-offset:3px}'+
+    '@media(max-width:700px){.ortho-v25730-menu{grid-template-columns:1fr;gap:12px}.ortho-v25730-card{border-radius:18px}}';
     var style=document.createElement('style'); style.id='hibouOrthographeV25730Style'; style.textContent=css; document.head.appendChild(style);
   }
 
@@ -109,13 +118,12 @@
 
   function renderMenu(){
     setOrthoTopbar('',false);
-    var count=activeItems().length;
-    setInner(header('🔤 Orthographe','Choisis un entraînement.','Banque externe : '+count+' exercice(s), adaptée au CE2 à partir du guide ministériel CE1.')+
+    setInner(header('🔤 Orthographe','Choisis un entraînement.',null)+
       '<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v2348-training-head"><button type="button" class="fr-v2348-back" onclick="renderFrenchDomainMenuV25720()">← Retour au menu Français</button><div class="fr-v2348-training-title">Orthographe</div><div></div></div>'+
       '<div class="ortho-v25730-menu">'+
-      '<button class="ortho-v25730-card" type="button" onclick="startHibouOrthographeV25730(\'mot_correct\')"><div class="ortho-v25730-icon">👀</div><div class="ortho-v25730-title">Choisis le mot bien écrit</div><div class="ortho-v25730-desc">Observer, comparer et mémoriser l’orthographe des mots.</div></button>'+
-      '<button class="ortho-v25730-card" type="button" onclick="startHibouOrthographeV25730(\'erreur\')"><div class="ortho-v25730-icon">🔎</div><div class="ortho-v25730-title">Corrige l’erreur</div><div class="ortho-v25730-desc">Identifier la difficulté et choisir une correction raisonnée.</div></button>'+
-      '<button class="ortho-v25730-card" type="button" onclick="startHibouOrthographeV25730(\'dictee_segmentee\')"><div class="ortho-v25730-icon">✍️</div><div class="ortho-v25730-title">Dictée segmentée</div><div class="ortho-v25730-desc">Écrire une phrase par groupes de sens et vérifier chaque segment.</div></button>'+
+      '<button class="ortho-v25730-card ortho-v25730-card-mot" type="button" aria-label="Choisis le mot bien écrit" onclick="startHibouOrthographeV25730(\'mot_correct\')"><img src="images/orthographe-choisis-mot.jpg" alt="Choisis le mot bien écrit — observer, comparer et mémoriser l’orthographe des mots" loading="eager"></button>'+
+      '<button class="ortho-v25730-card ortho-v25730-card-erreur" type="button" aria-label="Corrige l’erreur" onclick="startHibouOrthographeV25730(\'erreur\')"><img src="images/orthographe-corrige-erreur.jpg" alt="Corrige l’erreur — identifier la difficulté et choisir une correction raisonnée" loading="eager"></button>'+
+      '<button class="ortho-v25730-card ortho-v25730-card-dictee" type="button" aria-label="Dictée segmentée" onclick="startHibouOrthographeV25730(\'dictee_segmentee\')"><img src="images/orthographe-dictee-segmentee.jpg" alt="Dictée segmentée — écrire par groupes de sens et vérifier chaque segment" loading="eager"></button>'+
       '</div></section></div>');
   }
 
