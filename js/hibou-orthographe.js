@@ -135,6 +135,14 @@
     '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-content{padding:6px 8px 8px!important;margin:0!important}'+
     '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-panel{padding:6px!important}'+
     '@media(max-width:580px){#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-topbar-title{font-size:13px}#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-topbar-return{font-size:11px;padding:6px 8px}}';
+    // Alignement du catalogue Orthographe sur le catalogue Vocabulaire :
+    // hauteur dictée par la vraie image 2:1, pas par les hauteurs minimales globales des boutons.
+    css += '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-menu{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;align-items:start!important;align-content:start!important;margin:0!important;padding:0!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-card{display:block!important;box-sizing:border-box!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;aspect-ratio:auto!important;padding:4px!important;margin:0!important;line-height:0!important;border-width:2px!important;border-radius:20px!important;overflow:hidden!important;align-self:start!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-card img{display:block!important;width:100%!important;height:auto!important;max-height:none!important;min-height:0!important;aspect-ratio:2/1!important;object-fit:contain!important;margin:0!important;padding:0!important;border-radius:15px!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-content{padding:8px 12px 12px!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-panel{padding:0!important;margin:0!important;border:0!important;box-shadow:none!important;background:transparent!important}'+
+    '@media(max-width:700px){#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-menu{grid-template-columns:1fr!important;gap:10px!important}#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-content{padding:6px 8px 10px!important}}';
     var style=document.createElement('style'); style.id='hibouOrthographeV25730Style'; style.textContent=css; document.head.appendChild(style);
   }
 
