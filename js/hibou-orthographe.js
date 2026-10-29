@@ -54,7 +54,8 @@
     '.ortho-v25730-icon{font-size:42px;margin-bottom:8px}.ortho-v25730-title{font-size:20px;color:#0f5132}.ortho-v25730-desc{font-size:13px;color:#287047;margin-top:5px;line-height:1.25}'+
     '.ortho-v25730-box{background:#fff;border:2px solid #d9f99d;border-radius:18px;padding:16px;margin-top:8px}'+
     '.ortho-v25730-question{background:#f7fee7;border:2px solid #bef264;border-radius:16px;padding:14px;font-size:20px;font-weight:1000;color:#1f3d0c;margin:8px 0;line-height:1.3}'+
-    '.ortho-v25730-mot-visual{display:flex;justify-content:center;margin:10px auto;max-width:440px}.ortho-v25730-mot-visual img{width:100%;height:clamp(150px,23vh,240px);object-fit:contain;border-radius:16px}.ortho-v25730-box:has(.ortho-v25730-mot-visual) .ortho-v25730-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}@media(max-width:620px){.ortho-v25730-box:has(.ortho-v25730-mot-visual) .ortho-v25730-options{grid-template-columns:1fr}}'+
+    '.ortho-v25730-mot-visual{display:flex;justify-content:center;align-items:center;margin:12px 0}.ortho-v25730-mot-visual img{display:block;width:min(200px,48vw);height:min(200px,48vw);object-fit:contain;border-radius:14px}'+
+    '.ortho-v25730-box:has(.ortho-v25730-mot-visual) .ortho-v25730-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}@media(max-width:560px){.ortho-v25730-box:has(.ortho-v25730-mot-visual) .ortho-v25730-options{grid-template-columns:1fr}}'+
     '.ortho-v25730-options{display:flex;flex-direction:column;gap:9px;margin-top:10px}.ortho-v25730-option{border:2px solid #e5e7eb;background:#fff;border-radius:14px;padding:12px 14px;text-align:left;font-size:17px;font-weight:900;color:#172554;font-family:inherit;cursor:pointer}'+
     '.ortho-v25730-option.correct{background:#dcfce7!important;border-color:#22c55e!important;color:#14532d!important}.ortho-v25730-option.wrong{background:#fee2e2!important;border-color:#ef4444!important;color:#7f1d1d!important}'+
     '.ortho-v25730-feedback{margin-top:12px;border-radius:14px;padding:12px;font-weight:900;text-align:center}.ortho-v25730-feedback.ok{background:#dcfce7;color:#14532d;border:2px solid #86efac}.ortho-v25730-feedback.warn{background:#fff7ed;color:#7c2d12;border:2px solid #fdba74}'+
@@ -64,14 +65,6 @@
     '#frenchTrainingOverlayV2348 .fr-v2348-chip.ortho-v25730-topbar-chip{flex:1;max-width:none;background:transparent!important;box-shadow:none!important;border:0!important;padding:0!important;display:flex;align-items:center;justify-content:space-between;gap:14px;color:#fff!important;font-weight:1000}'+
     '.ortho-v25730-topbar-title{font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ortho-v25730-topbar-title b{opacity:.78;margin:0 4px}.ortho-v25730-topbar-return{border:2px solid rgba(255,255,255,.8);background:rgba(255,255,255,.18);color:#fff;border-radius:999px;padding:7px 12px;font:inherit;font-size:14px;font-weight:1000;cursor:pointer;white-space:nowrap}.ortho-v25730-topbar-return:hover{background:rgba(255,255,255,.28)}'+
     '@media(max-width:820px){.ortho-v25730-topbar-title{font-size:15px}.ortho-v25730-topbar-return{font-size:12px;padding:6px 9px}.ortho-v25730-menu{grid-template-columns:1fr}.ortho-v25730-card{padding:14px}.ortho-v25730-icon{font-size:34px}.ortho-v25730-box{padding:12px;margin-top:6px}.ortho-v25730-question{font-size:18px;margin:7px 0}.ortho-v25730-option{font-size:16px}}';
-    css += '.ortho-v25730-menu{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:1150px;margin-inline:auto}'+
-      '.ortho-v25730-card{position:relative;display:block;aspect-ratio:2 / 1;min-height:170px;width:100%;padding:0!important;background-color:#f0fdf4;background-repeat:no-repeat;background-position:center;background-size:100% 100%;border-radius:22px;overflow:hidden;transition:transform .15s ease,box-shadow .15s ease}'+
-      '.ortho-v25730-card:nth-child(1){background-image:url("images/orthographe-choisis-mot.jpg")}'+
-      '.ortho-v25730-card:nth-child(2){background-image:url("images/orthographe-corrige-erreur.jpg")}'+
-      '.ortho-v25730-card:nth-child(3){background-image:url("images/orthographe-dictee-segmentee.jpg")}'+
-      '.ortho-v25730-card .ortho-v25730-icon,.ortho-v25730-card .ortho-v25730-title,.ortho-v25730-card .ortho-v25730-desc{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}'+
-      '.ortho-v25730-card:focus-visible{outline:4px solid #166534;outline-offset:3px}'+
-      '@media(max-width:760px){.ortho-v25730-menu{grid-template-columns:1fr}.ortho-v25730-card{min-height:0}}';
     var style=document.createElement('style'); style.id='hibouOrthographeV25730Style'; style.textContent=css; document.head.appendChild(style);
   }
 
@@ -146,17 +139,23 @@
     return shuffle([item.bonne_reponse,item.erreur_1,item.erreur_2,item.erreur_3].filter(function(x){return clean(x);})).map(function(x){return {text:x,ok:norm(x)===norm(item.bonne_reponse)};});
   }
 
-  var MOT_IMAGES={'taxi':'taxi.jpg','malheureux':'malheureux.jpg'};
-  function motIllustration(item){
-    if(state.activity!=='mot_correct') return '';
-    var file=MOT_IMAGES[norm(item.bonne_reponse).replace(/ /g,'-')];
-    return file ? '<div class="ortho-v25730-mot-visual"><img src="images/orthographe-mots/'+file+'" alt="Illustration du mot" decoding="async"></div>' : '';
+  // NAV-02 : uniquement les neuf photographies locales contrôlées.
+  var MOT_IMAGES_400 = {
+    important:'important.jpg', taxi:'taxi.jpg', addition:'addition.jpg',
+    malheureux:'malheureux.jpg', kangourou:'kangourou.jpg',
+    tambour:'tambour.jpg', poussin:'poussin.jpg', girafe:'girafe.jpg',
+    champignon:'champignon.jpg'
+  };
+  function renderMotImage(item){
+    if(state.activity !== 'mot_correct') return '';
+    var file = MOT_IMAGES_400[norm(item.bonne_reponse)];
+    return file ? '<div class="ortho-v25730-mot-visual"><img src="images/orthographe/'+file+'" alt="Illustration pour aider à reconnaître le mot" width="200" height="200" decoding="async"></div>' : '';
   }
   function renderQcm(){
     setOrthoTopbar(state.activity,true);
     var item=state.questions[state.index]; if(!item) return renderResult();
     var html=optionsFor(item).map(function(o){ return '<button type="button" class="ortho-v25730-option" data-ok="'+(o.ok?'1':'0')+'" onclick="answerHibouOrthographeV25730(this)">'+esc(o.text)+'</button>'; }).join('');
-    setInner('<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="ortho-v25730-box"><div class="ortho-v25730-progress">Question '+(state.index+1)+' / '+state.total+'</div><div class="ortho-v25730-question">'+esc(item.question||item.consigne||'Choisis la bonne réponse.')+'</div>'+motIllustration(item)+'<div class="ortho-v25730-options">'+html+'</div><div id="orthoFeedbackV25730"></div></div></section></div>');
+    setInner('<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="ortho-v25730-box"><div class="ortho-v25730-progress">Question '+(state.index+1)+' / '+state.total+'</div><div class="ortho-v25730-question">'+esc(item.question||item.consigne||'Choisis la bonne réponse.')+'</div>'+renderMotImage(item)+'<div class="ortho-v25730-options">'+html+'</div><div id="orthoFeedbackV25730"></div></div></section></div>');
   }
 
   window.answerHibouOrthographeV25730=function(btn){
