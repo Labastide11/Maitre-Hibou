@@ -26092,6 +26092,46 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
     grid.className = 'v24-english-shell';
     grid.innerHTML = '<div class="v24-english-toolbar"><button type="button" class="v24-english-back" id="v24HistoryBack">← Séances</button><div><div class="v24-english-objective">'+esc(s.emoji+' '+s.title+' — '+s.objective)+'</div><div class="v24-english-criteria">'+s.criteria.map(function(c){return '<span>✓ '+esc(c)+'</span>';}).join('')+'</div></div></div><div class="v24-english-exercises" id="v24HistoryExercises"></div>';
     grid.querySelector('#v24HistoryBack').addEventListener('click', function(ev){ev.preventDefault();ev.stopPropagation();renderHistoryHome(grid);}, true);
+
+    /* NAV-01 Histoire : accès aux leçons en superposition, sans reconstruire les exercices. */
+    var historyLessons = {
+      1: [{name:'Je me repère dans le calendrier',url:'bibliotheque_histoire/lecons/nav01-calendrier.html'}],
+      2: [{name:'Ordonner des événements',url:'bibliotheque_histoire/lecons/his-p1-01.html'},{name:'Utiliser une frise chronologique',url:'bibliotheque_histoire/lecons/his-p1-02.html'}],
+      3: [{name:'Je comprends les générations',url:'bibliotheque_histoire/lecons/nav01-generations.html'}],
+      4: [{name:'Comparer les habitations',url:'bibliotheque_histoire/index.html'},{name:'Comparer des objets et vêtements',url:'bibliotheque_histoire/lecons/his-p2-03.html'},{name:'Repérer changements et permanences',url:'bibliotheque_histoire/lecons/his-p2-04.html'}],
+      5: [{name:'Les grandes périodes historiques',url:'bibliotheque_histoire/lecons/his-p1-03.html'},{name:'Associer un repère à une période',url:'bibliotheque_histoire/lecons/his-p1-04.html'}],
+      6: [{name:'Calendrier',url:'bibliotheque_histoire/lecons/nav01-calendrier.html'},{name:'Frise chronologique',url:'bibliotheque_histoire/lecons/his-p1-02.html'},{name:'Grandes périodes',url:'bibliotheque_histoire/lecons/his-p1-03.html'},{name:'Chiffres romains',url:'bibliotheque_histoire/lecons/nav01-chiffres-romains.html'}]
+    };
+    var lessons = historyLessons[s.id] || [];
+    var lessonButton = document.createElement('button');
+    lessonButton.type = 'button';
+    lessonButton.className = 'v24-english-back';
+    lessonButton.textContent = '📖 Voir la leçon';
+    lessonButton.style.cssText = 'margin-left:8px;background:#eef5ff;border:2px solid #8bb8ff;color:#204b85;font-weight:800;white-space:nowrap;';
+    var backBtn = grid.querySelector('#v24HistoryBack');
+    backBtn.insertAdjacentElement('afterend',lessonButton);
+    var viewer = null;
+    lessonButton.addEventListener('click',function(ev){
+      ev.preventDefault();ev.stopPropagation();
+      if(viewer) return;
+      viewer = document.createElement('div');
+      viewer.setAttribute('role','dialog');viewer.setAttribute('aria-modal','true');viewer.setAttribute('aria-label','Leçons d’histoire');
+      viewer.style.cssText='position:fixed;inset:0;z-index:2147483000;background:rgba(20,29,49,.72);padding:10px;display:flex;align-items:center;justify-content:center;';
+      var panel=document.createElement('section');
+      panel.style.cssText='display:flex;flex-direction:column;width:min(1100px,100%);height:min(94dvh,100%);background:white;border-radius:16px;overflow:hidden;box-shadow:0 15px 45px #0004;';
+      var top=document.createElement('div');
+      top.style.cssText='display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:10px;border-bottom:1px solid #ddd;background:#f4f7ff;';
+      var close=document.createElement('button');close.type='button';close.textContent='← Retour aux exercices';close.style.cssText='padding:10px 14px;border:0;border-radius:10px;background:#4231a2;color:white;font-weight:800;cursor:pointer;';
+      top.appendChild(close);
+      var frame=document.createElement('iframe');frame.title='Leçon d’histoire';frame.style.cssText='width:100%;flex:1;border:0;background:white;';frame.setAttribute('loading','eager');
+      lessons.forEach(function(l,i){var b=document.createElement('button');b.type='button';b.textContent=l.name;b.style.cssText='padding:8px 10px;border:1px solid #b4c5e7;border-radius:9px;background:white;font-weight:700;cursor:pointer;';b.addEventListener('click',function(){frame.src=l.url;});top.appendChild(b);if(i===0)frame.src=l.url;});
+      panel.appendChild(top);panel.appendChild(frame);viewer.appendChild(panel);document.body.appendChild(viewer);
+      function finish(){if(!viewer)return;viewer.remove();viewer=null;lessonButton.focus();document.removeEventListener('keydown',onKey);}
+      function onKey(e){if(e.key==='Escape')finish();}
+      close.addEventListener('click',finish);viewer.addEventListener('click',function(e){if(e.target===viewer)finish();});document.addEventListener('keydown',onKey);
+      close.focus();
+    });
+
     var wrap = grid.querySelector('#v24HistoryExercises');
     s.exos.forEach(function(exo, idx){
       var card = document.createElement('section');
