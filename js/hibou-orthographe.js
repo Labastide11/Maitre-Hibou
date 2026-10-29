@@ -17,7 +17,7 @@
   function esc(v){ return String(v == null ? '' : v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
   function norm(v){ return clean(v).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,' ').replace(/[^a-z0-9]+/g,' ').trim(); }
   function shuffle(a){ var out=(a||[]).slice(); for(var i=out.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=out[i]; out[i]=out[j]; out[j]=t; } return out; }
-  function setInner(html){ var el=popupInner(); if(el) el.innerHTML=html; }
+  function setInner(html){ var el=popupInner(); if(el) el.innerHTML=html; var ov=$('frenchTrainingOverlayV2348'); if(ov) ov.classList.remove('ortho-menu-compact'); }
 
   function activityLabel(type){
     return type==='mot_correct'?'Choisis le mot bien écrit':
@@ -74,6 +74,19 @@
     '.ortho-v25730-card:hover{transform:translateY(-2px);box-shadow:0 8px 16px rgba(25,50,80,.12)}'+
     '.ortho-v25730-card:focus-visible{outline:4px solid #2563eb;outline-offset:3px}'+
     '@media(max-width:700px){.ortho-v25730-menu{grid-template-columns:1fr;gap:12px}.ortho-v25730-card{border-radius:18px}}';
+    css += '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-topbar{min-height:50px;padding:6px 12px}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-close{width:40px;height:40px;font-size:27px}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact #frenchPopupInnerV2348{display:block;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain;touch-action:pan-y;scrollbar-width:auto}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-menu-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 18px 8px}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-menu-heading{display:flex;gap:10px;align-items:center;min-width:0}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-menu-heading h2{font-size:clamp(23px,2.5vw,32px);line-height:1.2;margin:0;color:#2d2b55}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-menu-heading .ortho-owl{font-size:27px}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-menu-head .fr-v2348-back{margin:0;white-space:normal}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-content{display:block;overflow:visible!important;min-height:0;padding:4px 16px 18px}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-panel{display:block;overflow:visible!important;min-height:0;padding:10px 12px 16px}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-menu{margin:0;gap:14px}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-card img{height:auto;aspect-ratio:2/1;object-fit:contain}'+
+    '@media(max-width:700px){#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-menu-head{padding:10px 12px 8px}#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-content{padding:4px 10px 14px}}';
     var style=document.createElement('style'); style.id='hibouOrthographeV25730Style'; style.textContent=css; document.head.appendChild(style);
   }
 
@@ -118,13 +131,14 @@
 
   function renderMenu(){
     setOrthoTopbar('',false);
-    setInner(header('🔤 Orthographe','Choisis un entraînement.',null)+
-      '<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v2348-training-head"><button type="button" class="fr-v2348-back" onclick="renderFrenchDomainMenuV25720()">← Retour au menu Français</button><div class="fr-v2348-training-title">Orthographe</div><div></div></div>'+
+    setInner('<div class="ortho-menu-head"><div class="ortho-menu-heading"><span class="ortho-owl" aria-hidden="true">🦉</span><h2>Orthographe</h2></div><button type="button" class="fr-v2348-back" onclick="renderFrenchDomainMenuV25720()">← Retour au menu Français</button></div>'+
+      '<div class="fr-v2348-content"><section class="fr-v2348-panel">'+
       '<div class="ortho-v25730-menu">'+
       '<button class="ortho-v25730-card ortho-v25730-card-mot" type="button" aria-label="Choisis le mot bien écrit" onclick="startHibouOrthographeV25730(\'mot_correct\')"><img src="images/orthographe-choisis-mot.jpg" alt="Choisis le mot bien écrit — observer, comparer et mémoriser l’orthographe des mots" loading="eager"></button>'+
       '<button class="ortho-v25730-card ortho-v25730-card-erreur" type="button" aria-label="Corrige l’erreur" onclick="startHibouOrthographeV25730(\'erreur\')"><img src="images/orthographe-corrige-erreur.jpg" alt="Corrige l’erreur — identifier la difficulté et choisir une correction raisonnée" loading="eager"></button>'+
       '<button class="ortho-v25730-card ortho-v25730-card-dictee" type="button" aria-label="Dictée segmentée" onclick="startHibouOrthographeV25730(\'dictee_segmentee\')"><img src="images/orthographe-dictee-segmentee.jpg" alt="Dictée segmentée — écrire par groupes de sens et vérifier chaque segment" loading="eager"></button>'+
       '</div></section></div>');
+    var ov=$('frenchTrainingOverlayV2348'); if(ov) ov.classList.add('ortho-menu-compact');
   }
 
   window.openHibouOrthographeV25730=function(){ injectStyle(); showLoading(); loadData(false).then(renderMenu); };
