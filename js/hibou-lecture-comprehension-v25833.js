@@ -42,12 +42,46 @@
     grid.insertAdjacentHTML('beforeend', readingCardHTML());
   }
 
-  function titleBlock(){
-    return '<div class="fr-v2348-header">'
-      +'<button type="button" class="fr-v2348-owl fr-v25833-test-owl" aria-label="Mode test enseignant" onclick="openFrenchTeacherTestV25833()">🦉</button>'
-      +'<div class="fr-v2348-title">'
-      +'<h2>📖 Lecture &amp; compréhension</h2><p>Choisis une activité liée à la progression de la classe.</p>'
-      +'<div class="fr-v23411-grammar-note">Même référentiel que Progressions CE2 · période '+currentPeriod()+'.</div></div></div>';
+  // NAV lecture : un seul bandeau et aucun titre redondant sous celui-ci.
+  window.leaveHibouReadingCompactV25833=function(){
+    const ov=document.getElementById('frenchTrainingOverlayV2348');
+    if(ov){ ov.classList.remove('hibou-reading-compact'); const chip=ov.querySelector('.fr-v2348-chip'); if(chip){chip.classList.remove('hibou-reading-topbar');chip.textContent='📖 Français';} }
+    if(typeof window.renderFrenchDomainMenuV25720==='function') window.renderFrenchDomainMenuV25720();
+  };
+  function compactReadingChrome(inMission){
+    const ov=document.getElementById('frenchTrainingOverlayV2348');
+    if(!ov) return;
+    ov.classList.add('hibou-reading-compact');
+    const chip=ov.querySelector('.fr-v2348-chip');
+    if(chip){
+      chip.classList.add('hibou-reading-topbar');
+      chip.innerHTML='<span class="hibou-reading-breadcrumb">📖 Français — 📘 Lecture &amp; compréhension</span>'
+        +'<button type="button" class="hibou-reading-return" onclick="'+(inMission?'openHibouReadingV25763()':'leaveHibouReadingCompactV25833()')+'">← '+(inMission?'Retour aux activités':'Retour au menu Français')+'</button>';
+    }
+  }
+  function compactReadingStyle(){
+    if(document.getElementById('hibouReadingCompactNavCSS')) return;
+    const st=document.createElement('style');
+    st.id='hibouReadingCompactNavCSS';
+    st.textContent=`
+      #frenchTrainingOverlayV2348.hibou-reading-compact .fr-v2348-topbar{min-height:50px;padding:5px 12px}
+      #frenchTrainingOverlayV2348.hibou-reading-compact .fr-v2348-chip.hibou-reading-topbar{flex:1;min-width:0;max-width:none;display:flex;align-items:center;justify-content:space-between;gap:10px;background:transparent!important;border:0!important;box-shadow:none!important;color:white!important;padding:0!important}
+      .hibou-reading-breadcrumb{font-size:clamp(14px,1.5vw,20px);font-weight:900;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+      .hibou-reading-return{border:2px solid rgba(255,255,255,.9);border-radius:999px;background:rgba(255,255,255,.15);color:white;padding:7px 14px;font:inherit;font-size:clamp(12px,1.15vw,16px);font-weight:900;white-space:nowrap;cursor:pointer}
+      .hibou-reading-return:hover{background:rgba(255,255,255,.28)}
+      #frenchTrainingOverlayV2348.hibou-reading-compact #frenchPopupInnerV2348{min-height:0;overflow-y:auto!important;overflow-x:hidden!important;scrollbar-width:auto;touch-action:pan-y}
+      #frenchTrainingOverlayV2348.hibou-reading-compact .fr-v2348-content{padding:6px 10px 12px;margin:0;min-height:0}
+      #frenchTrainingOverlayV2348.hibou-reading-compact .fr-v2348-panel{padding:6px 8px 12px;margin:0;min-height:0}
+      #frenchTrainingOverlayV2348.hibou-reading-compact .fr-v25763-shell{margin:0}
+      #frenchTrainingOverlayV2348.hibou-reading-compact .fr-v25763-head{margin:0 0 8px;padding:0;min-height:0;display:flex;justify-content:flex-end;align-items:center;gap:8px}
+      #frenchTrainingOverlayV2348.hibou-reading-compact .fr-v25763-tabs{margin-top:0}
+      .hibou-reading-teacher{border:1px solid #e5e7eb;background:#fff;border-radius:999px;padding:4px 9px;cursor:pointer;font-size:17px;line-height:1.4}
+      @media(max-width:650px){.hibou-reading-breadcrumb{font-size:12px}.hibou-reading-return{font-size:11px;padding:6px 8px}#frenchTrainingOverlayV2348.hibou-reading-compact .fr-v2348-content{padding:4px 6px 10px}}
+    `;
+    document.head.appendChild(st);
+  }
+  function testAccess(){
+    return '<button type="button" class="hibou-reading-teacher" aria-label="Mode test enseignant" title="Mode test enseignant" onclick="openFrenchTeacherTestV25833()">🦉</button>';
   }
   function renderHome(){
     const host=inner(); if(!host) return;
@@ -56,8 +90,9 @@
       +'<div class="fr-v25763-item-icon">'+iconFor(state.tab)+'</div>'
       +'<div class="fr-v25763-item-main"><strong>'+esc(x.title)+'</strong><span>'+esc(x.jeSais)+'</span></div>'
       +'<span class="fr-v25763-go" aria-hidden="true">›</span></button>').join('');
-    host.innerHTML=titleBlock()+'<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v25763-shell">'
-      +'<div class="fr-v25763-head"><button type="button" class="fr-v25763-back" onclick="renderFrenchDomainMenuV25720()">← Menu Français</button><span class="fr-v25763-period">Période '+currentPeriod()+'</span></div>'
+    compactReadingStyle(); compactReadingChrome(false);
+    host.innerHTML='<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v25763-shell">'
+      +'<div class="fr-v25763-head">'+testAccess()+'<span class="fr-v25763-period">Période '+currentPeriod()+'</span></div>'
       +'<div class="fr-v25763-tabs">'+tabs+'</div><div class="fr-v25763-list">'+(list||'<div class="fr-v2348-note">Aucune activité pour cette période.</div>')+'</div>'
       +'</div></section></div>';
   }
@@ -71,8 +106,9 @@
     const steps=(x.checklist||[]).slice(0,5).map((s,i)=>'<li><strong>'+(i+1)+'.</strong> '+esc(s)+'</li>').join('');
     const proof=(x.proofs&&x.proofs[0]) ? '<div class="fr-v2348-note" style="margin-top:12px"><strong>Pour montrer que tu sais faire :</strong> '+esc(x.proofs[0])+'</div>' : '';
     const host=inner(); if(!host) return;
-    host.innerHTML=titleBlock()+'<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v25763-shell">'
-      +'<div class="fr-v25763-head"><button type="button" class="fr-v25763-back" onclick="openHibouReadingV25763()">← Retour</button><span class="fr-v25763-period">'+iconFor(x.code.slice(0,3))+' Période '+codePeriod(x.code)+'</span></div>'
+    compactReadingStyle(); compactReadingChrome(true);
+    host.innerHTML='<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v25763-shell">'
+      +'<div class="fr-v25763-head">'+testAccess()+'<span class="fr-v25763-period">'+iconFor(x.code.slice(0,3))+' Période '+codePeriod(x.code)+'</span></div>'
       +'<div class="fr-v25763-mission"><h3>'+esc(x.title)+'</h3><div class="fr-v25763-je-sais">🎯 '+esc(x.jeSais)+'</div>'
       +'<ul class="fr-v25763-steps">'+steps+'</ul>'+proof
       +'<div class="fr-v25763-actions"><button type="button" class="fr-v25763-action" onclick="finishHibouReadingMissionV25763(\''+esc(x.code)+'\')">✅ J’ai fait l’activité</button>'
