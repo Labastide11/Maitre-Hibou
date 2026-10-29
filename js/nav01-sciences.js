@@ -76,7 +76,7 @@
   }
   function detectSession(text){
     text=String(text||'').toLocaleLowerCase('fr');
-    if(text.includes('vivant')&&text.includes('non-vivant'))return 1;
+    if(text.includes("vivant") && (text.includes("non-vivant") || text.includes("ne l'est pas")))return 1;
     if(text.includes('vie d\'une plante'))return 2;
     if(text.includes('vie d\'un animal'))return 3;
     if(text.includes('biodiversité')||text.includes('trier les déchets'))return 4;
