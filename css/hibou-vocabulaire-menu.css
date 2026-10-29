@@ -18,6 +18,7 @@
 #frenchTrainingOverlayV2348 .vocab-v25729-card:not(.vocab-image-ready) .vocab-v25729-icon {font-size:25px!important;}
 #frenchTrainingOverlayV2348 .vocab-v25729-card:not(.vocab-image-ready) .vocab-v25729-title {font-size:20px!important;}
 #frenchTrainingOverlayV2348 .vocab-v25729-card:not(.vocab-image-ready) .vocab-v25729-desc {font-size:13px!important;}
-#frenchTrainingOverlayV2348 .vocab-v25729-card.vocab-image-ready>:not(.vocab-image-loaded){position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;opacity:0!important;pointer-events:none!important;}
+/* Si l'image se charge, seul son contenu illustré est visible ; les textes de secours restent dans le DOM. */
+#frenchTrainingOverlayV2348 .vocab-v25729-card.vocab-image-ready>:not(.vocab-image-loaded){display:none!important;}
 #frenchTrainingOverlayV2348 .vocab-v25729-card:focus-visible{outline:3px solid #f49c1d!important;outline-offset:3px}
 @media(max-width:700px){#frenchTrainingOverlayV2348 .vocab-v25729-menu{width:calc(100vw - 48px)!important;grid-template-columns:1fr!important;gap:9px!important}#frenchTrainingOverlayV2348 .vocab-v25729-menu>.vocab-v25729-card{height:155px!important}#frenchTrainingOverlayV2348:has(.vocab-v25729-menu) .fr-v2348-back{font-size:12px!important}}
