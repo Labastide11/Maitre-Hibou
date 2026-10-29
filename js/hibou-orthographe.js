@@ -143,6 +143,14 @@
     '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-content{padding:8px 12px 12px!important}'+
     '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-panel{padding:0!important;margin:0!important;border:0!important;box-shadow:none!important;background:transparent!important}'+
     '@media(max-width:700px){#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-menu{grid-template-columns:1fr!important;gap:10px!important}#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-content{padding:6px 8px 10px!important}}';
+    // Les JPG de menu incluent eux-memes des bandes blanches verticales.
+    // On resserre UNIQUEMENT le cadre, en gardant la largeur et l'echelle du visuel.
+    // Le cadrage couvre les bandes blanches, sans couper les contenus illustrés.
+    css += '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-menu{row-gap:8px!important;column-gap:10px!important;align-content:start!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-card{position:relative!important;aspect-ratio:2.50/1!important;height:auto!important;min-height:0!important;max-height:none!important;padding:0!important;margin:0!important;overflow:hidden!important;align-self:start!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-card img{position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;aspect-ratio:auto!important;object-fit:cover!important;object-position:center center!important;margin:0!important;padding:0!important;border-radius:0!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-card-dictee{aspect-ratio:2.10/1!important}'+
+    '@media(max-width:700px){#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-menu{row-gap:8px!important;column-gap:8px!important}}';
     var style=document.createElement('style'); style.id='hibouOrthographeV25730Style'; style.textContent=css; document.head.appendChild(style);
   }
 
