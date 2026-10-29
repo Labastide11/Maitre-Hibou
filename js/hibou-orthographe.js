@@ -17,7 +17,7 @@
   function esc(v){ return String(v == null ? '' : v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
   function norm(v){ return clean(v).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,' ').replace(/[^a-z0-9]+/g,' ').trim(); }
   function shuffle(a){ var out=(a||[]).slice(); for(var i=out.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=out[i]; out[i]=out[j]; out[j]=t; } return out; }
-  function setInner(html){ var el=popupInner(); if(el) el.innerHTML=html; var ov=$('frenchTrainingOverlayV2348'); if(ov) ov.classList.remove('ortho-menu-compact'); }
+  function setInner(html){ var el=popupInner(); if(el) el.innerHTML=html; var ov=$('frenchTrainingOverlayV2348'); if(ov) ov.classList.remove('ortho-menu-compact','ortho-qcm-compact','ortho-segment-compact'); }
 
   function activityLabel(type){
     return type==='mot_correct'?'Choisis le mot bien écrit':
@@ -87,6 +87,21 @@
     '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-menu{margin:0;gap:14px}'+
     '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-card img{height:auto;aspect-ratio:2/1;object-fit:contain}'+
     '@media(max-width:700px){#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-menu-head{padding:10px 12px 8px}#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-content{padding:4px 10px 14px}}';
+    // NAV-02 : mise en page compacte du QCM et défilement unique dans la fenêtre.
+    css += '#frenchTrainingOverlayV2348.ortho-qcm-compact .fr-v2348-topbar{min-height:50px;padding:6px 12px}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .fr-v2348-close{width:40px;height:40px;font-size:27px}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact #frenchPopupInnerV2348{flex:1 1 auto;min-height:0;display:block;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain;touch-action:pan-y;scrollbar-width:auto}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .fr-v2348-content{display:block;overflow:visible!important;min-height:0;padding:8px 12px 14px}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .fr-v2348-panel{display:block;overflow:visible!important;min-height:0;padding:10px 12px 14px}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-v25730-box{padding:12px;margin:0}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-v25730-question{padding:10px 14px;margin:6px 0 12px}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-qcm-body.has-image{display:grid;grid-template-columns:minmax(150px,230px) minmax(0,1fr);gap:18px;align-items:center}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-v25730-mot-visual{margin:0;min-width:0}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-v25730-mot-visual img{width:100%;max-width:220px;height:auto;aspect-ratio:1;object-fit:contain;border-radius:12px}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-v25730-options{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-qcm-body.has-image .ortho-v25730-options{grid-template-columns:minmax(0,1fr)!important}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-v25730-option{min-height:54px;padding:11px 14px;line-height:1.25}'+
+    '@media(max-width:650px){#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-qcm-body.has-image{grid-template-columns:1fr;gap:12px}#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-v25730-mot-visual img{max-width:160px}#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-v25730-options{grid-template-columns:1fr!important}#frenchTrainingOverlayV2348.ortho-qcm-compact .fr-v2348-content{padding:6px}}';
     var style=document.createElement('style'); style.id='hibouOrthographeV25730Style'; style.textContent=css; document.head.appendChild(style);
   }
 
@@ -154,7 +169,7 @@
 
   function renderNoData(type){
     setOrthoTopbar(type,true);
-    setInner('<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="ortho-v25730-feedback warn">Aucun exercice disponible pour : '+esc(activityLabel(type))+'</div><div class="ortho-v25730-actions"><button class="ortho-v25730-btn secondary" onclick="openHibouOrthographeV25730()">← Retour Orthographe</button></div></section></div>');
+    setInner('<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="ortho-v25730-feedback warn">Aucun exercice disponible pour : '+esc(activityLabel(type))+'</div><div class="ortho-v25730-actions"><button class="ortho-v25730-btn secondary" onclick="openHibouOrthographeV25730()">← Retour Orthographe</button></div></section></div>'); var overlay=$('frenchTrainingOverlayV2348'); if(overlay) overlay.classList.add('ortho-qcm-compact');
   }
 
   function optionsFor(item){
@@ -179,7 +194,9 @@
     setOrthoTopbar(state.activity,true);
     var item=state.questions[state.index]; if(!item) return renderResult();
     var html=optionsFor(item).map(function(o){ return '<button type="button" class="ortho-v25730-option" data-ok="'+(o.ok?'1':'0')+'" onclick="answerHibouOrthographeV25730(this)">'+esc(o.text)+'</button>'; }).join('');
-    setInner('<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="ortho-v25730-box"><div class="ortho-v25730-progress">Question '+(state.index+1)+' / '+state.total+'</div><div class="ortho-v25730-question">'+esc(item.question||item.consigne||'Choisis la bonne réponse.')+'</div>'+renderMotImage(item)+'<div class="ortho-v25730-options">'+html+'</div><div id="orthoFeedbackV25730"></div></div></section></div>');
+    var imageHtml=renderMotImage(item);
+    setInner('<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="ortho-v25730-box"><div class="ortho-v25730-progress">Question '+(state.index+1)+' / '+state.total+'</div><div class="ortho-v25730-question">'+esc(item.question||item.consigne||'Choisis la bonne réponse.')+'</div><div class="ortho-qcm-body'+(imageHtml?' has-image':'')+'">'+imageHtml+'<div class="ortho-v25730-options">'+html+'</div></div><div id="orthoFeedbackV25730"></div></div></section></div>');
+    var overlay=$('frenchTrainingOverlayV2348'); if(overlay) overlay.classList.add('ortho-qcm-compact');
   }
 
   window.answerHibouOrthographeV25730=function(btn){
@@ -203,7 +220,7 @@
   function renderSegment(){
     setOrthoTopbar('dictee_segmentee',true);
     var seg=state.questions[state.segmentIndex]; if(!seg) return renderResult();
-    setInner('<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="ortho-v25730-box"><div class="ortho-v25730-progress">Segment '+(state.segmentIndex+1)+' / '+state.total+'</div><div class="ortho-v25730-model">Phrase à mémoriser : '+esc(state.item.question||'')+'</div><div class="ortho-v25730-question">'+esc(seg)+'</div><input id="orthoSegmentInputV25730" class="ortho-v25730-input" autocomplete="off" placeholder="Recopie le segment sans erreur"><div id="orthoFeedbackV25730"></div><div class="ortho-v25730-actions"><button class="ortho-v25730-btn" onclick="checkHibouSegmentV25730()">✅ Vérifier</button></div></div></section></div>');
+    setInner('<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="ortho-v25730-box"><div class="ortho-v25730-progress">Segment '+(state.segmentIndex+1)+' / '+state.total+'</div><div class="ortho-v25730-model">Phrase à mémoriser : '+esc(state.item.question||'')+'</div><div class="ortho-v25730-question">'+esc(seg)+'</div><input id="orthoSegmentInputV25730" class="ortho-v25730-input" autocomplete="off" placeholder="Recopie le segment sans erreur"><div id="orthoFeedbackV25730"></div><div class="ortho-v25730-actions"><button class="ortho-v25730-btn" onclick="checkHibouSegmentV25730()">✅ Vérifier</button></div></div></section></div>'); var overlay=$('frenchTrainingOverlayV2348'); if(overlay) overlay.classList.add('ortho-qcm-compact');
     setTimeout(function(){ var inp=$('orthoSegmentInputV25730'); if(inp) inp.focus(); },50);
   }
 
@@ -219,7 +236,7 @@
   function renderResult(){
     setOrthoTopbar(state.activity,true);
     var total=state.total||state.questions.length||1; var pct=Math.round((state.score/total)*100); var label=activityLabel(state.activity);
-    setInner(header('🔤 Orthographe','Entraînement terminé.','Le résultat est ajouté à Mon parcours récent.')+'<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v2348-result"><h3>Bravo, entraînement terminé !</h3><div class="fr-v2348-score-grid"><div class="fr-v2348-score-card">Score<b>'+state.score+' / '+total+'</b></div><div class="fr-v2348-score-card">Réussite<b>'+pct+'%</b></div></div><div class="fr-v2348-feedback">'+esc(label)+' · Banque pédagogique externe</div><div class="fr-v2348-actions"><button type="button" class="fr-v2348-action" onclick="startHibouOrthographeV25730(\''+esc(state.activity)+'\')">🔁 Refaire</button><button type="button" class="fr-v2348-action secondary" onclick="openHibouOrthographeV25730()">← Retour Orthographe</button><button type="button" class="fr-v2348-action secondary" onclick="renderFrenchDomainMenuV25720()">Menu Français</button></div></div></section></div>');
+    setInner(header('🔤 Orthographe','Entraînement terminé.','Le résultat est ajouté à Mon parcours récent.')+'<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v2348-result"><h3>Bravo, entraînement terminé !</h3><div class="fr-v2348-score-grid"><div class="fr-v2348-score-card">Score<b>'+state.score+' / '+total+'</b></div><div class="fr-v2348-score-card">Réussite<b>'+pct+'%</b></div></div><div class="fr-v2348-feedback">'+esc(label)+'</div><div class="fr-v2348-actions"><button type="button" class="fr-v2348-action" onclick="startHibouOrthographeV25730(\''+esc(state.activity)+'\')">🔁 Refaire</button><button type="button" class="fr-v2348-action secondary" onclick="openHibouOrthographeV25730()">← Retour Orthographe</button><button type="button" class="fr-v2348-action secondary" onclick="renderFrenchDomainMenuV25720()">Menu Français</button></div></div></section></div>');
     track(label,total,pct);
   }
 
