@@ -31,7 +31,7 @@
     chip.classList.add('ortho-v25730-topbar-chip');
     var label=activity ? activityLabel(activity) : '';
     chip.innerHTML='<span class="ortho-v25730-topbar-title">📖 Français <b>—</b> 🔤 Orthographe'+(label?' <b>—</b> '+esc(label):'')+'</span>'+
-      (showReturn?'<button type="button" class="ortho-v25730-topbar-return" onclick="openHibouOrthographeV25730()">← Retour Orthographe</button>':'');
+      (showReturn?'<button type="button" class="ortho-v25730-topbar-return" onclick="'+(showReturn==='menu'?'renderFrenchDomainMenuV25720()':'openHibouOrthographeV25730()')+'">'+(showReturn==='menu'?'← Retour au menu Français':'← Retour Orthographe')+'</button>':'');
   }
 
   function resetFrenchTopbar(){
@@ -127,6 +127,14 @@
     '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-card{border-width:2px!important;border-radius:16px!important;line-height:0!important;padding:0!important}'+
     '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-card img{display:block;width:100%;height:auto!important;aspect-ratio:2/1;object-fit:contain!important}'+
     '@media(max-width:700px){#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-menu-head{padding:7px 8px 5px!important}#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-menu{grid-template-columns:1fr!important;gap:8px!important}}';
+    // Menu Orthographe : titre et retour dans le bandeau ; cartes sans en-tête redondant.
+    css += '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-topbar{min-height:48px!important;padding:4px 12px!important;gap:10px!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-chip.ortho-v25730-topbar-chip{display:flex!important;flex:1 1 auto!important;min-width:0;max-width:none!important;justify-content:space-between!important;gap:12px!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-topbar-title{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-topbar-return{flex:0 0 auto;min-height:36px;white-space:nowrap}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-content{padding:6px 8px 8px!important;margin:0!important}'+
+    '#frenchTrainingOverlayV2348.ortho-menu-compact .fr-v2348-panel{padding:6px!important}'+
+    '@media(max-width:580px){#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-topbar-title{font-size:13px}#frenchTrainingOverlayV2348.ortho-menu-compact .ortho-v25730-topbar-return{font-size:11px;padding:6px 8px}}';
     var style=document.createElement('style'); style.id='hibouOrthographeV25730Style'; style.textContent=css; document.head.appendChild(style);
   }
 
@@ -170,8 +178,8 @@
   }
 
   function renderMenu(){
-    setOrthoTopbar('',false);
-    setInner('<div class="ortho-menu-head"><div class="ortho-menu-heading"><span class="ortho-owl" aria-hidden="true">🦉</span><h2>Orthographe</h2></div><button type="button" class="fr-v2348-back" onclick="renderFrenchDomainMenuV25720()">← Retour au menu Français</button></div>'+
+    setOrthoTopbar('','menu');
+    setInner(''+
       '<div class="fr-v2348-content"><section class="fr-v2348-panel">'+
       '<div class="ortho-v25730-menu">'+
       '<button class="ortho-v25730-card ortho-v25730-card-mot" type="button" aria-label="Choisis le mot bien écrit" onclick="startHibouOrthographeV25730(\'mot_correct\')"><img src="images/orthographe-choisis-mot.jpg" alt="Choisis le mot bien écrit — observer, comparer et mémoriser l’orthographe des mots" loading="eager"></button>'+
