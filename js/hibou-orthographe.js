@@ -102,6 +102,15 @@
     '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-qcm-body.has-image .ortho-v25730-options{grid-template-columns:minmax(0,1fr)!important}'+
     '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-v25730-option{min-height:54px;padding:11px 14px;line-height:1.25}'+
     '@media(max-width:650px){#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-qcm-body.has-image{grid-template-columns:1fr;gap:12px}#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-v25730-mot-visual img{max-width:160px}#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-v25730-options{grid-template-columns:1fr!important}#frenchTrainingOverlayV2348.ortho-qcm-compact .fr-v2348-content{padding:6px}}';
+    css += '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-dictee-model{background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:10px 12px;margin:8px 0;color:#1e3a8a}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-dictee-model p{margin:0 0 8px;line-height:1.35}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-dictee-model .ortho-v25730-question{margin:0 0 8px;padding:8px 10px}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-dictee-compose{display:grid;grid-template-columns:minmax(0,210px) minmax(0,1fr);gap:16px;align-items:center}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-dictee-compose:not(.has-image){display:block}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-dictee-compose img{width:100%;max-width:200px;height:auto;aspect-ratio:1;object-fit:contain}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-dictee-write[hidden]{display:none!important}'+
+    '#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-dictee-model[hidden]{display:none!important}'+
+    '@media(max-width:650px){#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-dictee-compose.has-image{grid-template-columns:1fr}#frenchTrainingOverlayV2348.ortho-qcm-compact .ortho-dictee-compose img{max-width:135px;display:block;margin:auto}}';
     var style=document.createElement('style'); style.id='hibouOrthographeV25730Style'; style.textContent=css; document.head.appendChild(style);
   }
 
@@ -185,9 +194,19 @@
     emmener:'emmener.jpg', facteur:'facteur.jpg', femme:'femme.jpg',
     monsieur:'monsieur.jpg', joyeux:'joyeux.jpg', maison:'maison.jpg', marcher:'marcher.jpg', cherchez:'cherchez.jpg', action:'action.jpg', attention:'attention.jpg', bosquet:'bosquet.jpg', chameau:'chameau.jpg', nageoire:'nageoire.jpg', garcon:'garcon.jpg', guirlande:'guirlande.jpg', musicien:'musicien.jpg', symbole:'symbole.jpg', visiteuse:'visiteuse.jpg', ocean:'ocean.jpg', bateau:'bateau.jpg', beaucoup:'beaucoup.jpg', jardinier:'jardinier.jpg', chanteuse:'chanteuse.jpg'
   };
+  var CORRIGE_IMAGES = new Set(['tambour','emmener','poussin','peinture','girafe','guirlande','champignon','garcon','maison','chameau','monsieur','jardinier','chanteuse','attention','addition','pharmacie','marcher']);
+  var DICTEE_IMAGES = {
+    'La maison est près du chemin.':'maison.jpg',
+    'Le tambour résonne dans la cour.':'tambour.jpg',
+    'Un poussin marche dans le jardin.':'poussin.jpg',
+    'Vous cherchez le chemin de la forêt.':'foret.jpg',
+    'Le garçon mange un morceau de gâteau.':'garcon.jpg'
+  };
   function renderMotImage(item){
-    if(state.activity !== 'mot_correct') return '';
-    var file = MOT_IMAGES_400[norm(item.bonne_reponse)];
+    if(state.activity !== 'mot_correct' && state.activity !== 'erreur') return '';
+    var word=norm(item.bonne_reponse);
+    if(state.activity === 'erreur' && !CORRIGE_IMAGES.has(word)) return '';
+    var file = MOT_IMAGES_400[word];
     return file ? '<div class="ortho-v25730-mot-visual"><img src="images/orthographe/'+file+'" alt="Illustration pour aider à reconnaître le mot" width="200" height="200" decoding="async"></div>' : '';
   }
   function renderQcm(){
@@ -220,12 +239,23 @@
   function renderSegment(){
     setOrthoTopbar('dictee_segmentee',true);
     var seg=state.questions[state.segmentIndex]; if(!seg) return renderResult();
-    setInner('<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="ortho-v25730-box"><div class="ortho-v25730-progress">Segment '+(state.segmentIndex+1)+' / '+state.total+'</div><div class="ortho-v25730-model">Phrase à mémoriser : '+esc(state.item.question||'')+'</div><div class="ortho-v25730-question">'+esc(seg)+'</div><input id="orthoSegmentInputV25730" class="ortho-v25730-input" autocomplete="off" placeholder="Recopie le segment sans erreur"><div id="orthoFeedbackV25730"></div><div class="ortho-v25730-actions"><button class="ortho-v25730-btn" onclick="checkHibouSegmentV25730()">✅ Vérifier</button></div></div></section></div>'); var overlay=$('frenchTrainingOverlayV2348'); if(overlay) overlay.classList.add('ortho-qcm-compact');
-    setTimeout(function(){ var inp=$('orthoSegmentInputV25730'); if(inp) inp.focus(); },50);
+    var file=DICTEE_IMAGES[state.item.question||''];
+    var imageHtml=file?'<div class="ortho-v25730-mot-visual"><img src="images/orthographe/'+file+'" alt="Illustration de la phrase" width="200" height="200"></div>':'';
+    setInner('<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="ortho-v25730-box"><div class="ortho-v25730-progress">Segment '+(state.segmentIndex+1)+' / '+state.total+'</div><div class="ortho-dictee-compose'+(imageHtml?' has-image':'')+'">'+imageHtml+'<div><div id="orthoDictModelV25730" class="ortho-dictee-model"><p><strong>Observe et mémorise ce segment :</strong></p><div class="ortho-v25730-question">'+esc(seg)+'</div><button type="button" class="ortho-v25730-btn" onclick="hideHibouSegmentModelV25730()">Je cache le modèle</button></div><div id="orthoDictWriteV25730" class="ortho-dictee-write" hidden><label for="orthoSegmentInputV25730" class="ortho-v25730-model">Écris le segment de mémoire.</label><input id="orthoSegmentInputV25730" class="ortho-v25730-input" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="Écris ici"><div id="orthoFeedbackV25730"></div><div class="ortho-v25730-actions"><button class="ortho-v25730-btn" onclick="checkHibouSegmentV25730()">✅ Vérifier</button></div></div></div></div></div></section></div>');
+    var overlay=$('frenchTrainingOverlayV2348'); if(overlay) overlay.classList.add('ortho-qcm-compact');
   }
 
+  window.hideHibouSegmentModelV25730=function(){
+    var model=$('orthoDictModelV25730'),writing=$('orthoDictWriteV25730');
+    if(!model||!writing) return;
+    model.hidden=true; writing.hidden=false;
+    var inp=$('orthoSegmentInputV25730'); if(inp) inp.focus();
+  };
+
   window.checkHibouSegmentV25730=function(){
-    var inp=$('orthoSegmentInputV25730'); if(!inp || inp.disabled) return;
+    var inp=$('orthoSegmentInputV25730'); if(!inp || inp.disabled || !$('orthoDictModelV25730') || !$('orthoDictModelV25730').hidden) return;
+    if(!clean(inp.value)){ inp.focus(); inp.setAttribute('aria-invalid','true'); return; }
+    inp.removeAttribute('aria-invalid');
     var expected=state.questions[state.segmentIndex]||''; var ok=norm(inp.value)===norm(expected); if(ok) state.score++;
     state.answers.push({segment:expected,ok:ok}); inp.disabled=true;
     var fb=$('orthoFeedbackV25730'); var next=(state.segmentIndex+1>=state.total)?'Voir le résultat':'Segment suivant';
