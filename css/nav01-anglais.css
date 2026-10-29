@@ -1,0 +1,10 @@
+/* NAV-01 anglais — bouton et affiche accessibles, sans toucher au quiz */
+.v24-english-toolbar .mh-en-lesson-link{margin-left:auto;flex:0 0 auto;background:#6941bd;color:white;border:0;border-radius:14px;padding:12px 18px;min-height:46px;font:800 15px system-ui,sans-serif;cursor:pointer}
+.v24-english-toolbar{flex-wrap:wrap}
+#mh-nav01-english-viewer[hidden]{display:none!important}
+#mh-nav01-english-viewer{position:fixed;inset:0;z-index:2147483000;background:#182847bb;padding:clamp(5px,1.4vw,18px);display:flex;align-items:center;justify-content:center}
+#mh-nav01-english-viewer .mh-en-lesson-panel{display:flex;flex-direction:column;width:min(1100px,100%);height:min(92dvh,850px);min-height:0;background:#eef4fb;border-radius:19px;overflow:hidden;box-shadow:0 12px 50px #081b4270}
+.mh-en-lesson-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:#f5edff;color:#36236b;font:800 19px system-ui,sans-serif}
+#mh-en-lesson-return{border:0;color:white;background:#6941bd;padding:11px 16px;min-height:45px;border-radius:12px;font:800 15px system-ui,sans-serif;cursor:pointer}
+#mh-en-lesson-frame{border:0;width:100%;flex:1;min-height:0;background:white}
+@media(max-width:680px){.mh-en-lesson-header{font-size:15px;padding:8px;flex-wrap:wrap}#mh-en-lesson-return{font-size:13px}.v24-english-toolbar .mh-en-lesson-link{margin-left:0;width:100%}#mh-nav01-english-viewer .mh-en-lesson-panel{height:96dvh}}
