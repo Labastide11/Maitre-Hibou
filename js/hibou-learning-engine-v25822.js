@@ -6,18 +6,38 @@ window.__hibouLearningEngineV25822=true;
 
 const activities=()=>window.HIBOU_LEARNING_ACTIVITIES||{};
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const state={activity:null,stage:'lesson',index:0,answers:{},helpUsed:0,startAt:0,sessionId:'',exerciseTypes:new Set(),challengeScore:0,challengeTotal:0};
+const state={activity:null,stage:'lesson',index:0,answers:{},helpUsed:0,startAt:0,sessionId:'',exerciseTypes:new Set(),challengeScore:0,challengeTotal:0,unlockedStage:0};
 
 function host(){return document.getElementById('frenchPopupInnerV2348');}
 function nowId(){return 'learn_'+Date.now()+'_'+Math.random().toString(36).slice(2,8);}
-function reset(a){state.activity=a;state.stage='lesson';state.index=0;state.answers={};state.helpUsed=0;state.startAt=Date.now();state.sessionId=nowId();state.exerciseTypes=new Set();state.challengeScore=0;state.challengeTotal=(a.challenge||[]).length;}
+function reset(a){state.activity=a;state.stage='lesson';state.index=0;state.answers={};state.helpUsed=0;state.startAt=Date.now();state.sessionId=nowId();state.exerciseTypes=new Set();state.challengeScore=0;state.challengeTotal=(a.challenge||[]).length;state.unlockedStage=0;}
 function titleBlock(){const a=state.activity;return '<div class="fr-v2348-header"><div class="fr-v2348-owl">🦉</div><div class="fr-v2348-title"><h2>📖 '+esc(a.title)+'</h2><p>'+esc(a.studentGoal)+'</p></div></div>';}
 function progressHTML(){
  const stages=[['lesson','📘','Je comprends'],['guided','🧩',"J'essaie"],['training','🎯',"Je m'entraîne"],['challenge','⭐','Mon défi'],['summary','🦉','Mon bilan']];
- const order=stages.map(x=>x[0]),current=order.indexOf(state.stage);
- return '<div class="hle-progress">'+stages.map((s,i)=>'<div class="hle-step '+(i===current?'active ':'')+(i<current?'done':'')+'"><span>'+s[1]+'</span><small>'+s[2]+'</small></div>').join('')+'</div>';
+ const current=stages.findIndex(x=>x[0]===state.stage);
+ return '<p class="hle-path-instruction">🦉 Avec Maître Hibou, avance étape par étape : découvre la leçon, entraîne-toi, relève le défi et découvre ton bilan !</p><nav class="hle-progress" aria-label="Étapes de l’activité">'+stages.map((step,index)=>{
+  const locked=index>state.unlockedStage,active=index===current;
+  return '<button type="button" class="hle-step '+(active?'active ':'')+(index<current?'done ':'')+(locked?'hle-step-locked':'')+'"'+
+   (locked?' disabled aria-disabled="true"':' onclick="hibouLearningGoStageV25822(&quot;'+step[0]+'&quot;)"')+
+   ' title="'+(locked?'Termine l’étape précédente':'Ouvrir '+step[2])+'"><span>'+step[1]+'</span><small>'+step[2]+'</small></button>';
+ }).join('')+'</nav>';
 }
-function shell(content){const h=host();if(!h)return;h.innerHTML=titleBlock()+'<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="hle-shell">'+progressHTML()+content+'</div></section></div>';}
+function navigateStage(stage){
+ const order=['lesson','guided','training','challenge','summary'],position=order.indexOf(stage);
+ if(!state.activity||position<0||position>state.unlockedStage)return;
+ state.stage=stage;state.index=0;
+ if(stage==='lesson')renderLesson();
+ else if(stage==='summary')renderSummary();
+ else renderExercise();
+}
+
+function shell(content){const h=host();if(!h)return;
+ if(!document.getElementById('hleClickableTabsStyleV25822')){
+  const style=document.createElement('style');style.id='hleClickableTabsStyleV25822';
+  style.textContent='.hle-path-instruction{margin:0 0 8px;padding:0 3px;color:#34446f;font-size:clamp(13px,1.1vw,16px);font-weight:700;line-height:1.35}.hle-progress button.hle-step{font:inherit;cursor:pointer;color:inherit}.hle-progress button.hle-step:focus-visible{outline:3px solid #2563eb;outline-offset:2px}.hle-progress button.hle-step:disabled{cursor:not-allowed;opacity:.55}';
+  document.head.appendChild(style);
+ }
+ h.innerHTML=titleBlock()+'<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="hle-shell">'+progressHTML()+content+'</div></section></div>';}
 
 function renderLesson(){
  state.stage='lesson';state.index=0;const l=state.activity.lesson||{};
@@ -127,7 +147,7 @@ function validateMulti(){
 function validateOrder(){const ex=currentExercise();if(!ex||ex.type!=='order')return;const rec=answerRecord(ex),seq=(rec.sequence||[]).map(x=>x.value),ok=JSON.stringify(seq)===JSON.stringify(ex.answer||[]);if(!ok)rec.sequence=[];markResult(ex,ok);}
 function help(){const ex=currentExercise();if(!ex||state.stage==='challenge')return;const rec=answerRecord(ex),helps=ex.help||[];if(!helps.length)return;const i=Math.min(rec.help||0,helps.length-1);rec.help=(rec.help||0)+1;state.helpUsed++;const box=document.getElementById('hleHelp');if(box){box.textContent='💡 '+helps[i];box.classList.add('show');}}
 function nextExercise(){const ex=currentExercise();if(!ex)return;const rec=answerRecord(ex);if(!rec.done)return;state.index++;if(state.index>=stageItems().length)advanceStage();else renderExercise();}
-function advanceStage(){if(state.stage==='lesson'){state.stage='guided';state.index=0;renderExercise();return;}if(state.stage==='guided'){state.stage='training';state.index=0;renderExercise();return;}if(state.stage==='training'){state.stage='challenge';state.index=0;renderExercise();return;}if(state.stage==='challenge'){renderSummary();}}
+function advanceStage(){const order=['lesson','guided','training','challenge','summary'],position=order.indexOf(state.stage);if(position<0||position>=order.length-1)return;state.unlockedStage=Math.max(state.unlockedStage,position+1);navigateStage(order[position+1]);}
 
 function scoreTraining(){const ids=[...(state.activity.guided||[]),...(state.activity.training||[])].map(x=>x.id);return{score:ids.filter(id=>state.answers[id]&&state.answers[id].correct).length,total:ids.length};}
 function previousIndependentSuccesses(code){
@@ -166,6 +186,7 @@ function renderSummary(){
 function open(code){const a=activities()[code];if(!a)return false;reset(a);renderLesson();return true;}
 window.hibouLearningEngineV25822={open,activities};
 window.hibouLearningNextV25822=function(){if(state.stage==='lesson')advanceStage();};
+window.hibouLearningGoStageV25822=navigateStage;
 window.hibouLearningChooseV25822=choose;
 window.hibouLearningToggleHighlightV25822=toggleHighlight;
 window.hibouLearningValidateHighlightV25822=validateHighlight;
