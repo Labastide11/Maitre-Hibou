@@ -3,7 +3,7 @@
   'use strict';
   if(window.__hibouNav01English) return;
   window.__hibouNav01English=true;
-  const lessonNames={1:'Hello! Goodbye!',2:"What’s your name?",3:'How are you?',4:'Numbers 1–10',5:'How old are you?',6:'Numbers 11–20',7:'Days of the week',8:'What day is it today?',9:'Months of the year',10:'What is the date today?'};
+  const lessonNames={1:'Hello! Goodbye!',2:"What’s your name?",3:'How are you?',4:'Numbers 1–10',5:'How old are you?',6:'Révisions des séances 1 à 5',7:'Days of the week',8:'What day is it today?',9:'Months of the year',10:'What is the date today?'};
   let viewer=null,previousFocus=null;
   function lessonId(){
     const root=document.getElementById('v24EnglishExercises');
@@ -37,7 +37,7 @@
     const box=ensureViewer();
     box.querySelector('#mh-en-lesson-title').textContent=lessonNames[id];
     const frame=box.querySelector('iframe');
-    const path='bibliotheque_anglais/index.html#lesson-'+id;
+    const path='bibliotheque_anglais/index.html'+(id===6?'':'#lesson-'+id);
     if(frame.getAttribute('src')!==path)frame.setAttribute('src',path);
     box.hidden=false;
     box.querySelector('#mh-en-lesson-return').focus();
@@ -54,7 +54,7 @@
     if(old)old.remove();
     const btn=document.createElement('button');btn.type='button';btn.className='mh-en-lesson-link';
     btn.dataset.lessonId=String(id);
-    btn.textContent='📖 Voir la leçon';
+    btn.textContent=id===6?'📖 Revoir mes leçons':'📖 Voir la leçon';
     btn.setAttribute('aria-label','Voir la leçon '+lessonNames[id]);
     btn.addEventListener('click',()=>openLesson(id));toolbar.append(btn);
   }
