@@ -3,7 +3,7 @@
   'use strict';
   if(window.__hibouNav01English) return;
   window.__hibouNav01English=true;
-  const lessonNames={1:'Hello! Goodbye!',2:"What’s your name?",3:'How are you?',4:'Numbers 1–10',5:'How old are you?',6:'Numbers 11–20'};
+  const lessonNames={1:'Hello! Goodbye!',2:"What’s your name?",3:'How are you?',4:'Numbers 1–10',5:'How old are you?',6:'Numbers 11–20',7:'Days of the week',8:'What day is it today?',9:'Months of the year',10:'What is the date today?'};
   let viewer=null,previousFocus=null;
   function lessonId(){
     const root=document.getElementById('v24EnglishExercises');
