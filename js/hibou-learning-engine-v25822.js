@@ -6,11 +6,11 @@ window.__hibouLearningEngineV25822=true;
 
 const activities=()=>window.HIBOU_LEARNING_ACTIVITIES||{};
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const state={activity:null,stage:'lesson',index:0,answers:{},helpUsed:0,startAt:0,sessionId:'',exerciseTypes:new Set(),challengeScore:0,challengeTotal:0,unlockedStage:0};
+const state={activity:null,stage:'lesson',index:0,answers:{},helpUsed:0,startAt:0,sessionId:'',exerciseTypes:new Set(),challengeScore:0,challengeTotal:0,unlockedStage:0,stagePositions:{}};
 
 function host(){return document.getElementById('frenchPopupInnerV2348');}
 function nowId(){return 'learn_'+Date.now()+'_'+Math.random().toString(36).slice(2,8);}
-function reset(a){state.activity=a;state.stage='lesson';state.index=0;state.answers={};state.helpUsed=0;state.startAt=Date.now();state.sessionId=nowId();state.exerciseTypes=new Set();state.challengeScore=0;state.challengeTotal=(a.challenge||[]).length;state.unlockedStage=0;}
+function reset(a){state.activity=a;state.stage='lesson';state.index=0;state.answers={};state.helpUsed=0;state.startAt=Date.now();state.sessionId=nowId();state.exerciseTypes=new Set();state.challengeScore=0;state.challengeTotal=(a.challenge||[]).length;state.unlockedStage=0;state.stagePositions={};}
 function titleBlock(){const a=state.activity;return '<div class="fr-v2348-header"><div class="fr-v2348-owl">🦉</div><div class="fr-v2348-title"><h2>📖 '+esc(a.title)+'</h2><p>'+esc(a.studentGoal)+'</p></div></div>';}
 function progressHTML(){
  const stages=[['lesson','📘','Je comprends'],['guided','🧩',"J'essaie"],['training','🎯',"Je m'entraîne"],['challenge','⭐','Mon défi'],['summary','🦉','Mon bilan']];
@@ -25,7 +25,8 @@ function progressHTML(){
 function navigateStage(stage){
  const order=['lesson','guided','training','challenge','summary'],position=order.indexOf(stage);
  if(!state.activity||position<0||position>state.unlockedStage)return;
- state.stage=stage;state.index=0;
+ if(state.stage!==stage)state.stagePositions[state.stage]=state.index;
+ state.stage=stage;state.index=state.stagePositions[stage]||0;
  if(stage==='lesson')renderLesson();
  else if(stage==='summary')renderSummary();
  else renderExercise();
@@ -40,7 +41,7 @@ function shell(content){const h=host();if(!h)return;
  h.innerHTML=titleBlock()+'<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="hle-shell">'+progressHTML()+content+'</div></section></div>';}
 
 function renderLesson(){
- state.stage='lesson';state.index=0;const l=state.activity.lesson||{};
+ state.stage='lesson';const l=state.activity.lesson||{};
  shell('<div class="hle-card hle-lesson"><h3>📘 Je comprends</h3><p class="hle-intro">'+esc(l.intro||'')+'</p><ol class="hle-lesson-steps">'+(l.steps||[]).map(s=>'<li>'+esc(s)+'</li>').join('')+'</ol>'
  +(l.example?'<div class="hle-example"><strong>Exemple</strong><div class="hle-word">'+esc(l.example.word)+'</div><div class="hle-chunks">'+(l.example.chunks||[]).map(x=>'<span>'+esc(x)+'</span>').join('<b>·</b>')+'</div><p>'+esc(l.example.sentence||'')+'</p></div>':'')
  +'<div class="hle-actions"><button class="hle-primary" type="button" onclick="hibouLearningNextV25822()">🧩 J’essaie avec Maître Hibou</button><button class="hle-secondary" type="button" onclick="openHibouReadingV25763()">← Choisir une autre activité</button></div></div>');
@@ -146,8 +147,8 @@ function validateMulti(){
 }
 function validateOrder(){const ex=currentExercise();if(!ex||ex.type!=='order')return;const rec=answerRecord(ex),seq=(rec.sequence||[]).map(x=>x.value),ok=JSON.stringify(seq)===JSON.stringify(ex.answer||[]);if(!ok)rec.sequence=[];markResult(ex,ok);}
 function help(){const ex=currentExercise();if(!ex||state.stage==='challenge')return;const rec=answerRecord(ex),helps=ex.help||[];if(!helps.length)return;const i=Math.min(rec.help||0,helps.length-1);rec.help=(rec.help||0)+1;state.helpUsed++;const box=document.getElementById('hleHelp');if(box){box.textContent='💡 '+helps[i];box.classList.add('show');}}
-function nextExercise(){const ex=currentExercise();if(!ex)return;const rec=answerRecord(ex);if(!rec.done)return;state.index++;if(state.index>=stageItems().length)advanceStage();else renderExercise();}
-function advanceStage(){const order=['lesson','guided','training','challenge','summary'],position=order.indexOf(state.stage);if(position<0||position>=order.length-1)return;state.unlockedStage=Math.max(state.unlockedStage,position+1);navigateStage(order[position+1]);}
+function nextExercise(){const ex=currentExercise();if(!ex)return;const rec=answerRecord(ex);if(!rec.done)return;state.index++;state.stagePositions[state.stage]=state.index;if(state.index>=stageItems().length)advanceStage();else renderExercise();}
+function advanceStage(){const order=['lesson','guided','training','challenge','summary'],position=order.indexOf(state.stage);if(position<0||position>=order.length-1)return;state.unlockedStage=Math.max(state.unlockedStage,position+1);state.stagePositions[order[position+1]]=0;navigateStage(order[position+1]);}
 
 function scoreTraining(){const ids=[...(state.activity.guided||[]),...(state.activity.training||[])].map(x=>x.id);return{score:ids.filter(id=>state.answers[id]&&state.answers[id].correct).length,total:ids.length};}
 function previousIndependentSuccesses(code){
