@@ -33,19 +33,25 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
     });
   }
 
+  /* Indices CE2 : un par exercice, sans divulguer la réponse. */
+  var SCIENCE_PEDAGOGICAL_HINTS = {1: ["Demande-toi si chaque élément naît, grandit et a besoin de se nourrir. Bouger ne suffit pas.", "Observe la différence entre grandir parce qu'on est vivant et changer de taille sous l'effet de quelque chose.", "Pense aux besoins et aux étapes de la vie d'un être vivant.", "Compare le jeune arbre et le grand arbre. Qu'est-ce qui a changé avec le temps ?", "Un objet peut se déplacer sans être vivant. Cherche plutôt ce qui grandit et se nourrit."], 2: ["Pars de ce qu'on plante dans la terre, puis observe les changements jusqu'à l'apparition de nouvelles graines.", "Observe ce qui se trouve sous la terre, ce qui porte les feuilles et ce qui peut devenir un fruit.", "Imagine une plante privée d'eau, de lumière ou d'air. De quoi a-t-elle besoin pour grandir ?", "Observe le stade actuel de la plante : quel changement pourrait venir ensuite ?", "Appuie-toi sur les photos du cycle de vie et sur les besoins d'une plante."], 3: ["Observe les changements de l'animal depuis l'œuf jusqu'à l'âge adulte.", "Réfléchis à la façon dont chaque animal donne naissance à ses petits, sans te fier à sa taille.", "Compare les jeunes animaux et les adultes. Cherche ce qui change en grandissant.", "Commence par le tout début de la vie du papillon, puis repère les transformations.", "Utilise les indices du cycle de vie : naissance, croissance et transformation."], 4: ["Regarde la matière de chaque objet et cherche le bac adapté. Pense aussi aux consignes de tri locales.", "Imagine le chemin suivi par ce déchet après son utilisation.", "Observe ce que font les abeilles quand elles passent d'une fleur à une autre.", "Demande-toi quelle action protège les plantes, les animaux et leur milieu.", "Cherche les conséquences de chaque geste sur les êtres vivants."], 5: ["Observe chaque image : l'eau garde-t-elle une forme, coule-t-elle, ou est-elle invisible sous forme de gaz ?", "Compare l'image avant et après. Cherche ce qui a changé dans l'état de l'eau.", "Repère le rôle du Soleil, des nuages et de la pluie avant de remettre les images en ordre.", "Observe une surface froide et l'air qui l'entoure. D'où l'eau pourrait-elle venir ?", "Pense aux changements d'état et au trajet de l'eau dans la nature."], 6: ["Regarde le rôle de chaque élément : fournir l'énergie, relier les éléments, éclairer ou ouvrir le circuit.", "Suis le trajet possible du courant : peut-il faire une boucle complète ?", "Pour chaque situation, imagine le trajet du courant et cherche si le circuit reste fermé.", "Observe les fils et les contacts. Le courant peut-il passer partout ?", "Cherche si tous les éléments nécessaires sont reliés dans une boucle continue."]};
+
   function renderScienceSession(grid, id){
     var s = SCIENCE_SESSIONS.filter(function(x){return x.id === id;})[0] || SCIENCE_SESSIONS[0];
     grid.className = 'v24-english-shell';
     grid.innerHTML = '<div class="v24-english-toolbar"><button type="button" class="v24-english-back" id="v24ScienceBack">← Séances</button><div><div class="v24-english-objective">'+esc(s.emoji+' '+s.title+' — '+s.objective)+'</div><div class="v24-english-criteria">'+s.criteria.map(function(c){return '<span>✓ '+esc(c)+'</span>';}).join('')+'</div></div></div><div class="v24-english-exercises" id="v24ScienceExercises"></div>';
     grid.querySelector('#v24ScienceBack').addEventListener('click', function(ev){ev.preventDefault();ev.stopPropagation();renderScienceHome(grid);}, true);
     var wrap = grid.querySelector('#v24ScienceExercises');
-    s.exos.forEach(function(exo){
+    s.exos.forEach(function(exo, exoIndex){
       var card = document.createElement('section');
       card.className = 'v24-english-exo';
       if(s.id === 4 && exo.photos && exo.photos.length === 1){
         card.classList.add('mh-science-s4-wide-photo');
       }
       card.innerHTML = '<h3>'+esc(exo.title)+'</h3><p>'+esc(exo.instr)+'</p>';
+      /* Aide systématique, avant tout choix et pour tous les types d'exercice. */
+      var directHelp = (SCIENCE_PEDAGOGICAL_HINTS[s.id] || [])[exoIndex];
+      renderScienceHelp(card, [{icon:'🦉',text:directHelp || 'Relis la consigne, observe les documents et compare les indices.'}]);
       if(exo.type === 'choice') renderScienceChoice(card, exo);
       if(exo.type === 'match') renderScienceMatch(card, exo);
       if(exo.type === 'order') renderScienceOrder(card, exo);
@@ -301,6 +307,7 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
   }
 
   function renderScienceHelp(card, help){
+    if(card.querySelector('.v24-science-help-btn')) return;
     if(!help || !help.length) return;
     var btn = document.createElement('button');
     btn.type = 'button';
