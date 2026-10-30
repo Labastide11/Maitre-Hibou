@@ -9,7 +9,7 @@
 
   var DATA_URL = 'data/orthographe_dictee.json?v=25730';
   var CACHE_KEY = 'hibou_orthographe_dictee_json_v25730';
-  var state = { data:null, activity:null, questions:[], index:0, score:0, total:0, answers:[], segmentIndex:0, item:null };
+  var state = { data:null, activity:null, questions:[], index:0, score:0, total:0, answers:[], segmentIndex:0, item:null, attempts:0, firstCorrect:false };
 
   function $(id){ return document.getElementById(id); }
   function popupInner(){ return $('frenchPopupInnerV2348'); }
@@ -211,7 +211,7 @@
     loadData(false).then(function(){
       if(type==='dictee_segmentee') return startSegmented();
       var items=shuffle(activeItems(type)).slice(0,10);
-      state.activity=type; state.questions=items; state.index=0; state.score=0; state.total=items.length; state.answers=[];
+      state.activity=type; state.questions=items; state.index=0; state.score=0; state.total=items.length; state.answers=[]; state.attempts=0;
       if(!items.length) return renderNoData(type); renderQcm();
     });
   };
@@ -249,29 +249,53 @@
     var file = MOT_IMAGES_400[word];
     return file ? '<div class="ortho-v25730-mot-visual"><img src="images/orthographe/'+file+'" alt="Illustration pour aider à reconnaître le mot" width="200" height="200" decoding="async"></div>' : '';
   }
+  function orthographeIndice(item){
+    var c=clean(item.competence||'').toLowerCase();
+    if(c.includes('devant p')||c.includes('devant b')||c.includes('m devant'))return 'Observe la lettre qui suit le son nasal : devant m, b ou p, on emploie souvent m.';
+    if(c.includes('accent'))return 'Prononce le mot doucement et regarde les accents possibles.';
+    if(c.includes('pluriel')||c.includes('accord'))return 'Cherche le nombre du nom et vérifie les marques d’accord.';
+    if(c.includes('lettre muette'))return 'Pense à un mot de la même famille pour retrouver une lettre finale.';
+    if(c.includes('son'))return 'Lis chaque proposition lentement et compare les lettres qui écrivent le son.';
+    if(state.activity==='erreur')return 'Relis le mot et compare chaque lettre avec ce que tu connais de son orthographe.';
+    return 'Relis les propositions et cherche la règle ou la partie du mot que tu connais.';
+  }
+  window.showHibouOrthoHintV25730=function(){
+    var hint=$('orthoHintV25730');if(hint)hint.hidden=false;
+  };
   function renderQcm(){
     setOrthoTopbar(state.activity,true);
     var item=state.questions[state.index]; if(!item) return renderResult();
     var html=optionsFor(item).map(function(o){ return '<button type="button" class="ortho-v25730-option" data-ok="'+(o.ok?'1':'0')+'" onclick="answerHibouOrthographeV25730(this)">'+esc(o.text)+'</button>'; }).join('');
     var imageHtml=renderMotImage(item);
-    setInner('<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="ortho-v25730-box"><div class="ortho-v25730-progress">Question '+(state.index+1)+' / '+state.total+'</div><div class="ortho-v25730-question">'+esc(item.question||item.consigne||'Choisis la bonne réponse.')+'</div><div class="ortho-qcm-body'+(imageHtml?' has-image':'')+'">'+imageHtml+'<div class="ortho-v25730-options">'+html+'</div></div><div id="orthoFeedbackV25730"></div></div></section></div>');
+    state.attempts=0;
+    setInner('<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="ortho-v25730-box"><div class="ortho-v25730-progress">Question '+(state.index+1)+' / '+state.total+'</div><div class="ortho-v25730-question">'+esc(item.question||item.consigne||'Choisis la bonne réponse.')+'</div><div class="ortho-qcm-body'+(imageHtml?' has-image':'')+'">'+imageHtml+'<div class="ortho-v25730-options">'+html+'</div></div><div class="ortho-v25730-actions"><button class="ortho-v25730-btn" type="button" onclick="showHibouOrthoHintV25730()">💡 Besoin d’un indice ?</button></div><div id="orthoHintV25730" class="ortho-v25730-feedback" hidden>'+esc(orthographeIndice(item))+'</div><div id="orthoFeedbackV25730"></div></div></section></div>');
     var overlay=$('frenchTrainingOverlayV2348'); if(overlay) overlay.classList.add('ortho-qcm-compact');
   }
 
   window.answerHibouOrthographeV25730=function(btn){
-    var item=state.questions[state.index]; if(!item) return;
-    var buttons=[].slice.call(document.querySelectorAll('.ortho-v25730-option')); var ok=btn.getAttribute('data-ok')==='1';
-    buttons.forEach(function(b){ b.disabled=true; if(b.getAttribute('data-ok')==='1') b.classList.add('correct'); });
-    if(!ok) btn.classList.add('wrong'); else state.score++;
-    state.answers.push({question:item.question,ok:ok,competence:item.competence||''});
-    var fb=$('orthoFeedbackV25730'); var next=(state.index+1>=state.total)?'Voir le résultat':'Question suivante';
-    if(fb) fb.innerHTML='<div class="ortho-v25730-feedback '+(ok?'ok':'warn')+'">'+(ok?'✅ Bravo !':'💡 Correction : '+esc(item.bonne_reponse||''))+(item.explication?'<br><small>'+esc(item.explication)+'</small>':'')+'</div><div class="ortho-v25730-actions"><button class="ortho-v25730-btn" onclick="nextHibouOrthographeQuestionV25730()">'+next+'</button></div>';
+    var item=state.questions[state.index];if(!item||btn.disabled)return;
+    var buttons=[].slice.call(document.querySelectorAll('.ortho-v25730-option'));
+    var ok=btn.getAttribute('data-ok')==='1';
+    state.attempts++;
+    var fb=$('orthoFeedbackV25730');
+    if(!ok&&state.attempts===1){
+      btn.disabled=true;btn.classList.add('wrong');
+      window.showHibouOrthoHintV25730();
+      if(fb)fb.innerHTML='<div class="ortho-v25730-feedback warn">Ce n’est pas encore juste. Lis l’indice, puis essaie une autre réponse.</div>';
+      return;
+    }
+    buttons.forEach(function(b){b.disabled=true;if(b.getAttribute('data-ok')==='1')b.classList.add('correct');});
+    if(!ok)btn.classList.add('wrong');
+    if(ok&&state.attempts===1)state.score++;
+    state.answers.push({question:item.question,ok:ok,competence:item.competence||'',attempts:state.attempts,withHint:state.attempts>1});
+    var next=(state.index+1>=state.total)?'Voir le résultat':'Question suivante';
+    if(fb)fb.innerHTML='<div class="ortho-v25730-feedback '+(ok?'ok':'warn')+'">'+(ok?(state.attempts===1?'✅ Bravo !':'✅ Bravo, tu as trouvé après l’indice !'):'💡 Correction : '+esc(item.bonne_reponse||''))+(item.explication?'<br><small>'+esc(item.explication)+'</small>':'')+'</div><div class="ortho-v25730-actions"><button class="ortho-v25730-btn" onclick="nextHibouOrthographeQuestionV25730()">'+next+'</button></div>';
   };
   window.nextHibouOrthographeQuestionV25730=function(){ state.index++; if(state.index>=state.total) renderResult(); else renderQcm(); };
 
   function startSegmented(){
     var items=shuffle(activeItems('dictee_segmentee'));
-    state.activity='dictee_segmentee'; state.item=items[0]||null; state.segmentIndex=0; state.score=0; state.answers=[];
+    state.activity='dictee_segmentee'; state.item=items[0]||null; state.segmentIndex=0; state.score=0; state.answers=[]; state.attempts=0;
     if(!state.item) return renderNoData('dictee_segmentee');
     state.questions=[state.item.segment_1,state.item.segment_2,state.item.segment_3,state.item.segment_4].filter(function(x){return clean(x);}); state.total=state.questions.length; renderSegment();
   }
@@ -279,6 +303,7 @@
   function renderSegment(){
     setOrthoTopbar('dictee_segmentee',true);
     var seg=state.questions[state.segmentIndex]; if(!seg) return renderResult();
+    state.attempts=0;
     var file=DICTEE_IMAGES[state.item.question||''];
     var imageHtml=file?'<div class="ortho-v25730-mot-visual"><img src="images/orthographe/'+file+'" alt="Illustration de la phrase" width="200" height="200"></div>':'';
     setInner('<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="ortho-v25730-box"><div class="ortho-v25730-progress">Segment '+(state.segmentIndex+1)+' / '+state.total+'</div><div class="ortho-dictee-compose'+(imageHtml?' has-image':'')+'">'+imageHtml+'<div><div id="orthoDictModelV25730" class="ortho-dictee-model"><p><strong>Observe et mémorise ce segment :</strong></p><div class="ortho-v25730-question">'+esc(seg)+'</div><button type="button" class="ortho-v25730-btn" onclick="hideHibouSegmentModelV25730()">Je cache le modèle</button></div><div id="orthoDictWriteV25730" class="ortho-dictee-write" hidden><label for="orthoSegmentInputV25730" class="ortho-v25730-model">Écris le segment de mémoire.</label><input id="orthoSegmentInputV25730" class="ortho-v25730-input" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="Écris ici"><div id="orthoFeedbackV25730"></div><div class="ortho-v25730-actions"><button class="ortho-v25730-btn" onclick="checkHibouSegmentV25730()">✅ Vérifier</button></div></div></div></div></div></section></div>');
@@ -293,13 +318,21 @@
   };
 
   window.checkHibouSegmentV25730=function(){
-    var inp=$('orthoSegmentInputV25730'); if(!inp || inp.disabled || !$('orthoDictModelV25730') || !$('orthoDictModelV25730').hidden) return;
-    if(!clean(inp.value)){ inp.focus(); inp.setAttribute('aria-invalid','true'); return; }
+    var inp=$('orthoSegmentInputV25730');if(!inp||inp.disabled||!$('orthoDictModelV25730')||!$('orthoDictModelV25730').hidden)return;
+    if(!clean(inp.value)){inp.focus();inp.setAttribute('aria-invalid','true');return;}
     inp.removeAttribute('aria-invalid');
-    var expected=state.questions[state.segmentIndex]||''; var ok=norm(inp.value)===norm(expected); if(ok) state.score++;
-    state.answers.push({segment:expected,ok:ok}); inp.disabled=true;
-    var fb=$('orthoFeedbackV25730'); var next=(state.segmentIndex+1>=state.total)?'Voir le résultat':'Segment suivant';
-    if(fb) fb.innerHTML='<div class="ortho-v25730-feedback '+(ok?'ok':'warn')+'">'+(ok?'✅ Segment juste !':'💡 Segment attendu : <strong>'+esc(expected)+'</strong>')+'</div><div class="ortho-v25730-actions"><button class="ortho-v25730-btn" onclick="nextHibouSegmentV25730()">'+next+'</button></div>';
+    var expected=state.questions[state.segmentIndex]||'';
+    var ok=norm(inp.value)===norm(expected);
+    state.attempts++;
+    var fb=$('orthoFeedbackV25730');
+    if(!ok&&state.attempts===1){
+      if(fb)fb.innerHTML='<div class="ortho-v25730-feedback warn">Relis ton texte : vérifie les majuscules, les mots et leurs accords. Tu peux corriger puis vérifier une deuxième fois.</div>';
+      inp.focus();return;
+    }
+    if(ok&&state.attempts===1)state.score++;
+    state.answers.push({segment:expected,ok:ok,attempts:state.attempts});inp.disabled=true;
+    var next=(state.segmentIndex+1>=state.total)?'Voir le résultat':'Segment suivant';
+    if(fb)fb.innerHTML='<div class="ortho-v25730-feedback '+(ok?'ok':'warn')+'">'+(ok?'✅ Segment juste !':'💡 Segment attendu : <strong>'+esc(expected)+'</strong>')+'</div><div class="ortho-v25730-actions"><button class="ortho-v25730-btn" onclick="nextHibouSegmentV25730()">'+next+'</button></div>';
   };
   window.nextHibouSegmentV25730=function(){ state.segmentIndex++; if(state.segmentIndex>=state.total) renderResult(); else renderSegment(); };
 
