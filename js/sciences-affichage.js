@@ -111,36 +111,47 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
           total:exerciseCards.length,
           source:'sciences_seance_'+s.id
         };
-        var recorded = false;
-        try{
+        /* Le journal exige un prénom actif et renvoie un événement en cas de succès. */
+        var recordedEvent = null;
+        var studentName = '';
+        try {
+          if(window.hibouStudentSystem && typeof window.hibouStudentSystem.currentName === 'function'){
+            studentName = window.hibouStudentSystem.currentName() || '';
+          }
+        } catch(ignore) {}
+        if(!studentName){
+          alert('Choisis ton prénom sur l’accueil de Maître Hibou avant d’enregistrer ta séance. Ton score reste affiché ici.');
+          return;
+        }
+        payload.prenom = studentName;
+        try {
           if(typeof window.hibouTrackEvent === 'function'){
-            window.hibouTrackEvent(payload);
-            recorded = true;
-          }else if(typeof window.hibouRecordSuccess === 'function'){
-            window.hibouRecordSuccess(s.emoji+' Sciences — '+s.short+' — séance terminée', 'entrainement', payload);
-            recorded = true;
-          }else if(typeof window.hibouRecordTrainingSuccess === 'function'){
-            window.hibouRecordTrainingSuccess('sciences', s.short, exerciseCards.length+' exercices terminés');
-            recorded = true;
+            recordedEvent = window.hibouTrackEvent(payload);
           }
         }catch(error){
-          try{ console.error('Sciences séance '+s.id+' : journal non alimenté', error); }catch(ignore){}
+          try{console.error('Sciences : erreur du journal élève',error);}catch(ignore){}
         }
-
-        if(recorded){
+        var inHistory = false;
+        try {
+          if(recordedEvent && typeof window.hibouGetEventHistory === 'function'){
+            var history = window.hibouGetEventHistory(studentName) || [];
+            inHistory = history.some(function(item){
+              return item.id_evenement === recordedEvent.id_evenement;
+            });
+          }
+        }catch(error){
+          try{console.error('Sciences : contrôle du journal impossible',error);}catch(ignore){}
+        }
+        if(recordedEvent && inHistory){
           finishButton.dataset.recorded = '1';
           finishButton.disabled = true;
           finishButton.textContent = '✅ Séance enregistrée dans mon parcours';
           var confirmation = document.createElement('div');
           confirmation.className = 'v24-english-feedback ok';
-          confirmation.textContent = 'La séance '+s.short+' a été ajoutée à Mon parcours récent : '+firstTryScore+'/'+exerciseCards.length+' réussis sans erreur.';
+          confirmation.textContent = 'La séance '+s.short+' est bien enregistrée pour '+studentName+' : '+firstTryScore+'/'+exerciseCards.length+'.';
           finishBox.appendChild(confirmation);
-          try{
-            document.dispatchEvent(new CustomEvent('hibou:student-event', {detail:payload}));
-            window.dispatchEvent(new CustomEvent('hibou:student-event', {detail:payload}));
-          }catch(ignore){}
         }else{
-          alert('Le journal élève n’est pas encore disponible. Recharge la page puis recommence.');
+          alert('La séance n’a pas été confirmée dans Mon parcours récent. Vérifie que ton prénom est bien sélectionné, puis réessaie avec ce bouton.');
         }
       }, true);
     }
