@@ -77,8 +77,7 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
 
       function refreshScienceSessionButton(){
         var finished = exerciseCards.filter(function(card){
-          var feedback = card.querySelector('.v24-english-feedback');
-          return feedback && String(feedback.textContent || '').trim().length > 0;
+          return card.dataset.mhScienceCompleted === '1';
         }).length;
         finishButton.disabled = finished < exerciseCards.length;
         finishButton.textContent = finished < exerciseCards.length
@@ -107,7 +106,7 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
           domaine:s.short,
           titre:'Séance de sciences terminée',
           detail:detailText,
-          score:exerciseCards.length,
+          score:exerciseCards.filter(function(card){return card.dataset.mhScienceSolved === '1';}).length,
           total:exerciseCards.length,
           source:'sciences_seance_'+s.id
         };
@@ -245,6 +244,8 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
       html += '<div class="v24-history-final-message">'+(validated ? 'Bravo, bilan Sciences validé : aucune compétence en rouge.' : 'Bilan terminé : regarde les compétences rouges à retravailler.')+' Score : '+totalOk+' / '+questions.length+'.</div>';
       result.style.display = 'block';
       result.innerHTML = html;
+      card.dataset.mhScienceCompleted='1';
+      card.dataset.mhScienceSolved = totalOk === questions.length ? '1' : '0';
       resultButton.disabled = true;
       resultButton.textContent = '✅ Bilan enregistré dans mon parcours';
 
@@ -377,6 +378,7 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
         return;
       }
       card.dataset.mhScienceSolved = '1';
+      card.dataset.mhScienceCompleted = '1';
       Array.prototype.forEach.call(list.querySelectorAll('button'), function(b){b.disabled=true;});
       check.disabled = true;
       renderEnglishFeedback(card,true,exo.explanation || 'Bravo, les trois réponses sont correctes.');
@@ -393,6 +395,7 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
       card.appendChild(imgBox);
     }
     renderSciencePhotos(card, exo.photos);
+    renderScienceHelp(card, exo.help || [{icon:'🦉',text:exo.hint || 'Relis la consigne et observe les images avant de choisir.'}]);
     var wrap = document.createElement('div');
     wrap.className = 'v24-english-options';
     var opts = exo.imgOptions || exo.options || [];
@@ -405,21 +408,25 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
         ev.preventDefault();
         if(card.dataset.mhScienceSolved === '1') return;
         var ok = i === exo.correct;
-        if(exo.retry){
-          Array.prototype.forEach.call(wrap.children,function(x){x.classList.remove('correct','wrong');});
-          b.classList.add(ok ? 'correct' : 'wrong');
-          if(ok){
-            card.dataset.mhScienceSolved='1';
-            Array.prototype.forEach.call(wrap.children,function(x){x.disabled=true;});
-            renderEnglishFeedback(card,true,exo.explanation || 'Bravo, c’est correct.');
-          }else{
-            renderEnglishFeedback(card,false,exo.hint || 'Essaie encore et observe les indices.');
-          }
+        var tries = Number(card.dataset.mhScienceTries || 0) + 1;
+        card.dataset.mhScienceTries = String(tries);
+        Array.prototype.forEach.call(wrap.children,function(x){x.classList.remove('correct','wrong');});
+        if(ok){
+          b.classList.add('correct');
+          card.dataset.mhScienceSolved = '1';
+          card.dataset.mhScienceCompleted = '1';
+          Array.prototype.forEach.call(wrap.children,function(x){x.disabled=true;});
+          renderEnglishFeedback(card,true,tries===1?'Bravo, c’est correct.':'Bravo, tu as trouvé après avoir réfléchi.');
+        }else if(tries === 1){
+          b.classList.add('wrong');
+          b.disabled=true;
+          renderEnglishFeedback(card,false,exo.hint || 'Observe les détails et relis la consigne. Essaie encore.');
         }else{
-          Array.prototype.forEach.call(wrap.querySelectorAll('button'), function(x){x.disabled = true;});
-          b.classList.add(ok ? 'correct' : 'wrong');
+          card.dataset.mhScienceCompleted='1';
+          b.classList.add('wrong');
+          Array.prototype.forEach.call(wrap.children,function(x){x.disabled=true;});
           if(wrap.children[exo.correct]) wrap.children[exo.correct].classList.add('correct');
-          renderEnglishFeedback(card, ok, ok ? 'Bravo, c’est correct.' : 'Regarde la bonne réponse en vert.');
+          renderEnglishFeedback(card,false,exo.explanation || 'Observe la réponse en vert et relis la leçon.');
         }
       }, true);
       wrap.appendChild(b);
@@ -462,6 +469,7 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
           b.classList.add('done');
           selected = -1;
           done++;
+          if(done === exo.left.length){card.dataset.mhScienceCompleted='1';card.dataset.mhScienceSolved='1';}
           renderEnglishFeedback(card, true, done === exo.left.length ? 'Toutes les paires sont correctes.' : 'Bonne paire.');
         }else{
           renderEnglishFeedback(card, false, 'Essaie une autre paire.');
@@ -498,7 +506,7 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
       validate.onclick=function(e){e.preventDefault();if(selectedItems.length!==exo.photoSteps.length){renderEnglishFeedback(card,false,'Place toutes les étapes avant de vérifier.');return;}
         var ok=selectedItems.every(function(x,i){return x.label===exo.correctOrder[i];});
         renderEnglishFeedback(card,ok,ok?(exo.success || 'Bravo, les étapes sont dans le bon ordre.'):(exo.hint||'Observe les étapes et réessaie.'));
-        if(ok){photoBank.querySelectorAll('button').forEach(function(b){b.disabled=true;});sequence.querySelectorAll('button').forEach(function(b){b.disabled=true;});validate.disabled=true;}
+        if(ok){card.dataset.mhScienceCompleted='1';card.dataset.mhScienceSolved='1';photoBank.querySelectorAll('button').forEach(function(b){b.disabled=true;});sequence.querySelectorAll('button').forEach(function(b){b.disabled=true;});validate.disabled=true;}
       };
       redrawPhotos();card.appendChild(photoBank);card.appendChild(sequence);card.appendChild(validate);renderEnglishFeedback(card,true,'');return;
     }
@@ -525,7 +533,8 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
     check.type = 'button';
     check.className = 'v24-english-check';
     check.textContent = 'Vérifier';
-    check.addEventListener('click', function(ev){ev.preventDefault();var ok=JSON.stringify(placed.map(function(p){return p.w;}))===JSON.stringify(exo.correctOrder);renderEnglishFeedback(card, ok, ok ? 'Parfait, bon ordre.' : 'Pas encore. Clique un mot placé pour le retirer.');}, true);
+    check.addEventListener('click', function(ev){ev.preventDefault();var ok=JSON.stringify(placed.map(function(p){return p.w;}))===JSON.stringify(exo.correctOrder);if(ok){card.dataset.mhScienceCompleted='1';card.dataset.mhScienceSolved='1';}
+      renderEnglishFeedback(card, ok, ok ? 'Parfait, bon ordre.' : 'Pas encore. Clique un mot placé pour le retirer.');}, true);
     card.appendChild(bank);card.appendChild(zone);card.appendChild(check);renderEnglishFeedback(card, true, '');
   }
 
@@ -608,7 +617,7 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
         selected = null;
         count++;
         renderEnglishFeedback(card, true, 'Bien classé.');
-        if(count === exo.items.length) renderEnglishFeedback(card, true, 'Tri terminé.');
+        if(count === exo.items.length){card.dataset.mhScienceCompleted='1';card.dataset.mhScienceSolved='1';renderEnglishFeedback(card, true, 'Tri terminé.');}
       },true);
       zones.appendChild(z);
     });
@@ -626,7 +635,7 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
     check.type = 'button';
     check.className = 'v24-english-check';
     check.textContent = 'Valider';
-    check.addEventListener('click', function(ev){ev.preventDefault();var boxes=Array.prototype.slice.call(card.querySelectorAll('input[type="checkbox"]'));var ok=boxes.length>0&&boxes.every(function(b){return b.checked;});renderEnglishFeedback(card, ok, ok ? 'Bilan validé.' : 'Coche les bonnes réponses avant de valider.');}, true);
+    check.addEventListener('click', function(ev){ev.preventDefault();var boxes=Array.prototype.slice.call(card.querySelectorAll('input[type="checkbox"]'));var ok=boxes.length>0&&boxes.every(function(b){return b.checked;});if(ok){card.dataset.mhScienceCompleted='1';card.dataset.mhScienceSolved='1';}renderEnglishFeedback(card, ok, ok ? 'Bilan validé.' : 'Coche les bonnes réponses avant de valider.');}, true);
     card.appendChild(check);
     renderEnglishFeedback(card, true, '');
   }
