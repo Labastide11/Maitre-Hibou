@@ -84,7 +84,7 @@
 
   /* Aide méthodologique par notion, disponible avant toute réponse. */
   var GEO_HELP_BY_SESSION = {
-    1:['Observe la rose des vents : le nord est généralement en haut. Repère ensuite les autres directions.', 'Lis d’abord les symboles de la légende, puis retrouve-les sur le plan.', 'Repère le point de départ et suis le trajet étape par étape.', 'Cherche un repère fixe sur le plan avant de choisir.', 'Vérifie les directions et la légende une dernière fois.'],
+    1:['Observe les quatre extrémités de la rose des vents. Retrouve la direction de chaque pointe en utilisant ce que tu as appris dans la leçon.', 'Observe l’école sur le plan. Cherche ce qui est placé à sa droite, puis vérifie la direction demandée.', 'Associe chaque numéro au symbole qui lui ressemble. Cherche ensuite sa signification dans la légende.', 'Cherche un repère fixe sur le plan avant de choisir.', 'Vérifie les directions et la légende une dernière fois.'],
     2:['Observe les noms des fleuves et les lieux traversés. Cherche un indice sur la carte.', 'Regarde la forme du territoire et situe-le par rapport à la mer.', 'Lis le titre et la légende de la carte avant de répondre.', 'Cherche un indice sur la carte plutôt que de répondre au hasard.', 'Compare les informations de la carte et la consigne.'],
     3:['Lis la légende : les couleurs montrent des espaces plus ou moins peuplés.', 'Compare les zones de la carte avant de choisir.', 'Cherche où vivent beaucoup de personnes et où elles sont moins nombreuses.', 'Observe les écarts de population sur la carte.', 'Relis le titre de la carte et vérifie son échelle.'],
     4:['Commence par observer les bâtiments, les routes et les espaces naturels.', 'Cherche des indices de la ville et de la campagne.', 'Observe le relief et la présence éventuelle de la mer.', 'Compare les photographies en repérant ce qui est commun et différent.', 'Justifie ton choix avec un détail visible du paysage.'],
@@ -95,13 +95,13 @@
     var tips=GEO_HELP_BY_SESSION[sessionId]||[];
     var tip=(exo && typeof exo.hint==='string' && exo.hint.trim()) || tips[index] || 'Relis la consigne, puis observe attentivement les documents et leur légende.';
     var btn=document.createElement('button');
-    btn.type='button';btn.className='v24-science-help-btn mh-geo-help';
+    btn.type='button';btn.className='mh-geo-help-visible';
     btn.textContent='💡 Aide';btn.setAttribute('aria-expanded','false');
-    btn.style.cssText='display:inline-block;margin:8px 0;padding:9px 14px;border:2px solid #d09e4e;border-radius:12px;background:#fff4dc;color:#694719;font-weight:800;cursor:pointer';
+    btn.style.cssText='display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;align-self:flex-start;flex:none;width:auto;min-height:40px;margin:8px 0;padding:9px 14px;border:2px solid #d09e4e;border-radius:12px;background:#fff4dc;color:#694719;font-size:15px;font-weight:800;cursor:pointer';
     var panel=document.createElement('div');panel.hidden=true;panel.className='mh-geo-help-panel';
     panel.style.cssText='margin:3px 0 12px;padding:11px 13px;background:#fff9e9;border-left:4px solid #e6b858;border-radius:8px;line-height:1.5';
     panel.textContent='🦉 '+tip;
-    btn.addEventListener('click',function(e){e.preventDefault();panel.hidden=!panel.hidden;btn.textContent=panel.hidden?'💡 Aide':'💡 Cacher l’aide';btn.setAttribute('aria-expanded',String(!panel.hidden));});
+    btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();panel.hidden=!panel.hidden;btn.textContent=panel.hidden?'💡 Aide':'💡 Cacher l’aide';btn.setAttribute('aria-expanded',String(!panel.hidden));});
     var instruction=card.querySelector('p');
     if(instruction){instruction.insertAdjacentElement('afterend',panel);instruction.insertAdjacentElement('afterend',btn);}
     else {card.insertBefore(panel,card.firstChild);card.insertBefore(btn,card.firstChild);}
