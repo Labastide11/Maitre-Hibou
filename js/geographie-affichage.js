@@ -82,6 +82,39 @@
     buttons[0].click();close.focus();
   }
 
+  /* Aide méthodologique par notion, disponible avant toute réponse. */
+  var GEO_HELP_BY_SESSION = {
+    1:['Observe la rose des vents : le nord est généralement en haut. Repère ensuite les autres directions.', 'Lis d’abord les symboles de la légende, puis retrouve-les sur le plan.', 'Repère le point de départ et suis le trajet étape par étape.', 'Cherche un repère fixe sur le plan avant de choisir.', 'Vérifie les directions et la légende une dernière fois.'],
+    2:['Observe les noms des fleuves et les lieux traversés. Cherche un indice sur la carte.', 'Regarde la forme du territoire et situe-le par rapport à la mer.', 'Lis le titre et la légende de la carte avant de répondre.', 'Cherche un indice sur la carte plutôt que de répondre au hasard.', 'Compare les informations de la carte et la consigne.'],
+    3:['Lis la légende : les couleurs montrent des espaces plus ou moins peuplés.', 'Compare les zones de la carte avant de choisir.', 'Cherche où vivent beaucoup de personnes et où elles sont moins nombreuses.', 'Observe les écarts de population sur la carte.', 'Relis le titre de la carte et vérifie son échelle.'],
+    4:['Commence par observer les bâtiments, les routes et les espaces naturels.', 'Cherche des indices de la ville et de la campagne.', 'Observe le relief et la présence éventuelle de la mer.', 'Compare les photographies en repérant ce qui est commun et différent.', 'Justifie ton choix avec un détail visible du paysage.'],
+    5:['Observe si les habitations sont groupées ou éloignées.', 'Cherche des indices pour distinguer ville, village et campagne.', 'Regarde les routes, les bâtiments et les espaces verts.', 'Compare la taille et la disposition des logements.', 'Appuie-toi sur les photographies pour justifier ton choix.'],
+    6:['Cherche qui travaille, habite ou se déplace dans ce lieu.', 'Observe ce que les personnes font dans le quartier.', 'Repère les services utiles aux habitants.', 'Compare les besoins des habitants et les aménagements.', 'Cherche un indice concret dans chaque document.']
+  };
+  function renderGeoActivityHelp(card, sessionId, index, exo){
+    var tips=GEO_HELP_BY_SESSION[sessionId]||[];
+    var tip=(exo && typeof exo.hint==='string' && exo.hint.trim()) || tips[index] || 'Relis la consigne, puis observe attentivement les documents et leur légende.';
+    var btn=document.createElement('button');
+    btn.type='button';btn.className='v24-science-help-btn mh-geo-help';
+    btn.textContent='💡 Aide';btn.setAttribute('aria-expanded','false');
+    btn.style.cssText='display:inline-block;margin:8px 0;padding:9px 14px;border:2px solid #d09e4e;border-radius:12px;background:#fff4dc;color:#694719;font-weight:800;cursor:pointer';
+    var panel=document.createElement('div');panel.hidden=true;panel.className='mh-geo-help-panel';
+    panel.style.cssText='margin:3px 0 12px;padding:11px 13px;background:#fff9e9;border-left:4px solid #e6b858;border-radius:8px;line-height:1.5';
+    panel.textContent='🦉 '+tip;
+    btn.addEventListener('click',function(e){e.preventDefault();panel.hidden=!panel.hidden;btn.textContent=panel.hidden?'💡 Aide':'💡 Cacher l’aide';btn.setAttribute('aria-expanded',String(!panel.hidden));});
+    var instruction=card.querySelector('p');
+    if(instruction){instruction.insertAdjacentElement('afterend',panel);instruction.insertAdjacentElement('afterend',btn);}
+    else {card.insertBefore(panel,card.firstChild);card.insertBefore(btn,card.firstChild);}
+    card.dataset.mhGeoHelpReady='1';
+  }
+  function geoIsCompleted(card,sessionId){
+    if(sessionId<=2)return card.dataset.geoDone==='1';
+    if(card.dataset.mhScienceCompleted==='1'||card.dataset.mhScienceSolved==='1')return true;
+    var fb=card.querySelector('.v24-english-feedback');
+    var msg=fb ? String(fb.textContent||'').toLowerCase() : '';
+    if(!msg)return false;
+    return /toutes les paires|tri terminé|tous les éléments|bon ordre|ordre correct|phrase validée|bilan validé|félicitations|bravo, c.est correct|tu as trouvé après avoir réfléchi/.test(msg);
+  }
   function renderGeoSession(grid, id){
     var s = GEO_SESSIONS.filter(function(x){return x.id === id;})[0] || GEO_SESSIONS[0];
     grid.className = 'v24-english-shell';
@@ -101,6 +134,7 @@
       var card = document.createElement('section');
       card.className = 'v24-english-exo' + (s.id === 1 ? ' geo-s1-activity' : (s.id === 2 ? ' geo-s2-activity' : ''));
       card.innerHTML = '<h3>'+esc(exo.title)+'</h3><p>'+esc(exo.instr)+'</p>';
+      renderGeoActivityHelp(card,s.id,idx,exo);
       if(s.id === 1){ renderGeoS1(card, idx); wrap.appendChild(card); return; }
       if(s.id === 2){ renderGeoS2(card, idx); wrap.appendChild(card); return; }
       if(idx === 0 && s.map) card.insertAdjacentHTML('beforeend','<div class="v24-geo-map-card">'+s.map+'</div>');
@@ -130,10 +164,7 @@
       wrap.appendChild(finishBox);
 
       function refreshGeoSessionButton(){
-        var finished = exerciseCards.filter(function(card){
-          var feedback = card.querySelector('.v24-english-feedback');
-          return (s.id === 1 || s.id === 2) ? card.dataset.geoDone === '1' : (feedback && String(feedback.textContent || '').trim().length > 0);
-        }).length;
+        var finished = exerciseCards.filter(function(card){return geoIsCompleted(card,s.id);}).length;
         finishButton.disabled = finished < exerciseCards.length;
         finishButton.textContent = finished < exerciseCards.length
           ? 'Exercices terminés : '+finished+' / '+exerciseCards.length
@@ -141,6 +172,17 @@
       }
 
       exerciseCards.forEach(function(card){
+        /* Les erreurs sont repérées sans pénaliser le simple affichage d'un indice. */
+        card.addEventListener('click',function(){
+          setTimeout(function(){
+            var feedback=card.querySelector('.v24-english-feedback, .geo-s2-feedback');
+            if(!feedback)return;
+            var t=String(feedback.textContent||'').toLowerCase();
+            if(feedback.classList.contains('bad') || feedback.classList.contains('wrong') || feedback.classList.contains('retry') || /essaie encore|pas encore|mauvaise réponse|ce n.est pas|incorrect|recommence|regarde la bonne réponse/.test(t)){
+              card.dataset.mhGeoHadError='1';
+            }
+          },0);
+        },false);
         try{
           new MutationObserver(refreshGeoSessionButton).observe(card, {
             childList:true, subtree:true, characterData:true, attributes:true,
@@ -154,32 +196,30 @@
         ev.preventDefault();
         if(finishButton.disabled || finishButton.dataset.recorded === '1') return;
 
-        var detailText = s.short+' — '+exerciseCards.length+' exercices terminés';
+        var successes = exerciseCards.filter(function(card){return geoIsCompleted(card,s.id)&&card.dataset.mhGeoHadError!=='1';}).length;
+        var detailText = s.short+' — '+exerciseCards.length+' exercices terminés · '+successes+'/'+exerciseCards.length+' sans erreur';
         var payload = {
           type:'entrainement_termine',
           matiere:'Géographie',
           domaine:s.short,
           titre:'Séance de géographie terminée',
           detail:detailText,
-          score:exerciseCards.length,
+          score:successes,
           total:exerciseCards.length,
           source:'geographie_seance_'+s.id
         };
-        var recorded = false;
+        var recorded = false, savedEvent = null;
+        var studentName = '';
+        try{if(window.hibouStudentSystem && typeof window.hibouStudentSystem.currentName==='function')studentName=window.hibouStudentSystem.currentName()||'';}catch(ignore){}
+        if(!studentName){alert('Choisis ton prénom sur l’accueil avant d’enregistrer la séance.');return;}
+        payload.prenom=studentName;
         try{
-          if(typeof window.hibouTrackEvent === 'function'){
-            window.hibouTrackEvent(payload);
-            recorded = true;
-          }else if(typeof window.hibouRecordSuccess === 'function'){
-            window.hibouRecordSuccess(s.emoji+' Géographie — '+s.short+' — séance terminée', 'entrainement', payload);
-            recorded = true;
-          }else if(typeof window.hibouRecordTrainingSuccess === 'function'){
-            window.hibouRecordTrainingSuccess('géographie', s.short, exerciseCards.length+' exercices terminés');
-            recorded = true;
+          if(typeof window.hibouTrackEvent==='function')savedEvent=window.hibouTrackEvent(payload);
+          if(savedEvent && typeof window.hibouGetEventHistory==='function'){
+            var hist=window.hibouGetEventHistory(studentName)||[];
+            recorded=hist.some(function(e){return e.id_evenement && e.id_evenement===savedEvent.id_evenement;});
           }
-        }catch(error){
-          try{ console.error('Géographie séance '+s.id+' : journal non alimenté', error); }catch(ignore){}
-        }
+        }catch(error){try{console.error('Géographie : journal non alimenté',error);}catch(ignore){}}
 
         if(recorded){
           finishButton.dataset.recorded = '1';
