@@ -9,7 +9,7 @@
 
   var DATA_URL = 'data/vocabulaire.json?v=25729';
   var CACHE_KEY = 'hibou_vocabulaire_json_v25729';
-  var state = { data:null, activity:null, questions:[], index:0, score:0, total:0, answers:[], hintsUsed:0, hintsByQuestion:{} };
+  var state = { data:null, activity:null, questions:[], index:0, score:0, total:0, answers:[], hintsUsed:0, hintsByQuestion:{}, attemptsByQuestion:{} };
 
   function $(id){ return document.getElementById(id); }
   function popupInner(){ return $('frenchPopupInnerV2348'); }
@@ -132,7 +132,7 @@
   window.startHibouVocabulaireV25729 = function(type){
     loadData(false).then(function(){
       var items=shuffle(activeItems(type)).slice(0,10);
-      state.activity=type; state.questions=items; state.index=0; state.score=0; state.total=items.length; state.answers=[]; state.hintsUsed=0; state.hintsByQuestion={};
+      state.activity=type; state.questions=items; state.index=0; state.score=0; state.total=items.length; state.answers=[]; state.hintsUsed=0; state.hintsByQuestion={}; state.attemptsByQuestion={};
       if(!items.length) return renderNoData(type);
       renderQcm();
     });
@@ -172,15 +172,29 @@
   };
 
   window.answerHibouVocabulaireV25729 = function(btn){
-    var item=state.questions[state.index]; if(!item) return;
+    var item=state.questions[state.index]; if(!item || btn.disabled) return;
+    var key=String(state.activity||'')+'_'+String(state.index||0);
     var buttons=[].slice.call(document.querySelectorAll('.vocab-v25729-option'));
+    // Après une erreur, on garde les autres propositions accessibles : pas de réponse dévoilée.
     var ok=btn.getAttribute('data-ok')==='1';
-    buttons.forEach(function(b){ b.disabled=true; if(b.getAttribute('data-ok')==='1') b.classList.add('correct'); });
-    if(!ok) btn.classList.add('wrong'); else state.score++;
-    state.answers.push({question:item.question, ok:ok, hint:!!state.hintsByQuestion[String(state.activity||'')+'_'+String(state.index||0)]});
+    var tries=(state.attemptsByQuestion[key]||0)+1;
+    state.attemptsByQuestion[key]=tries;
     var fb=$('vocabFeedbackV25729');
-    var nextLabel = (state.index+1>=state.total) ? 'Voir le résultat' : 'Question suivante';
-    if(fb) fb.innerHTML='<div class="vocab-v25729-feedback '+(ok?'ok':'warn')+'">'+(ok?'✅ Bravo !':'💡 Correction : '+esc(item.bonne_reponse||''))+(item.explication?'<br><small>'+esc(item.explication)+'</small>':'')+'</div><div class="vocab-v25729-actions"><button class="vocab-v25729-btn" onclick="nextHibouVocabulaireQuestionV25729()">'+nextLabel+'</button></div>';
+    if(!ok && tries===1){
+      btn.disabled=true;
+      btn.classList.add('wrong');
+      window.showHibouVocabHintV25729();
+      if(fb) fb.innerHTML='<div class="vocab-v25729-feedback warn">Ce n’est pas encore ça. Lis l’indice puis essaie une deuxième fois !</div>';
+      return;
+    }
+    buttons.forEach(function(b){b.disabled=true;if(b.getAttribute('data-ok')==='1')b.classList.add('correct');});
+    if(!ok) btn.classList.add('wrong');
+    // Score exigeant : un point seulement si la première tentative est correcte.
+    if(ok && tries===1) state.score++;
+    state.answers.push({question:item.question,ok:ok, attempts:tries, firstTry:ok&&tries===1, hint:!!state.hintsByQuestion[key]});
+    var nextLabel=(state.index+1>=state.total)?'Voir le résultat':'Question suivante';
+    var feedback=ok?(tries===1?'✅ Bravo !':'✅ Tu as trouvé en réessayant !'):'💡 Correction : '+esc(item.bonne_reponse||'');
+    if(fb) fb.innerHTML='<div class="vocab-v25729-feedback '+(ok?'ok':'warn')+'">'+feedback+(item.explication?'<br><small>'+esc(item.explication)+'</small>':'')+'</div><div class="vocab-v25729-actions"><button class="vocab-v25729-btn" onclick="nextHibouVocabulaireQuestionV25729()">'+nextLabel+'</button></div>';
   };
   window.nextHibouVocabulaireQuestionV25729 = function(){
     state.index++;
