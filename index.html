@@ -2,33 +2,6 @@
 
 <html lang="fr" class="hibou-login-pending">
 <head>
-<script id="mh-accueil-navigation-directe-v2">
-/* Une carte = une action. Ne neutralise jamais le clic si le moteur n'est pas prêt. */
-(function(){
-  'use strict';
-  var keys=['francais','anglais','sciences','geographie','histoire'];
-  function normalise(t){return String(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
-  document.addEventListener('click',function(ev){
-    var btn=ev.target && ev.target.closest ? ev.target.closest('button') : null;
-    if(!btn || !btn.closest('#v2574MainDashboard .subjects-bar.mh-subjects'))return;
-    var key=btn.getAttribute('data-subject');
-    if(!key || keys.indexOf(key)<0){
-      var label=normalise(btn.getAttribute('aria-label')||btn.textContent);
-      key=keys.find(function(k){return label.includes(k);});
-    }
-    if(!key || typeof window.mhOpenDirectSubject!=='function')return;
-    try{
-      window.mhOpenDirectSubject(key);
-    }catch(err){
-      console.error('Maître Hibou : ouverture matière impossible',key,err);
-      return; /* permettre au gestionnaire de clic précédent de réagir */
-    }
-    ev.preventDefault();
-    ev.stopImmediatePropagation();
-  },true);
-})();
-</script>
-
 <meta charset="utf-8"/>
 <style id="hibou-login-gate-v25884">
 /* Navigation interdite avant une authentification réussie, dès le premier rendu. */
@@ -17095,7 +17068,7 @@ body.v21-final .quick-btn{
     if(bySubject.jeux && !bySubject.histoire){
       const b = bySubject.jeux;
       b.setAttribute("data-subject","histoire");
-      b.setAttribute("onclick","selectSubject(this, 'histoire')");
+      b.removeAttribute("onclick");
       bySubject.histoire = b;
       delete bySubject.jeux;
     }
@@ -17108,8 +17081,9 @@ body.v21-final .quick-btn{
         btn.className = "subject-btn";
         btn.type = "button";
         btn.setAttribute("data-subject", key);
-        btn.setAttribute("onclick", "selectSubject(this, '" + key + "')");
+        btn.removeAttribute("onclick");
       }
+      btn.removeAttribute('onclick');
       const data = subjectMap[key];
       btn.innerHTML = `
         <span class="subject-title-line"><span class="subject-icon">${data.icon}</span> <span class="subject-label">${data.label}</span></span>
@@ -25941,17 +25915,19 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
   window.mhOpenDirectSubject = openSubject;
 
   function installClicks(){
-    var bar = document.querySelector('.subjects-bar');
-    if(!bar || bar.__v2403Bound) return;
-    bar.__v2403Bound = true;
-    bar.addEventListener('click', function(ev){
-      var btn = ev.target && ev.target.closest ? ev.target.closest('.subject-btn') : null;
+    /* Une seule écoute pour les cartes du tableau de bord, même si la barre est reconstruite. */
+    if(document.__mhSubjectsDirectBound) return;
+    document.__mhSubjectsDirectBound = true;
+    document.addEventListener('click', function(ev){
+      var target=ev.target;
+      var btn=target && target.closest ? target.closest('#v2574MainDashboard .subjects-bar.mh-subjects > button[data-subject]') : null;
       if(!btn) return;
-      var key = btn.getAttribute('data-subject');
+      var key=btn.getAttribute('data-subject');
       if(!key || !SUBJECTS[key]) return;
+      /* Ignore le clic seulement si une destination réelle existe. */
+      if(!byId('v24BigSubjectOverlay') || !byId('v24BigSubjectGrid')) return;
       ev.preventDefault();
-      ev.stopPropagation();
-      if(ev.stopImmediatePropagation) ev.stopImmediatePropagation();
+      ev.stopImmediatePropagation();
       openSubject(key);
     }, true);
   }
