@@ -5280,6 +5280,17 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar
   body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects {display:grid!important;visibility:visible!important;}
 }
 </style>
+
+<style id="mh-direct-tiles-source-fix-20261031">
+#v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button[data-subject] .subject-title-line {
+  display:flex !important; flex-direction:column !important; align-items:center !important;
+  justify-content:center !important; gap:5px !important; width:100% !important; height:100% !important;
+}
+#v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button[data-subject] .subject-title-line .subject-label {
+  font-size:13px !important; line-height:1.25 !important; text-align:center !important;
+  font-weight:900 !important; white-space:normal !important;
+}
+</style>
 </head>
 <body class="prenom-mode">
 <header>
@@ -16869,12 +16880,12 @@ body.v21-final .quick-btn{
   window.__maitreHibouV21AccueilTresorFinal = true;
 
   const subjectMap = {
-    francais:{label:"Français", icon:"📖", items:["Grammaire","Conjugaison","Orthographe","Vocabulaire","Lecture"]},
-    maths:{label:"Maths", icon:"🧮", items:["Nombres","Calcul","Géométrie","Mesures","Problèmes"]},
-    anglais:{label:"Anglais", icon:"🇬🇧", items:["Vocabulaire","Grammaire","Expression orale","Compréhension","Culture"]},
-    sciences:{label:"Sciences", icon:"🧪", items:["Le vivant","La matière","Les objets","La planète Terre","Espace"]},
-    geographie:{label:"Géographie", icon:"🌍", items:["Le monde","Les paysages","Les climats","Population","Cartes"]},
-    histoire:{label:"Histoire", icon:"🏛️", items:["Préhistoire","Antiquité","Moyen Âge","Temps modernes","Époque contemporaine"]}
+    francais:{label:"Français", icon:"📖"},
+    maths:{label:"Maths", icon:"🧮"},
+    anglais:{label:"Anglais", icon:"🇬🇧"},
+    sciences:{label:"Sciences", icon:"🧪"},
+    geographie:{label:"Géographie", icon:"🌍"},
+    histoire:{label:"Histoire", icon:"🏛️"}
   };
 
   function h(v){
@@ -17094,8 +17105,6 @@ body.v21-final .quick-btn{
       const data = subjectMap[key];
       btn.innerHTML = `
         <span class="subject-title-line"><span class="subject-icon">${data.icon}</span> <span class="subject-label">${data.label}</span></span>
-        <span class="v21-sublist">${data.items.map(function(item){return '<span class="v21-subitem">' + h(item) + '</span>';}).join("")}</span>
-        <span class="v21-subject-arrow" aria-hidden="true">›</span>
       `;
       bar.appendChild(btn);
     });
