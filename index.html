@@ -36244,5 +36244,99 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 }
 </style>
 
+
+<!-- Maître Hibou : accueil matières en un clic — sans sous-menus visibles -->
+<style id="mh-home-direct-subjects-20261031">
+@media (min-width:1200px) and (pointer:fine) {
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation
+  .subjects-bar.mh-subjects > button {
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    flex-direction:column !important;
+    gap:0 !important;
+    cursor:pointer !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation
+  .subjects-bar.mh-subjects > button > :not(.subject-label) {
+    display:none !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation
+  .subjects-bar.mh-subjects > button::before,
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation
+  .subjects-bar.mh-subjects > button::after,
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation
+  .subjects-bar.mh-subjects > button .subject-label::before,
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation
+  .subjects-bar.mh-subjects > button .subject-label::after {
+    content:none !important;
+    display:none !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation
+  .subjects-bar.mh-subjects > button > .subject-label {
+    display:flex !important;
+    flex:1 1 auto !important;
+    width:100% !important;
+    align-items:center !important;
+    justify-content:center !important;
+    text-align:center !important;
+    font-family:inherit !important;
+    font-size:clamp(15px,1.25vw,20px) !important;
+    font-weight:900 !important;
+    line-height:1.2 !important;
+    color:white !important;
+    background:transparent !important;
+    border:0 !important;
+    padding:0 5px !important;
+    margin:0 !important;
+    box-shadow:none !important;
+    overflow:visible !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation
+  .subjects-bar.mh-subjects > button > .subject-label > * {
+    display:none !important;
+  }
+}
+</style>
+<script id="mh-home-direct-subjects-20261031">
+(function(){
+  'use strict';
+  var names = {
+    francais:'Français', anglais:'Anglais', sciences:'Sciences',
+    geographie:'Géographie', histoire:'Histoire'
+  };
+  function update(){
+    var nav=document.querySelector('#v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects');
+    if(!nav)return;
+    var buttons=nav.querySelectorAll(':scope > button');
+    buttons.forEach(function(btn){
+      var key=btn.getAttribute('data-subject');
+      var name=names[key] ||
+        (btn.classList.contains('v2574-grow-btn')?'Grandir ensemble':
+        (btn.classList.contains('v2574-tools-btn')?'Outils':null));
+      if(!name)return;
+      var label=btn.querySelector(':scope > .subject-label');
+      if(!label){
+        label=document.createElement('span');
+        label.className='subject-label';
+        btn.appendChild(label);
+      }
+      if(label.textContent.trim()!==name || label.children.length) label.textContent=name;
+      if(btn.getAttribute('aria-label')!=='Ouvrir '+name)
+        btn.setAttribute('aria-label','Ouvrir '+name);
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',update);
+  else update();
+  window.addEventListener('load',update);
+  var pending=false;
+  new MutationObserver(function(){
+    if(pending)return;
+    pending=true;
+    requestAnimationFrame(function(){pending=false;update();});
+  }).observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+
 </body>
 </html>
