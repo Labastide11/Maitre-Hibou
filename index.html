@@ -25478,6 +25478,30 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
     buttons[0].click();close.focus();
   }
 
+
+  /* Aides CE2 : appliquées au moteur de géographie effectivement utilisé dans index.html. */
+  var MH_GEO_HINTS_20261031 = [['Observe la rose des vents : elle indique quatre directions. Cherche leurs initiales.', 'Choisis un bâtiment du plan, puis suis les rues avec ton doigt.', "Observe chaque dessin de la légende et cherche ce qu'il pourrait représenter dans un quartier.", "Cherche d'abord un point de repère facile à reconnaître sur le plan.", 'Lis chaque indice séparément et élimine les lieux qui ne conviennent pas.'], ['Lis les noms inscrits sur la carte avant de faire ton choix.', "Observe la forme de la France et les espaces qui l'entourent.", 'Lis le titre de la carte et regarde les symboles utilisés.', 'Commence par retrouver le lieu demandé sur la carte.', 'Vérifie ton choix en confrontant plusieurs indices de la carte.'], ['Regarde la légende : elle explique les couleurs et les nombres.', 'Compare les différentes zones de la carte, sans te presser.', "Cherche les endroits qui comptent le plus d'habitants et ceux qui en comptent moins.", 'Utilise la légende pour comprendre les différences entre les lieux.', 'Observe les lettres et les nombres avant de répondre.'], ["Observe les bâtiments, les routes et la végétation sur l'image.", "Cherche un détail qui permet de distinguer un espace urbain d'un espace rural.", 'Compare les formes du relief et les éléments naturels.', 'Repère deux ressemblances et une différence entre les paysages.', 'Explique ton choix avec un élément visible sur la photographie.'], ['Observe si les maisons sont rapprochées ou éloignées.', 'Cherche les différences entre un village, une ville et la campagne.', 'Repère les routes et les espaces naturels sur la photographie.', 'Compare la taille et la disposition des habitations.', 'Choisis un détail précis pour justifier ta réponse.'], ['Observe les activités des personnes et les bâtiments du quartier.', 'Cherche à quoi sert chaque lieu pour ses habitants.', 'Repère les services qui rendent la vie quotidienne plus facile.', 'Demande-toi de quoi les habitants ont besoin dans ce lieu.', 'Compare les documents avant de choisir et explique ton raisonnement.']];
+  function mhGeoHelp20261031(card, sessionId, index){
+    if(card.querySelector('.mh-geo-help-20261031')) return;
+    var tip=(MH_GEO_HINTS_20261031[sessionId-1]||[])[index] || 'Observe le document, puis relis la consigne.';
+    var instruction=card.querySelector('p');
+    if(!instruction) return;
+    var holder=document.createElement('div');
+    holder.className='mh-geo-help-20261031';
+    holder.style.cssText='display:block!important;visibility:visible!important;opacity:1!important;margin:9px 0 12px!important;flex:0 0 auto!important';
+    var button=document.createElement('button');
+    button.type='button';button.textContent='💡 Aide';
+    button.setAttribute('aria-expanded','false');
+    button.style.cssText='display:inline-block!important;visibility:visible!important;opacity:1!important;position:static!important;background:#fff4dc!important;color:#634316!important;border:2px solid #d5a450!important;border-radius:12px!important;padding:9px 15px!important;font-size:15px!important;font-weight:800!important;cursor:pointer!important;width:auto!important;min-height:40px!important';
+    var panel=document.createElement('div');
+    panel.hidden=true;
+    panel.style.cssText='margin:8px 0 0;padding:11px 13px;background:#fff9e9;color:#46330d;border-left:4px solid #d5a450;border-radius:9px;line-height:1.5;font-weight:650';
+    panel.textContent='🦉 '+tip;
+    button.addEventListener('click',function(event){event.preventDefault();event.stopPropagation();panel.hidden=!panel.hidden;button.textContent=panel.hidden?'💡 Aide':'💡 Cacher l’aide';button.setAttribute('aria-expanded',String(!panel.hidden));});
+    holder.appendChild(button);holder.appendChild(panel);
+    instruction.insertAdjacentElement('afterend',holder);
+  }
+
   function renderGeoSession(grid, id){
     var s = GEO_SESSIONS.filter(function(x){return x.id === id;})[0] || GEO_SESSIONS[0];
     grid.className = 'v24-english-shell';
@@ -25498,12 +25522,12 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       var card = document.createElement('section');
       card.className = 'v24-english-exo' + (s.id === 1 ? ' geo-s1-activity' : (s.id === 2 ? ' geo-s2-activity' : (s.id === 3 ? ' geo-s3-activity' : '')));
       card.innerHTML = '<h3>'+esc(exo.title)+'</h3><p>'+esc(exo.instr)+'</p>';
-      if(s.id === 1){ renderGeoS1(card, idx); wrap.appendChild(card); return; }
-      if(s.id === 2){ renderGeoS2(card, idx); wrap.appendChild(card); return; }
-      if(s.id === 3){ renderGeoS3(card, idx); wrap.appendChild(card); return; }
-      if(s.id === 4){ renderGeoS4(card, idx); wrap.appendChild(card); return; }
-      if(s.id === 5){ renderGeoS5(card, idx); wrap.appendChild(card); return; }
-      if(s.id === 6){ renderGeoS6(card, idx); wrap.appendChild(card); return; }
+      if(s.id === 1){ renderGeoS1(card, idx); mhGeoHelp20261031(card,s.id,idx); wrap.appendChild(card); return; }
+      if(s.id === 2){ renderGeoS2(card, idx); mhGeoHelp20261031(card,s.id,idx); wrap.appendChild(card); return; }
+      if(s.id === 3){ renderGeoS3(card, idx); mhGeoHelp20261031(card,s.id,idx); wrap.appendChild(card); return; }
+      if(s.id === 4){ renderGeoS4(card, idx); mhGeoHelp20261031(card,s.id,idx); wrap.appendChild(card); return; }
+      if(s.id === 5){ renderGeoS5(card, idx); mhGeoHelp20261031(card,s.id,idx); wrap.appendChild(card); return; }
+      if(s.id === 6){ renderGeoS6(card, idx); mhGeoHelp20261031(card,s.id,idx); wrap.appendChild(card); return; }
       if(idx === 0 && s.map) card.insertAdjacentHTML('beforeend','<div class="v24-geo-map-card">'+s.map+'</div>');
       if(exo.type === 'assessment') renderHistoryAssessment(card, exo);
       if(exo.type === 'choice') renderScienceChoice(card, exo);
@@ -25512,6 +25536,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       if(exo.type === 'sort') renderScienceSort(card, exo);
       if(exo.type === 'checklist') renderScienceChecklist(card, exo);
       if(exo.type === 'free') renderGeoFree(card, exo);
+      mhGeoHelp20261031(card,s.id,idx);
       wrap.appendChild(card);
     });
 
