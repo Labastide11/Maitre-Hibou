@@ -17093,6 +17093,7 @@ body.v21-final .quick-btn{
           return;
         }
         var fn=window.mhOpenDirectSubject;
+        if(key==='sciences' || key==='geographie'){ window.location.assign(key+'.html'); return; }
         if(typeof fn==='function')fn(key);
         else if(key==='francais' && typeof window.openFrenchTrainingPopupV2348==='function')window.openFrenchTrainingPopupV2348();
         else if(key==='maths' && typeof window.openMathsTrainingPopupV2343==='function')window.openMathsTrainingPopupV2343();
@@ -25709,7 +25710,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
   }
 
   /* Navigation directe : entrée unique vers les pages des matières. */
-  window.mhOpenDirectSubject = openSubject;
+  window.mhOpenDirectSubject = function(key){ if(key==='sciences'||key==='geographie'){ window.location.assign(key+'.html'); return; } return openSubject(key); };
 
   /* Navigation unique : actions directement attachées par buildSubjects(). */
 

@@ -1,0 +1,1035 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sciences CE2 — Maître Hibou</title><style>
+:root{--ink:#26304a;--accent:#17865d;}*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial,sans-serif;background:#f6f9fc;color:var(--ink)}header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:white;border-bottom:3px solid var(--accent);padding:10px 18px}header h1{font-size:clamp(1.2rem,2vw,1.7rem);margin:0}.back{display:inline-block;padding:10px 15px;background:#e8f2ff;color:#193e69;border-radius:12px;text-decoration:none;font-weight:800}main{max-width:1250px;margin:auto;padding:15px}button{cursor:pointer;font:inherit}button:focus-visible,a:focus-visible{outline:3px solid #f59e0b;outline-offset:3px}.v24-english-shell{width:100%}.v24-english-sessions{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.v24-english-session-card{border:2px solid #dbe5f3;background:#fff;border-radius:18px;padding:12px;overflow:hidden;min-height:165px}.mh-science-session-image{width:100%;height:165px;object-fit:contain}.v24-english-exercises{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:14px}.v24-english-exo{min-width:0;background:white;border:1px solid #e0e7ef;border-radius:16px;padding:15px}.v24-english-exo img{max-width:100%;height:auto}.v24-english-back,.v24-english-check,.mh-choice{border:1px solid #b7cbe1;border-radius:10px;background:#eef6ff;padding:10px 13px;margin:5px}.mh-choice.chosen{background:#d8edff;border-color:#1760a8}.error{border:2px solid #e7a0a0;background:#fff4f4;padding:18px;border-radius:12px}@media(max-width:700px){header{padding:8px}main{padding:8px}.v24-english-exercises{grid-template-columns:1fr}}
+
+/* Miniatures des six seances de sciences, sans effet sur les exercices. */
+.v24-big-subject-popup.v24-science-popup #v24ScienceSessions .mh-science-illustrated-card {
+  padding: 5px !important;
+  min-width: 0;
+  min-height: 80px;
+  overflow: hidden;
+  display: block;
+  cursor: pointer;
+  text-align: left;
+}
+.v24-big-subject-popup.v24-science-popup #v24ScienceSessions .mh-science-session-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2.55 / 1;
+  display: block;
+  object-fit: contain;
+  border-radius: 12px;
+}
+.v24-big-subject-popup.v24-science-popup #v24ScienceSessions .mh-science-session-image[hidden] {display:none !important;}
+.v24-big-subject-popup.v24-science-popup #v24ScienceSessions .mh-science-fallback {
+  font-weight: 900;
+  font-size: 15px;
+  color: #196535;
+  padding: 15px;
+}
+.v24-big-subject-popup.v24-science-popup #v24ScienceSessions .mh-science-fallback[hidden] {display:none !important;}
+
+
+.v24-english-session-card{display:flex!important;align-items:center!important;gap:12px!important;text-align:left!important;}
+.v24-english-session-card .v24-subject-thumb{display:block;flex:0 0 108px;width:108px;height:88px;object-fit:cover;border-radius:12px;border:2px solid rgba(120,100,170,.17);background:#fff;}
+.v24-english-session-card .v24-subject-card-body{display:flex;flex-direction:column;align-items:flex-start;min-width:0;gap:4px;}
+.v24-english-session-card .v24-subject-card-body strong,.v24-english-session-card .v24-subject-card-body span,.v24-english-session-card .v24-subject-card-body small{display:block;}
+@media(max-width:720px){.v24-english-session-card .v24-subject-thumb{flex-basis:84px;width:84px;height:75px;}}
+
+
+/* Cartes catalogue : grand visuel et légendes, comme en Histoire.
+   Limité aux deux catalogues : les écrans d'exercices ne changent pas. */
+#v24EnglishSessions, #v24GeoSessions {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+#v24EnglishSessions .v24-english-session-card,
+#v24GeoSessions .v24-english-session-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  gap: 0 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 225px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border-radius: 19px !important;
+  text-align: left !important;
+}
+#v24EnglishSessions .v24-subject-thumb,
+#v24GeoSessions .v24-subject-thumb {
+  display: block !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 164px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+}
+#v24EnglishSessions .v24-subject-card-body,
+#v24GeoSessions .v24-subject-card-body {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+  padding: 11px 15px 15px !important;
+  gap: 5px !important;
+}
+#v24EnglishSessions .v24-subject-card-body strong,
+#v24GeoSessions .v24-subject-card-body strong {
+  font-size: 20px !important;
+  line-height: 1.2 !important;
+}
+#v24EnglishSessions .v24-subject-card-body span,
+#v24GeoSessions .v24-subject-card-body span {
+  font-size: 15px !important;
+}
+#v24EnglishSessions .v24-subject-card-body small,
+#v24GeoSessions .v24-subject-card-body small {
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+}
+@media (max-width: 1050px) {
+  #v24EnglishSessions, #v24GeoSessions {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 620px) {
+  #v24EnglishSessions, #v24GeoSessions {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+/* Géographie : les JPG sont des bandeaux pédagogiques horizontaux.
+   La hauteur intrinsèque permet d'occuper toute la largeur sans rogner les textes. */
+#v24GeoSessions .v24-english-session-card .v24-subject-thumb {
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  aspect-ratio: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+
+/* Les affiches contiennent déjà leurs titres, objectifs et illustrations.
+   Toute l'affiche constitue le bouton, sans doublon ni bandeau supplémentaire. */
+#v24GeoSessions .v24-english-session-card,
+#v24HistorySessions .v24-history-illustrated-session {
+  display:block !important;
+  padding:0 !important;
+  height:auto !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+  text-align:left !important;
+  line-height:0 !important;
+}
+#v24GeoSessions .v24-english-session-card .v24-subject-thumb,
+#v24HistorySessions .v24-history-illustrated-session > img {
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  height:auto !important;
+  max-height:none !important;
+  aspect-ratio:auto !important;
+  object-fit:contain !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  vertical-align:top !important;
+}
+#v24GeoSessions .v24-english-session-card .v24-subject-card-body,
+#v24HistorySessions .v24-history-illustrated-session .mh-history-card-caption {
+  display:none !important;
+}
+
+
+/* Séance 4 : règles limitées à ses exercices. */
+.geo-s4-match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.geo-s4-column{display:grid;grid-template-rows:repeat(4,150px);gap:10px}.geo-s4-button{font:inherit;font-weight:700;color:#252052;background:#fffaf1;border:2px solid #ffdaad;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.geo-s4-button:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.geo-s4-photo{display:flex;flex-direction:column;align-items:stretch;justify-content:center;padding:5px;gap:5px;overflow:hidden}.geo-s4-photo img{width:100%;height:110px;object-fit:cover;border-radius:9px;display:block}.geo-s4-button.selected{border-color:#6846ce;box-shadow:0 0 0 2px #6846ce}.geo-s4-button.matched{border-color:#378346;background:#edf8ed;opacity:1}.geo-s4-elements,.geo-s4-zones{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:10px 0}.geo-s4-elements img{height:140px}.geo-s4-zones button{border-style:dashed;min-height:65px}.geo-s4-intrus{display:flex;gap:8px;flex-wrap:wrap}.geo-s4-sorted{color:#246531}.geo-s4-activity .v24-english-feedback{margin-top:12px}@media(max-width:600px){.geo-s4-column{grid-template-rows:repeat(4,140px)}.geo-s4-photo img{height:95px}.geo-s4-elements img{height:115px}.geo-s4-button{font-size:16px;padding:6px}}
+
+
+
+.geo-s5-match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.geo-s5-col{display:grid;grid-template-rows:repeat(3,175px);gap:10px}.geo-s5-btn{font:inherit;font-weight:700;color:#252052;background:#fffaf1;border:2px solid #ffdaad;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.geo-s5-btn:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.geo-s5-photo{display:flex;flex-direction:column;align-items:stretch;padding:6px;gap:5px;overflow:hidden}.geo-s5-img{width:100%;height:180px;object-fit:cover;border-radius:9px;display:block}.geo-s5-photo .geo-s5-img{height:125px}.geo-s5-btn.selected{border-color:#6846ce;box-shadow:0 0 0 2px #6846ce}.geo-s5-btn.matched{border-color:#378346;background:#edf8ed;opacity:1}.geo-s5-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.geo-s5-answers{display:grid;gap:10px}.geo-s5-riddle-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.geo-s5-riddle-options .geo-s5-img{height:110px}.geo-s5-question{font-weight:700}.geo-s5-progress{color:#62428a}.geo-s5-activity textarea{width:100%;box-sizing:border-box;min-height:140px}.geo-s5-result{color:#246531}.geo-s5-activity .v24-english-feedback{margin-top:12px}@media(max-width:600px){.geo-s5-col{grid-template-rows:repeat(3,165px)}.geo-s5-btn{font-size:16px;padding:6px}.geo-s5-riddle-options{grid-template-columns:1fr}.geo-s5-riddle-options .geo-s5-img{height:150px}}
+
+
+
+.geo-s6-match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.geo-s6-col{display:grid;grid-template-rows:repeat(3,175px);gap:10px}.geo-s6-btn{font:inherit;font-weight:700;color:#252052;background:#fffaf1;border:2px solid #ffdaad;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.geo-s6-btn:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.geo-s6-photo{display:flex;flex-direction:column;align-items:stretch;padding:6px;gap:5px;overflow:hidden}.geo-s6-img{width:100%;height:220px;object-fit:contain;background:#fff;border-radius:9px;display:block}.geo-s6-photo .geo-s6-img{height:120px;order:-1}.geo-s6-btn.selected{border-color:#6846ce;box-shadow:0 0 0 2px #6846ce}.geo-s6-btn.matched{border-color:#378346;background:#edf8ed;opacity:1}.geo-s6-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.geo-s6-zones{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.geo-s6-zones button{border-style:dashed}.geo-s6-answers{display:grid;gap:10px}.geo-s6-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.geo-s6-choices .geo-s6-img{height:110px}.geo-s6-question{font-weight:700}.geo-s6-progress{color:#62428a}.geo-s6-result{color:#246531}.geo-s6-activity .v24-english-feedback{margin-top:12px}@media(max-width:600px){.geo-s6-col{grid-template-rows:repeat(3,175px)}.geo-s6-btn{font-size:16px;padding:6px}.geo-s6-choices{grid-template-columns:1fr}.geo-s6-choices .geo-s6-img{height:160px}}
+
+
+
+.en1-discovery{grid-column:1/-1;border:2px solid #d9d4fa;border-radius:14px;padding:12px;background:#f5f3ff}.en1-discovery summary{cursor:pointer;font-weight:700}.en1-intro-photo{display:block;max-width:500px;width:100%;max-height:240px;object-fit:contain;margin:10px auto}.en1-btn{font:inherit;font-weight:700;color:#252052;background:#fffaf1;border:2px solid #ffdaad;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.en1-btn:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.en1-options{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.en1-progress{font-weight:700;color:#62428a}.en1-match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.en1-match-col{display:grid;grid-template-rows:repeat(3,minmax(60px,auto));gap:10px}.en1-btn.selected{border-color:#6846ce;box-shadow:0 0 0 2px #6846ce}.en1-btn.matched,.en1-photo-scene.matched{border-color:#378346;background:#edf8ed;opacity:1}.en1-photo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.en1-photo-scene{border:2px solid #ffdaad;border-radius:14px;padding:8px;min-width:0}.en1-scene-img{width:100%;height:170px;object-fit:contain;background:#fff;border-radius:9px;display:block}.en1-caption{font-size:17px;line-height:1.4;margin:8px 0}.en1-photo-options{display:grid;gap:8px}.en1-activity .v24-english-feedback{margin-top:12px}.en1-bubble{border-radius:14px;background:#eee8ff;padding:14px;font-size:22px;font-weight:700}.en1-activity .en1-oral button{margin:6px 6px 6px 0}.en1-activity .en1-btn:disabled{cursor:default}.en1-activity .en1-btn:disabled:not(.matched){opacity:.7}#v24EnglishExercises:has(.en1-activity){grid-template-columns:repeat(2,minmax(0,1fr))}#v24EnglishExercises .en1-activity:nth-of-type(2){grid-column:1/-1}@media(max-width:700px){#v24EnglishExercises:has(.en1-activity){grid-template-columns:1fr}.en1-photo-grid{grid-template-columns:1fr}.en1-scene-img{height:200px}.en1-btn{font-size:17px}}
+
+
+
+.en2-discovery{grid-column:1/-1;border:2px solid #d9d4fa;border-radius:14px;padding:12px;background:#f5f3ff}.en2-discovery summary{cursor:pointer;font-weight:700}.en2-btn{font:inherit;font-weight:700;color:#252052;background:#fffaf1;border:2px solid #ffdaad;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.en2-btn:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.en2-options{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.en2-progress{font-weight:700;color:#62428a}.en2-portraits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}.en2-portrait{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:center}.en2-portrait-img{width:100%;height:190px;object-fit:contain;background:#fff;border-radius:9px;display:block}.en2-btn.matched{border-color:#378346;background:#edf8ed;opacity:1}.en2-slots{border:2px dashed #b5a6e8;border-radius:12px;background:#f7f4ff;min-height:65px;padding:12px;box-sizing:border-box;display:flex;align-items:center;font-size:22px;font-weight:700;overflow-wrap:anywhere}.en2-bubble{border-radius:14px;background:#eee8ff;padding:14px;font-size:22px;font-weight:700}.en2-answer-options{display:grid;gap:8px}.en2-activity .v24-english-feedback{margin-top:12px}.en2-activity .en2-oral button{margin:6px 6px 6px 0}.en2-activity .en2-btn:disabled{cursor:default}.en2-activity .en2-btn:disabled:not(.matched){opacity:.7}#v24EnglishExercises:has(.en2-activity){grid-template-columns:repeat(2,minmax(0,1fr))}#v24EnglishExercises .en2-activity:nth-of-type(2){grid-column:1/-1}@media(max-width:700px){#v24EnglishExercises:has(.en2-activity){grid-template-columns:1fr}.en2-btn{font-size:17px}.en2-portrait-img{height:140px}.en2-portraits{gap:6px}}@media(max-width:380px){.en2-portraits{grid-template-columns:1fr}.en2-portrait-img{height:175px}}
+
+
+
+.en3-discovery{grid-column:1/-1;border:2px solid #d9d4fa;border-radius:14px;padding:12px;background:#f5f3ff}.en3-discovery summary{cursor:pointer;font-weight:700}.en3-btn{font:inherit;font-weight:700;color:#252052;background:#fffaf1;border:2px solid #ffdaad;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.en3-btn:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.en3-progress{font-weight:700;color:#62428a}.en3-photo-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.en3-photo-btn{display:flex;flex-direction:column;align-items:stretch;gap:8px;text-align:center}.en3-photo{display:block;width:100%;height:230px;object-fit:contain;background:#fff;border-radius:9px}.en3-photo-btn .en3-photo{height:140px;order:-1}.en3-caption{font-weight:700;margin:10px 0;line-height:1.4}.en3-word-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.en3-match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;max-width:950px;margin:auto}.en3-match-col{display:grid;grid-template-rows:repeat(4,195px);gap:10px}.en3-btn.selected{border-color:#6846ce;box-shadow:0 0 0 2px #6846ce}.en3-btn.matched{border-color:#378346;background:#edf8ed;opacity:1}.en3-activity .v24-english-feedback{margin-top:12px}.en3-bubble{border-radius:14px;background:#eee8ff;padding:14px;font-size:22px;font-weight:700;white-space:pre-line}.en3-oral>.en3-btn{margin:8px 6px 8px 0}.en3-activity .en3-btn:disabled{cursor:default}.en3-activity .en3-btn:disabled:not(.matched){opacity:.7}#v24EnglishExercises:has(.en3-activity){grid-template-columns:repeat(2,minmax(0,1fr))}#v24EnglishExercises .en3-activity:nth-of-type(3){grid-column:1/-1}@media(max-width:700px){#v24EnglishExercises:has(.en3-activity){grid-template-columns:1fr}.en3-btn{font-size:17px}.en3-match-col{grid-template-rows:repeat(4,195px)}.en3-photo-btn .en3-photo{height:120px}}@media(max-width:380px){.en3-photo-options,.en3-word-options{grid-template-columns:1fr}}
+
+
+
+.en4-discovery{grid-column:1/-1;border:2px solid #d9d4fa;border-radius:14px;padding:12px;background:#f5f3ff}.en4-discovery summary{cursor:pointer;font-weight:700}.en4-number-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;max-width:850px;margin:12px auto}.en4-number-grid button{display:flex;flex-direction:column;gap:5px}.en4-number-grid strong{font-size:30px}.en4-btn{font:inherit;font-weight:700;color:#252052;background:#fff4e4;border:2px solid #efc78f;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.en4-btn:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.en4-progress{font-weight:700;color:#62428a}.en4-number-choices{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:12px 0}.en4-number-choices button{font-size:32px;background:#eee8fb;border-color:#b7a5e9;min-height:75px}.en4-collection{display:block;width:100%;height:260px;object-fit:contain;background:#fff;border-radius:14px;margin:10px 0}.en4-word-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.en4-match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}.en4-match-col{display:grid;grid-template-rows:repeat(5,62px);gap:10px}.en4-match-col:first-child button{font-size:29px;background:#eee8fb;border-color:#b7a5e9}.en4-btn.selected{border-color:#6846ce;box-shadow:0 0 0 2px #6846ce}.en4-btn.matched{border-color:#378346;background:#edf8ed!important;opacity:1}.en4-activity .v24-english-feedback{margin-top:12px}.en4-train svg{display:block;width:100%;height:auto;max-height:200px}.en4-spoken-numbers{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:12px 0}.en4-number-tag{text-align:center;padding:12px 5px;background:#eee8fb;border-radius:12px;font-size:24px;font-weight:700}.en4-oral>.en4-btn{margin:8px 6px 8px 0}.en4-activity .en4-btn:disabled{cursor:default}.en4-activity .en4-btn:disabled:not(.matched){opacity:.7}#v24EnglishExercises:has(.en4-activity){grid-template-columns:repeat(2,minmax(0,1fr))}@media(max-width:700px){#v24EnglishExercises:has(.en4-activity){grid-template-columns:1fr}.en4-btn{font-size:17px}.en4-number-choices{gap:6px}.en4-number-choices button{font-size:26px;padding:6px;min-height:62px}.en4-number-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.en4-collection{height:240px}}
+
+
+
+.en5-discovery{grid-column:1/-1;border:2px solid #d9d4fa;border-radius:14px;padding:12px;background:#f5f3ff}.en5-discovery summary{cursor:pointer;font-weight:700}.en5-number-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;max-width:850px;margin:12px auto}.en5-number-grid button{display:flex;flex-direction:column;gap:5px}.en5-number-grid strong{font-size:30px}.en5-btn{font:inherit;font-weight:700;color:#252052;background:#fff4e4;border:2px solid #efc78f;border-radius:14px;padding:10px;min-width:0;min-height:48px;cursor:pointer;overflow-wrap:anywhere}.en5-btn:focus-visible{outline:3px solid #6545cf;outline-offset:2px}.en5-progress{font-weight:700;color:#62428a}.en5-number-choices{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:12px 0}.en5-number-choices button{font-size:32px;background:#eee8fb;border-color:#b7a5e9;min-height:75px}.en5-collection{display:block;width:100%;height:260px;object-fit:contain;background:#fff;border-radius:14px;margin:10px 0}.en5-word-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.en5-match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}.en5-match-col{display:grid;grid-template-rows:repeat(5,62px);gap:10px}.en5-match-col:first-child button{font-size:29px;background:#eee8fb;border-color:#b7a5e9}.en5-btn.selected{border-color:#6846ce;box-shadow:0 0 0 2px #6846ce}.en5-btn.matched{border-color:#378346;background:#edf8ed!important;opacity:1}.en5-activity .v24-english-feedback{margin-top:12px}.en5-train svg{display:block;width:100%;height:auto;max-height:200px}.en5-spoken-numbers{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:12px 0}.en5-number-tag{text-align:center;padding:12px 5px;background:#eee8fb;border-radius:12px;font-size:24px;font-weight:700}.en5-oral>.en5-btn{margin:8px 6px 8px 0}.en5-activity .en5-btn:disabled{cursor:default}.en5-activity .en5-btn:disabled:not(.matched){opacity:.7}#v24EnglishExercises:has(.en5-activity){grid-template-columns:repeat(2,minmax(0,1fr))}@media(max-width:700px){#v24EnglishExercises:has(.en5-activity){grid-template-columns:1fr}.en5-btn{font-size:17px}.en5-number-choices{gap:6px}.en5-number-choices button{font-size:26px;padding:6px;min-height:62px}.en5-number-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.en5-collection{height:240px}}
+
+.en5-picture{display:block;width:100%;height:300px;object-fit:contain;background:white;border-radius:16px;margin:12px 0}.en5-options{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}.en5-options>.en5-btn{flex:1 1 130px}.en5-question,.en5-sentence{padding:12px;border-radius:12px;background:#eee8fb;font-size:22px;font-weight:700;min-height:50px}.en5-round>.en5-btn,.en5-discovery>.en5-btn{margin:5px}.en5-discovery p{margin:10px 0}@media(max-width:700px){.en5-picture{height:270px}}
+
+
+  :root{ --v24-nav-h: 92px; }
+
+  body.v24-0-3-ready{
+    padding-bottom: calc(var(--v24-nav-h) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Suppression des anciens menus déroulants sous les matières */
+  body.v24-0-3-ready #quickQuestions,
+  body.v24-0-3-ready .quick-questions,
+  body.v24-0-3-ready #v2173ActivitiesPanel,
+  body.v24-0-3-ready .v2173-activities-panel{
+    display:none !important;
+    visibility:hidden !important;
+    height:0 !important;
+    min-height:0 !important;
+    max-height:0 !important;
+    padding:0 !important;
+    margin:0 !important;
+    border:0 !important;
+    overflow:hidden !important;
+    pointer-events:none !important;
+  }
+
+  /* Barre de matières fixée en bas : vraie navigation tablette */
+  body.v24-0-3-ready .subjects-bar{
+    position:fixed !important;
+    left:12px !important;
+    right:12px !important;
+    bottom:calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+    z-index:300100 !important;
+    width:auto !important;
+    max-width:none !important;
+    margin:0 !important;
+    padding:8px 10px !important;
+    display:grid !important;
+    grid-template-columns:repeat(6,minmax(0,1fr)) !important;
+    gap:8px !important;
+    border:2px solid rgba(255,255,255,.88) !important;
+    border-radius:24px !important;
+    background:rgba(255,255,255,.95) !important;
+    box-shadow:0 -8px 28px rgba(45,43,85,.18), inset 0 1px 0 rgba(255,255,255,.75) !important;
+    backdrop-filter:blur(10px) !important;
+    -webkit-backdrop-filter:blur(10px) !important;
+    overflow:visible !important;
+    white-space:normal !important;
+  }
+
+  body.v24-0-3-ready .subjects-bar .subject-btn{
+    min-height:62px !important;
+    min-width:0 !important;
+    border-radius:18px !important;
+    padding:7px 8px !important;
+    justify-content:center !important;
+    align-items:center !important;
+    text-align:center !important;
+    gap:4px !important;
+    display:flex !important;
+    flex-direction:column !important;
+    color:white !important;
+    border:3px solid rgba(255,255,255,.75) !important;
+    background:linear-gradient(135deg,var(--mat,#6C63FF) 0%,var(--mat2,#8E86FF) 100%) !important;
+    box-shadow:0 7px 17px var(--mat-shadow,rgba(108,99,255,.24)), inset 0 1px 0 rgba(255,255,255,.35) !important;
+    cursor:pointer !important;
+    line-height:1.05 !important;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif !important;
+    font-weight:1000 !important;
+    text-shadow:0 2px 0 rgba(0,0,0,.14) !important;
+  }
+  body.v24-0-3-ready .subjects-bar .subject-btn .subject-icon,
+  body.v24-0-3-ready .subjects-bar .subject-btn .v2173-subject-icon{
+    font-size:22px !important;
+    line-height:1 !important;
+  }
+  body.v24-0-3-ready .subjects-bar .subject-btn .subject-label,
+  body.v24-0-3-ready .subjects-bar .subject-btn .v2173-subject-label{
+    font-size:14px !important;
+    font-weight:1000 !important;
+    line-height:1.05 !important;
+  }
+  body.v24-0-3-ready .subjects-bar .v2173-chevron{display:none !important;}
+  body.v24-0-3-ready .subjects-bar .subject-btn.active{
+    transform:none !important;
+    outline:3px solid rgba(255,255,255,.9) !important;
+  }
+
+  body.v24-0-3-ready .subjects-bar .subject-btn[data-subject="francais"]{--mat:#FF3B57;--mat2:#FF7A8C;--mat-shadow:rgba(255,59,87,.26);}
+  body.v24-0-3-ready .subjects-bar .subject-btn[data-subject="maths"]{--mat:#1683F7;--mat2:#4DB0FF;--mat-shadow:rgba(22,131,247,.28);}
+  body.v24-0-3-ready .subjects-bar .subject-btn[data-subject="anglais"]{--mat:#9C4DFF;--mat2:#C084FF;--mat-shadow:rgba(156,77,255,.25);}
+  body.v24-0-3-ready .subjects-bar .subject-btn[data-subject="sciences"]{--mat:#24A84A;--mat2:#63D878;--mat-shadow:rgba(36,168,74,.25);}
+  body.v24-0-3-ready .subjects-bar .subject-btn[data-subject="geographie"]{--mat:#FF8A00;--mat2:#FFB23F;--mat-shadow:rgba(255,138,0,.26);}
+  body.v24-0-3-ready .subjects-bar .subject-btn[data-subject="histoire"]{--mat:#6C63FF;--mat2:#8E86FF;--mat-shadow:rgba(108,99,255,.24);}
+
+  /* Correction du libellé Géographie : l'ancien pseudo-texte "Géo" est neutralisé. */
+  body.v24-0-3-ready .subjects-bar .subject-btn[data-subject="geographie"] .subject-label::after,
+  body.v24-0-3-ready .subjects-bar .subject-btn[data-subject="geographie"] .v2173-subject-label::after{
+    content:"" !important;
+    display:none !important;
+  }
+
+  /* Rééquilibrage visuel : la zone centrale respire mieux entre le bandeau haut et la barre du bas. */
+  body.v24-0-3-ready.v21-final .v21-home{
+    min-height:calc(100dvh - 126px - var(--v24-nav-h)) !important;
+    display:flex !important;
+    flex-direction:column !important;
+    justify-content:flex-start !important;
+    padding-top:clamp(16px,4.5vh,48px) !important;
+    padding-bottom:10px !important;
+  }
+  body.v24-0-3-ready.v21-final .v21-hero{
+    margin:0 auto 14px !important;
+  }
+  body.v24-0-3-ready.v21-final .v21-center{
+    width:min(1220px,calc(100% - 44px)) !important;
+    margin:0 auto !important;
+    gap:22px !important;
+    align-items:stretch !important;
+  }
+  body.v24-0-3-ready.v21-final .v21-treasure-card,
+  body.v24-0-3-ready.v21-final .v21-profile-card{
+    min-height:260px !important;
+  }
+  body.v24-0-3-ready.v21-final .v21-chest{
+    transform:scale(.96) !important;
+    margin-bottom:8px !important;
+  }
+
+  /* Grandes popups pour Anglais / Sciences / Géographie / Histoire */
+  .v24-big-subject-overlay{
+    position:fixed;
+    inset:0;
+    z-index:300250;
+    background:rgba(45,43,85,.62);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px;
+    touch-action:none;
+  }
+  .v24-big-subject-overlay.hidden{display:none !important;}
+  .v24-big-subject-popup{
+    width:min(1760px,98vw);
+    height:min(860px,94vh);
+    max-height:94vh;
+    min-height:0;
+    background:linear-gradient(135deg,#FFFFFF 0%,var(--v24-soft,#F8F7FF) 100%);
+    border:4px solid var(--v24-border,#EAE8FF);
+    border-radius:24px;
+    box-shadow:0 24px 70px rgba(9,20,50,.26);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    position:relative;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    color:#2D2B55;
+  }
+  .v24-big-subject-header{
+    flex:0 0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:14px 18px;
+    background:linear-gradient(135deg,var(--v24-color,#6C63FF),var(--v24-color2,#8E86FF));
+    color:white;
+  }
+  .v24-big-subject-title{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    min-width:0;
+  }
+  .v24-big-subject-title .v24-emoji{
+    width:52px;
+    height:52px;
+    border-radius:18px;
+    background:rgba(255,255,255,.22);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    flex-shrink:0;
+  }
+  .v24-big-subject-title h2{
+    margin:0;
+    font-family:"Trebuchet MS", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-size:34px;
+    line-height:.95;
+    font-weight:1000;
+    color:white;
+  }
+  .v24-big-subject-title small{
+    display:block;
+    margin-top:4px;
+    font-size:14px;
+    font-weight:900;
+    opacity:.95;
+  }
+  .v24-big-subject-close{
+    border:none;
+    background:white;
+    color:var(--v24-color,#6C63FF);
+    width:46px;
+    height:46px;
+    border-radius:17px;
+    font-size:30px;
+    font-weight:1000;
+    cursor:pointer;
+    box-shadow:0 8px 18px rgba(0,0,0,.14);
+    flex-shrink:0;
+  }
+  .v24-big-subject-body{
+    flex:1 1 auto;
+    min-height:0;
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+    padding:14px;
+  }
+  .v24-big-subject-help{
+    background:#FFFCEB;
+    border:2px solid #FFD93D;
+    color:#7A5C00;
+    border-radius:18px;
+    padding:12px 14px;
+    font-weight:900;
+    margin-bottom:16px;
+  }
+  .v24-big-subject-help.v24-hidden-help{
+    display:none !important;
+  }
+  .v24-big-activities-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:14px;
+  }
+  .v24-big-activity-card{
+    border:3px solid var(--v24-border,#EAE8FF);
+    background:linear-gradient(180deg,#FFFFFF 0%,var(--v24-soft,#F8F7FF) 100%);
+    color:#2D2B55;
+    border-radius:24px;
+    padding:20px;
+    min-height:120px;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-weight:1000;
+    font-size:20px;
+    line-height:1.15;
+    text-align:left;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(45,43,85,.08);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:7px;
+  }
+  .v24-big-activity-card:hover,
+  .v24-big-activity-card:focus{
+    transform:translateY(-2px);
+    border-color:var(--v24-color,#6C63FF);
+    outline:none;
+  }
+  .v24-big-activity-card small{
+    display:block;
+    color:#6f6c92;
+    font-size:14px;
+    font-weight:900;
+    line-height:1.25;
+  }
+  .v24-big-activity-card.soon{opacity:.72;}
+
+  .v24-english-shell{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .v24-english-intro{
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:14px;
+    align-items:stretch;
+  }
+  .v24-english-panel{
+    background:linear-gradient(180deg,#FFFFFF 0%,#F7F1FF 100%);
+    border:3px solid #DFC7FF;
+    border-radius:24px;
+    padding:16px;
+    color:#2D2B55;
+    box-shadow:0 8px 20px rgba(45,43,85,.08);
+  }
+  .v24-english-panel h3{
+    margin:0 0 6px;
+    font-family:"Trebuchet MS", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-size:24px;
+    line-height:1;
+    color:#44228F;
+  }
+  .v24-english-panel p{
+    margin:0;
+    color:#67638B;
+    font-weight:900;
+    line-height:1.3;
+  }
+  .v24-english-sessions{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:12px;
+  }
+  .v24-english-session-card{
+    appearance:none;
+    border:3px solid #DFC7FF;
+    border-radius:22px;
+    background:linear-gradient(180deg,#FFFFFF 0%,#F8F4FF 100%);
+    box-shadow:0 8px 18px rgba(45,43,85,.08);
+    color:#201C50;
+    text-align:left;
+    padding:16px;
+    min-height:138px;
+    cursor:pointer;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .v24-english-session-card:hover,
+  .v24-english-session-card:focus{
+    transform:translateY(-2px);
+    border-color:#8A5CFF;
+    outline:none;
+  }
+  .v24-english-session-card strong{
+    font-family:"Trebuchet MS", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-size:22px;
+    line-height:1;
+    color:#44228F;
+  }
+  .v24-english-session-card span{
+    font-weight:1000;
+    font-size:17px;
+  }
+  .v24-english-session-card small{
+    color:#716D92;
+    font-weight:900;
+    line-height:1.25;
+  }
+  .v24-english-toolbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:nowrap;
+    background:#FFFCEB;
+    border:2px solid #FFD93D;
+    border-radius:18px;
+    padding:10px;
+  }
+  .v24-english-back,
+  .v24-english-speak,
+  .v24-english-check{
+    appearance:none;
+    border:none;
+    border-radius:14px;
+    padding:8px 13px;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-weight:1000;
+    font-size:14px;
+    cursor:pointer;
+  }
+  .v24-english-back{background:#F3E9FF;color:#5D35C9;border:2px solid #DFC7FF;}
+  .v24-english-speak{background:#201C50;color:white;}
+  .v24-english-check{background:#6C63FF;color:white;margin-top:10px;}
+  .v24-english-objective{
+    color:#201C50;
+    font-weight:1000;
+    font-size:18px;
+    line-height:1.1;
+  }
+  .v24-english-criteria{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:6px;
+  }
+  .v24-english-criteria span{
+    background:white;
+    border:2px solid #E8DEFF;
+    color:#5B5680;
+    border-radius:999px;
+    padding:5px 9px;
+    font-weight:900;
+    font-size:12px;
+  }
+  .v24-english-exercises{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:10px;
+  }
+  .v24-english-exo{
+    background:white;
+    border:2px solid #E8DEFF;
+    border-radius:18px;
+    padding:11px;
+    color:#201C50;
+    min-height:0;
+    box-shadow:0 6px 16px rgba(45,43,85,.07);
+  }
+  .v24-english-exo.v24-english-listen-card{
+    grid-column:auto;
+  }
+  .v24-english-exo h3{
+    margin:0 0 2px;
+    font-family:"Trebuchet MS", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    color:#44228F;
+    font-size:18px;
+    line-height:1.05;
+  }
+  .v24-english-exo p{
+    margin:0 0 7px;
+    color:#716D92;
+    font-weight:900;
+    line-height:1.2;
+  }
+  .v24-english-options,
+  .v24-english-bank,
+  .v24-english-zone,
+  .v24-english-match{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .v24-english-option,
+  .v24-english-token,
+  .v24-english-match-item{
+    appearance:none;
+    border:2px solid #E8DEFF;
+    border-radius:12px;
+    background:#FAF8FF;
+    color:#201C50;
+    padding:7px 9px;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-weight:1000;
+    font-size:14px;
+    cursor:pointer;
+  }
+  .v24-english-option.correct,
+  .v24-english-match-item.done{
+    background:#E8F8EE;
+    border-color:#6BCB77;
+    color:#205A2A;
+  }
+  .v24-english-option.wrong{
+    background:#FFECEC;
+    border-color:#FF6B6B;
+    color:#7A2222;
+  }
+  .v24-english-match-col{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    flex:1 1 120px;
+  }
+  .v24-english-match-item.selected{
+    background:#FFF3D3;
+    border-color:#FFD93D;
+  }
+  .v24-english-zone{
+    margin-top:6px;
+    min-height:38px;
+    border:2px dashed #DFC7FF;
+    border-radius:16px;
+    padding:6px;
+    background:#FCFAFF;
+  }
+  .v24-english-token.placed{
+    background:#FFF6D6;
+    border-color:#FFD93D;
+  }
+  .v24-english-write{
+    width:100%;
+    min-height:58px;
+    border:2px solid #E8DEFF;
+    border-radius:16px;
+    padding:8px;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-weight:900;
+    resize:vertical;
+  }
+  .v24-english-feedback{
+    min-height:18px;
+    margin-top:6px;
+    font-weight:1000;
+    color:#716D92;
+  }
+  .v24-english-feedback.ok{color:#24723A;}
+  .v24-english-feedback.ko{color:#A83232;}
+  .v24-english-listen-progress{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin:0 0 7px;
+    padding:5px 10px;
+    border-radius:999px;
+    background:#FFF6D6;
+    border:2px solid #FFD93D;
+    color:#7A5C00;
+    font-weight:1000;
+  }
+  .v24-english-listen-prompt{
+    font-family:"Trebuchet MS", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    color:#201C50;
+    font-size:17px;
+    line-height:1.05;
+    margin-bottom:6px;
+  }
+  .v24-english-checkrow{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:7px 0;
+    font-weight:1000;
+  }
+  .v24-english-checkrow input{
+    width:22px;
+    height:22px;
+    accent-color:#6C63FF;
+  }
+  .v24-big-subject-popup.v24-science-popup .v24-english-panel,
+  .v24-big-subject-popup.v24-science-popup .v24-english-session-card,
+  .v24-big-subject-popup.v24-science-popup .v24-english-exo{
+    border-color:#CFF1D8;
+    background:linear-gradient(180deg,#FFFFFF 0%,#F0FFF4 100%);
+  }
+  .v24-big-subject-popup.v24-science-popup .v24-english-panel h3,
+  .v24-big-subject-popup.v24-science-popup .v24-english-session-card strong,
+  .v24-big-subject-popup.v24-science-popup .v24-english-exo h3,
+  .v24-big-subject-popup.v24-science-popup .v24-english-objective{
+    color:#1F6D38;
+  }
+  .v24-big-subject-popup.v24-science-popup .v24-english-back,
+  .v24-big-subject-popup.v24-science-popup .v24-english-option,
+  .v24-big-subject-popup.v24-science-popup .v24-english-token,
+  .v24-big-subject-popup.v24-science-popup .v24-english-match-item{
+    border-color:#CFF1D8;
+    background:#F5FFF7;
+  }
+  .v24-big-subject-popup.v24-science-popup .v24-english-check{
+    background:#24A84A;
+  }
+  .v24-science-sort-bank,
+  .v24-science-sort-zones,
+  .v24-science-help-panel{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+  }
+  .v24-science-sort-item{
+    border:2px solid #CFF1D8;
+    background:#F5FFF7;
+    color:#1F3B2A;
+    border-radius:12px;
+    padding:7px 9px;
+    font-weight:1000;
+    cursor:pointer;
+  }
+  .v24-science-sort-item.selected{
+    border-color:#D98A4A;
+    background:#FFF2E4;
+  }
+  .v24-science-sort-item.placed{
+    opacity:.38;
+    cursor:default;
+  }
+  .v24-science-sort-zone{
+    flex:1 1 150px;
+    min-height:74px;
+    border:2px dashed #BEE9C9;
+    border-radius:14px;
+    padding:8px;
+    background:#FFFFFF;
+  }
+  .v24-science-sort-zone h4{
+    margin:0 0 6px;
+    color:#1F6D38;
+    font-size:13px;
+    font-weight:1000;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .v24-science-zone-swatch{
+    width:24px;
+    height:24px;
+    border-radius:8px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .v24-science-chip{
+    display:inline-block;
+    margin:2px;
+    padding:5px 8px;
+    border-radius:999px;
+    background:#24A84A;
+    color:white;
+    font-size:12px;
+    font-weight:1000;
+  }
+  .v24-science-chip.wrong{
+    background:#D9614F;
+  }
+  .v24-science-help-btn{
+    border:2px solid #D98A4A;
+    background:#FFF6E9;
+    color:#8A4D1F;
+    border-radius:13px;
+    padding:7px 10px;
+    font-weight:1000;
+    margin-bottom:8px;
+    cursor:pointer;
+  }
+  .v24-science-help-panel{
+    display:none;
+    margin-bottom:8px;
+  }
+  .v24-science-help-panel.open{
+    display:flex;
+  }
+  .v24-science-help-card{
+    flex:1 1 170px;
+    border:2px solid #F0DFB8;
+    background:#FFFCF0;
+    border-radius:13px;
+    padding:7px 9px;
+    color:#4E493C;
+    font-weight:900;
+    font-size:12px;
+    line-height:1.2;
+  }
+  .v24-science-svg-option svg{
+    display:block;
+    max-width:100%;
+    height:auto;
+  }
+  .v24-big-subject-popup.v24-geo-popup .v24-english-panel,
+  .v24-big-subject-popup.v24-geo-popup .v24-english-session-card,
+  .v24-big-subject-popup.v24-geo-popup .v24-english-exo{
+    border-color:#FFDDAE;
+    background:linear-gradient(180deg,#FFFFFF 0%,#FFF7EC 100%);
+  }
+  .v24-big-subject-popup.v24-geo-popup .v24-english-panel h3,
+  .v24-big-subject-popup.v24-geo-popup .v24-english-session-card strong,
+  .v24-big-subject-popup.v24-geo-popup .v24-english-exo h3,
+  .v24-big-subject-popup.v24-geo-popup .v24-english-objective{
+    color:#A25B00;
+  }
+  .v24-big-subject-popup.v24-geo-popup .v24-english-back,
+  .v24-big-subject-popup.v24-geo-popup .v24-english-option,
+  .v24-big-subject-popup.v24-geo-popup .v24-english-token,
+  .v24-big-subject-popup.v24-geo-popup .v24-english-match-item{
+    border-color:#FFDDAE;
+    background:#FFF9F0;
+  }
+  .v24-big-subject-popup.v24-geo-popup .v24-english-check{
+    background:#FF8A00;
+  }
+  .v24-geo-map-card{
+    border:2px solid #FFDDAE;
+    border-radius:16px;
+    background:#FFFFFF;
+    padding:8px;
+    margin:0 0 8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .v24-geo-map-card svg{
+    max-width:100%;
+    height:auto;
+  }
+  .v24-geo-map-card img{
+    max-width:100%;
+    max-height:clamp(100px, 18vh, 170px);
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    border-radius:12px;
+    display:block;
+  }
+  .v24-geo-question-image img{
+    max-height:clamp(110px, 20vh, 190px);
+  }
+  .v24-big-subject-popup.v24-geo-popup .v24-science-sort-item{
+    border-color:#FFDDAE;
+    background:#FFF9F0;
+  }
+  .v24-big-subject-popup.v24-geo-popup .v24-science-sort-item.selected{
+    border-color:#FF8A00;
+    background:#FFF1DC;
+  }
+  .v24-big-subject-popup.v24-geo-popup .v24-science-sort-zone{
+    border-color:#FFDDAE;
+  }
+  .v24-big-subject-popup.v24-geo-popup .v24-science-chip{
+    background:#FF8A00;
+  }
+
+  .v24-big-subject-popup.v24-history-popup .v24-english-panel,
+  .v24-big-subject-popup.v24-history-popup .v24-english-session-card,
+  .v24-big-subject-popup.v24-history-popup .v24-english-exo{
+    border-color:#D8D4FF;
+    background:linear-gradient(180deg,#FFFFFF 0%,#F4F2FF 100%);
+  }
+  .v24-big-subject-popup.v24-history-popup .v24-english-panel h3,
+  .v24-big-subject-popup.v24-history-popup .v24-english-session-card strong,
+  .v24-big-subject-popup.v24-history-popup .v24-english-exo h3,
+  .v24-big-subject-popup.v24-history-popup .v24-english-objective{
+    color:#4D45BF;
+  }
+  .v24-big-subject-popup.v24-history-popup .v24-english-back,
+  .v24-big-subject-popup.v24-history-popup .v24-english-option,
+  .v24-big-subject-popup.v24-history-popup .v24-english-token,
+  .v24-big-subject-popup.v24-history-popup .v24-english-match-item,
+  .v24-big-subject-popup.v24-history-popup .v24-science-sort-item{
+    border-color:#D8D4FF;
+    background:#F9F8FF;
+  }
+  .v24-big-subject-popup.v24-history-popup .v24-english-check{
+    background:#6C63FF;
+  }
+  .v24-big-subject-popup.v24-history-popup .v24-science-sort-zone,
+  .v24-big-subject-popup.v24-history-popup .v24-geo-map-card{
+    border-color:#D8D4FF;
+  }
+  .v24-big-subject-popup.v24-history-popup .v24-science-chip{
+    background:#6C63FF;
+  }
+  .v24-big-subject-popup.v24-history-popup .v24-geo-map-card{
+    background:#FFFFFF;
+  }
+
+  @media (orientation:landscape) and (max-height:780px){
+    :root{--v24-nav-h:78px;}
+    .v24-big-subject-overlay{padding:6px !important;}
+    .v24-big-subject-popup{width:98.5vw !important;height:95vh !important;border-radius:20px !important;}
+    .v24-big-subject-header{padding:10px 14px !important;}
+    .v24-big-subject-title .v24-emoji{width:46px !important;height:46px !important;font-size:27px !important;}
+    .v24-big-subject-title h2{font-size:31px !important;}
+    .v24-big-subject-close{width:42px !important;height:42px !important;border-radius:14px !important;}
+    .v24-big-subject-popup.v24-english-popup .v24-big-subject-body{padding:10px !important;}
+    .v24-big-subject-popup.v24-english-popup .v24-english-toolbar{padding:8px !important;}
+    .v24-big-subject-popup.v24-english-popup .v24-english-exo{padding:9px !important;border-radius:16px !important;}
+    .v24-big-subject-popup.v24-english-popup .v24-english-exo h3{font-size:17px !important;}
+    .v24-big-subject-popup.v24-english-popup .v24-english-exo p{font-size:13px !important;margin-bottom:5px !important;}
+    .v24-big-subject-popup.v24-english-popup .v24-english-option,
+    .v24-big-subject-popup.v24-english-popup .v24-english-token,
+    .v24-big-subject-popup.v24-english-popup .v24-english-match-item{font-size:13px !important;padding:6px 8px !important;}
+    .v24-big-subject-popup.v24-english-popup .v24-english-speak,
+    .v24-big-subject-popup.v24-english-popup .v24-english-check,
+    .v24-big-subject-popup.v24-english-popup .v24-english-back{font-size:13px !important;padding:7px 11px !important;}
+    .v24-big-subject-popup.v24-english-popup .v24-english-listen-prompt{font-size:15px !important;margin-bottom:4px !important;}
+    .v24-big-subject-popup.v24-english-popup .v24-english-listen-progress{font-size:13px !important;padding:4px 9px !important;margin-bottom:5px !important;}
+    .v24-big-subject-popup.v24-science-popup .v24-big-subject-body{padding:10px !important;}
+    .v24-big-subject-popup.v24-science-popup .v24-english-toolbar{padding:8px !important;}
+    .v24-big-subject-popup.v24-science-popup .v24-english-exo{padding:9px !important;border-radius:16px !important;}
+    .v24-big-subject-popup.v24-science-popup .v24-english-exo h3{font-size:17px !important;}
+    .v24-big-subject-popup.v24-science-popup .v24-english-exo p{font-size:13px !important;margin-bottom:5px !important;}
+    .v24-big-subject-popup.v24-science-popup .v24-english-option,
+    .v24-big-subject-popup.v24-science-popup .v24-english-token,
+    .v24-big-subject-popup.v24-science-popup .v24-english-match-item,
+    .v24-big-subject-popup.v24-science-popup .v24-science-sort-item{font-size:13px !important;padding:6px 8px !important;}
+    .v24-big-subject-popup.v24-science-popup .v24-english-check,
+    .v24-big-subject-popup.v24-science-popup .v24-english-back,
+    .v24-big-subject-popup.v24-science-popup .v24-science-help-btn{font-size:13px !important;padding:7px 11px !important;}
+    .v24-big-subject-popup.v24-science-popup .v24-science-sort-zone{min-height:62px !important;padding:6px !important;}
+    .v24-big-subject-popup.v24-science-popup .v24-science-help-card{font-size:11px !important;padding:6px 8px !important;}
+    .v24-big-subject-popup.v24-geo-popup .v24-big-subject-body{padding:10px !important;}
+    .v24-big-subject-popup.v24-geo-popup .v24-english-toolbar{padding:8px !important;}
+    .v24-big-subject-popup.v24-geo-popup .v24-english-exo{padding:9px !important;border-radius:16px !important;}
+    .v24-big-subject-popup.v24-geo-popup .v24-english-exo h3{font-size:17px !important;}
+    .v24-big-subject-popup.v24-geo-popup .v24-english-exo p{font-size:13px !important;margin-bottom:5px !important;}
+    .v24-big-subject-popup.v24-geo-popup .v24-english-option,
+    .v24-big-subject-popup.v24-geo-popup .v24-english-token,
+    .v24-big-subject-popup.v24-geo-popup .v24-english-match-item,
+    .v24-big-subject-popup.v24-geo-popup .v24-science-sort-item{font-size:13px !important;padding:6px 8px !important;}
+    .v24-big-subject-popup.v24-geo-popup .v24-english-check,
+    .v24-big-subject-popup.v24-geo-popup .v24-english-back,
+    .v24-big-subject-popup.v24-geo-popup .v24-science-help-btn{font-size:13px !important;padding:7px 11px !important;}
+    .v24-big-subject-popup.v24-geo-popup .v24-science-sort-zone{min-height:62px !important;padding:6px !important;}
+    .v24-big-subject-popup.v24-geo-popup .v24-science-help-card{font-size:11px !important;padding:6px 8px !important;}
+    .v24-big-subject-popup.v24-geo-popup .v24-geo-map-card{padding:5px !important;margin-bottom:5px !important;}
+    body.v24-0-3-ready .subjects-bar{
+      bottom:6px !important;
+      padding:6px 8px !important;
+      gap:7px !important;
+      border-radius:20px !important;
+    }
+    body.v24-0-3-ready .subjects-bar .subject-btn{
+      min-height:54px !important;
+      border-radius:16px !important;
+      padding:5px 7px !important;
+    }
+    body.v24-0-3-ready .subjects-bar .subject-btn .subject-icon,
+    body.v24-0-3-ready .subjects-bar .subject-btn .v2173-subject-icon{font-size:20px !important;}
+    body.v24-0-3-ready .subjects-bar .subject-btn .subject-label,
+    body.v24-0-3-ready .subjects-bar .subject-btn .v2173-subject-label{font-size:13px !important;}
+    body.v24-0-3-ready.v21-final .v21-home{
+      padding-top:20px !important;
+      min-height:calc(100dvh - 118px - var(--v24-nav-h)) !important;
+    }
+    body.v24-0-3-ready.v21-final .v21-center{
+      gap:18px !important;
+    }
+    body.v24-0-3-ready.v21-final .v21-treasure-card,
+    body.v24-0-3-ready.v21-final .v21-profile-card{
+      min-height:242px !important;
+    }
+  }
+
+  @media (max-width:760px){
+    body.v24-0-3-ready .subjects-bar{
+      grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+      left:8px !important;
+      right:8px !important;
+    }
+    :root{--v24-nav-h:150px;}
+    .v24-english-intro,
+    .v24-english-sessions,
+    .v24-english-exercises{grid-template-columns:1fr;}
+  }
+
+</style><link rel="stylesheet" href="css/geographie-exercices.css"><link rel="stylesheet" href="css/sciences-exercices.css"></head><body data-matiere="sciences"><header><h1>🧪 Sciences — Maître Hibou CE2</h1><a class="back" href="index.html">← Retour à l’accueil</a></header><main><div id="exercices" aria-live="polite"></div></main><script src="js/sciences-exercices.js"></script><script src="js/sciences-affichage.js"></script><script src="js/geographie-affichage.js"></script><script>
+(function(){
+'use strict';
+const host=document.getElementById('exercices');
+function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function renderEnglishFeedback(card,ok,message){let n=card.querySelector('.v24-english-feedback');if(!n){n=document.createElement('p');n.className='v24-english-feedback';card.appendChild(n);}n.className='v24-english-feedback '+(ok?'ok':'ko');n.textContent=message||'';}
+function saveBilanResult(subject,payload){try{const student=localStorage.getItem('hibou_last_prenom')||localStorage.getItem('hibou_prenom')||'invité';const key='hibou_bilans_'+student;const all=JSON.parse(localStorage.getItem(key)||'{}');all[subject]=payload;localStorage.setItem(key,JSON.stringify(all));window.dispatchEvent(new CustomEvent('hibou:bilan-updated',{detail:{subject,result:payload}}));}catch(err){console.error('Bilan non sauvegardé',err);}}
+function renderHistoryAssessment(card,exo){const questions=exo.questions||[];if(!questions.length){renderEnglishFeedback(card,false,'Activité indisponible.');return;}let answers={};questions.forEach((q,i)=>{let div=document.createElement('div');div.className='mh-q';let title=document.createElement('p');title.textContent=(i+1)+'. '+(q.question||q.text||q.prompt||'Question');div.appendChild(title);(q.options||q.choices||[]).forEach((v,j)=>{const b=document.createElement('button');b.type='button';b.className='mh-choice';b.textContent=typeof v==='string'?v:(v.label||v.text||String(v));b.onclick=()=>{answers[i]=j;div.querySelectorAll('button').forEach(x=>x.classList.remove('chosen'));b.classList.add('chosen');};div.appendChild(b);});card.appendChild(div)});let b=document.createElement('button');b.type='button';b.textContent='Vérifier mes réponses';b.className='v24-english-check';b.onclick=()=>{let ok=questions.every((q,i)=>answers[i]!=null);renderEnglishFeedback(card,ok,ok?'Toutes les réponses ont été sélectionnées.':'Réponds à chaque question avant de vérifier.');};card.appendChild(b);}
+function report(error){console.error(error);host.innerHTML='<div class="error"><strong>Impossible de charger les exercices.</strong><p>Vérifie que les fichiers JavaScript des séances se trouvent dans le dossier js/ du dépôt.</p></div>';}
+try{
+if(!window.MHScienceSessions||typeof window.MHCreateScienceEngine!=='function')throw new Error('Données ou moteur Sciences absents');
+const sci=window.MHCreateScienceEngine({esc,renderEnglishFeedback,saveBilanResult});
+const geoFactory=window.MH_GEO_RENDER_FACTORY;
+if(document.body.dataset.matiere==='sciences'){sci.renderScienceHome(host);return;}
+if(typeof geoFactory!=='function')throw new Error('Moteur Géographie absent');
+const geo=geoFactory({esc,renderHistoryAssessment,renderScienceChoice:sci.renderScienceChoice,renderScienceMatch:sci.renderScienceMatch,renderScienceOrder:sci.renderScienceOrder,renderScienceSort:sci.renderScienceSort,renderScienceChecklist:sci.renderScienceChecklist,renderEnglishFeedback});
+geo.renderGeoHome(host);
+}catch(err){report(err)}
+})();
+</script></body></html>
