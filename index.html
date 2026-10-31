@@ -36258,5 +36258,50 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 
+
+<!-- Correctif structurel : retirer les barres de matières réellement du DOM, ne pas les masquer. -->
+<script id="mh-remove-duplicate-subject-bars-v1">
+(function(){
+  'use strict';
+  var desktop=window.matchMedia('(min-width:1200px) and (pointer:fine)');
+  var scheduled=false;
+  function clean(){
+    if(!desktop.matches)return;
+    var panel=document.getElementById('v2574MainDashboard');
+    if(!panel || !panel.classList.contains('mh-constellation'))return;
+    var main=panel.querySelector('.subjects-bar.mh-subjects');
+    if(!main || !main.querySelector('[data-subject="francais"]'))return;
+    // Une seule barre, celle qui porte les boutons originaux et leurs événements.
+    document.querySelectorAll('.subjects-bar').forEach(function(bar){
+      if(bar!==main)bar.remove();
+    });
+    // Si une ancienne reconstruction a dupliqué une carte dans la même barre,
+    // conserver la première carte et son gestionnaire de clic.
+    var seen=new Set();
+    main.querySelectorAll(':scope > button').forEach(function(btn){
+      var subject=btn.getAttribute('data-subject');
+      var kind=subject || (btn.classList.contains('v2574-grow-btn')?'grandir-ensemble':
+        btn.classList.contains('v2574-tools-btn')?'outils':null);
+      if(!kind)return;
+      if(seen.has(kind))btn.remove();else seen.add(kind);
+    });
+  }
+  function schedule(){
+    if(scheduled)return;
+    scheduled=true;
+    requestAnimationFrame(function(){scheduled=false;clean();});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',schedule);
+  else schedule();
+  window.addEventListener('load',schedule);
+  window.addEventListener('resize',schedule);
+  new MutationObserver(function(records){
+    if(!desktop.matches)return;
+    // Ne traiter que les insertions / retraits, sans recréer de noeuds.
+    if(records.some(function(r){return r.addedNodes.length>0;}))schedule();
+  }).observe(document.documentElement,{childList:true,subtree:true});
+})();
+</script>
+
 </body>
 </html>
