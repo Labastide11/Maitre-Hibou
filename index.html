@@ -2102,14 +2102,7 @@ header.mockup-header{
     font-size:16px !important;
   }
 
-  /* Libellés longs raccourcis automatiquement en paysage */
-  .subject-btn[data-subject="geographie"] .subject-label{
-    font-size:0 !important;
-  }
-  .subject-btn[data-subject="geographie"] .subject-label::after{
-    content:"Géo";
-    font-size:16px;
-  }
+  /* Les intitulés des matières sont désormais affichés sans pseudo-libellé. */
   .subject-btn[data-subject="francais"] .subject-label{
     font-size:15px !important;
   }
@@ -5231,6 +5224,34 @@ body.v21-final .birthday-top-card-v2414 .birthday-cake-v2414 {
 }
 #frenchTrainingOverlayV2348:has(.fr-v25720-domain-grid) .fr-v2348-content {
   padding-top: 6px !important;
+}
+</style>
+
+<style id="mh-fix-matieres-intitules-20261031">
+/* Accueil PC : supprimer définitivement le doublon « Géo ». */
+.subjects-bar .subject-btn[data-subject="geographie"] .subject-label::after,
+.subjects-bar .subject-btn[data-subject="geographie"] .v2173-subject-label::after {
+  content:none !important;
+  display:none !important;
+}
+/* Empêcher la superposition et la troncature des noms en haut des cartes. */
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button .subject-label,
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button .v2173-subject-label {
+  position:relative !important;
+  inset:auto !important;
+  flex:0 0 auto !important;
+  display:block !important;
+  width:100% !important;
+  height:auto !important;
+  max-width:100% !important;
+  overflow:visible !important;
+  font-size:clamp(11px,.85vw,14px) !important;
+  line-height:1.2 !important;
+  white-space:normal !important;
+  text-overflow:clip !important;
+  text-align:center !important;
+  margin:0 !important;
+  padding:0 !important;
 }
 </style>
 </head>
