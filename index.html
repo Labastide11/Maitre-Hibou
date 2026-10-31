@@ -25970,6 +25970,23 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
     ]}
   ];
 
+
+  /* Compléments Histoire CE2 : cinq activités par séance, exercices précédents conservés. */
+  HISTORY_SESSIONS[0].exos.push({"type":"choice","title":"Le mois suivant","instr":"Quel mois vient juste après avril ?","options":["Mars","Mai","Juin"],"correct":1,"hint":"Récite les mois dans l’ordre en partant d’avril."});
+  HISTORY_SESSIONS[0].exos.push({"type":"order","title":"Une journée dans l’ordre","instr":"Place les moments de la journée dans l’ordre.","bank":["soir","matin","après-midi"],"correctOrder":["matin","après-midi","soir"],"hint":"Pense à ce que tu fais avant et après le déjeuner."});
+  HISTORY_SESSIONS[1].exos.push({"type":"choice","title":"Le temps sur une frise","instr":"Sur une frise, quel événement vient en premier ?","options":["Celui placé à droite","Celui placé à gauche","Celui placé au milieu"],"correct":1,"hint":"Observe dans quel sens les dates avancent sur une frise habituelle."});
+  HISTORY_SESSIONS[1].exos.push({"type":"order","title":"Des événements à ranger","instr":"Range ces événements du plus ancien au plus récent.","bank":["Entrée en CE2","Premiers pas","Entrée au CP","Naissance"],"correctOrder":["Naissance","Premiers pas","Entrée au CP","Entrée en CE2"],"hint":"Commence par le tout début de la vie, puis avance dans le temps."});
+  HISTORY_SESSIONS[2].exos.push({"type":"choice","title":"Une même génération","instr":"Qui appartient généralement à la même génération que mes parents ?","options":["Mon oncle","Ma fille","Ma grand-mère"],"correct":0,"hint":"Cherche une personne qui est à peu près de l’âge de tes parents."});
+  HISTORY_SESSIONS[2].exos.push({"type":"match","title":"Les liens de famille","instr":"Associe chaque personne à son lien de parenté.","left":["La mère de ma mère","Le frère de mon père","La fille de mon oncle"],"right":["Ma cousine","Ma grand-mère","Mon oncle"],"pairs":[1,2,0],"hint":"Pour chaque expression, commence par identifier le lien avec ton parent."});
+  HISTORY_SESSIONS[3].exos.push({"type":"choice","title":"Communiquer autrefois","instr":"Quel objet utilisait-on autrefois pour téléphoner à la maison ?","options":["Un téléphone à cadran","Une tablette tactile","Une montre connectée"],"correct":0,"hint":"Cherche l’objet ancien qui permettait de parler à une personne éloignée."});
+  HISTORY_SESSIONS[3].exos.push({"type":"sort","title":"Se déplacer : hier et aujourd’hui","instr":"Classe chaque moyen de transport.","items":["Une calèche tirée par un cheval","Un train à vapeur ancien","Une voiture électrique récente","Un TGV moderne"],"zones":["Autrefois","Aujourd’hui"],"zoneIcons":["🕰️","🚆"],"zoneColors":["#F2E8FF","#E8F8FF"],"correct":[0,0,1,1],"hint":"Cherche les moyens de transport anciens et ceux qu’on utilise aujourd’hui."});
+  HISTORY_SESSIONS[4].exos.push({"type":"choice","title":"La période des Romains","instr":"À quelle période appartiennent les Romains ?","options":["Moyen Âge","Antiquité","Préhistoire"],"correct":1,"hint":"Cherche la période qui vient après la Préhistoire et avant le Moyen Âge."});
+  HISTORY_SESSIONS[4].exos.push({"type":"order","title":"Cinq grandes périodes","instr":"Range les cinq périodes de la plus ancienne à la plus récente.","bank":["Époque contemporaine","Antiquité","Temps modernes","Préhistoire","Moyen Âge"],"correctOrder":["Préhistoire","Antiquité","Moyen Âge","Temps modernes","Époque contemporaine"],"hint":"Commence par les premiers humains et termine par notre époque."});
+  HISTORY_SESSIONS[5].exos.push({"type":"choice","title":"Révision : la semaine","instr":"Combien y a-t-il de jours dans une semaine ?","options":["5","7","10"],"correct":1,"hint":"Récite tous les jours, du lundi au dimanche, en les comptant."});
+  HISTORY_SESSIONS[5].exos.push({"type":"order","title":"Révision : une frise de vie","instr":"Range ces étapes de vie de la plus ancienne à la plus récente.","bank":["CE2","Naissance","CP","Maternelle"],"correctOrder":["Naissance","Maternelle","CP","CE2"],"hint":"Commence par ce qui s’est passé en premier dans ta vie."});
+  HISTORY_SESSIONS[5].exos.push({"type":"match","title":"Révision : repères du passé","instr":"Associe chaque indice à la bonne période.","left":["Premiers humains","Romains","Châteaux forts"],"right":["Moyen Âge","Préhistoire","Antiquité"],"pairs":[1,2,0],"hint":"Rappelle-toi la succession des périodes : la Préhistoire, puis l’Antiquité et le Moyen Âge."});
+  HISTORY_SESSIONS[5].exos.push({"type":"choice","title":"Révision : les chiffres romains","instr":"Quel nombre représente le chiffre romain V ?","options":["10","5","1"],"correct":1,"hint":"Rappelle-toi les symboles romains I, V et X, puis compare-les."});
+
   function renderHistoryHome(grid){
     grid.className = 'v24-english-shell';
     grid.innerHTML = '<div class="v24-english-intro"><div class="v24-english-panel"><h3>Histoire CE2</h3><p>Choisis une séance courte pour travailler le temps, les générations et les grandes périodes.</p></div><div class="v24-english-panel"><h3>Images repères</h3><p>Calendrier, frise, générations, objets d’autrefois et grandes périodes.</p></div></div><div class="v24-english-sessions" id="v24HistorySessions"></div>';
@@ -26172,6 +26189,18 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
       var card = document.createElement('section');
       card.className = 'v24-english-exo';
       card.innerHTML = '<h3>'+esc(exo.title)+'</h3><p>'+esc(exo.instr)+'</p>';
+      var historyHelp = document.createElement('button');
+      historyHelp.type = 'button';
+      historyHelp.className = 'mh-history-help';
+      historyHelp.textContent = '💡 Aide';
+      historyHelp.setAttribute('aria-expanded', 'false');
+      historyHelp.style.cssText = 'display:inline-block;margin:8px 0 10px;padding:9px 14px;border:2px solid #d3a653;border-radius:12px;background:#fff4dc;color:#65481c;font-weight:800;cursor:pointer;';
+      var historyTip = document.createElement('div');
+      historyTip.hidden = true;
+      historyTip.style.cssText = 'margin:0 0 10px;padding:10px 12px;background:#fff9e9;border-left:4px solid #d3a653;border-radius:9px;line-height:1.45;';
+      historyTip.textContent = '🦉 ' + (exo.hint || 'Relis la consigne et observe les documents. Cherche un repère de temps ou un indice avant de choisir.');
+      historyHelp.addEventListener('click',function(event){event.preventDefault();event.stopPropagation();historyTip.hidden = !historyTip.hidden;historyHelp.textContent = historyTip.hidden ? '💡 Aide' : '💡 Cacher l’aide';historyHelp.setAttribute('aria-expanded',String(!historyTip.hidden));});
+      card.appendChild(historyHelp);card.appendChild(historyTip);
       if(idx === 0 && s.map) card.insertAdjacentHTML('beforeend','<div class="v24-geo-map-card">'+s.map+'</div>');
       if(exo.type === 'assessment') renderHistoryAssessment(card, exo);
       if(exo.type === 'choice') renderScienceChoice(card, exo);
