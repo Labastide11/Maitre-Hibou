@@ -17081,11 +17081,10 @@ body.v21-final .quick-btn{
       btn.appendChild(pict);btn.appendChild(label);
       btn.addEventListener('click',function(ev){
         ev.preventDefault();ev.stopPropagation();
-        // Les trois matières possèdent leur propre page : navigation native,
-        // sans dépendance au moteur de la fenêtre d'exercices.
+        // Accès direct aux exercices de Sciences et Géographie ; Histoire conserve sa page actuelle.
         var destination={
-          sciences:'bibliotheque_sciences/index.html',
-          geographie:'bibliotheque_geographie/index.html',
+          sciences:'sciences.html',
+          geographie:'geographie.html',
           histoire:'bibliotheque_histoire/index.html'
         }[key];
         if(destination){
@@ -17093,7 +17092,6 @@ body.v21-final .quick-btn{
           return;
         }
         var fn=window.mhOpenDirectSubject;
-        if(key==='sciences' || key==='geographie'){ window.location.assign(key+'.html'); return; }
         if(typeof fn==='function')fn(key);
         else if(key==='francais' && typeof window.openFrenchTrainingPopupV2348==='function')window.openFrenchTrainingPopupV2348();
         else if(key==='maths' && typeof window.openMathsTrainingPopupV2343==='function')window.openMathsTrainingPopupV2343();
