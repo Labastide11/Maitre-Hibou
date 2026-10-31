@@ -5338,12 +5338,12 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar
 <div class="stat-card">🎖️ <span id="badgeValue">0</span> badge</div>
 </div>
 <div class="subjects-bar">
-<button class="subject-btn active" data-subject="maths" onclick="selectSubject(this, 'maths')"><span class="subject-icon">🔢</span><span class="subject-label">Maths</span></button>
-<button class="subject-btn" data-subject="francais" onclick="selectSubject(this, 'francais')"><span class="subject-icon">📖</span><span class="subject-label">Français</span></button>
-<button class="subject-btn" data-subject="sciences" onclick="selectSubject(this, 'sciences')"><span class="subject-icon">🧪</span><span class="subject-label">Sciences</span></button>
-<button class="subject-btn" data-subject="histoire" onclick="selectSubject(this, 'histoire')"><span class="subject-icon">🏛️</span><span class="subject-label">Histoire</span></button>
-<button class="subject-btn" data-subject="geographie" onclick="selectSubject(this, 'geographie')"><span class="subject-icon">🌍</span><span class="subject-label">Géographie</span></button>
-<button class="subject-btn" data-subject="anglais" onclick="selectSubject(this, 'anglais')"><span class="subject-icon">🇬🇧</span><span class="subject-label">Anglais</span></button>
+<button class="subject-btn active" data-subject="maths"><span class="subject-icon">🔢</span><span class="subject-label">Maths</span></button>
+<button class="subject-btn" data-subject="francais"><span class="subject-icon">📖</span><span class="subject-label">Français</span></button>
+<button class="subject-btn" data-subject="sciences"><span class="subject-icon">🧪</span><span class="subject-label">Sciences</span></button>
+<button class="subject-btn" data-subject="histoire"><span class="subject-icon">🏛️</span><span class="subject-label">Histoire</span></button>
+<button class="subject-btn" data-subject="geographie"><span class="subject-icon">🌍</span><span class="subject-label">Géographie</span></button>
+<button class="subject-btn" data-subject="anglais"><span class="subject-icon">🇬🇧</span><span class="subject-label">Anglais</span></button>
 </div>
 <div class="quick-questions" id="quickQuestions" style="display:none;"></div>
 <div class="master-challenge-card" id="masterChallengeCard"></div>
@@ -8302,15 +8302,7 @@ exportTeacherCSV = function(){
 renderClassMotivationPanel = function(){ return; };
 
 
-// Sécurité supplémentaire : les boutons de matières fonctionnent même si un onclick inline est mal interprété par le navigateur.
-window.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.subject-btn').forEach(btn => {
-    const subject = btn.getAttribute('data-subject');
-    if (subject) {
-      btn.addEventListener('click', () => selectSubject(btn, subject));
-    }
-  });
-});
+/* Ancien branchement selectSubject retiré : les cartes utilisent mhOpenDirectSubject. */
 
 </script>
 <script>
@@ -17074,8 +17066,9 @@ body.v21-final .quick-btn{
       ['anglais','🇬🇧','Anglais'],['sciences','🧪','Sciences'],
       ['geographie','🌍','Géographie'],['histoire','🏛️','Histoire']
     ];
-    /* Effacement des anciens boutons : leurs écouteurs et leurs menus sont éliminés. */
-    bar.querySelectorAll('.subject-btn').forEach(function(old){old.remove()});
+    /* Une seule construction : ne jamais détruire des boutons déjà initialisés. */
+    if(bar.querySelectorAll(':scope > button.mh-direct-subject').length === subjects.length) return;
+    bar.querySelectorAll(':scope > button.subject-btn').forEach(function(old){old.remove()});
     subjects.forEach(function(data){
       var key=data[0],icon=data[1],name=data[2];
       var btn=document.createElement('button');
@@ -17149,19 +17142,15 @@ body.v21-final .quick-btn{
   if(document.readyState === "loading"){
     document.addEventListener("DOMContentLoaded", function(){
       initV21();
-      setTimeout(initV21, 150);
-      setTimeout(initV21, 700);
       setInterval(syncV21Texts, 900);
     });
   }else{
     initV21();
-    setTimeout(initV21, 150);
-    setTimeout(initV21, 700);
     setInterval(syncV21Texts, 900);
   }
   window.addEventListener("load", function(){
-    setTimeout(initV21, 150);
-    setTimeout(syncV21Texts, 500);
+    if(!document.querySelector('.subjects-bar .mh-direct-subject')) initV21();
+    syncV21Texts();
   });
 })();
 </script>
@@ -18526,202 +18515,7 @@ body.v21-final .v2173-activity-btn.soon{
   body.v21-final .v2173-panel-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
 }
 </style>
-<script id="script-v21-7-3-titres-verrouilles">
-(function(){
-  if(window.__maitreHibouV2173TitresVerrouilles) return;
-  window.__maitreHibouV2173TitresVerrouilles = true;
-  const VERSION_TITLE = '🦉 Maître Hibou V25.8.84';
-  const SUBJECTS = {
-    francais:{label:'Français', icon:'📖', color:'#FF3B57', color2:'#FF6E82', soft:'#FFECEF', border:'#FFD3DA', shadow:'rgba(255,59,87,.24)', items:[
-      {label:'Nom commun', names:['startNomCommun','showNomCommunLesson']},
-      {label:'Verbe', names:['startVerbe','showVerbeLesson']},
-      {label:'Idées pour écrire', names:['startIdeesPourEcrire','showWritingIdeas']},
-      {label:'Futurs ajouts : déterminant, adjectif, groupe nominal', soon:true, message:'Ces entraînements de français arriveront plus tard.'}
-    ]},
-    maths:{label:'Maths', icon:'🧮', color:'#1683F7', color2:'#4DB0FF', soft:'#E8F4FF', border:'#CFE7FF', shadow:'rgba(22,131,247,.24)', items:[
-      {label:'Calcul mental', names:['startCalculMentalCE2','startMentalMath','startCalculMental']},
-      {label:'Multiplication posée', names:['showMultiplicationMenu','startMultiplicationPosee']}
-    ]},
-    anglais:{label:'Anglais', icon:'🇬🇧', color:'#9C4DFF', color2:'#B978FF', soft:'#F3E9FF', border:'#DFC7FF', shadow:'rgba(156,77,255,.24)', items:[
-      {label:'Se présenter', names:['showEnglishPresentation','startEnglishPresentation','startSePresenter']},
-      {label:'Nombres', prompt:'Je veux travailler les nombres en anglais.'}
-    ]},
-    sciences:{label:'Sciences', icon:'🧪', color:'#24A84A', color2:'#63D878', soft:'#E9F9EE', border:'#CFF1D8', shadow:'rgba(36,168,74,.24)', items:[
-      {label:'Squelette', names:['showSqueletteLesson','startSquelette']},
-      {label:'Plantes', names:['showPlantesLesson','startPlantes']},
-      {label:'Système solaire', names:['showSystemeSolaireLesson','startSystemeSolaire']}
-    ]},
-    geographie:{label:'Géographie', icon:'🌍', color:'#FF8A00', color2:'#FFB23F', soft:'#FFF2E0', border:'#FFDDAE', shadow:'rgba(255,138,0,.24)', items:[
-      {label:'France', names:['startGeoFrance'], prompt:'Explique-moi la France en géographie pour un CE2'},
-      {label:'Europe', prompt:'Explique-moi l’Europe en géographie pour un CE2'}
-    ]},
-    histoire:{label:'Histoire', icon:'🏛️', color:'#6C63FF', color2:'#8E86FF', soft:'#EAE8FF', border:'#D8D4FF', shadow:'rgba(108,99,255,.24)', items:[
-      {label:'À venir', soon:true, message:'Les activités d’histoire seront ajoutées plus tard.'}
-    ]}
-  };
-  const ORDER = ['francais','maths','anglais','sciences','geographie','histoire'];
-  function escapeHTML(v){
-    return String(v == null ? '' : v).replace(/[&<>"']/g, function(c){
-      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-    });
-  }
-  function applyVars(el, data){
-    if(!el || !data) return;
-    el.style.setProperty('--v2173-color', data.color);
-    el.style.setProperty('--v2173-color2', data.color2 || data.color);
-    el.style.setProperty('--v2173-shadow', data.shadow || 'rgba(108,99,255,.24)');
-    el.style.setProperty('--v2173-panel-color', data.color);
-    el.style.setProperty('--v2173-panel-soft', data.soft);
-    el.style.setProperty('--v2173-panel-border', data.border);
-  }
-  function setTitle(){
-    if(document.title !== VERSION_TITLE) document.title = VERSION_TITLE;
-  }
-  function hideOldMenus(){
-    const q = document.getElementById('quickQuestions');
-    if(q){ q.style.display='none'; q.style.visibility='hidden'; q.innerHTML=''; q.setAttribute('aria-hidden','true'); }
-    const oldDrop = document.getElementById('v21SubjectDropdown');
-    if(oldDrop){ oldDrop.classList.remove('open'); oldDrop.style.display='none'; oldDrop.style.visibility='hidden'; oldDrop.innerHTML=''; }
-  }
-  function ensurePanel(bar){
-    let panel = document.getElementById('v2173ActivitiesPanel');
-    if(!panel){
-      panel = document.createElement('section');
-      panel.id = 'v2173ActivitiesPanel';
-      panel.className = 'v2173-activities-panel';
-      panel.setAttribute('aria-live','polite');
-      bar.insertAdjacentElement('afterend', panel);
-    }else if(panel.previousElementSibling !== bar){
-      bar.insertAdjacentElement('afterend', panel);
-    }
-    return panel;
-  }
-  function closePanel(){
-    const panel = document.getElementById('v2173ActivitiesPanel');
-    if(panel){ panel.classList.remove('open'); panel.innerHTML=''; panel.dataset.subject=''; }
-    document.querySelectorAll('.subject-btn.v2173-title-locked').forEach(function(btn){
-      btn.classList.remove('active');
-      btn.setAttribute('aria-expanded','false');
-      const ch = btn.querySelector('.v2173-chevron');
-      if(ch) ch.textContent = '▼';
-    });
-  }
-  function openLearning(subjectKey){
-    document.body.classList.add('v21-final','v21-learning-open');
-    document.body.classList.remove('competence-mode');
-    try{
-      window.currentSubject = subjectKey;
-      const btn = document.querySelector('.subject-btn.v2173-title-locked[data-subject="'+subjectKey+'"]');
-      if(typeof window.selectSubject === 'function') window.selectSubject(btn, subjectKey);
-    }catch(e){}
-    setTimeout(hideOldMenus, 0);
-    setTimeout(hideOldMenus, 120);
-  }
-  function callFirst(names){
-    for(const name of (names || [])){
-      if(typeof window[name] === 'function'){
-        try{ window[name](); return true; }catch(e){ console.warn('Action Maître Hibou impossible :', name, e); }
-      }
-    }
-    return false;
-  }
-  function showMessage(text){
-    if(typeof window.addMessage === 'function') window.addMessage('prof', '🦉 ' + text);
-    else alert(text);
-  }
-  function launchItem(subjectKey, item){
-    openLearning(subjectKey);
-    const panel = document.getElementById('v2173ActivitiesPanel');
-    if(panel) panel.classList.remove('open');
-    if(item.soon){ showMessage(item.message || 'Cette activité sera ajoutée plus tard.'); return; }
-    if(item.names && callFirst(item.names)) return;
-    if(item.prompt && typeof window.sendQuick === 'function'){ window.sendQuick(item.prompt); return; }
-    showMessage('Cette activité est prête dans le menu, mais son module doit encore être relié.');
-  }
-  function openPanel(subjectKey, btn){
-    const bar = document.querySelector('.subjects-bar');
-    if(!bar) return;
-    const data = SUBJECTS[subjectKey];
-    if(!data) return;
-    const panel = ensurePanel(bar);
-    const alreadyOpen = panel.classList.contains('open') && panel.dataset.subject === subjectKey;
-    closePanel();
-    hideOldMenus();
-    if(alreadyOpen) return;
-    applyVars(panel, data);
-    panel.dataset.subject = subjectKey;
-    panel.innerHTML = '<div class="v2173-panel-title"><span aria-hidden="true">'+data.icon+'</span><span>'+escapeHTML(data.label)+' : choisis une activité</span></div><div class="v2173-panel-grid"></div>';
-    const grid = panel.querySelector('.v2173-panel-grid');
-    data.items.forEach(function(item){
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'v2173-activity-btn' + (item.soon ? ' soon' : '');
-      b.textContent = item.label;
-      b.title = item.label;
-      b.setAttribute('aria-label', item.label);
-      b.addEventListener('click', function(ev){
-        ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation();
-        launchItem(subjectKey, item);
-      }, true);
-      grid.appendChild(b);
-    });
-    panel.classList.add('open');
-    btn.classList.add('active');
-    btn.setAttribute('aria-expanded','true');
-    const ch = btn.querySelector('.v2173-chevron');
-    if(ch) ch.textContent = '▲';
-  }
-  function createButton(subjectKey){
-    const data = SUBJECTS[subjectKey];
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'subject-btn v2173-title-locked';
-    btn.dataset.subject = subjectKey;
-    btn.setAttribute('aria-expanded','false');
-    btn.setAttribute('aria-label', data.label + ' : afficher les activités');
-    btn.title = data.label;
-    applyVars(btn, data);
-    btn.innerHTML = '<span class="v2173-subject-icon" aria-hidden="true">'+data.icon+'</span><span class="v2173-subject-label">'+escapeHTML(data.label)+'</span><span class="v2173-chevron" aria-hidden="true">▼</span>';
-    btn.addEventListener('click', function(ev){
-      ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation();
-      if(subjectKey === 'maths' && typeof window.openMathsTrainingPopupV2343 === 'function'){
-        window.openMathsTrainingPopupV2343();
-        return;
-      }
-      openPanel(subjectKey, btn);
-    }, true);
-    return btn;
-  }
-  function buttonIsLocked(btn, key){
-    if(!btn || !btn.classList.contains('v2173-title-locked')) return false;
-    const label = btn.querySelector('.v2173-subject-label');
-    return !!label && label.textContent.trim() === SUBJECTS[key].label;
-  }
-  function rebuildSubjects(){
-    /* V25.7.79 : neutralisé. Le bandeau inférieur appartient désormais à hibou-bottom-nav-v25778.js. */
-    return;
-}
-  function schedule(){
-    clearTimeout(window.__v2173TitleLockTimer);
-    window.__v2173TitleLockTimer = setTimeout(rebuildSubjects, 20);
-  }
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', rebuildSubjects);
-  else rebuildSubjects();
-  window.addEventListener('load', function(){
-    rebuildSubjects();
-    [80,150,350,700,1200,2200,4000,6500].forEach(function(ms){ setTimeout(rebuildSubjects, ms); });
-  });
-  new MutationObserver(function(){
-    const bar = document.querySelector('.subjects-bar');
-    if(!bar) return;
-    const missing = ORDER.some(function(key){ return !buttonIsLocked(bar.querySelector('.subject-btn[data-subject="'+key+'"]'), key); });
-    if(missing) schedule();
-  }).observe(document.documentElement,{childList:true,subtree:true,characterData:true});
-  // Le fichier contient encore d'anciens scripts V21.6 qui remettaient le titre à V21.6.
-  // Ce verrou maintient le titre exact de la version générée.
-  setInterval(setTitle, 500);
-})();
-</script>
+<!-- Ancien contrôleur V21.7.3 des matières supprimé : navigation unique. -->
 <!-- PATCH V21.7.3.3 - Correction ciblée : popup Boîte à questions reliée au Google Sheet uniquement -->
 <!-- V25.6.16 : ancien JS supprimé patch-v2173-3-popup-boite-questions-sheet-only -->
 <style id="patch-v22-2-maths-sheets-css">
@@ -25906,8 +25700,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
   /* Navigation directe : entrée unique vers les pages des matières. */
   window.mhOpenDirectSubject = openSubject;
 
-  /* Plus de gestionnaire global concurrent : chaque bouton possède son clic unique. */
-  function installClicks(){}
+  /* Navigation unique : actions directement attachées par buildSubjects(). */
 
   function currentName(){
     try{
