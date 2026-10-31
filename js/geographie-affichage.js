@@ -83,29 +83,83 @@
   }
 
   /* Aide méthodologique par notion, disponible avant toute réponse. */
+  /* Aides CE2 harmonisées : 5 exercices par séance, sans correction anticipée. */
   var GEO_HELP_BY_SESSION = {
-    1:['Observe les quatre extrémités de la rose des vents. Retrouve la direction de chaque pointe en utilisant ce que tu as appris dans la leçon.', 'Observe l’école sur le plan. Cherche ce qui est placé à sa droite, puis vérifie la direction demandée.', 'Associe chaque numéro au symbole qui lui ressemble. Cherche ensuite sa signification dans la légende.', 'Cherche un repère fixe sur le plan avant de choisir.', 'Vérifie les directions et la légende une dernière fois.'],
-    2:['Observe les noms des fleuves et les lieux traversés. Cherche un indice sur la carte.', 'Regarde la forme du territoire et situe-le par rapport à la mer.', 'Lis le titre et la légende de la carte avant de répondre.', 'Cherche un indice sur la carte plutôt que de répondre au hasard.', 'Compare les informations de la carte et la consigne.'],
-    3:['Lis la légende : les couleurs montrent des espaces plus ou moins peuplés.', 'Compare les zones de la carte avant de choisir.', 'Cherche où vivent beaucoup de personnes et où elles sont moins nombreuses.', 'Observe les écarts de population sur la carte.', 'Relis le titre de la carte et vérifie son échelle.'],
-    4:['Commence par observer les bâtiments, les routes et les espaces naturels.', 'Cherche des indices de la ville et de la campagne.', 'Observe le relief et la présence éventuelle de la mer.', 'Compare les photographies en repérant ce qui est commun et différent.', 'Justifie ton choix avec un détail visible du paysage.'],
-    5:['Observe si les habitations sont groupées ou éloignées.', 'Cherche des indices pour distinguer ville, village et campagne.', 'Regarde les routes, les bâtiments et les espaces verts.', 'Compare la taille et la disposition des logements.', 'Appuie-toi sur les photographies pour justifier ton choix.'],
-    6:['Cherche qui travaille, habite ou se déplace dans ce lieu.', 'Observe ce que les personnes font dans le quartier.', 'Repère les services utiles aux habitants.', 'Compare les besoins des habitants et les aménagements.', 'Cherche un indice concret dans chaque document.']
+    1:[
+      'Observe la rose des vents et cherche les quatre directions opposées deux à deux.',
+      'Repère l’école sur le plan. Cherche ensuite le lieu situé à sa droite sur la carte.',
+      'Observe chaque dessin de la légende et cherche le même symbole sur le plan.',
+      'Repère d’abord le lieu demandé. Observe sa position sur le plan avant de répondre.',
+      'Cherche un repère connu, puis utilise les directions pour vérifier ton choix.'
+    ],
+    2:[
+      'Observe les noms des fleuves et les lieux traversés. Cherche un indice sur la carte.',
+      'Observe les contours du pays, puis les mers et les pays voisins.',
+      'Lis le titre et la légende de la carte avant de répondre.',
+      'Cherche un repère sur la carte plutôt que de répondre au hasard.',
+      'Compare les informations de la carte et la consigne.'
+    ],
+    3:[
+      'Commence par lire la légende : les couleurs donnent des informations sur les habitants.',
+      'Compare les espaces représentés et cherche les différences.',
+      'Observe les zones les plus colorées, puis compare leur population.',
+      'Repère les zones où les habitants sont nombreux ou peu nombreux.',
+      'Relis le titre de la carte et les informations de la légende.'
+    ],
+    4:[
+      'Observe les bâtiments, les routes et les espaces naturels.',
+      'Cherche des indices pour distinguer plusieurs types de paysages.',
+      'Observe le relief et la présence éventuelle de la mer.',
+      'Compare les photographies et repère ce qui change.',
+      'Justifie ton choix avec un détail visible du paysage.'
+    ],
+    5:[
+      'Observe si les habitations sont groupées ou éloignées.',
+      'Cherche des indices pour distinguer ville, village et campagne.',
+      'Regarde les routes, les bâtiments et les espaces verts.',
+      'Compare la taille et la disposition des logements.',
+      'Appuie-toi sur un détail de la photo pour expliquer ton choix.'
+    ],
+    6:[
+      'Observe ce que font les personnes et les lieux où elles se rendent.',
+      'Repère les activités qui font vivre la ville.',
+      'Cherche les lieux utiles aux habitants.',
+      'Compare les besoins des habitants et les aménagements.',
+      'Cherche un détail concret dans chaque document.'
+    ]
   };
   function renderGeoActivityHelp(card, sessionId, index, exo){
-    var tips=GEO_HELP_BY_SESSION[sessionId]||[];
-    var tip=(exo && typeof exo.hint==='string' && exo.hint.trim()) || tips[index] || 'Relis la consigne, puis observe attentivement les documents et leur légende.';
+    if(card.querySelector('[data-mh-geo-aide]')) return;
+    var tips=GEO_HELP_BY_SESSION[sessionId] || [];
+    var tip=tips[index] || 'Observe les documents et relis la consigne avant de choisir.';
+    var wrap=document.createElement('div');
+    wrap.setAttribute('data-mh-geo-aide','v2');
+    wrap.style.cssText='display:block!important;visibility:visible!important;opacity:1!important;position:relative!important;clear:both;width:100%;margin:8px 0 10px;flex:0 0 auto;';
     var btn=document.createElement('button');
-    btn.type='button';btn.className='mh-geo-help-visible';
-    btn.textContent='💡 Aide';btn.setAttribute('aria-expanded','false');
-    btn.style.cssText='display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;align-self:flex-start;flex:none;width:auto;min-height:40px;margin:8px 0;padding:9px 14px;border:2px solid #d09e4e;border-radius:12px;background:#fff4dc;color:#694719;font-size:15px;font-weight:800;cursor:pointer';
-    var panel=document.createElement('div');panel.hidden=true;panel.className='mh-geo-help-panel';
-    panel.style.cssText='margin:3px 0 12px;padding:11px 13px;background:#fff9e9;border-left:4px solid #e6b858;border-radius:8px;line-height:1.5';
+    btn.type='button';
+    btn.className='mh-geo-aide-ce2-v2';
+    btn.textContent='💡 Aide';
+    btn.setAttribute('aria-expanded','false');
+    btn.style.cssText='display:inline-flex!important;visibility:visible!important;opacity:1!important;align-items:center;justify-content:center;max-width:100%;min-height:42px;padding:9px 15px;border:2px solid #db9e44;border-radius:12px;background:#fff2d4;color:#633e10;font:800 15px/1.3 system-ui,sans-serif;cursor:pointer;';
+    var panel=document.createElement('p');
+    panel.hidden=true;
+    panel.className='mh-geo-aide-panneau-ce2-v2';
+    panel.setAttribute('role','status');
     panel.textContent='🦉 '+tip;
-    btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();panel.hidden=!panel.hidden;btn.textContent=panel.hidden?'💡 Aide':'💡 Cacher l’aide';btn.setAttribute('aria-expanded',String(!panel.hidden));});
+    panel.style.cssText='display:none;margin:8px 0 0;padding:12px 14px;background:#fffaed;border:2px solid #ead3a1;border-radius:12px;color:#493817;font-weight:700;line-height:1.5;';
+    btn.addEventListener('click',function(e){
+      e.preventDefault();e.stopPropagation();
+      var opening=panel.hidden;
+      panel.hidden=!opening;
+      panel.style.display=opening?'block':'none';
+      btn.textContent=opening?'💡 Cacher l’aide':'💡 Aide';
+      btn.setAttribute('aria-expanded',String(opening));
+    });
+    wrap.appendChild(btn);wrap.appendChild(panel);
     var instruction=card.querySelector('p');
-    if(instruction){instruction.insertAdjacentElement('afterend',panel);instruction.insertAdjacentElement('afterend',btn);}
-    else {card.insertBefore(panel,card.firstChild);card.insertBefore(btn,card.firstChild);}
-    card.dataset.mhGeoHelpReady='1';
+    if(instruction)instruction.insertAdjacentElement('afterend',wrap);
+    else card.insertBefore(wrap,card.firstChild);
+    card.dataset.mhGeoHelpReady='v2';
   }
   function geoIsCompleted(card,sessionId){
     if(sessionId<=2)return card.dataset.geoDone==='1';
@@ -118,6 +172,7 @@
   function renderGeoSession(grid, id){
     var s = GEO_SESSIONS.filter(function(x){return x.id === id;})[0] || GEO_SESSIONS[0];
     grid.className = 'v24-english-shell';
+    grid.dataset.mhGeoHelpVersion = 'v2-20261030';
     grid.innerHTML = '<div class="v24-english-toolbar"><button type="button" class="v24-english-back" id="v24GeoBack">← Séances</button><div><div class="v24-english-objective">'+esc(s.emoji+' '+s.title+' — '+s.objective)+'</div><div class="v24-english-criteria">'+s.criteria.map(function(c){return '<span>✓ '+esc(c)+'</span>';}).join('')+'</div></div></div><div class="v24-english-exercises" id="v24GeoExercises"></div>';
     grid.querySelector('#v24GeoBack').addEventListener('click', function(ev){ev.preventDefault();ev.stopPropagation();renderGeoHome(grid);}, true);
     var nav01Button=document.createElement('button');
@@ -134,9 +189,8 @@
       var card = document.createElement('section');
       card.className = 'v24-english-exo' + (s.id === 1 ? ' geo-s1-activity' : (s.id === 2 ? ' geo-s2-activity' : ''));
       card.innerHTML = '<h3>'+esc(exo.title)+'</h3><p>'+esc(exo.instr)+'</p>';
-      renderGeoActivityHelp(card,s.id,idx,exo);
-      if(s.id === 1){ renderGeoS1(card, idx); wrap.appendChild(card); return; }
-      if(s.id === 2){ renderGeoS2(card, idx); wrap.appendChild(card); return; }
+      if(s.id === 1){ renderGeoS1(card, idx); renderGeoActivityHelp(card,s.id,idx,exo); wrap.appendChild(card); return; }
+      if(s.id === 2){ renderGeoS2(card, idx); renderGeoActivityHelp(card,s.id,idx,exo); wrap.appendChild(card); return; }
       if(idx === 0 && s.map) card.insertAdjacentHTML('beforeend','<div class="v24-geo-map-card">'+s.map+'</div>');
       if(exo.type === 'assessment') renderHistoryAssessment(card, exo);
       if(exo.type === 'choice') renderScienceChoice(card, exo);
@@ -145,6 +199,7 @@
       if(exo.type === 'sort') renderScienceSort(card, exo);
       if(exo.type === 'checklist') renderScienceChecklist(card, exo);
       if(exo.type === 'free') renderGeoFree(card, exo);
+      renderGeoActivityHelp(card,s.id,idx,exo);
       wrap.appendChild(card);
     });
 
