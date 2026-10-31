@@ -1,0 +1,1 @@
+Remplacer index.html a la racine du depot. Correction ciblee du clic Anglais, Sciences, Geographie et Histoire. Les trois autres cartes restent inchangees.

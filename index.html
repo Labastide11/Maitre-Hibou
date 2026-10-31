@@ -25915,17 +25915,17 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
   window.mhOpenDirectSubject = openSubject;
 
   function installClicks(){
-    /* Une seule écoute pour les cartes du tableau de bord, même si la barre est reconstruite. */
-    if(document.__mhSubjectsDirectBound) return;
-    document.__mhSubjectsDirectBound = true;
+    /* Le clic doit suivre les vrais boutons, même lorsque le DOM est reconstruit. */
+    if(document.__mhFourSubjectsBound) return;
+    document.__mhFourSubjectsBound = true;
     document.addEventListener('click', function(ev){
       var target=ev.target;
-      var btn=target && target.closest ? target.closest('#v2574MainDashboard .subjects-bar.mh-subjects > button[data-subject]') : null;
-      if(!btn) return;
+      var btn=target && target.closest ? target.closest('.subjects-bar button[data-subject]') : null;
+      if(!btn || !btn.isConnected) return;
       var key=btn.getAttribute('data-subject');
-      if(!key || !SUBJECTS[key]) return;
-      /* Ignore le clic seulement si une destination réelle existe. */
-      if(!byId('v24BigSubjectOverlay') || !byId('v24BigSubjectGrid')) return;
+      /* Français, Grandir ensemble et Outils conservent leurs actions déjà fonctionnelles. */
+      if(['anglais','sciences','geographie','histoire'].indexOf(key) === -1) return;
+      if(!SUBJECTS[key]) return;
       ev.preventDefault();
       ev.stopImmediatePropagation();
       openSubject(key);
