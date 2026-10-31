@@ -2,6 +2,25 @@
 
 <html lang="fr" class="hibou-login-pending">
 <head>
+<script id="mh-accueil-navigation-directe-v1">
+/* Interception précoce : empêche les anciens écouteurs de créer un sous-menu. */
+(function(){
+  'use strict';
+  var subjects = {francais:1, anglais:1, sciences:1, geographie:1, histoire:1};
+  document.addEventListener('click',function(event){
+    var target = event.target && event.target.closest ? event.target.closest('button[data-subject]') : null;
+    if(!target) return;
+    var nav = target.closest('.subjects-bar.mh-subjects');
+    if(!nav || !nav.closest('#v2574MainDashboard')) return;
+    var key = target.getAttribute('data-subject');
+    if(!subjects[key] || typeof window.mhOpenDirectSubject !== 'function') return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    window.mhOpenDirectSubject(key);
+  },true);
+})();
+</script>
+
 <meta charset="utf-8"/>
 <style id="hibou-login-gate-v25884">
 /* Navigation interdite avant une authentification réussie, dès le premier rendu. */
@@ -25901,6 +25920,9 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
     openBigPopup(key);
   }
 
+  /* Navigation directe : entrée unique vers les pages des matières. */
+  window.mhOpenDirectSubject = openSubject;
+
   function installClicks(){
     var bar = document.querySelector('.subjects-bar');
     if(!bar || bar.__v2403Bound) return;
@@ -36257,51 +36279,6 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 
-
-
-<!-- Correctif structurel : retirer les barres de matières réellement du DOM, ne pas les masquer. -->
-<script id="mh-remove-duplicate-subject-bars-v1">
-(function(){
-  'use strict';
-  var desktop=window.matchMedia('(min-width:1200px) and (pointer:fine)');
-  var scheduled=false;
-  function clean(){
-    if(!desktop.matches)return;
-    var panel=document.getElementById('v2574MainDashboard');
-    if(!panel || !panel.classList.contains('mh-constellation'))return;
-    var main=panel.querySelector('.subjects-bar.mh-subjects');
-    if(!main || !main.querySelector('[data-subject="francais"]'))return;
-    // Une seule barre, celle qui porte les boutons originaux et leurs événements.
-    document.querySelectorAll('.subjects-bar').forEach(function(bar){
-      if(bar!==main)bar.remove();
-    });
-    // Si une ancienne reconstruction a dupliqué une carte dans la même barre,
-    // conserver la première carte et son gestionnaire de clic.
-    var seen=new Set();
-    main.querySelectorAll(':scope > button').forEach(function(btn){
-      var subject=btn.getAttribute('data-subject');
-      var kind=subject || (btn.classList.contains('v2574-grow-btn')?'grandir-ensemble':
-        btn.classList.contains('v2574-tools-btn')?'outils':null);
-      if(!kind)return;
-      if(seen.has(kind))btn.remove();else seen.add(kind);
-    });
-  }
-  function schedule(){
-    if(scheduled)return;
-    scheduled=true;
-    requestAnimationFrame(function(){scheduled=false;clean();});
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',schedule);
-  else schedule();
-  window.addEventListener('load',schedule);
-  window.addEventListener('resize',schedule);
-  new MutationObserver(function(records){
-    if(!desktop.matches)return;
-    // Ne traiter que les insertions / retraits, sans recréer de noeuds.
-    if(records.some(function(r){return r.addedNodes.length>0;}))schedule();
-  }).observe(document.documentElement,{childList:true,subtree:true});
-})();
-</script>
 
 </body>
 </html>
