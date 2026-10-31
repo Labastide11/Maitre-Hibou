@@ -5272,6 +5272,20 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar
   font-weight:900 !important; white-space:normal !important;
 }
 </style>
+<style id="mh-eight-clean-subject-buttons">
+@media(min-width:1200px) and (pointer:fine){
+#v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button.mh-direct-subject{
+  display:flex!important;flex-direction:column!important;justify-content:center!important;
+  align-items:center!important;gap:5px!important;cursor:pointer!important;}
+#v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button.mh-direct-subject .subject-icon{
+  display:block!important;font-size:clamp(20px,2vw,32px)!important;line-height:1.2!important;}
+#v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button.mh-direct-subject .subject-label{
+  display:block!important;text-align:center!important;font-size:clamp(12px,1.1vw,17px)!important;
+  line-height:1.2!important;font-weight:900!important;}
+#v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button.mh-direct-subject::before,
+#v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button.mh-direct-subject::after{content:none!important;display:none!important;}
+}
+</style>
 </head>
 <body class="prenom-mode">
 <header>
@@ -17047,62 +17061,40 @@ body.v21-final .quick-btn{
     }
   }
 
+  /* Navigation des matières : huit boutons, sans sous-listes ni ancien panneau. */
   function buildSubjects(){
-    const bar = document.querySelector(".subjects-bar");
-    const home = document.getElementById("v21Home");
+    var bar = document.querySelector('#v2574MainDashboard .subjects-bar') || document.querySelector('.subjects-bar');
     if(!bar) return;
-
-    // La V21 affiche les matières sous la zone d'accueil.
-    if(home && bar.previousElementSibling !== home){
-      home.insertAdjacentElement("afterend", bar);
+    var home=document.getElementById('v21Home');
+    if(home && !document.getElementById('v2574MainDashboard') && bar.previousElementSibling!==home){
+      home.insertAdjacentElement('afterend',bar);
     }
-
-    const existing = Array.from(bar.querySelectorAll(".subject-btn"));
-    const bySubject = {};
-    existing.forEach(function(btn){
-      const key = btn.getAttribute("data-subject");
-      if(key) bySubject[key] = btn;
-    });
-
-    // L'ancien bouton "Jeux" devient visuellement et fonctionnellement "Histoire" pour respecter la V21.
-    if(bySubject.jeux && !bySubject.histoire){
-      const b = bySubject.jeux;
-      b.setAttribute("data-subject","histoire");
-      b.removeAttribute("onclick");
-      bySubject.histoire = b;
-      delete bySubject.jeux;
-    }
-
-    const order = ["francais","maths","anglais","sciences","geographie","histoire"];
-    order.forEach(function(key){
-      let btn = bySubject[key];
-      if(!btn){
-        btn = document.createElement("button");
-        btn.className = "subject-btn";
-        btn.type = "button";
-        btn.setAttribute("data-subject", key);
-        btn.removeAttribute("onclick");
-      }
-      btn.removeAttribute('onclick');
-      const data = subjectMap[key];
-      btn.innerHTML = `
-        <span class="subject-title-line"><span class="subject-icon">${data.icon}</span> <span class="subject-label">${data.label}</span></span>
-      `;
+    var subjects=[
+      ['francais','📖','Français'],['maths','🧮','Maths'],
+      ['anglais','🇬🇧','Anglais'],['sciences','🧪','Sciences'],
+      ['geographie','🌍','Géographie'],['histoire','🏛️','Histoire']
+    ];
+    /* Effacement des anciens boutons : leurs écouteurs et leurs menus sont éliminés. */
+    bar.querySelectorAll('.subject-btn').forEach(function(old){old.remove()});
+    subjects.forEach(function(data){
+      var key=data[0],icon=data[1],name=data[2];
+      var btn=document.createElement('button');
+      btn.type='button';btn.className='subject-btn mh-direct-subject';
+      btn.setAttribute('data-subject',key);
+      btn.setAttribute('aria-label','Ouvrir '+name);
+      var pict=document.createElement('span');pict.className='subject-icon';
+      pict.textContent=icon;pict.setAttribute('aria-hidden','true');
+      var label=document.createElement('span');label.className='subject-label';label.textContent=name;
+      btn.appendChild(pict);btn.appendChild(label);
+      btn.addEventListener('click',function(ev){
+        ev.preventDefault();ev.stopPropagation();
+        var fn=window.mhOpenDirectSubject;
+        if(typeof fn==='function')fn(key);
+        else if(key==='francais' && typeof window.openFrenchTrainingPopupV2348==='function')window.openFrenchTrainingPopupV2348();
+        else if(key==='maths' && typeof window.openMathsTrainingPopupV2343==='function')window.openMathsTrainingPopupV2343();
+        else console.error('Navigation indisponible pour : '+key);
+      });
       bar.appendChild(btn);
-    });
-
-    // Supprime d'éventuels anciens boutons hors charte V21.
-    Array.from(bar.querySelectorAll(".subject-btn")).forEach(function(btn){
-      const key = btn.getAttribute("data-subject");
-      if(order.indexOf(key) === -1) btn.remove();
-    });
-
-    bar.querySelectorAll(".subject-btn").forEach(function(btn){
-      if(btn.__v21LearningBound) return;
-      btn.__v21LearningBound = true;
-      btn.addEventListener("click", function(){
-        document.body.classList.add("v21-learning-open");
-      }, true);
     });
   }
 
@@ -25914,23 +25906,8 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
   /* Navigation directe : entrée unique vers les pages des matières. */
   window.mhOpenDirectSubject = openSubject;
 
-  function installClicks(){
-    /* Le clic doit suivre les vrais boutons, même lorsque le DOM est reconstruit. */
-    if(document.__mhFourSubjectsBound) return;
-    document.__mhFourSubjectsBound = true;
-    document.addEventListener('click', function(ev){
-      var target=ev.target;
-      var btn=target && target.closest ? target.closest('.subjects-bar button[data-subject]') : null;
-      if(!btn || !btn.isConnected) return;
-      var key=btn.getAttribute('data-subject');
-      /* Français, Grandir ensemble et Outils conservent leurs actions déjà fonctionnelles. */
-      if(['anglais','sciences','geographie','histoire'].indexOf(key) === -1) return;
-      if(!SUBJECTS[key]) return;
-      ev.preventDefault();
-      ev.stopImmediatePropagation();
-      openSubject(key);
-    }, true);
-  }
+  /* Plus de gestionnaire global concurrent : chaque bouton possède son clic unique. */
+  function installClicks(){}
 
   function currentName(){
     try{
@@ -34900,9 +34877,7 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects {
    display:grid!important;
  }
- body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > .subject-btn[data-subject="maths"] {
-   display:none!important;
- }
+ 
 }
 </style>
 <script id="mh-constellation-pc-js">
