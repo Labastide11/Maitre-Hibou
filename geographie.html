@@ -1013,24 +1013,13 @@
     .v24-english-exercises{grid-template-columns:1fr;}
   }
 
-</style><link rel="stylesheet" href="css/geographie-exercices.css"><link rel="stylesheet" href="css/sciences-exercices.css"><style id="mh-standalone-illustrated-catalog">
-/* Catalogue épuré : titre de la matière, puis six cartes illustrées. */
-#exercices .v24-english-intro{display:none!important}
-#exercices .v24-english-sessions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important}
-#exercices .v24-english-session-card{min-width:0!important;overflow:hidden!important;border-radius:16px!important}
-#v24ScienceSessions .mh-science-illustrated-card{display:block!important;padding:6px!important;min-height:0!important}
-#v24ScienceSessions .mh-science-session-image{display:block!important;width:100%!important;height:auto!important;aspect-ratio:2.55/1!important;object-fit:contain!important;border-radius:12px!important}
-#v24ScienceSessions .mh-science-session-image[hidden],#v24ScienceSessions .mh-science-fallback[hidden]{display:none!important}
-@media(max-width:950px){#exercices .v24-english-sessions{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
-@media(max-width:600px){#exercices .v24-english-sessions{grid-template-columns:minmax(0,1fr)!important}}
-</style></head><body data-matiere="geographie"><header><h1>🌍 Géographie — Maître Hibou CE2</h1><a class="back" href="index.html">← Retour à l’accueil</a></header><main><div id="exercices" aria-live="polite"></div></main><script src="js/sciences-exercices.js"></script><script src="js/sciences-affichage.js"></script><script src="js/geographie-ressources.js"></script>
-<script src="js/geographie-affichage.js"></script><script>
+</style><link rel="stylesheet" href="css/geographie-exercices.css"><link rel="stylesheet" href="css/sciences-exercices.css"></head><body data-matiere="geographie"><header><h1>🌍 Géographie — Maître Hibou CE2</h1><a class="back" href="index.html">← Retour à l’accueil</a></header><main><p id="mh-student-progress" role="status" aria-live="polite"></p><div id="exercices" aria-live="polite"></div></main><script src="js/hibou-journal-eleve-v25847.js?v=25.8.47"></script><script src="js/hibou-sync-v25839.js?v=25.8.39"></script><script src="js/parcours-pages-autonomes.js"></script><script src="js/sciences-exercices.js"></script><script src="js/sciences-affichage.js"></script><script src="js/geographie-affichage.js"></script><script>
 (function(){
 'use strict';
 const host=document.getElementById('exercices');
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function renderEnglishFeedback(card,ok,message){let n=card.querySelector('.v24-english-feedback');if(!n){n=document.createElement('p');n.className='v24-english-feedback';card.appendChild(n);}n.className='v24-english-feedback '+(ok?'ok':'ko');n.textContent=message||'';}
-function saveBilanResult(subject,payload){try{const student=localStorage.getItem('hibou_last_prenom')||localStorage.getItem('hibou_prenom')||'invité';const key='hibou_bilans_'+student;const all=JSON.parse(localStorage.getItem(key)||'{}');all[subject]=payload;localStorage.setItem(key,JSON.stringify(all));window.dispatchEvent(new CustomEvent('hibou:bilan-updated',{detail:{subject,result:payload}}));}catch(err){console.error('Bilan non sauvegardé',err);}}
+function saveBilanResult(subject,payload){return window.MHStandaloneProgress.saveBilanResult(subject,payload);}
 function renderHistoryAssessment(card,exo){const questions=exo.questions||[];if(!questions.length){renderEnglishFeedback(card,false,'Activité indisponible.');return;}let answers={};questions.forEach((q,i)=>{let div=document.createElement('div');div.className='mh-q';let title=document.createElement('p');title.textContent=(i+1)+'. '+(q.question||q.text||q.prompt||'Question');div.appendChild(title);(q.options||q.choices||[]).forEach((v,j)=>{const b=document.createElement('button');b.type='button';b.className='mh-choice';b.textContent=typeof v==='string'?v:(v.label||v.text||String(v));b.onclick=()=>{answers[i]=j;div.querySelectorAll('button').forEach(x=>x.classList.remove('chosen'));b.classList.add('chosen');};div.appendChild(b);});card.appendChild(div)});let b=document.createElement('button');b.type='button';b.textContent='Vérifier mes réponses';b.className='v24-english-check';b.onclick=()=>{let ok=questions.every((q,i)=>answers[i]!=null);renderEnglishFeedback(card,ok,ok?'Toutes les réponses ont été sélectionnées.':'Réponds à chaque question avant de vérifier.');};card.appendChild(b);}
 function report(error){console.error(error);host.innerHTML='<div class="error"><strong>Impossible de charger les exercices.</strong><p>Vérifie que les fichiers JavaScript des séances se trouvent dans le dossier js/ du dépôt.</p></div>';}
 try{
@@ -1040,13 +1029,7 @@ const geoFactory=window.MH_GEO_RENDER_FACTORY;
 if(document.body.dataset.matiere==='sciences'){sci.renderScienceHome(host);return;}
 if(typeof geoFactory!=='function')throw new Error('Moteur Géographie absent');
 const geo=geoFactory({esc,renderHistoryAssessment,renderScienceChoice:sci.renderScienceChoice,renderScienceMatch:sci.renderScienceMatch,renderScienceOrder:sci.renderScienceOrder,renderScienceSort:sci.renderScienceSort,renderScienceChecklist:sci.renderScienceChecklist,renderEnglishFeedback});
-// Supprime les panneaux de présentation ajoutés par le moteur historique.
-const observer=new MutationObserver(function(){
-  host.querySelectorAll('.v24-english-intro').forEach(function(element){element.remove();});
-});
-observer.observe(host,{childList:true,subtree:true});
 geo.renderGeoHome(host);
-host.querySelectorAll('.v24-english-intro').forEach(function(element){element.remove();});
 }catch(err){report(err)}
 })();
 </script></body></html>

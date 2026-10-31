@@ -1038,13 +1038,15 @@
 .v24-history-result{padding:10px;margin:8px;border-radius:12px;background:#f6f3ee}
 @media(max-width:950px){#v24HistorySessions{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:600px){#v24HistorySessions{grid-template-columns:minmax(0,1fr)!important}}
-</style></head><body><header><h1>🏛️ Histoire — Maître Hibou CE2</h1><a class="back" href="index.html">← Retour à l’accueil</a></header><main><div id="exercices" aria-live="polite"></div></main>
-<script src="js/sciences-exercices.js"></script><script src="js/sciences-affichage.js"></script><script src="js/histoire-exercices.js"></script><script>(function(){
+#mh-student-progress{margin:8px 22px;color:#245b46;font-size:14px;font-weight:700}
+#mh-student-progress.mh-student-unknown{color:#a34030}
+</style></head><body><header><h1>🏛️ Histoire — Maître Hibou CE2</h1><a class="back" href="index.html">← Retour à l’accueil</a></header><main><p id="mh-student-progress" role="status" aria-live="polite"></p><div id="exercices" aria-live="polite"></div></main>
+<script src="js/hibou-journal-eleve-v25847.js?v=25.8.47"></script><script src="js/hibou-sync-v25839.js?v=25.8.39"></script><script src="js/parcours-pages-autonomes.js"></script><script src="js/sciences-exercices.js"></script><script src="js/sciences-affichage.js"></script><script src="js/histoire-exercices.js"></script><script>(function(){
 'use strict';
 const host=document.getElementById('exercices');
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function renderEnglishFeedback(card,ok,message){let n=card.querySelector('.v24-english-feedback');if(!n){n=document.createElement('p');n.className='v24-english-feedback';card.appendChild(n);}n.className='v24-english-feedback '+(ok?'ok':'ko');n.textContent=message||'';}
-function saveBilanResult(subject,payload){try{const student=localStorage.getItem('hibou_last_prenom')||localStorage.getItem('hibou_prenom')||'invité';const key='hibou_bilans_'+student;const all=JSON.parse(localStorage.getItem(key)||'{}');all[subject]=payload;localStorage.setItem(key,JSON.stringify(all));window.dispatchEvent(new CustomEvent('hibou:bilan-updated',{detail:{subject,result:payload}}));}catch(err){console.error('Bilan non sauvegardé',err);}}
+function saveBilanResult(subject,payload){return window.MHStandaloneProgress.saveBilanResult(subject,payload);}
 
 function report(error){console.error(error);host.innerHTML='<div class="error"><strong>Impossible de charger les exercices d’Histoire.</strong><p>'+esc(error && error.message || 'Erreur inconnue')+'</p></div>';}
 try{
