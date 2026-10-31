@@ -1013,9 +1013,17 @@
     .v24-english-exercises{grid-template-columns:1fr;}
   }
 
-</style><link rel="stylesheet" href="css/geographie-exercices.css"><link rel="stylesheet" href="css/sciences-exercices.css"><style id="mh-independent-exercise-pages">
-.mh-independent-sessions{background:#fff;border:1px solid #dce5ef;border-radius:18px;padding:14px;margin-bottom:15px}.mh-independent-sessions h2{margin:0 0 6px;font-size:1.3rem}.mh-independent-sessions p{margin:0 0 12px;font-size:.94rem}.mh-session-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.mh-session-list button{border:2px solid #bed8ed;background:#f0f7ff;color:#173b62;border-radius:14px;padding:12px;min-height:58px;font-weight:800;text-align:center}.mh-session-list button[aria-current="true"]{background:#dcf5e9;border-color:#21855f;color:#18583f}.mh-session-list button:hover{border-color:#2b78b9}@media(max-width:680px){.mh-session-list{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:390px){.mh-session-list{grid-template-columns:1fr}}
-</style></head><body data-matiere="sciences"><header><h1>🧪 Sciences — Maître Hibou CE2</h1><a class="back" href="index.html">← Retour à l’accueil</a></header><main><nav id="choix-seances" class="mh-independent-sessions" aria-label="Séances de Sciences"><h2>Mes exercices de Sciences</h2><p>Choisis une séance pour commencer les cinq exercices. Tu peux utiliser « Aide » avant de répondre.</p><div class="mh-session-list" id="mh-session-list"></div></nav><div id="exercices" aria-live="polite"></div></main><script src="js/sciences-exercices.js"></script><script src="js/sciences-affichage.js"></script><script src="js/geographie-affichage.js"></script><script>
+</style><link rel="stylesheet" href="css/geographie-exercices.css"><link rel="stylesheet" href="css/sciences-exercices.css"><style id="mh-standalone-illustrated-catalog">
+/* Catalogue épuré : titre de la matière, puis six cartes illustrées. */
+#exercices .v24-english-intro{display:none!important}
+#exercices .v24-english-sessions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important}
+#exercices .v24-english-session-card{min-width:0!important;overflow:hidden!important;border-radius:16px!important}
+#v24ScienceSessions .mh-science-illustrated-card{display:block!important;padding:6px!important;min-height:0!important}
+#v24ScienceSessions .mh-science-session-image{display:block!important;width:100%!important;height:auto!important;aspect-ratio:2.55/1!important;object-fit:contain!important;border-radius:12px!important}
+#v24ScienceSessions .mh-science-session-image[hidden],#v24ScienceSessions .mh-science-fallback[hidden]{display:none!important}
+@media(max-width:950px){#exercices .v24-english-sessions{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:600px){#exercices .v24-english-sessions{grid-template-columns:minmax(0,1fr)!important}}
+</style></head><body data-matiere="sciences"><header><h1>🧪 Sciences — Maître Hibou CE2</h1><a class="back" href="index.html">← Retour à l’accueil</a></header><main><div id="exercices" aria-live="polite"></div></main><script src="js/sciences-exercices.js"></script><script src="js/sciences-affichage.js"></script><script src="js/geographie-affichage.js"></script><script>
 (function(){
 'use strict';
 const host=document.getElementById('exercices');
@@ -1037,23 +1045,16 @@ else {
   // Le moteur Géographie contient les six séances, sans exposer les données.
   engine={sessions:Array.from({length:6},(_,i)=>({id:i+1,short:'Séance '+(i+1)})),render:geo.renderGeoSession,home:geo.renderGeoHome};
 }
-const chooser=document.getElementById('mh-session-list');
-function openSession(id){
-  try{
-    engine.render(host,id);
-    chooser.querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',String(Number(b.dataset.session)===id)));
-    if(location.hash!=='#seance-'+id)history.replaceState(null,'','#seance-'+id);
-    host.scrollIntoView({block:'start',behavior:'auto'});
-  }catch(error){report(error)}
-}
-for(const session of engine.sessions){
-  const b=document.createElement('button');b.type='button';b.dataset.session=String(session.id);
-  b.textContent='Séance '+session.id;b.setAttribute('aria-current','false');
-  b.addEventListener('click',()=>openSession(session.id));chooser.appendChild(b);
-}
+// Une seule source pour les séances : les six cartes photographiques du moteur.
+// Suppression effective des anciens panneaux explicatifs, y compris après retour au catalogue.
+const observer=new MutationObserver(function(){
+  host.querySelectorAll('.v24-english-intro').forEach(function(element){element.remove();});
+});
+observer.observe(host,{childList:true,subtree:true});
 const initial=/^#seance-([1-6])$/.exec(location.hash);
-if(initial)openSession(Number(initial[1]));
-else engine.home(host);
+if(initial){engine.render(host,Number(initial[1]));}
+else {engine.home(host);}
+host.querySelectorAll('.v24-english-intro').forEach(function(element){element.remove();});
 }catch(err){report(err)}
 })();
 </script></body></html>

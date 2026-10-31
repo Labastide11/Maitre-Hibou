@@ -1013,7 +1013,17 @@
     .v24-english-exercises{grid-template-columns:1fr;}
   }
 
-</style><link rel="stylesheet" href="css/geographie-exercices.css"><link rel="stylesheet" href="css/sciences-exercices.css"></head><body data-matiere="geographie"><header><h1>🌍 Géographie — Maître Hibou CE2</h1><a class="back" href="index.html">← Retour à l’accueil</a></header><main><div id="exercices" aria-live="polite"></div></main><script src="js/sciences-exercices.js"></script><script src="js/sciences-affichage.js"></script><script src="js/geographie-ressources.js"></script>
+</style><link rel="stylesheet" href="css/geographie-exercices.css"><link rel="stylesheet" href="css/sciences-exercices.css"><style id="mh-standalone-illustrated-catalog">
+/* Catalogue épuré : titre de la matière, puis six cartes illustrées. */
+#exercices .v24-english-intro{display:none!important}
+#exercices .v24-english-sessions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important}
+#exercices .v24-english-session-card{min-width:0!important;overflow:hidden!important;border-radius:16px!important}
+#v24ScienceSessions .mh-science-illustrated-card{display:block!important;padding:6px!important;min-height:0!important}
+#v24ScienceSessions .mh-science-session-image{display:block!important;width:100%!important;height:auto!important;aspect-ratio:2.55/1!important;object-fit:contain!important;border-radius:12px!important}
+#v24ScienceSessions .mh-science-session-image[hidden],#v24ScienceSessions .mh-science-fallback[hidden]{display:none!important}
+@media(max-width:950px){#exercices .v24-english-sessions{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:600px){#exercices .v24-english-sessions{grid-template-columns:minmax(0,1fr)!important}}
+</style></head><body data-matiere="geographie"><header><h1>🌍 Géographie — Maître Hibou CE2</h1><a class="back" href="index.html">← Retour à l’accueil</a></header><main><div id="exercices" aria-live="polite"></div></main><script src="js/sciences-exercices.js"></script><script src="js/sciences-affichage.js"></script><script src="js/geographie-ressources.js"></script>
 <script src="js/geographie-affichage.js"></script><script>
 (function(){
 'use strict';
@@ -1030,7 +1040,13 @@ const geoFactory=window.MH_GEO_RENDER_FACTORY;
 if(document.body.dataset.matiere==='sciences'){sci.renderScienceHome(host);return;}
 if(typeof geoFactory!=='function')throw new Error('Moteur Géographie absent');
 const geo=geoFactory({esc,renderHistoryAssessment,renderScienceChoice:sci.renderScienceChoice,renderScienceMatch:sci.renderScienceMatch,renderScienceOrder:sci.renderScienceOrder,renderScienceSort:sci.renderScienceSort,renderScienceChecklist:sci.renderScienceChecklist,renderEnglishFeedback});
+// Supprime les panneaux de présentation ajoutés par le moteur historique.
+const observer=new MutationObserver(function(){
+  host.querySelectorAll('.v24-english-intro').forEach(function(element){element.remove();});
+});
+observer.observe(host,{childList:true,subtree:true});
 geo.renderGeoHome(host);
+host.querySelectorAll('.v24-english-intro').forEach(function(element){element.remove();});
 }catch(err){report(err)}
 })();
 </script></body></html>
