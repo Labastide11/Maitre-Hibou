@@ -5254,6 +5254,13 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar
   padding:0 !important;
 }
 </style>
+<style id="mh-unique-subjects-bar-fix">
+/* Antidoublon final : masquer toutes les barres historiques hors du tableau de bord PC. */
+@media (min-width:1200px) and (pointer:fine) {
+  body.v25-7-73-simplified-home .subjects-bar:not(.mh-subjects) {display:none!important;visibility:hidden!important;}
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects {display:grid!important;visibility:visible!important;}
+}
+</style>
 </head>
 <body class="prenom-mode">
 <header>
@@ -34868,9 +34875,13 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
  /* La barre reste visible même pendant la reconstruction asynchrone de l’accueil.
     Ancienne règle display:none supprimée : elle cachait parfois les matières
     quand les classes du tableau de bord étaient réinitialisées. */
- body.v25-7-73-simplified-home .subjects-bar {
-   display:grid!important;
+ /* Une seule barre est autorisée sur l'accueil PC : celle de Constellation.
+    Les anciennes barres extérieures restent dans le DOM mais ne s'affichent pas. */
+ body.v25-7-73-simplified-home .subjects-bar:not(.mh-subjects) {
+   display:none!important;
+   visibility:hidden!important;
  }
+
  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects {
    display:grid!important;
  }
