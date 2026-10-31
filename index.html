@@ -2,21 +2,29 @@
 
 <html lang="fr" class="hibou-login-pending">
 <head>
-<script id="mh-accueil-navigation-directe-v1">
-/* Interception précoce : empêche les anciens écouteurs de créer un sous-menu. */
+<script id="mh-accueil-navigation-directe-v2">
+/* Une carte = une action. Ne neutralise jamais le clic si le moteur n'est pas prêt. */
 (function(){
   'use strict';
-  var subjects = {francais:1, anglais:1, sciences:1, geographie:1, histoire:1};
-  document.addEventListener('click',function(event){
-    var target = event.target && event.target.closest ? event.target.closest('button[data-subject]') : null;
-    if(!target) return;
-    var nav = target.closest('.subjects-bar.mh-subjects');
-    if(!nav || !nav.closest('#v2574MainDashboard')) return;
-    var key = target.getAttribute('data-subject');
-    if(!subjects[key] || typeof window.mhOpenDirectSubject !== 'function') return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    window.mhOpenDirectSubject(key);
+  var keys=['francais','anglais','sciences','geographie','histoire'];
+  function normalise(t){return String(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+  document.addEventListener('click',function(ev){
+    var btn=ev.target && ev.target.closest ? ev.target.closest('button') : null;
+    if(!btn || !btn.closest('#v2574MainDashboard .subjects-bar.mh-subjects'))return;
+    var key=btn.getAttribute('data-subject');
+    if(!key || keys.indexOf(key)<0){
+      var label=normalise(btn.getAttribute('aria-label')||btn.textContent);
+      key=keys.find(function(k){return label.includes(k);});
+    }
+    if(!key || typeof window.mhOpenDirectSubject!=='function')return;
+    try{
+      window.mhOpenDirectSubject(key);
+    }catch(err){
+      console.error('Maître Hibou : ouverture matière impossible',key,err);
+      return; /* permettre au gestionnaire de clic précédent de réagir */
+    }
+    ev.preventDefault();
+    ev.stopImmediatePropagation();
   },true);
 })();
 </script>
