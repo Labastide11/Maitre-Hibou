@@ -19809,64 +19809,7 @@ body.v21-final .v2173-activity-btn.soon{
 })();
 </script>
 <!-- PATCH V23.4.12 - Français : sections Grammaire + Production d'écrits -->
-<style id="patch-v23412-francais-sections-css">
-#frenchTrainingOverlayV2348 .fr-v23412-scroll{
-  flex:1 1 auto;
-  min-height:0;
-  overflow-y:auto;
-  overflow-x:hidden;
-  -webkit-overflow-scrolling:touch;
-  overscroll-behavior:contain;
-  touch-action:pan-y;
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-  padding:2px 4px 18px;
-}
-#frenchTrainingOverlayV2348 .fr-v23412-block{
-  flex:0 0 auto;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-#frenchTrainingOverlayV2348 .fr-v23412-writing-title{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:14px;
-  margin:8px 0 6px 0;
-  color:#7A5C00;
-  font-family:"Trebuchet MS", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  font-size:28px;
-  font-weight:1000;
-}
-#frenchTrainingOverlayV2348 .fr-v23412-writing-title:before,
-#frenchTrainingOverlayV2348 .fr-v23412-writing-title:after{
-  content:'';
-  height:2px;
-  flex:1;
-  background:#FFEFA3;
-}
-#frenchTrainingOverlayV2348 .fr-v23412-writing-note{
-  margin:-2px 0 6px 0;
-  text-align:center;
-  color:#7A5C00;
-  font-size:13px;
-  font-weight:900;
-}
-#frenchTrainingOverlayV2348 .fr-v23412-production-row{
-  border-color:#FFD93D!important;
-  background:linear-gradient(135deg,#FFFCEB 0%,#FFFFFF 100%)!important;
-}
-#frenchTrainingOverlayV2348 .fr-v23412-production-row .fr-v23411-train-btn{
-  border-color:#FFD93D;
-  background:linear-gradient(135deg,#FFF8C7 0%,#FFFCEB 100%);
-  color:#7A5C00;
-}
-@media (max-width:760px){
-  #frenchTrainingOverlayV2348 .fr-v23412-writing-title{font-size:23px;}
-}
-</style>
+<link rel="stylesheet" href="css/francais-sections-v23412.css"/>
 <script id="patch-v23412-francais-sections-js">
 (function(){
   if(window.__maitreHibouFrancaisSectionsV23412) return;
@@ -19921,31 +19864,7 @@ body.v21-final .v2173-activity-btn.soon{
 })();
 </script>
 <!-- PATCH V23.4.13 - Français : espace bas sous Production d'écrits -->
-<style id="patch-v23413-francais-espace-production-css">
-/* Ajoute une marge confortable sous "Idées pour écrire" sur tablette.
-   La zone reste scrollable dans la même popup Français. */
-#frenchTrainingOverlayV2348 .fr-v23412-scroll{
-  padding-bottom:92px !important;
-  scroll-padding-bottom:92px !important;
-}
-#frenchTrainingOverlayV2348 .fr-v23412-block:last-child{
-  margin-bottom:42px !important;
-  padding-bottom:28px !important;
-}
-#frenchTrainingOverlayV2348 .fr-v23412-production-row{
-  margin-bottom:22px !important;
-}
-@media (max-height:760px), (max-width:900px){
-  #frenchTrainingOverlayV2348 .fr-v23412-scroll{
-    padding-bottom:120px !important;
-    scroll-padding-bottom:120px !important;
-  }
-  #frenchTrainingOverlayV2348 .fr-v23412-block:last-child{
-    margin-bottom:58px !important;
-    padding-bottom:34px !important;
-  }
-}
-</style>
+<link rel="stylesheet" href="css/francais-espace-production-v23413.css"/>
 <script id="patch-v23413-version-title">
 (function(){ try{ document.title = '🦉 Maître Hibou V25.8.84'; }catch(e){} })();
 </script>

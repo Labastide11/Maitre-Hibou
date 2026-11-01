@@ -1,0 +1,57 @@
+
+#frenchTrainingOverlayV2348 .fr-v23412-scroll{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  touch-action:pan-y;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  padding:2px 4px 18px;
+}
+#frenchTrainingOverlayV2348 .fr-v23412-block{
+  flex:0 0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+#frenchTrainingOverlayV2348 .fr-v23412-writing-title{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  margin:8px 0 6px 0;
+  color:#7A5C00;
+  font-family:"Trebuchet MS", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size:28px;
+  font-weight:1000;
+}
+#frenchTrainingOverlayV2348 .fr-v23412-writing-title:before,
+#frenchTrainingOverlayV2348 .fr-v23412-writing-title:after{
+  content:'';
+  height:2px;
+  flex:1;
+  background:#FFEFA3;
+}
+#frenchTrainingOverlayV2348 .fr-v23412-writing-note{
+  margin:-2px 0 6px 0;
+  text-align:center;
+  color:#7A5C00;
+  font-size:13px;
+  font-weight:900;
+}
+#frenchTrainingOverlayV2348 .fr-v23412-production-row{
+  border-color:#FFD93D!important;
+  background:linear-gradient(135deg,#FFFCEB 0%,#FFFFFF 100%)!important;
+}
+#frenchTrainingOverlayV2348 .fr-v23412-production-row .fr-v23411-train-btn{
+  border-color:#FFD93D;
+  background:linear-gradient(135deg,#FFF8C7 0%,#FFFCEB 100%);
+  color:#7A5C00;
+}
+@media (max-width:760px){
+  #frenchTrainingOverlayV2348 .fr-v23412-writing-title{font-size:23px;}
+}

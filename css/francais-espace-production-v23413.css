@@ -1,0 +1,24 @@
+
+/* Ajoute une marge confortable sous "Idées pour écrire" sur tablette.
+   La zone reste scrollable dans la même popup Français. */
+#frenchTrainingOverlayV2348 .fr-v23412-scroll{
+  padding-bottom:92px !important;
+  scroll-padding-bottom:92px !important;
+}
+#frenchTrainingOverlayV2348 .fr-v23412-block:last-child{
+  margin-bottom:42px !important;
+  padding-bottom:28px !important;
+}
+#frenchTrainingOverlayV2348 .fr-v23412-production-row{
+  margin-bottom:22px !important;
+}
+@media (max-height:760px), (max-width:900px){
+  #frenchTrainingOverlayV2348 .fr-v23412-scroll{
+    padding-bottom:120px !important;
+    scroll-padding-bottom:120px !important;
+  }
+  #frenchTrainingOverlayV2348 .fr-v23412-block:last-child{
+    margin-bottom:58px !important;
+    padding-bottom:34px !important;
+  }
+}
