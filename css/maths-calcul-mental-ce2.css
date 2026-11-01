@@ -1,0 +1,97 @@
+/* Mini-activité Maths : Calcul mental CE2 */
+.mental-game-container{
+  background:#F8F7FF;
+  border:2px solid var(--primary-light);
+  border-radius:16px;
+  padding:16px;
+  margin-top:10px;
+  width:100%;
+}
+.mental-title-line{
+  font-size:15px;
+  font-weight:900;
+  color:var(--primary);
+  margin-bottom:8px;
+}
+.mental-skill-box{
+  background:#FFFCEB;
+  border:2px solid var(--accent);
+  border-radius:14px;
+  padding:10px 12px;
+  font-size:13px;
+  font-weight:900;
+  color:#7A5C00;
+  margin-bottom:10px;
+}
+.mental-progress{
+  font-size:12px;
+  font-weight:900;
+  color:var(--text-muted);
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.mental-question{
+  background:white;
+  border:2px solid #ECEBF3;
+  border-radius:14px;
+  padding:14px;
+  font-size:20px;
+  font-weight:900;
+  text-align:center;
+  color:var(--text);
+  margin-bottom:10px;
+}
+.mental-options{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.mental-option{
+  background:white;
+  border:2px solid #ECEBF3;
+  border-radius:12px;
+  padding:10px 14px;
+  font-family:inherit;
+  font-size:15px;
+  font-weight:900;
+  color:var(--text);
+  cursor:pointer;
+  text-align:left;
+  transition:all .2s;
+}
+.mental-option:not(:disabled):hover{
+  border-color:var(--primary);
+  background:var(--primary-light);
+  transform:translateY(-1px);
+}
+.mental-option.correct{
+  background:#E6F7E9!important;
+  border-color:var(--green)!important;
+  color:#1E5627!important;
+}
+.mental-option.wrong{
+  background:#FFEAEA!important;
+  border-color:var(--secondary)!important;
+  color:#7A2222!important;
+}
+.mental-feedback{
+  margin-top:10px;
+  font-size:14px;
+  font-weight:900;
+  text-align:center;
+}
+.mental-feedback.ok{color:#1E5627;}
+.mental-feedback.warn{color:#7A5C00;}
+.mental-feedback.bad{color:#7A2222;}
+.mental-next-btn{
+  margin-top:10px;
+  background:var(--primary);
+  color:white;
+  border:none;
+  border-radius:14px;
+  padding:10px 14px;
+  font-weight:900;
+  font-family:inherit;
+  cursor:pointer;
+  width:100%;
+}
