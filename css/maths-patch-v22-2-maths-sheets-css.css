@@ -1,0 +1,11 @@
+.v22-domain.maths .v22-belt-list{
+  max-height:62vh;
+  overflow:auto;
+  padding-right:4px;
+}
+.v22-domain.maths .v22-belt-card{
+  grid-template-columns:50px 1fr 190px;
+}
+@media(max-width:900px){
+  .v22-domain.maths .v22-belt-list{max-height:none;overflow:visible;}
+}

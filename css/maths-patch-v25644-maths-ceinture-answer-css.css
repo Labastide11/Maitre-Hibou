@@ -1,0 +1,20 @@
+/* V25.7.3 — les réponses des ceintures Maths n'utilisent plus .quiz-option.
+   Un ancien correctif global interceptait .quiz-option et appelait answerQuiz(), ce qui bloquait les ceintures Maths. */
+.v222-math-options{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.v222-math-option{
+  background:#fff;
+  border:2px solid #ECEBF3;
+  border-radius:12px;
+  padding:10px 14px;
+  font-family:inherit;
+  font-weight:900;
+  cursor:pointer;
+  text-align:left;
+  color:var(--text);
+  transition:all .2s;
+  pointer-events:auto;
+}
+.v222-math-option:not(:disabled):hover{border-color:var(--primary);background:var(--primary-light);transform:translateY(-1px);}
+.v222-math-option.correct{background:#E6F7E9!important;border-color:var(--green)!important;color:#1E5627!important;}
+.v222-math-option.wrong{background:#FFEAEA!important;border-color:var(--secondary)!important;color:#7A2222!important;}
+.v222-math-option:disabled{cursor:default;opacity:.92;}

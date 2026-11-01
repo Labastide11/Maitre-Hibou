@@ -1,0 +1,43 @@
+.multi-box{
+  background:#F8F7FF;
+  border:2px solid #EAE8FF;
+  border-radius:16px;
+  padding:16px;
+  margin-top:10px;
+}
+.multi-box h3{
+  margin:0 0 8px 0;
+  color:var(--primary);
+  font-family:"Trebuchet MS", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size:20px;
+}
+.multi-desc{
+  background:#FFFCEB;
+  border:2px solid var(--accent);
+  border-radius:14px;
+  padding:10px;
+  margin:10px 0;
+  font-weight:900;
+  color:#7A5C00;
+}
+.multi-levels{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+.multi-btn{
+  border:none;
+  border-radius:12px;
+  padding:10px 12px;
+  font-weight:900;
+  cursor:pointer;
+  font-family:inherit;
+  background:var(--primary);
+  color:white;
+}
+.multi-btn.secondary{
+  background:#fff;
+  color:var(--primary);
+  border:2px solid var(--primary-light);
+}
