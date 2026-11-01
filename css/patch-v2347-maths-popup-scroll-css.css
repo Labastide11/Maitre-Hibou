@@ -1,0 +1,82 @@
+
+/* Correction ciblée : la liste des entraînements doit défiler dans la grande popup Maths,
+   sans ouvrir une troisième fenêtre et sans basculer dans le chat. */
+#mathsTrainingOverlayV2343{
+  touch-action:none;
+}
+#mathsTrainingOverlayV2343 .maths-v2343-popup{
+  max-height:92vh !important;
+  min-height:0 !important;
+}
+#mathsPopupInnerV2343{
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  overflow:hidden !important;
+}
+#mathsPopupInnerV2343 .maths-v2343-header{
+  flex:0 0 auto !important;
+}
+#mathsPopupInnerV2343 .maths-v2343-content{
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+  display:flex !important;
+  flex-direction:column !important;
+}
+#mathsPopupInnerV2343 .maths-v2343-panel{
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+}
+#mathsPopupInnerV2343 .maths-v2343-panel-title{
+  flex:0 0 auto !important;
+}
+#mathsPopupInnerV2343 .maths-v2343-list{
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  max-height:100% !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  -webkit-overflow-scrolling:touch !important;
+  overscroll-behavior:contain !important;
+  touch-action:pan-y !important;
+  padding-bottom:16px !important;
+  scrollbar-gutter:stable;
+}
+/* Pendant un entraînement ou sur l'écran de résultat, le contenu reste aussi accessible
+   si la tablette est en paysage ou si la hauteur disponible est faible. */
+#mathsPopupInnerV2343 .maths-v2343-panel:not(:has(.maths-v2343-list)){
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  -webkit-overflow-scrolling:touch !important;
+  overscroll-behavior:contain !important;
+  touch-action:pan-y !important;
+  padding-bottom:18px !important;
+}
+@supports not selector(:has(*)){
+  #mathsPopupInnerV2343 .maths-v2343-panel{
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch !important;
+    overscroll-behavior:contain !important;
+    touch-action:pan-y !important;
+  }
+}
+@media (orientation:landscape) and (max-height:760px){
+  #mathsTrainingOverlayV2343{
+    align-items:stretch !important;
+    padding:10px !important;
+  }
+  #mathsTrainingOverlayV2343 .maths-v2343-popup{
+    height:calc(100vh - 20px) !important;
+    max-height:calc(100vh - 20px) !important;
+  }
+  #mathsPopupInnerV2343 .maths-v2343-content{
+    padding:10px 14px 14px !important;
+  }
+  #mathsPopupInnerV2343 .maths-v2343-list{
+    gap:8px !important;
+  }
+}

@@ -1,0 +1,46 @@
+
+#mathsTrainingOverlayV2343 .maths-v25224-subtle{
+  text-align:center;
+  color:#6C63A8;
+  font-weight:900;
+  margin-top:-4px;
+  margin-bottom:10px;
+}
+#mathsTrainingOverlayV2343 .maths-v25224-review{
+  width:100%;
+  max-width:860px;
+  margin:8px auto 0;
+  display:grid;
+  gap:8px;
+  text-align:left;
+}
+#mathsTrainingOverlayV2343 .maths-v25224-review-row{
+  display:grid;
+  grid-template-columns:44px minmax(120px,1.2fr) minmax(120px,1fr) minmax(120px,1fr) 54px;
+  gap:8px;
+  align-items:center;
+  border:2px solid #EAE8FF;
+  border-radius:16px;
+  padding:8px 10px;
+  background:#FFFFFF;
+  font-weight:900;
+  color:#2D2B55;
+}
+#mathsTrainingOverlayV2343 .maths-v25224-review-row.head{
+  background:#E8F4FF;
+  color:#1E6EDB;
+  border-color:#CFE7FF;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:.02em;
+}
+#mathsTrainingOverlayV2343 .maths-v25224-ok{color:#1E7E34;font-weight:1000;}
+#mathsTrainingOverlayV2343 .maths-v25224-ko{color:#B3261E;font-weight:1000;}
+@media (max-width:760px){
+  #mathsTrainingOverlayV2343 .maths-v25224-review-row{
+    grid-template-columns:34px 1fr;
+  }
+  #mathsTrainingOverlayV2343 .maths-v25224-review-row.head{display:none;}
+  #mathsTrainingOverlayV2343 .maths-v25224-review-row span:nth-child(3)::before{content:'Réponse : '; color:#6C63A8;}
+  #mathsTrainingOverlayV2343 .maths-v25224-review-row span:nth-child(4)::before{content:'Correction : '; color:#6C63A8;}
+}

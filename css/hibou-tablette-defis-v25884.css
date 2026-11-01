@@ -1,0 +1,60 @@
+
+/* Superposition quasi plein écran, en portrait comme en paysage. */
+#htg-overlay, #hsg-overlay {
+  box-sizing:border-box !important;
+  padding:clamp(6px,1.4vw,16px) !important;
+  overscroll-behavior:contain;
+}
+#htg-panel, #hsg-panel {
+  box-sizing:border-box !important;
+  width:min(1250px,97vw) !important;
+  max-width:1250px !important;
+  height:min(93vh,960px) !important;
+  height:min(93dvh,960px) !important;
+  max-height:93vh !important;
+  max-height:93dvh !important;
+  overflow-y:auto !important;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  padding:clamp(17px,2.6vw,35px) !important;
+  border-radius:clamp(16px,2vw,27px) !important;
+}
+/* Typographie lisible depuis le poste élève et grandes commandes. */
+#htg-panel h2, #hsg-panel h2 {font-size:clamp(25px,3.1vw,39px) !important;line-height:1.18}
+#htg-panel p, #hsg-panel p {font-size:clamp(16px,1.6vw,21px);line-height:1.4}
+#htg-panel label, #hsg-panel label {font-size:clamp(16px,1.5vw,21px)}
+#htg-panel select, #hsg-panel select {font-size:clamp(17px,1.5vw,21px) !important;min-height:56px}
+#htg-panel button, #hsg-panel button {
+  font-size:clamp(17px,1.65vw,23px) !important;
+  min-height:60px !important;
+  padding:14px 22px !important;
+  touch-action:manipulation;
+}
+#htg-panel .htg-head button, #hsg-panel .hsg-head button {min-width:60px}
+/* Défi des tables : calcul très visible, quatre grandes réponses tactiles. */
+#htg-panel .htg-sum {font-size:clamp(48px,6.6vw,94px) !important;margin:clamp(16px,3vh,34px) 0 !important;line-height:1.18}
+#htg-panel .htg-choices {width:min(780px,100%);margin:clamp(15px,3vh,30px) auto !important;gap:clamp(12px,2vw,22px) !important}
+#htg-panel .htg-choices button {font-size:clamp(30px,4vw,55px) !important;min-height:clamp(85px,13vh,125px) !important;border-radius:20px !important}
+#htg-panel #htg-next button {min-width:min(350px,100%)}
+#htg-panel .htg-feedback, #hsg-panel .hsg-feedback {font-size:clamp(16px,1.6vw,22px) !important;padding:16px !important}
+/* Défi des suites : cinq cases réparties sur toute la largeur utile. */
+#hsg-panel .hsg-sequence {width:100%;gap:clamp(7px,1.3vw,18px) !important;margin:clamp(20px,4vh,40px) 0 !important}
+#hsg-panel .hsg-num {height:clamp(77px,12vh,125px) !important;font-size:clamp(23px,4vw,52px) !important;border-radius:17px !important;min-width:0}
+#hsg-panel input.hsg-num {padding:5px !important;font-size:clamp(23px,4vw,52px) !important;touch-action:manipulation}
+#hsg-panel .hsg-row {gap:clamp(10px,2vw,24px) !important;margin-top:24px !important}
+#hsg-panel #hsg-check,#hsg-panel #hsg-next {min-width:min(260px,100%)}
+/* Portrait : ne pas tronquer les cases ni bloquer le clavier virtuel. */
+@media (orientation:portrait) and (max-width:850px) {
+  #htg-panel,#hsg-panel {width:97vw !important;height:94dvh !important;max-height:94dvh !important;padding:clamp(13px,2.8vw,24px) !important}
+  #hsg-panel .hsg-sequence {gap:clamp(4px,1vw,10px) !important}
+  #hsg-panel .hsg-num, #hsg-panel input.hsg-num {height:clamp(66px,9vh,105px) !important;font-size:clamp(20px,4.2vw,38px) !important}
+}
+@media (max-width:500px) {
+  #htg-panel,#hsg-panel {width:calc(100vw - 12px) !important;padding:13px !important;height:calc(100dvh - 12px) !important;max-height:calc(100dvh - 12px) !important}
+  #htg-panel .htg-choices button {min-height:78px !important}
+  #hsg-panel .hsg-num,#hsg-panel input.hsg-num {height:64px !important;font-size:clamp(17px,5vw,27px) !important}
+  #hsg-panel .hsg-row button {flex:1 1 100%}
+}
+@media (prefers-reduced-motion:reduce) {
+  #htg-panel *,#hsg-panel * {scroll-behavior:auto !important}
+}

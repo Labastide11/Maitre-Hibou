@@ -1,0 +1,14 @@
+
+#htg-overlay{position:fixed;inset:0;z-index:99999;background:rgba(35,27,71,.74);display:flex;justify-content:center;align-items:center;padding:15px}
+#htg-overlay[hidden]{display:none!important}
+#htg-panel{background:#fff;max-width:620px;width:100%;max-height:94vh;overflow:auto;border-radius:24px;padding:22px;color:#2d2b55;box-shadow:0 12px 40px #1f164055;font-family:system-ui,Arial,sans-serif;text-align:center}
+#htg-panel h2{font-size:25px;margin:0 0 8px;color:#6c63ff}#htg-panel p{line-height:1.45;margin:8px 0}#htg-panel button,#htg-panel select{font:inherit;border-radius:13px;cursor:pointer}
+#htg-panel button{background:#6c63ff;color:white;border:0;padding:12px 16px;font-weight:800;min-height:48px}#htg-panel button:disabled{opacity:.6;cursor:default}
+#htg-panel button.htg-light{background:#f0edff;color:#3a3181;border:2px solid #d8d3ff}#htg-panel button.htg-right{background:#e4f8e9!important;color:#195d30!important;border:2px solid #39a565!important}
+#htg-panel button.htg-wrong{background:#ffe6e6!important;color:#802323!important;border:2px solid #ec7878!important}
+#htg-panel select{padding:11px;width:100%;border:2px solid #d8d3ff;background:white;color:#2d2b55}
+#htg-panel label{font-weight:800;text-align:left;display:block;margin:10px 0 5px}
+.htg-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}.htg-choices button{font-size:26px;min-height:76px}
+.htg-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.htg-progress{height:11px;background:#eae8ff;border-radius:20px;margin:10px 0 16px;overflow:hidden}.htg-fill{height:100%;background:#6bcb77;transition:width .25s}
+.htg-sum{font-size:45px;font-weight:900;margin:18px 0}.htg-feedback{background:#fff9df;border-radius:14px;padding:12px;font-weight:800;margin:12px 0}.htg-foot{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}.htg-mini{font-size:12px;color:#716d90}
+@media(max-width:450px){#htg-panel{padding:14px}.htg-sum{font-size:36px}.htg-choices button{min-height:66px}}
