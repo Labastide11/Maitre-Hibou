@@ -1,0 +1,140 @@
+
+/* V25.7.57 — Cartes domaines compactes tablette
+   Objectif : les 4 domaines du bouton Français tiennent en paysage tablette sans scroll obligatoire. */
+#frenchTrainingOverlayV2348 .fr-v25720-domain-panel{
+  padding:12px !important;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:12px !important;
+  align-content:start;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-card{
+  min-height:112px !important;
+  display:grid !important;
+  grid-template-columns:64px 1fr 40px !important;
+  grid-template-rows:auto auto !important;
+  grid-template-areas:"icon title arrow" "icon desc arrow" !important;
+  align-items:center !important;
+  justify-content:initial !important;
+  column-gap:14px !important;
+  row-gap:2px !important;
+  text-align:left !important;
+  padding:12px 14px !important;
+  border-radius:20px !important;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-icon{
+  grid-area:icon !important;
+  width:56px !important;
+  height:56px !important;
+  border-radius:18px !important;
+  font-size:32px !important;
+  margin:0 !important;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-title{
+  grid-area:title !important;
+  font-size:22px !important;
+  line-height:1.05 !important;
+  align-self:end !important;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-desc{
+  grid-area:desc !important;
+  font-size:13px !important;
+  line-height:1.18 !important;
+  align-self:start !important;
+  margin:0 !important;
+  opacity:.82 !important;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-arrow{
+  grid-area:arrow !important;
+  width:36px !important;
+  height:36px !important;
+  font-size:28px !important;
+  margin:0 !important;
+  justify-self:end !important;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-soon{
+  grid-area:arrow !important;
+  margin:0 !important;
+  padding:6px 8px !important;
+  font-size:11px !important;
+  justify-self:end !important;
+  white-space:nowrap;
+}
+@media (orientation:landscape) and (max-height:760px){
+  #frenchTrainingOverlayV2348{padding:10px !important;}
+  #frenchTrainingOverlayV2348 .fr-v2348-popup{
+    width:calc(100vw - 20px) !important;
+    height:calc(100vh - 20px) !important;
+    max-height:calc(100vh - 20px) !important;
+  }
+  #frenchTrainingOverlayV2348 .fr-v2348-topbar{
+    min-height:44px !important;
+    padding:7px 14px !important;
+  }
+  #frenchTrainingOverlayV2348 .fr-v2348-chip{
+    padding:6px 10px !important;
+    font-size:14px !important;
+  }
+  #frenchTrainingOverlayV2348 .fr-v2348-close{
+    width:38px !important;
+    height:38px !important;
+    font-size:27px !important;
+  }
+  #frenchTrainingOverlayV2348 .fr-v2348-header{
+    padding:10px 18px 6px !important;
+    gap:12px !important;
+  }
+  #frenchTrainingOverlayV2348 .fr-v2348-owl{
+    width:66px !important;
+    height:66px !important;
+    border-radius:20px !important;
+    font-size:44px !important;
+  }
+  #frenchTrainingOverlayV2348 .fr-v2348-title h2{
+    font-size:29px !important;
+  }
+  #frenchTrainingOverlayV2348 .fr-v2348-title p{
+    font-size:15px !important;
+    margin-top:2px !important;
+  }
+  #frenchTrainingOverlayV2348 .fr-v23411-grammar-note{
+    margin-top:6px !important;
+    padding:6px 10px !important;
+    font-size:12px !important;
+    line-height:1.15 !important;
+  }
+  #frenchTrainingOverlayV2348 .fr-v2348-content{
+    padding:6px 18px 14px !important;
+  }
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-grid{
+    gap:10px !important;
+  }
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-card{
+    min-height:100px !important;
+    padding:10px 12px !important;
+    grid-template-columns:56px 1fr 36px !important;
+    column-gap:12px !important;
+    border-width:2px !important;
+  }
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-icon{
+    width:48px !important;
+    height:48px !important;
+    border-radius:16px !important;
+    font-size:28px !important;
+  }
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-title{
+    font-size:20px !important;
+  }
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-desc{
+    font-size:12px !important;
+  }
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-arrow{
+    width:32px !important;
+    height:32px !important;
+    font-size:25px !important;
+  }
+}
+@media (max-width:520px){
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-grid{grid-template-columns:1fr !important;}
+}

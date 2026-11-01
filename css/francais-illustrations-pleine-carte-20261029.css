@@ -1,0 +1,13 @@
+
+/* Harmonisation avec Lecture & compréhension : dimensions des cartes inchangées. */
+#frenchTrainingOverlayV2348 .fr-v25720-domain-grid > .fr-v25720-domain-card.writing,
+#frenchTrainingOverlayV2348 .fr-v25720-domain-grid > .fr-v25720-domain-card.vocab,
+#frenchTrainingOverlayV2348 .fr-v25720-domain-grid > .fr-v25720-domain-card.ortho {
+  padding:0 !important;
+  margin:0 !important;
+  border:0 !important;
+  background-repeat:no-repeat !important;
+  background-position:center center !important;
+  background-size:cover !important;
+  overflow:hidden !important;
+}
