@@ -1,0 +1,46 @@
+
+.verbe-lesson{
+  background:#F8F7FF;
+  border:2px solid var(--primary-light);
+  border-radius:16px;
+  padding:16px;
+  margin-top:10px;
+  width:100%;
+}
+.verbe-lesson h3{
+  font-family:"Trebuchet MS", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  color:var(--primary);
+  font-size:20px;
+  margin:0 0 8px 0;
+}
+.verbe-rule{
+  background:#FFFCEB;
+  border:2px solid var(--accent);
+  border-radius:14px;
+  padding:10px 12px;
+  font-weight:900;
+  color:#7A5C00;
+  margin:10px 0;
+  line-height:1.4;
+}
+.verbe-examples{
+  background:white;
+  border:2px solid #ECEBF3;
+  border-radius:14px;
+  padding:10px 12px;
+  font-weight:800;
+  line-height:1.45;
+  margin:10px 0;
+}
+.verbe-quiz-btn{
+  background:var(--primary);
+  color:white;
+  border:none;
+  border-radius:14px;
+  padding:10px 14px;
+  font-weight:900;
+  font-family:inherit;
+  cursor:pointer;
+  width:100%;
+  margin-top:8px;
+}
