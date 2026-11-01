@@ -34,7 +34,7 @@
     '<button type="button" class="mht-game" data-mht="tables"><strong>🎯 Défi des tables</strong><small>Jeu de calcul mental</small></button>'+
     '<button type="button" class="mht-game" data-mht="suites"><strong>🔢 Défi des suites</strong><small>Nombres à compléter</small></button></div><p class="mht-note">Les jeux restent indépendants de la validation des ceintures.</p></div></div></section></div>';
     document.body.appendChild(page);
-    page.addEventListener('click',function(ev){var btn=ev.target.closest('[data-mht]');if(!btn)return;var a=btn.getAttribute('data-mht');var id=btn.getAttribute('data-id');if(a==='home'){close();return;}if(a==='fr-belt'){launchFrenchBelt(id);return;}if(a==='math-belt'){launchMathBelt(id);return;}if(a==='tables'){run('openHibouTablesGame');return;}if(a==='suites'){run('openHibouSuitesGame');return;}if(a==='stick'){launchNumberStick();return;}if(['writing','vocab','ortho','reading'].indexOf(a)>=0){launchFrenchFree(a);}});
+    page.addEventListener('click',function(ev){var btn=ev.target.closest('[data-mht]');if(!btn)return;var a=btn.getAttribute('data-mht');var id=btn.getAttribute('data-id');if(a==='home'){close();return;}if(a==='fr-belt'){launchFrenchBelt(id);return;}if(a==='math-belt'){launchMathBelt(id);return;}if(a==='tables'){launchTablesGame();return;}if(a==='suites'){run('openHibouSuitesGame');return;}if(a==='stick'){launchNumberStick();return;}if(['writing','vocab','ortho','reading'].indexOf(a)>=0){launchFrenchFree(a);}});
     return page;
   }
   function open(){make();page.hidden=false;page.scrollTop=0;document.documentElement.classList.add('mh-training-route');}
@@ -55,12 +55,34 @@
     for(var i=0;i<list.length;i++){if(typeof window[list[i]]==='function'){window[list[i]]();return;}}
     console.warn('Rubrique à vérifier :',type);
   }
+  function launchTablesGame(){
+    // Le jeu existe dans js/hibou-tables-game-v25881.js.
+    // Les clics doivent rester exploitables même si le fichier n'est pas encore chargé.
+    var fn=window.openHibouTablesGame;
+    if(typeof fn==='function'){
+      closeIntoActivity();
+      try{fn();}catch(err){console.error('Défi des tables : ouverture impossible',err);open();alert('Le Défi des tables ne peut pas démarrer.');}
+      return;
+    }
+    var script=document.querySelector('script[src="js/hibou-tables-game-v25881.js"]');
+    if(script && script.dataset.mhtRetry==='1'){
+      alert('Défi des tables indisponible : vérifie le fichier js/hibou-tables-game-v25881.js.');
+      return;
+    }
+    if(script){script.dataset.mhtRetry='1';}
+    var loader=document.createElement('script');
+    loader.src='js/hibou-tables-game-v25881.js';
+    loader.onload=function(){
+      if(typeof window.openHibouTablesGame==='function')launchTablesGame();
+      else alert('Le jeu est chargé, mais sa fonction d’ouverture est introuvable.');
+    };
+    loader.onerror=function(){alert('Fichier du Défi des tables introuvable : js/hibou-tables-game-v25881.js');};
+    document.head.appendChild(loader);
+  }
   function launchNumberStick(){
-    // Recherche le vrai point d'entrée existant plutôt que de recréer le jeu.
-    for(var name of ['openNumberStick','openHibouNumberStick','openNumberStickV25881']){if(typeof window[name]==='function'){run(name);return;}}
-    var b=[].slice.call(document.querySelectorAll('button,a')).find(function(el){return !el.closest('#mhTrainingPage')&&/number\s*stick/i.test(el.textContent||'');});
-    if(b){closeIntoActivity();b.click();return;}
-    console.warn('Number Stick : bouton original non trouvé');
+    // Page locale du dépôt, chemin relatif compatible localhost et GitHub Pages.
+    // Navigation dans le même onglet : le bouton précédent du navigateur permet le retour.
+    window.location.assign('number-stick-ce2.html');
   }
   document.addEventListener('click',function(ev){var target=ev.target&&ev.target.closest&&ev.target.closest('#v2574TrainBtn');if(target){ev.preventDefault();ev.stopImmediatePropagation();open();}},true);
   window.openMHTrainingPage=open;
