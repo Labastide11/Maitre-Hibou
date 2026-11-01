@@ -57,3 +57,24 @@ html.mh-training-route #frenchTrainingOverlayV2348 .fr-v2348-popup,html.mh-train
 #mhTrainingPage button.mht-banner img{display:block!important;width:100%!important;height:100%!important;position:absolute!important;inset:0!important;object-fit:fill!important;opacity:1!important;visibility:visible!important;max-width:none!important;max-height:none!important;pointer-events:none!important}
 #mhTrainingPage button.mht-banner span{z-index:1}
 @media(max-width:650px){#mhTrainingPage .mht-free-grid{grid-template-columns:1fr!important}#mhTrainingPage button.mht-banner{aspect-ratio:3.65/1!important}}
+
+/* Correctif proportions des 4 illustrations Français.
+   Chaque JPG conserve sa taille intrinsèque et son ratio d'origine. */
+#mhTrainingPage .mht-free-grid { align-items:start!important; }
+#mhTrainingPage button.mht-banner {
+  aspect-ratio:auto!important; height:auto!important;
+  min-height:0!important; padding:0!important;
+  overflow:hidden!important; line-height:0!important;
+}
+#mhTrainingPage button.mht-banner img {
+  position:static!important; inset:auto!important;
+  display:block!important; width:100%!important; height:auto!important;
+  min-height:0!important; max-height:none!important;
+  object-fit:contain!important; object-position:center!important;
+  aspect-ratio:auto!important; transform:none!important;
+}
+/* Titres déjà inscrits sur les images : pas de doublon sous les cartes. */
+#mhTrainingPage button.mht-banner span {display:none!important;}
+@media(max-width:650px){
+  #mhTrainingPage button.mht-banner{aspect-ratio:auto!important;}
+}
