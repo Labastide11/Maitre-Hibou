@@ -602,8 +602,105 @@ animation:pop .25s ease-out;
 .writing-idea-btn{background:var(--primary);color:white;border:none;border-radius:14px;padding:10px 14px;font-weight:900;font-family:inherit;cursor:pointer;box-shadow:0 6px 16px rgba(108,99,255,.25);}
 
 
+/* Mini-activité Maths : Calcul mental CE2 */
+.mental-game-container{
+  background:#F8F7FF;
+  border:2px solid var(--primary-light);
+  border-radius:16px;
+  padding:16px;
+  margin-top:10px;
+  width:100%;
+}
+.mental-title-line{
+  font-size:15px;
+  font-weight:900;
+  color:var(--primary);
+  margin-bottom:8px;
+}
+.mental-skill-box{
+  background:#FFFCEB;
+  border:2px solid var(--accent);
+  border-radius:14px;
+  padding:10px 12px;
+  font-size:13px;
+  font-weight:900;
+  color:#7A5C00;
+  margin-bottom:10px;
+}
+.mental-progress{
+  font-size:12px;
+  font-weight:900;
+  color:var(--text-muted);
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.mental-question{
+  background:white;
+  border:2px solid #ECEBF3;
+  border-radius:14px;
+  padding:14px;
+  font-size:20px;
+  font-weight:900;
+  text-align:center;
+  color:var(--text);
+  margin-bottom:10px;
+}
+.mental-options{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.mental-option{
+  background:white;
+  border:2px solid #ECEBF3;
+  border-radius:12px;
+  padding:10px 14px;
+  font-family:inherit;
+  font-size:15px;
+  font-weight:900;
+  color:var(--text);
+  cursor:pointer;
+  text-align:left;
+  transition:all .2s;
+}
+.mental-option:not(:disabled):hover{
+  border-color:var(--primary);
+  background:var(--primary-light);
+  transform:translateY(-1px);
+}
+.mental-option.correct{
+  background:#E6F7E9!important;
+  border-color:var(--green)!important;
+  color:#1E5627!important;
+}
+.mental-option.wrong{
+  background:#FFEAEA!important;
+  border-color:var(--secondary)!important;
+  color:#7A2222!important;
+}
+.mental-feedback{
+  margin-top:10px;
+  font-size:14px;
+  font-weight:900;
+  text-align:center;
+}
+.mental-feedback.ok{color:#1E5627;}
+.mental-feedback.warn{color:#7A5C00;}
+.mental-feedback.bad{color:#7A2222;}
+.mental-next-btn{
+  margin-top:10px;
+  background:var(--primary);
+  color:white;
+  border:none;
+  border-radius:14px;
+  padding:10px 14px;
+  font-weight:900;
+  font-family:inherit;
+  cursor:pointer;
+  width:100%;
+}
+
 </style>
-<link rel="stylesheet" href="css/maths-calcul-mental-ce2.css"/>
 <link rel="stylesheet" href="css/maths-multiplication-posee-v50.css"/>
 <style id="patch-tablette-anti-refresh-v50c">
 html, body {
@@ -4835,7 +4932,13 @@ body.hibou-keyboard-open #prenomOverlay .hibou-accueil-hero { display:none !impo
   }
 }
 </style>
-<link rel="stylesheet" href="css/maths-accueil-pc-constellation.css"/>
+<style id="mh-pc-hide-duplicate-maths">
+/* Accueil Constellation PC seulement : Maths reste disponible via M’entraîner. */
+@media (min-width:1200px) and (pointer:fine) {
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button[data-subject="maths"] { display:none!important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects { grid-template-columns:repeat(7,minmax(0,1fr))!important; }
+}
+</style>
 
 <!-- HISTOIRE-CATALOGUE-6-ILLUSTRATIONS : affiches individuelles, cartes cliquables -->
 <style id="mh-history-catalogue-images-css">
@@ -5384,7 +5487,48 @@ function shuffleHibouArray(arr) {
   return arr.map(v => ({v, r: Math.random()})).sort((a,b) => a.r - b.r).map(o => o.v);
 }
 
-<script src="js/maths-defi-tables-historique.js"></script>
+function makeMultiplicationOptions(answer) {
+  const candidates = [
+    answer,
+    answer + 2,
+    answer - 2,
+    answer + 5,
+    answer - 5,
+    answer + 10,
+    answer - 10
+  ].filter(n => n > 0 && n !== answer);
+  const uniqueWrong = [...new Set(candidates)].slice(0, 3);
+  while (uniqueWrong.length < 3) {
+    const extra = answer + (uniqueWrong.length + 1) * 3;
+    if (!uniqueWrong.includes(extra)) uniqueWrong.push(extra);
+  }
+  const optionsNumbers = shuffleHibouArray([answer, ...uniqueWrong.slice(0, 3)]);
+  return { options: optionsNumbers.map(String), correct: optionsNumbers.indexOf(answer) };
+}
+
+function makeAllTablesChallengeQuestions() {
+  const questions = [];
+  for (let a = 2; a <= 10; a++) {
+    for (let b = 2; b <= 10; b++) {
+      const answer = a * b;
+      const data = makeMultiplicationOptions(answer);
+      questions.push({
+        q: `${a} × ${b} = ?`,
+        options: data.options,
+        correct: data.correct,
+        skill: 'tables 2 à 10',
+        subject: 'maths'
+      });
+    }
+  }
+  return shuffleHibouArray(questions);
+}
+
+function makeTablesChallenge20Questions() {
+  // Les tables 2 à 10 contiennent 81 combinaisons possibles.
+  // Pour un vrai défi CE2 faisable sur tablette, on tire 20 calculs au hasard.
+  return makeAllTablesChallengeQuestions().slice(0, 20);
+}
 
 const challengeCatalog = {
   tables2a10: {id:'tables2a10', title:'Méga défi : tables de 2 à 10', subject:'maths', reward:300, badge:'defi-tables-2-10', badgeLabel:'🏆 Maître des tables de 2 à 10', questions: makeTablesChallenge20Questions()},
@@ -9597,7 +9741,227 @@ setTimeout(removeVieDeClassePanel, 1000);
   window.addEventListener("load", function(){ setTimeout(addBtn, 150); });
 })();
 </script>
-<script src="js/maths-defi-maitre-popup-v120.js"></script>
+<script id="patch-defi-maitre-popup-v120">
+(function(){
+  const challengeQuestions = [
+    {q:"7 × 5 = ?", options:["30","35","40","45"], answer:"35", skill:"Tables de multiplication"},
+    {q:"48 + 27 = ?", options:["65","75","85","95"], answer:"75", skill:"Calcul mental"},
+    {q:"100 - 36 = ?", options:["54","64","74","84"], answer:"64", skill:"Calcul mental"},
+    {q:"6 × 8 = ?", options:["42","48","54","56"], answer:"48", skill:"Tables de multiplication"},
+    {q:"25 + 25 + 25 = ?", options:["50","65","75","100"], answer:"75", skill:"Addition"}
+  ];
+
+  let challengeState = { index:0, score:0, locked:false };
+
+  function ensureChallengePopup(){
+    if(document.getElementById("challengePopupOverlay")) return;
+
+    const overlay = document.createElement("div");
+    overlay.id = "challengePopupOverlay";
+    overlay.className = "challenge-popup-overlay";
+    overlay.innerHTML = `
+      <div class="challenge-popup-box" role="dialog" aria-modal="true" aria-label="Défi du maître">
+        <div class="challenge-popup-head">
+          <div class="challenge-popup-owl">🦉</div>
+          <div>
+            <div class="challenge-popup-title">Défi du maître</div>
+            <div class="challenge-popup-sub">Réponds à 5 questions dans cette fenêtre.</div>
+          </div>
+        </div>
+
+        <div class="challenge-popup-task" id="challengeTaskText">
+          🎯 Mission du jour : réussir le plus de questions possible en Maths. Récompense : jusqu'à <b>50 points</b>.
+        </div>
+
+        <div class="challenge-popup-progress">
+          <div class="challenge-popup-bar"><div class="challenge-popup-fill" id="challengePopupFill"></div></div>
+          <div class="challenge-popup-count" id="challengePopupCount">0 / 5</div>
+        </div>
+
+        <div class="challenge-game-zone" id="challengeGameZone"></div>
+      </div>
+    `;
+    overlay.addEventListener("click", function(e){
+      if(e.target === overlay) closeMasterChallengePopup();
+    });
+    document.body.appendChild(overlay);
+  }
+
+  function updateSideProgress(){
+    const fill = document.querySelector(".mockup-progress-fill");
+    const text = document.querySelector(".mockup-progress-text");
+    if(fill) fill.style.width = Math.round((challengeState.index / challengeQuestions.length) * 100) + "%";
+    if(text) text.textContent = challengeState.index + " / " + challengeQuestions.length + " questions";
+  }
+
+  function updatePopupProgress(){
+    const fill = document.getElementById("challengePopupFill");
+    const count = document.getElementById("challengePopupCount");
+    const pct = Math.round((challengeState.index / challengeQuestions.length) * 100);
+    if(fill) fill.style.width = pct + "%";
+    if(count) count.textContent = challengeState.index + " / " + challengeQuestions.length;
+    updateSideProgress();
+  }
+
+  function renderStart(){
+    challengeState = { index:0, score:0, locked:false };
+    updatePopupProgress();
+    const zone = document.getElementById("challengeGameZone");
+    if(!zone) return;
+    zone.innerHTML = `
+      <div class="challenge-result-box">
+        <div class="challenge-result-title">Prêt pour le défi ?</div>
+        <div class="challenge-result-score">5 questions de maths CE2</div>
+        <div class="challenge-reward">🎁 Jusqu'à +50 points</div>
+      </div>
+      <div class="challenge-popup-actions">
+        <button class="challenge-popup-btn primary full" onclick="startPopupMasterChallenge()">🚀 Commencer le défi</button>
+        <button class="challenge-popup-btn secondary full" onclick="closeMasterChallengePopup()">Fermer</button>
+      </div>
+    `;
+  }
+
+  function renderQuestion(){
+    challengeState.locked = false;
+    updatePopupProgress();
+    const zone = document.getElementById("challengeGameZone");
+    if(!zone) return;
+
+    const item = challengeQuestions[challengeState.index];
+    const buttons = item.options.map(function(opt){
+      return `<button class="challenge-option" onclick="answerPopupMasterChallenge('${String(opt).replace(/'/g,"\\'")}')">${opt}</button>`;
+    }).join("");
+
+    zone.innerHTML = `
+      <div class="challenge-question-card">
+        <div class="challenge-question-number">Question ${challengeState.index + 1} / ${challengeQuestions.length} · ${item.skill}</div>
+        <div class="challenge-question-text">${item.q}</div>
+        <div class="challenge-options">${buttons}</div>
+        <div class="challenge-feedback" id="challengeFeedback"></div>
+      </div>
+      <div class="challenge-popup-actions">
+        <button class="challenge-popup-btn secondary full" onclick="closeMasterChallengePopup()">🔙 Quitter le défi</button>
+      </div>
+    `;
+  }
+
+  function addChallengePoints(points){
+    try{
+      if(typeof addPoints === "function"){
+        addPoints(points);
+        return;
+      }
+      const scoreEl = document.getElementById("scoreVal");
+      if(scoreEl){
+        const current = parseInt(scoreEl.textContent || "0", 10) || 0;
+        scoreEl.textContent = current + points;
+      }
+    }catch(e){}
+  }
+
+  function renderEnd(){
+    challengeState.index = challengeQuestions.length;
+    updatePopupProgress();
+    const zone = document.getElementById("challengeGameZone");
+    if(!zone) return;
+
+    const points = challengeState.score * 10;
+    if(points > 0 && !challengeState.rewardGiven){
+      challengeState.rewardGiven = true;
+      addChallengePoints(points);
+    }
+
+    const success = challengeState.score >= 4;
+    zone.innerHTML = `
+      <div class="challenge-result-box">
+        <div class="challenge-result-title">${success ? "🎉 Défi réussi !" : "💪 Défi terminé !"}</div>
+        <div class="challenge-result-score">Score : ${challengeState.score} / ${challengeQuestions.length}</div>
+        <div class="challenge-reward">⭐ +${points} points</div>
+        <div style="margin-top:12px;font-weight:900;color:#2D2B55;">
+          ${success ? "Bravo, tu as très bien travaillé !" : "Tu peux réessayer pour battre ton score."}
+        </div>
+      </div>
+      <div class="challenge-popup-actions">
+        <button class="challenge-popup-btn primary" onclick="startPopupMasterChallenge()">🔁 Rejouer</button>
+        <button class="challenge-popup-btn purple" onclick="closeMasterChallengePopup()">Terminer</button>
+      </div>
+    `;
+  }
+
+  window.openMasterChallengePopup = function(){
+    ensureChallengePopup();
+    const overlay = document.getElementById("challengePopupOverlay");
+    if(overlay) overlay.classList.add("visible");
+    renderStart();
+  };
+
+  window.closeMasterChallengePopup = function(){
+    const overlay = document.getElementById("challengePopupOverlay");
+    if(overlay) overlay.classList.remove("visible");
+  };
+
+  window.startPopupMasterChallenge = function(){
+    challengeState = { index:0, score:0, locked:false, rewardGiven:false };
+    renderQuestion();
+  };
+
+  window.answerPopupMasterChallenge = function(choice){
+    if(challengeState.locked) return;
+    challengeState.locked = true;
+
+    const item = challengeQuestions[challengeState.index];
+    const ok = choice === item.answer;
+    if(ok) challengeState.score++;
+
+    document.querySelectorAll(".challenge-option").forEach(function(btn){
+      btn.disabled = true;
+      const val = (btn.textContent || "").trim();
+      if(val === item.answer) btn.classList.add("correct");
+      else if(val === choice) btn.classList.add("wrong");
+    });
+
+    const feedback = document.getElementById("challengeFeedback");
+    if(feedback){
+      feedback.className = "challenge-feedback " + (ok ? "ok" : "bad");
+      feedback.textContent = ok ? "✅ Bravo !" : "❌ Presque ! La bonne réponse était " + item.answer + ".";
+    }
+
+    setTimeout(function(){
+      challengeState.index++;
+      if(challengeState.index >= challengeQuestions.length) renderEnd();
+      else renderQuestion();
+    }, 950);
+  };
+
+  function makeChallengeClickable(){
+    ensureChallengePopup();
+
+    document.querySelectorAll(".mockup-challenge-top").forEach(function(el){
+      el.onclick = openMasterChallengePopup;
+      el.title = "Ouvrir le défi du maître";
+    });
+
+    const sideCards = document.querySelectorAll(".mockup-side-card");
+    if(sideCards[0]){
+      sideCards[0].onclick = openMasterChallengePopup;
+      sideCards[0].title = "Ouvrir le défi du maître";
+      if(!sideCards[0].querySelector(".challenge-click-note")){
+        const note = document.createElement("div");
+        note.className = "challenge-click-note";
+        note.textContent = "👆 Clique ici pour jouer le défi";
+        sideCards[0].appendChild(note);
+      }
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function(){
+    setTimeout(makeChallengeClickable, 180);
+  });
+  window.addEventListener("load", function(){
+    setTimeout(makeChallengeClickable, 240);
+  });
+})();
+</script>
 <script id="patch-corrections-affichage-v124">
 (function(){
   function cleanBadVersionText(){
@@ -28792,118 +29156,7 @@ header .logo-icon img{
   try{ document.title = '🦉 Maître Hibou V25.8.84'; }catch(e){}
 })();
 </script>
-<style id="patch-v25720-francais-domaines-css">
-/* V25.7.57 — popup Français par domaines, uniquement pour le bouton Français du bandeau du bas */
-#frenchTrainingOverlayV2348 .fr-v25720-domain-panel{
-  padding:18px !important;
-}
-#frenchTrainingOverlayV2348 .fr-v25720-domain-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:16px;
-}
-#frenchTrainingOverlayV2348 .fr-v25720-domain-card{
-  min-height:190px;
-  border-radius:24px;
-  border:3px solid #dbeafe;
-  background:linear-gradient(135deg,#f8fbff,#eef7ff);
-  box-shadow:0 12px 26px rgba(30,64,175,.10);
-  color:#14245a;
-  font-family:inherit;
-  font-weight:950;
-  cursor:pointer;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  padding:18px 16px;
-  text-align:center;
-  transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-}
-#frenchTrainingOverlayV2348 .fr-v25720-domain-card:not(.is-disabled):hover,
-#frenchTrainingOverlayV2348 .fr-v25720-domain-card:not(.is-disabled):focus-visible{
-  transform:translateY(-2px);
-  border-color:#93c5fd;
-  box-shadow:0 16px 34px rgba(30,64,175,.16);
-  outline:none;
-}
-#frenchTrainingOverlayV2348 .fr-v25720-domain-card.writing{
-  background:linear-gradient(135deg,#fffdf2,#fff7d6);
-  border-color:#fde68a;
-  color:#7a4a00;
-}
-#frenchTrainingOverlayV2348 .fr-v25720-domain-card.vocab{
-  background:linear-gradient(135deg,#fbf7ff,#f2e8ff);
-  border-color:#ddd6fe;
-  color:#5b21b6;
-}
-#frenchTrainingOverlayV2348 .fr-v25720-domain-card.ortho{
-  background:linear-gradient(135deg,#f2fff8,#e7f9ef);
-  border-color:#bbf7d0;
-  color:#166534;
-}
-#frenchTrainingOverlayV2348 .fr-v25720-domain-card.is-disabled{
-  opacity:.72;
-  cursor:not-allowed;
-}
-#frenchTrainingOverlayV2348 .fr-v25720-domain-icon{
-  width:76px;
-  height:76px;
-  border-radius:28px;
-  display:grid;
-  place-items:center;
-  font-size:44px;
-  background:rgba(255,255,255,.75);
-  box-shadow:inset 0 2px 8px rgba(255,255,255,.7), 0 6px 18px rgba(15,23,42,.08);
-}
-#frenchTrainingOverlayV2348 .fr-v25720-domain-title{
-  font-size:26px;
-  line-height:1.05;
-}
-#frenchTrainingOverlayV2348 .fr-v25720-domain-desc{
-  font-size:15px;
-  line-height:1.25;
-  opacity:.78;
-}
-#frenchTrainingOverlayV2348 .fr-v25720-domain-arrow{
-  margin-top:6px;
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  background:#fff;
-  color:#1d4ed8;
-  display:grid;
-  place-items:center;
-  font-size:36px;
-  line-height:1;
-  box-shadow:0 8px 18px rgba(15,23,42,.12);
-}
-#frenchTrainingOverlayV2348 .fr-v25720-domain-card.writing .fr-v25720-domain-arrow{
-  color:#f59e0b;
-}
-#frenchTrainingOverlayV2348 .fr-v25720-domain-soon{
-  margin-top:8px;
-  border-radius:999px;
-  padding:8px 14px;
-  background:rgba(255,255,255,.72);
-  border:2px solid currentColor;
-  font-size:14px;
-  font-weight:1000;
-}
-@media(max-width:760px){
-  #frenchTrainingOverlayV2348 .fr-v25720-domain-grid{grid-template-columns:1fr 1fr;gap:10px;}
-  #frenchTrainingOverlayV2348 .fr-v25720-domain-card{min-height:150px;padding:12px 10px;border-radius:20px;}
-  #frenchTrainingOverlayV2348 .fr-v25720-domain-icon{width:54px;height:54px;border-radius:18px;font-size:32px;}
-  #frenchTrainingOverlayV2348 .fr-v25720-domain-title{font-size:20px;}
-  #frenchTrainingOverlayV2348 .fr-v25720-domain-desc{font-size:12px;}
-  #frenchTrainingOverlayV2348 .fr-v25720-domain-arrow{width:36px;height:36px;font-size:28px;}
-  #frenchTrainingOverlayV2348 .fr-v25720-domain-soon{font-size:11px;padding:6px 9px;}
-}
-@media(max-width:520px){
-  #frenchTrainingOverlayV2348 .fr-v25720-domain-grid{grid-template-columns:1fr;}
-}
-</style>
+<link rel="stylesheet" href="css/francais-domaines-v25720.css"/>
 <style id="patch-v25726-francais-domaines-compact-tablette">
 /* V25.7.57 — Cartes domaines compactes tablette
    Objectif : les 4 domaines du bouton Français tiennent en paysage tablette sans scroll obligatoire. */

@@ -1,0 +1,111 @@
+
+/* V25.7.57 — popup Français par domaines, uniquement pour le bouton Français du bandeau du bas */
+#frenchTrainingOverlayV2348 .fr-v25720-domain-panel{
+  padding:18px !important;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-card{
+  min-height:190px;
+  border-radius:24px;
+  border:3px solid #dbeafe;
+  background:linear-gradient(135deg,#f8fbff,#eef7ff);
+  box-shadow:0 12px 26px rgba(30,64,175,.10);
+  color:#14245a;
+  font-family:inherit;
+  font-weight:950;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:18px 16px;
+  text-align:center;
+  transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-card:not(.is-disabled):hover,
+#frenchTrainingOverlayV2348 .fr-v25720-domain-card:not(.is-disabled):focus-visible{
+  transform:translateY(-2px);
+  border-color:#93c5fd;
+  box-shadow:0 16px 34px rgba(30,64,175,.16);
+  outline:none;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-card.writing{
+  background:linear-gradient(135deg,#fffdf2,#fff7d6);
+  border-color:#fde68a;
+  color:#7a4a00;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-card.vocab{
+  background:linear-gradient(135deg,#fbf7ff,#f2e8ff);
+  border-color:#ddd6fe;
+  color:#5b21b6;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-card.ortho{
+  background:linear-gradient(135deg,#f2fff8,#e7f9ef);
+  border-color:#bbf7d0;
+  color:#166534;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-card.is-disabled{
+  opacity:.72;
+  cursor:not-allowed;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-icon{
+  width:76px;
+  height:76px;
+  border-radius:28px;
+  display:grid;
+  place-items:center;
+  font-size:44px;
+  background:rgba(255,255,255,.75);
+  box-shadow:inset 0 2px 8px rgba(255,255,255,.7), 0 6px 18px rgba(15,23,42,.08);
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-title{
+  font-size:26px;
+  line-height:1.05;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-desc{
+  font-size:15px;
+  line-height:1.25;
+  opacity:.78;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-arrow{
+  margin-top:6px;
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:#fff;
+  color:#1d4ed8;
+  display:grid;
+  place-items:center;
+  font-size:36px;
+  line-height:1;
+  box-shadow:0 8px 18px rgba(15,23,42,.12);
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-card.writing .fr-v25720-domain-arrow{
+  color:#f59e0b;
+}
+#frenchTrainingOverlayV2348 .fr-v25720-domain-soon{
+  margin-top:8px;
+  border-radius:999px;
+  padding:8px 14px;
+  background:rgba(255,255,255,.72);
+  border:2px solid currentColor;
+  font-size:14px;
+  font-weight:1000;
+}
+@media(max-width:760px){
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-grid{grid-template-columns:1fr 1fr;gap:10px;}
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-card{min-height:150px;padding:12px 10px;border-radius:20px;}
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-icon{width:54px;height:54px;border-radius:18px;font-size:32px;}
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-title{font-size:20px;}
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-desc{font-size:12px;}
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-arrow{width:36px;height:36px;font-size:28px;}
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-soon{font-size:11px;padding:6px 9px;}
+}
+@media(max-width:520px){
+  #frenchTrainingOverlayV2348 .fr-v25720-domain-grid{grid-template-columns:1fr;}
+}
