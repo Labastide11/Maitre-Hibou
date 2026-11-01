@@ -46,3 +46,14 @@ html.mh-training-route #frenchTrainingOverlayV2348 .fr-v2348-popup,html.mh-train
 @media(max-width:900px){#mhTrainingPage .mht-columns{grid-template-columns:1fr}#mhTrainingPage .mht-panel{padding:15px}}
 @media(max-width:550px){#mhTrainingPage .mht-head{padding:10px 12px}#mhTrainingPage .mht-owl{font-size:26px}#mhTrainingPage .mht-subtitle{font-size:11px}#mhTrainingPage .mht-home{padding:8px 10px;font-size:12px}#mhTrainingPage .mht-main{padding:12px}#mhTrainingPage .mht-belt-grid{grid-template-columns:1fr 1fr}#mhTrainingPage .mht-belt{padding:8px;min-height:68px}#mhTrainingPage .mht-dot{width:18px;height:18px}#mhTrainingPage .mht-free-grid{grid-template-columns:1fr}#mhTrainingPage .mht-banner{min-height:120px}#mhTrainingPage .mht-free-maths{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){#mhTrainingPage *{transition:none!important}}
+
+/* Correctif images et bandeau — les styles historiques ne peuvent plus masquer les vignettes. */
+#mhTrainingPage .mht-head{background:#ffffff!important;color:#181c4b!important;box-shadow:0 3px 15px #26345918!important}
+#mhTrainingPage .mht-head h1{color:#181c4b!important;text-shadow:none!important;opacity:1!important}
+#mhTrainingPage .mht-head .mht-subtitle{color:#555f84!important;opacity:1!important}
+#mhTrainingPage .mht-head .mht-home{width:auto!important;max-width:180px!important;flex:0 0 auto!important}
+#mhTrainingPage .mht-free-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#mhTrainingPage button.mht-banner{display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;height:auto!important;min-height:0!important;padding:0!important;aspect-ratio:3.65/1!important;overflow:hidden!important;background:#fff!important;position:relative!important;border-radius:17px!important}
+#mhTrainingPage button.mht-banner img{display:block!important;width:100%!important;height:100%!important;position:absolute!important;inset:0!important;object-fit:fill!important;opacity:1!important;visibility:visible!important;max-width:none!important;max-height:none!important;pointer-events:none!important}
+#mhTrainingPage button.mht-banner span{z-index:1}
+@media(max-width:650px){#mhTrainingPage .mht-free-grid{grid-template-columns:1fr!important}#mhTrainingPage button.mht-banner{aspect-ratio:3.65/1!important}}

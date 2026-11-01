@@ -25,10 +25,10 @@
     '<div class="mht-panel math"><h3>🧮 Maths · 14 ceintures</h3><div class="mht-belt-grid">'+beltRows(maths,'math')+'</div></div></div></section>'+
     '<section class="mht-section"><h2 class="mht-section-title">🎮 Je m’entraîne librement</h2><p class="mht-section-desc">Je choisis une activité indépendante des ceintures.</p><div class="mht-columns">'+
     '<div class="mht-free-panel fr"><h3>📚 Français</h3><div class="mht-free-grid">'+
-    '<button type="button" class="mht-banner" data-mht="writing" style="--mht-img:url(\'images/francais-production-ecrit.jpg\')" aria-label="Production d’écrits"><span>Production d’écrits</span></button>'+
-    '<button type="button" class="mht-banner" data-mht="vocab" style="--mht-img:url(\'images/francais-vocabulaire.jpg\')" aria-label="Vocabulaire"><span>Vocabulaire</span></button>'+
-    '<button type="button" class="mht-banner" data-mht="ortho" style="--mht-img:url(\'images/francais-orthographe.jpg\')" aria-label="Orthographe"><span>Orthographe</span></button>'+
-    '<button type="button" class="mht-banner" data-mht="reading" style="--mht-img:url(\'images/francais-lecture-comprehension.jpg\')" aria-label="Lecture et compréhension"><span>Lecture & compréhension</span></button></div></div>'+
+    '<button type="button" class="mht-banner" data-mht="writing" aria-label="Production d’écrits"><img src="images/francais-production-ecrit.jpg" alt="Production d’écrits" loading="eager" decoding="async"/><span>Production d’écrits</span></button>'+
+    '<button type="button" class="mht-banner" data-mht="vocab" aria-label="Vocabulaire"><img src="images/francais-vocabulaire.jpg" alt="Vocabulaire" loading="eager" decoding="async"/><span>Vocabulaire</span></button>'+
+    '<button type="button" class="mht-banner" data-mht="ortho" aria-label="Orthographe"><img src="images/francais-orthographe.jpg" alt="Orthographe" loading="eager" decoding="async"/><span>Orthographe</span></button>'+
+    '<button type="button" class="mht-banner" data-mht="reading" aria-label="Lecture & compréhension"><img src="images/francais-lecture-comprehension.jpg" alt="Lecture & compréhension" loading="eager" decoding="async"/><span>Lecture & compréhension</span></button></div></div>'+
     '<div class="mht-free-panel math"><h3>🔢 Maths</h3><div class="mht-free-maths">'+
     '<button type="button" class="mht-game" data-mht="stick"><strong>🧮 Number Stick</strong><small>Tables de multiplication · découvrir</small></button>'+
     '<button type="button" class="mht-game" data-mht="tables"><strong>🎯 Défi des tables</strong><small>Jeu de calcul mental</small></button>'+
