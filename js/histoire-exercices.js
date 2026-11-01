@@ -12,7 +12,7 @@ var esc=deps.esc, renderScienceChoice=deps.renderScienceChoice,
 
   var HISTORY_SESSIONS = [
     {id:1,title:'Séance 1',short:'Le calendrier',emoji:'📅',map:HIST_IMG_CALENDAR,objective:'Je sais me repérer dans une semaine, un mois et une année.',criteria:['Jours','Mois','Année'],exos:[
-      {type:'order',title:'Les jours',instr:'Clique les jours dans l’ordre de la semaine.',bank:['mercredi','lundi','vendredi','mardi'],correctOrder:['lundi','mardi','mercredi','vendredi']},
+      {type:'order',title:'Les jours',instr:'Clique les jours dans l’ordre de la semaine.',bank:['mercredi','lundi','vendredi','dimanche','mardi','jeudi','samedi'],correctOrder:['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche']},
       {type:'choice',title:'Une année',instr:'Combien y a-t-il de mois dans une année ?',options:['10','12','14'],correct:1},
       {type:'match',title:'Relie la durée',instr:'Relie chaque durée à ce qu’elle contient.',left:['Une semaine','Une année','Un jour'],right:['24 heures','12 mois','7 jours'],pairs:[2,1,0]}
     ]},

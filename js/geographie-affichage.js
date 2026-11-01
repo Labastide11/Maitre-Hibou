@@ -62,6 +62,7 @@
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'v24-english-session-card';
+      b.style.setProperty('--mh-poster-image', 'url("images/geographie-carte-seance-'+s.id+'.jpg")');
       b.innerHTML = '<img class="v24-subject-thumb" src="images/geographie-carte-seance-'+s.id+'.jpg" alt="Carte illustrant la séance '+s.id+'" loading="lazy"><span class="v24-subject-card-body"><strong>'+esc(s.emoji+' '+s.short)+'</strong><span>'+esc(s.title)+'</span><small>'+esc(s.objective)+'</small></span>';
       b.addEventListener('click', function(ev){ev.preventDefault();ev.stopPropagation();renderGeoSession(grid, s.id);}, true);
       wrap.appendChild(b);

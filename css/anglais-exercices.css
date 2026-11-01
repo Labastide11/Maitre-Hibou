@@ -519,3 +519,68 @@ main{margin:0 auto;max-width:1260px;padding:12px 18px 45px}
 .v24-english-back,.v24-english-check{padding:10px 14px;background:#ece8fb;border:1px solid #c8bcea;color:#41367b;border-radius:11px;font-weight:800;cursor:pointer}
 button{font-family:inherit}button:focus-visible,a:focus-visible{outline:3px solid #6758cd;outline-offset:3px}
 @media(max-width:720px){.v24-english-sessions,.v24-english-exercises{grid-template-columns:1fr}.v24-english-session-card img{height:auto;max-height:240px}}
+
+
+/* === Catalogue Anglais : texte à gauche, photographie à droite === */
+#v24EnglishSessions {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:16px !important;
+  align-items:stretch;
+}
+#v24EnglishSessions .v24-english-session-card {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) 46% !important;
+  grid-template-rows:auto !important;
+  align-items:center !important;
+  gap:14px !important;
+  min-height:0 !important;
+  padding:14px !important;
+  border-radius:20px !important;
+  text-align:left !important;
+}
+#v24EnglishSessions .v24-english-session-card .v24-subject-card-body {
+  grid-column:1 !important;
+  grid-row:1 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:center !important;
+  align-items:flex-start !important;
+  gap:7px !important;
+  min-width:0 !important;
+  padding:0 !important;
+}
+#v24EnglishSessions .v24-english-session-card .v24-subject-thumb {
+  grid-column:2 !important;
+  grid-row:1 !important;
+  display:block !important;
+  width:100% !important;
+  height:180px !important;
+  max-width:100% !important;
+  border:0 !important;
+  border-radius:14px !important;
+  object-fit:cover !important;
+  object-position:center !important;
+}
+#v24EnglishSessions .v24-english-session-card .v24-subject-card-body strong {
+  font-size:clamp(17px,1.3vw,22px) !important;
+  line-height:1.2 !important;
+}
+#v24EnglishSessions .v24-english-session-card .v24-subject-card-body span {
+  font-size:16px !important;
+  line-height:1.2 !important;
+}
+#v24EnglishSessions .v24-english-session-card .v24-subject-card-body small {
+  font-size:13px !important;
+  line-height:1.35 !important;
+}
+@media (max-width:1050px) {
+  #v24EnglishSessions {grid-template-columns:1fr !important;}
+  #v24EnglishSessions .v24-english-session-card .v24-subject-thumb {height:195px !important;}
+}
+@media (max-width:520px) {
+  #v24EnglishSessions .v24-english-session-card {grid-template-columns:minmax(0,1fr) 43% !important;padding:10px !important;gap:10px !important;}
+  #v24EnglishSessions .v24-english-session-card .v24-subject-thumb {height:130px !important;}
+  #v24EnglishSessions .v24-english-session-card .v24-subject-card-body strong {font-size:17px !important;}
+  #v24EnglishSessions .v24-english-session-card .v24-subject-card-body small {font-size:12px !important;}
+}

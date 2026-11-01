@@ -5286,6 +5286,34 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar
 #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button.mh-direct-subject::after{content:none!important;display:none!important;}
 }
 </style>
+<style id="mh-htg-compact-local-20261101">
+/* Défi des tables seulement : 4 choix visibles sans ascenseur sur PC. */
+#htg-overlay{padding:8px !important;align-items:center !important}
+#htg-panel{
+ width:min(780px,calc(100vw - 20px)) !important;
+ max-width:780px !important;
+ height:auto !important;
+ min-height:0 !important;
+ max-height:calc(100dvh - 16px) !important;
+ padding:clamp(10px,1.5vh,18px) !important;
+ overflow-y:auto !important;
+}
+#htg-panel .htg-head{gap:8px !important}
+#htg-panel .htg-head strong{font-size:clamp(14px,2.3vh,19px) !important}
+#htg-panel .htg-head button{min-width:44px !important;min-height:44px !important;padding:6px 11px !important}
+#htg-panel .htg-progress{height:7px !important;margin:8px 0 !important}
+#htg-panel p{font-size:clamp(15px,2.5vh,20px) !important;margin:4px 0 !important;line-height:1.2 !important}
+#htg-panel .htg-sum{font-size:clamp(38px,7vh,67px) !important;line-height:1.08 !important;margin:10px 0 12px !important}
+#htg-panel .htg-choices{width:min(650px,100%) !important;margin:8px auto !important;gap:clamp(7px,1.5vh,12px) !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+#htg-panel .htg-choices button{font-size:clamp(24px,4.7vh,38px) !important;min-height:clamp(51px,9vh,76px) !important;padding:6px 12px !important;border-radius:15px !important}
+#htg-panel #htg-feedback:not(:empty){font-size:15px !important;padding:7px !important;margin:7px 0 !important}
+#htg-panel #htg-next button{min-height:45px !important;padding:8px 13px !important}
+@media(max-height:630px){
+ #htg-panel{padding:9px !important}
+ #htg-panel .htg-sum{font-size:clamp(32px,6.4vh,48px) !important;margin:4px 0 7px !important}
+ #htg-panel .htg-choices button{min-height:47px !important}
+}
+</style>
 </head>
 <body class="prenom-mode">
 <header>
@@ -17081,11 +17109,11 @@ body.v21-final .quick-btn{
       btn.appendChild(pict);btn.appendChild(label);
       btn.addEventListener('click',function(ev){
         ev.preventDefault();ev.stopPropagation();
-        // Accès direct aux exercices de Sciences et Géographie ; Histoire conserve sa page actuelle.
+        // Accès direct aux catalogues d’exercices de Sciences, Géographie et Histoire.
         var destination={
           sciences:'sciences.html',
           geographie:'geographie.html',
-          histoire:'bibliotheque_histoire/index.html'
+          histoire:'histoire.html'
         }[key];
         if(destination){
           window.location.assign(new URL(destination, document.baseURI).href);
@@ -24456,6 +24484,7 @@ body.v21-final .v21-profile-card .profile-life-v23417-open-hint{
     modal.classList.toggle('v24-science-popup', key === 'sciences');
     modal.classList.toggle('v24-geo-popup', key === 'geographie');
     modal.classList.toggle('v24-history-popup', key === 'histoire');
+    modal.dataset.mhSubjectKey = key;
     grid.className = 'v24-big-activities-grid';
     modal.style.setProperty('--v24-color',data.color);
     modal.style.setProperty('--v24-color2',data.color2 || data.color);
@@ -34843,5 +34872,84 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 
+<!-- Navigation compacte commune aux matières — 2026-11-01 -->
+<style id="mh-navigation-compacte-20261101">
+.mh-subject-nav{display:flex;align-items:center;justify-content:center;gap:6px;flex:1;min-width:0;margin:0 12px}
+.mh-subject-nav button{border:1px solid rgba(255,255,255,.48);background:rgba(255,255,255,.22);color:inherit;border-radius:12px;padding:8px 13px;font:800 13px system-ui,sans-serif;cursor:pointer;white-space:nowrap;line-height:1.15}
+.mh-subject-nav button:hover,.mh-subject-nav button:focus-visible{background:rgba(255,255,255,.42);outline:2px solid rgba(255,255,255,.75)}
+.mh-subject-nav button[aria-current="page"]{background:#fff;color:#a52a44}
+#frenchTrainingOverlayV2348 .fr-v2348-topbar,#mathsTrainingOverlayV2343 .maths-v2343-topbar{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;min-height:52px!important}
+#frenchTrainingOverlayV2348 .mh-subject-nav button{color:#fff}
+#mathsTrainingOverlayV2343 .mh-subject-nav button{color:#1670b8;border-color:#a9d9ff;background:#eaf5ff}
+#mathsTrainingOverlayV2343 .mh-subject-nav button[aria-current="page"]{background:#1683f7;color:#fff}
+#v24BigSubjectOverlay .mh-subject-nav button{color:#fff;background:rgba(255,255,255,.22)}
+#v24BigSubjectOverlay .mh-subject-nav button[aria-current="page"]{background:#fff;color:#26445c}
+#v24BigSubjectOverlay .v24-big-subject-header{display:flex!important;align-items:center!important;gap:8px!important;min-height:52px!important}
+@media(max-width:640px){.mh-subject-nav{gap:4px;margin:0 3px}.mh-subject-nav button{padding:8px 7px;font-size:11px}#frenchTrainingOverlayV2348 .fr-v2348-chip,#mathsTrainingOverlayV2343 .maths-v2343-chip{font-size:12px!important;padding:5px 7px!important}}
+@media(max-width:390px){.mh-subject-nav button{font-size:10px;padding:7px 5px}}
+</style>
+<script id="mh-navigation-compacte-20261101-script">
+(function(){
+  'use strict';
+  var subjects=[
+    {key:'francais',name:'français',top:'#frenchTrainingOverlayV2348 .fr-v2348-topbar',close:'closeFrenchTrainingPopupV2348',menu:'renderFrenchDomainMenuV25720',open:'openFrenchTrainingPopupV2348'},
+    {key:'maths',name:'math',top:'#mathsTrainingOverlayV2343 .maths-v2343-topbar',close:'closeMathsTrainingPopupV2343',open:'openMathsTrainingPopupV2343'},
+    {key:'autres',name:'matière',top:'#v24BigSubjectOverlay .v24-big-subject-header',closeId:'v24BigSubjectClose'}
+  ];
+  function invoke(name){if(typeof window[name]==='function'){window[name]();return true;}return false;}
+  function closeSubject(cfg){if(cfg.closeId){var cb=document.getElementById(cfg.closeId);if(cb)cb.click();return;}if(invoke(cfg.close))return;var top=document.querySelector(cfg.top);var x=top&&top.querySelector('button[class*="close"]');if(x)x.click();}
+  function home(cfg){closeSubject(cfg);var h=document.querySelector('#v21Home');if(h)h.scrollIntoView({block:'start',behavior:'instant'});}
+  function lessons(cfg){closeSubject(cfg);var b=document.getElementById('v2574LessonBtn');if(b)b.click();}
+  function exercises(cfg){if(cfg.closeId){var modal=document.querySelector('#v24BigSubjectOverlay .v24-big-subject-popup');var key=modal&&modal.dataset.mhSubjectKey;if(key&&typeof window.mhOpenDirectSubject==='function'){closeSubject(cfg);window.mhOpenDirectSubject(key);}return;}if(cfg.menu&&invoke(cfg.menu))return;if(cfg.open)invoke(cfg.open);}
+  function make(cfg){
+    var top=document.querySelector(cfg.top);
+    if(!top||top.querySelector('.mh-subject-nav'))return;
+    var nav=document.createElement('nav');nav.className='mh-subject-nav';nav.setAttribute('aria-label','Navigation '+cfg.key);
+    [['Accueil',home],['Leçons',lessons],['Exercices',exercises]].forEach(function(entry,i){
+      var b=document.createElement('button');b.type='button';b.textContent=entry[0];
+      if(i===2)b.setAttribute('aria-current','page');
+      b.addEventListener('click',function(ev){ev.stopPropagation();entry[1](cfg);});nav.appendChild(b);
+    });
+    var close=cfg.closeId?document.getElementById(cfg.closeId):top.querySelector('button[class*="close"]');top.insertBefore(nav,close||null);
+  }
+  var pending=false;
+  function refresh(){pending=false;subjects.forEach(make);}
+  function schedule(){if(!pending){pending=true;requestAnimationFrame(refresh);}}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){refresh();new MutationObserver(schedule).observe(document.body,{childList:true,subtree:true});});
+  else{refresh();new MutationObserver(schedule).observe(document.body,{childList:true,subtree:true});}
+})();
+</script>
+
+
+<!-- Correctif retour Accueil : conserver l'identité déjà vérifiée lors des pages autonomes -->
+<script id="mh-retour-accueil-session-v2">
+(function(){
+  'use strict';
+  function restore(){
+    var returnRequested=false;
+    try {returnRequested=sessionStorage.getItem('mh_return_home')==='1';sessionStorage.removeItem('mh_return_home');}catch(e){}
+    if(!returnRequested)return;
+    try{
+      var mode=localStorage.getItem('hibou_mode')||'';
+      var identity=JSON.parse(localStorage.getItem('hibou_current_student')||'null');
+      var name=identity&&typeof identity.prenom==='string'?identity.prenom.trim():'';
+      var stored=(localStorage.getItem('hibou_prenom')||'').trim();
+      var verified=(localStorage.getItem('hibou_verified_student_v25617')||localStorage.getItem('hibou_verified_student_v25785')||'').trim();
+      var valid=!!name&&name===stored&&(mode==='invite'||(mode==='eleve'&&verified.toLocaleLowerCase('fr')===name.toLocaleLowerCase('fr')));
+      if(!valid)return; // No bypass when there is no previously authenticated identity.
+      window.prenomActuel=name;
+      document.documentElement.classList.add('hibou-authenticated');
+      document.documentElement.classList.remove('hibou-login-pending');
+      document.body.classList.remove('prenom-mode');
+      var overlay=document.getElementById('prenomOverlay');if(overlay)overlay.classList.add('hidden');
+      var nom=document.getElementById('eleveNom');if(nom)nom.textContent=name;
+      var badge=document.getElementById('eleveBadge');if(badge){badge.style.display='flex';badge.textContent='👤 '+name;}
+      if(typeof window.hibouUpdateWelcomeTitle==='function')window.hibouUpdateWelcomeTitle();
+      ['loadStudentProgress','refreshScoreDisplays','refreshHibouProfile','updateStudentHeader'].forEach(function(f){if(typeof window[f]==='function')try{window[f]();}catch(e){}});
+    }catch(e){console.warn('Retour Accueil: session non restaurée',e);}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',restore);else restore();
+})();
+</script>
 </body>
 </html>

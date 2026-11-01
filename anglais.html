@@ -1,6 +1,42 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Anglais — Maître Hibou CE2</title><link rel="stylesheet" href="css/anglais-exercices.css"><link rel="stylesheet" href="css/nav01-anglais.css"></head><body>
-<header><h1>Anglais</h1><a href="index.html">← Retour à l’accueil</a></header>
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Anglais — Maître Hibou CE2</title><link rel="stylesheet" href="css/anglais-exercices.css"><link rel="stylesheet" href="css/nav01-anglais.css"><style id="mh-standalone-navigation-20261101">
+header.mh-compact-header{background:var(--mh-color)!important;border-bottom:0!important;color:#fff!important;padding:8px 14px!important;display:flex!important;flex-wrap:nowrap!important;gap:9px!important;min-height:56px;box-shadow:0 2px 8px #0002}
+.mh-compact-header h1{color:#fff!important;font-size:clamp(14px,1.6vw,20px)!important;white-space:nowrap!important;line-height:1.2!important;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.mh-standalone-nav{display:flex;align-items:center;justify-content:center;gap:6px;flex:1;min-width:0}
+.mh-standalone-nav a,.mh-standalone-nav button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid #ffffff69;background:#ffffff2b;color:#fff!important;border-radius:11px;font:800 13px system-ui,sans-serif;min-height:37px;padding:7px 12px;white-space:nowrap;cursor:pointer}
+.mh-standalone-nav [aria-current="page"]{background:#fff;color:var(--mh-color)!important}
+.mh-standalone-nav a:hover,.mh-standalone-nav button:hover{background:#ffffff55}
+.mh-standalone-nav button:disabled{opacity:.55;cursor:not-allowed}
+.mh-standalone-close{width:36px;height:36px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:#fff;color:var(--mh-color)!important;text-decoration:none;font-weight:900;font-size:20px}
+@media(max-width:630px){header.mh-compact-header{padding:7px 8px!important;gap:4px!important}.mh-compact-header h1{font-size:12px!important;max-width:88px}.mh-standalone-nav{gap:3px}.mh-standalone-nav a,.mh-standalone-nav button{font-size:10px;padding:6px 5px;min-height:34px}.mh-standalone-close{width:32px;height:32px}}
+@media(max-width:355px){.mh-compact-header h1{max-width:50px}.mh-standalone-nav a,.mh-standalone-nav button{font-size:9px;padding:6px 4px}}
+</style></head><body>
+<header class="mh-compact-header" style="--mh-color:#8755bb"><h1>🇬🇧 Anglais</h1><nav class="mh-standalone-nav" aria-label="Navigation anglais"><a href="index.html">Accueil</a><a href="bibliotheque_anglais/index.html">Leçons</a><button type="button" id="mhNavExercises" aria-current="page">Exercices</button></nav><a class="mh-standalone-close" href="index.html" title="Fermer et revenir à l’accueil" aria-label="Fermer et revenir à l’accueil">×</a></header>
 <main><p id="mh-student-progress" role="status" aria-live="polite"></p><div id="anglais-app"></div></main>
 <script src="js/hibou-journal-eleve-v25847.js"></script><script src="js/hibou-sync-v25839.js"></script><script src="js/parcours-pages-autonomes.js"></script><script src="js/anglais-exercices.js"></script>
 <script>document.addEventListener('DOMContentLoaded',function(){var root=document.getElementById('anglais-app');if(window.MHEnglish&&root){window.MHEnglish.home(root);var intro=root.querySelector('.v24-english-intro');if(intro)intro.remove();}else{root.textContent='Les exercices d’anglais n’ont pas pu être chargés.';}});</script>
-</body></html>
+<script id="mh-standalone-navigation-script">
+(function(){
+ 'use strict';
+ var host=document.getElementById('exercices')||document.getElementById('anglais-app');
+ var exercises=document.getElementById('mhNavExercises');
+ if(!host||!exercises)return;
+ function update(){
+  var isSession=!!host.querySelector('.v24-english-exercises,.v24-english-exo,.v24-history-session,.mh-science-exercises');
+  exercises.setAttribute('aria-current','page');
+  exercises.title=isSession?'Revenir aux séances et exercices':'Catalogue des séances et exercices';
+ }
+ exercises.addEventListener('click',function(){
+  var back=host.querySelector('.v24-english-back,button[data-action="back"],.mh-back');
+  if(back){back.click();window.scrollTo({top:0,behavior:'smooth'});return;}
+  if(window.MHEnglish&&typeof window.MHEnglish.home==='function'&&host.id==='anglais-app'){window.MHEnglish.home(host);window.scrollTo(0,0);return;}
+  location.href=location.pathname;
+ });
+ new MutationObserver(update).observe(host,{childList:true,subtree:false});update();
+})();
+</script><script id="mh-retour-accueil-lien-v2">
+document.addEventListener('click',function(e){
+  var a=e.target.closest('a[href="index.html"]');
+  if(!a)return;
+  try{sessionStorage.setItem('mh_return_home','1');}catch(err){}
+},true);
+</script></body></html>

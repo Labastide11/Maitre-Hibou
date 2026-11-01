@@ -1023,7 +1023,109 @@
 #v24ScienceSessions .mh-science-session-image[hidden],#v24ScienceSessions .mh-science-fallback[hidden]{display:none!important}
 @media(max-width:950px){#exercices .v24-english-sessions{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:600px){#exercices .v24-english-sessions{grid-template-columns:minmax(0,1fr)!important}}
-</style></head><body data-matiere="sciences"><header><h1>🧪 Sciences — Maître Hibou CE2</h1><a class="back" href="index.html">← Retour à l’accueil</a></header><main><div id="exercices" aria-live="polite"></div></main><script src="js/hibou-journal-eleve-v25847.js?v=25.8.47"></script><script src="js/hibou-sync-v25839.js?v=25.8.39"></script><script src="js/parcours-pages-autonomes.js"></script><script src="js/sciences-exercices.js"></script><script src="js/sciences-affichage.js"></script><script src="js/geographie-affichage.js"></script><script>
+</style><style id="mh-science-cards-two-columns-20261101">
+/* Sciences CE2 : six affiches JPG entières, chacune est son propre bouton. */
+#exercices #v24ScienceSessions {
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:14px!important;
+  align-items:start!important;
+}
+#exercices #v24ScienceSessions .mh-science-illustrated-card {
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  height:auto!important;
+  padding:5px!important;
+  margin:0!important;
+  line-height:0!important;
+  overflow:hidden!important;
+  border:2px solid #d6b9ff!important;
+  border-radius:19px!important;
+  background:#fff!important;
+}
+#exercices #v24ScienceSessions .mh-science-session-image {
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:none!important;
+  aspect-ratio:auto!important;
+  object-fit:contain!important;
+  border:0!important;
+  border-radius:13px!important;
+  margin:0!important;
+  padding:0!important;
+}
+#exercices #v24ScienceSessions .mh-science-session-image[hidden],
+#exercices #v24ScienceSessions .mh-science-fallback[hidden] { display:none!important; }
+#exercices #v24ScienceSessions .mh-science-fallback:not([hidden]) {
+  display:block!important;
+  line-height:1.4!important;
+  font-size:16px!important;
+  padding:18px!important;
+}
+@media(max-width:700px) {
+  #exercices #v24ScienceSessions { grid-template-columns:minmax(0,1fr)!important; }
+}
+</style><style id="mh-science-uniform-cards-20261101">
+/* Les six affiches gardent leurs textes intacts, dans un cadre de taille identique.
+   Un fond agrandi et flouté remplit les zones que les JPG plus panoramiques laissent libres. */
+#exercices #v24ScienceSessions { align-items:stretch!important; }
+#exercices #v24ScienceSessions .mh-science-illustrated-card {
+  position:relative!important;
+  isolation:isolate!important;
+  aspect-ratio:2.48 / 1!important;
+  min-height:0!important;
+  height:auto!important;
+  padding:6px!important;
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  background:#f6fbf8!important;
+}
+#exercices #v24ScienceSessions .mh-science-illustrated-card::before {
+  content:"";
+  position:absolute;
+  inset:-12px;
+  z-index:0;
+  background-image:var(--mh-science-image);
+  background-size:cover;
+  background-position:center;
+  filter:blur(14px);
+  opacity:.33;
+  pointer-events:none;
+}
+#exercices #v24ScienceSessions .mh-science-session-image {
+  display:block!important;
+  position:relative!important;
+  z-index:1!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:0!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  aspect-ratio:auto!important;
+  border-radius:12px!important;
+}
+@media(max-width:700px){
+ #exercices #v24ScienceSessions .mh-science-illustrated-card{aspect-ratio:2.48 / 1!important}
+}
+</style><style id="mh-standalone-navigation-20261101">
+header.mh-compact-header{background:var(--mh-color)!important;border-bottom:0!important;color:#fff!important;padding:8px 14px!important;display:flex!important;flex-wrap:nowrap!important;gap:9px!important;min-height:56px;box-shadow:0 2px 8px #0002}
+.mh-compact-header h1{color:#fff!important;font-size:clamp(14px,1.6vw,20px)!important;white-space:nowrap!important;line-height:1.2!important;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.mh-standalone-nav{display:flex;align-items:center;justify-content:center;gap:6px;flex:1;min-width:0}
+.mh-standalone-nav a,.mh-standalone-nav button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid #ffffff69;background:#ffffff2b;color:#fff!important;border-radius:11px;font:800 13px system-ui,sans-serif;min-height:37px;padding:7px 12px;white-space:nowrap;cursor:pointer}
+.mh-standalone-nav [aria-current="page"]{background:#fff;color:var(--mh-color)!important}
+.mh-standalone-nav a:hover,.mh-standalone-nav button:hover{background:#ffffff55}
+.mh-standalone-nav button:disabled{opacity:.55;cursor:not-allowed}
+.mh-standalone-close{width:36px;height:36px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:#fff;color:var(--mh-color)!important;text-decoration:none;font-weight:900;font-size:20px}
+@media(max-width:630px){header.mh-compact-header{padding:7px 8px!important;gap:4px!important}.mh-compact-header h1{font-size:12px!important;max-width:88px}.mh-standalone-nav{gap:3px}.mh-standalone-nav a,.mh-standalone-nav button{font-size:10px;padding:6px 5px;min-height:34px}.mh-standalone-close{width:32px;height:32px}}
+@media(max-width:355px){.mh-compact-header h1{max-width:50px}.mh-standalone-nav a,.mh-standalone-nav button{font-size:9px;padding:6px 4px}}
+</style></head><body data-matiere="sciences"><header class="mh-compact-header" style="--mh-color:#17865d"><h1>🧪 Sciences</h1><nav class="mh-standalone-nav" aria-label="Navigation sciences"><a href="index.html">Accueil</a><a href="bibliotheque_sciences/index.html">Leçons</a><button type="button" id="mhNavExercises" aria-current="page">Exercices</button></nav><a class="mh-standalone-close" href="index.html" title="Fermer et revenir à l’accueil" aria-label="Fermer et revenir à l’accueil">×</a></header><main><div id="exercices" aria-live="polite"></div></main><script src="js/hibou-journal-eleve-v25847.js?v=25.8.47"></script><script src="js/hibou-sync-v25839.js?v=25.8.39"></script><script src="js/parcours-pages-autonomes.js"></script><script src="js/sciences-exercices.js"></script><script src="js/sciences-affichage.js"></script><script src="js/geographie-affichage.js"></script><script>
 (function(){
 'use strict';
 const host=document.getElementById('exercices');
@@ -1057,4 +1159,29 @@ else {engine.home(host);}
 host.querySelectorAll('.v24-english-intro').forEach(function(element){element.remove();});
 }catch(err){report(err)}
 })();
+</script><script id="mh-standalone-navigation-script">
+(function(){
+ 'use strict';
+ var host=document.getElementById('exercices')||document.getElementById('anglais-app');
+ var exercises=document.getElementById('mhNavExercises');
+ if(!host||!exercises)return;
+ function update(){
+  var isSession=!!host.querySelector('.v24-english-exercises,.v24-english-exo,.v24-history-session,.mh-science-exercises');
+  exercises.setAttribute('aria-current','page');
+  exercises.title=isSession?'Revenir aux séances et exercices':'Catalogue des séances et exercices';
+ }
+ exercises.addEventListener('click',function(){
+  var back=host.querySelector('.v24-english-back,button[data-action="back"],.mh-back');
+  if(back){back.click();window.scrollTo({top:0,behavior:'smooth'});return;}
+  if(window.MHEnglish&&typeof window.MHEnglish.home==='function'&&host.id==='anglais-app'){window.MHEnglish.home(host);window.scrollTo(0,0);return;}
+  location.href=location.pathname;
+ });
+ new MutationObserver(update).observe(host,{childList:true,subtree:false});update();
+})();
+</script><script id="mh-retour-accueil-lien-v2">
+document.addEventListener('click',function(e){
+  var a=e.target.closest('a[href="index.html"]');
+  if(!a)return;
+  try{sessionStorage.setItem('mh_return_home','1');}catch(err){}
+},true);
 </script></body></html>

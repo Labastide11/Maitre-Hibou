@@ -88,8 +88,27 @@ body{margin:0;background:#edf4fb;color:#26374c;font:18px/1.58 system-ui,Arial,sa
 .hint-more summary{font-size:16px;color:#245a80}
 @media(max-width:620px){.hint-track{grid-template-columns:repeat(5,minmax(95px,1fr));overflow-x:auto}.hint-chronology{overflow-x:auto}.hint-eras{min-width:500px}}
 </style>
-</head>
-<body>
+<style id="mh-history-unified-nav-css">
+.mh-history-unified-nav{position:sticky;top:0;z-index:10000;min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:9px;padding:8px 16px;background:#a96c22;color:#fff;font:700 15px/1.25 system-ui,Arial,sans-serif;box-shadow:0 2px 10px #0002}
+.mh-history-unified-nav *{box-sizing:border-box}.mh-history-unified-nav .mh-title{font-weight:850;font-size:clamp(14px,1.55vw,21px);white-space:nowrap}.mh-history-unified-nav nav{display:flex;align-items:center;gap:7px;margin-left:auto}.mh-history-unified-nav a{font:800 14px/1.25 system-ui,Arial,sans-serif;text-decoration:none;color:#fff;background:#ffffff26;padding:9px 14px;border-radius:11px;white-space:nowrap;min-height:37px;display:inline-flex;align-items:center;justify-content:center}.mh-history-unified-nav a[aria-current="page"]{background:#fff;color:#7e4b10}.mh-history-unified-nav a:hover{background:#ffffff50}.mh-history-unified-nav a[aria-current="page"]:hover{background:#fff}.mh-history-unified-nav a:focus-visible{outline:3px solid #ffe18c;outline-offset:2px}.mh-history-unified-nav .mh-close{width:38px;height:38px;padding:0;border-radius:50%;background:white;color:#a96c22;font-size:27px;font-weight:800;margin-left:6px}
+body:has(.mh-history-unified-nav)>.wrap>a.back[href$="catalogue.html"],body:has(.mh-history-unified-nav)>.wrap>a.toplink[href$="catalogue.html"],body:has(.mh-history-unified-nav) .retour-catalogue[href$="catalogue.html"]{display:none!important}
+@media(max-width:630px){.mh-history-unified-nav{gap:5px;padding:7px 8px;min-height:49px}.mh-history-unified-nav .mh-title{font-size:12px}.mh-history-unified-nav nav{gap:3px}.mh-history-unified-nav a{font-size:11px;padding:7px 6px;min-height:33px}.mh-history-unified-nav .mh-close{width:32px;height:32px;font-size:23px;margin-left:1px}}
+@media(max-width:385px){.mh-history-unified-nav .mh-title{max-width:70px;overflow:hidden;text-overflow:ellipsis}}
+
+/* Navigation principale centrée dans le bandeau (PC et tablette large). */
+@media (min-width: 751px) {
+  .mh-history-unified-nav { position: sticky; }
+  .mh-history-unified-nav nav { position: absolute; left: 50%; transform: translateX(-50%); margin-left: 0; }
+  .mh-history-unified-nav .mh-close { margin-left: auto; }
+}
+/* Sous 751 px, conserver une navigation utilisable et sans chevauchement. */
+@media (max-width: 750px) {
+  .mh-history-unified-nav { flex-wrap: wrap; justify-content: space-between; }
+  .mh-history-unified-nav nav { order: 3; width: 100%; margin-left: 0; justify-content: center; }
+  .mh-history-unified-nav .mh-close { margin-left: auto; }
+}
+</style></head>
+<body><div class="mh-history-unified-nav" role="banner"><span class="mh-title">🏛️ Histoire</span><nav aria-label="Navigation Histoire"><a href="../../index.html" data-mh-home="true">Accueil</a><a href="../catalogue.html" aria-current="page">Leçons</a><a href="../../histoire.html">Exercices</a></nav><a class="mh-close" href="../../index.html" data-mh-home="true" aria-label="Fermer et revenir à l’accueil" title="Fermer">×</a></div>
 <main class="wrap">
 <a class="back" href="../catalogue.html">← Retour aux leçons d’histoire</a>
 <header class="hero">
@@ -232,5 +251,5 @@ else{el('quiz-feedback').textContent='Pas encore ! Ouvre l’indice si besoin, p
 el('quiz-next').addEventListener('click',()=>{index++;if(index===items.length){el('quiz-work').hidden=true;el('quiz-done').hidden=false;el('quiz-score').textContent='Tu as réussi '+score+' question'+(score>1?'s':'')+' sur '+items.length+'.';}else show();});
 el('quiz-restart').addEventListener('click',()=>{index=0;score=0;el('quiz-done').hidden=true;el('quiz-work').hidden=false;show();});
 show();})();
-</script></body>
+</script><script id="mh-history-session-home">document.addEventListener('click',function(e){var a=e.target.closest('a[data-mh-home="true"]');if(!a)return;try{sessionStorage.setItem('mh_return_home','1')}catch(err){}},true);</script></body>
 </html>

@@ -307,7 +307,13 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
   }
 
   function renderScienceHelp(card, help){
-    if(card.querySelector('.v24-science-help-btn')) return;
+    var existingButtons = card.querySelectorAll('.v24-science-help-btn');
+    var existingPanels = card.querySelectorAll('.v24-science-help-panel');
+    if(existingButtons.length){
+      Array.prototype.slice.call(existingButtons,1).forEach(function(node){ node.remove(); });
+      Array.prototype.slice.call(existingPanels,1).forEach(function(node){ node.remove(); });
+      return;
+    }
     if(!help || !help.length) return;
     var btn = document.createElement('button');
     btn.type = 'button';
@@ -454,6 +460,14 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
       wrap.appendChild(b);
     });
     card.appendChild(wrap);
+    var helpButtons = card.querySelectorAll('.v24-science-help-btn');
+    var helpPanels = card.querySelectorAll('.v24-science-help-panel');
+    if(helpButtons.length > 1){
+      Array.prototype.slice.call(helpButtons,1).forEach(function(node){ node.remove(); });
+    }
+    if(helpPanels.length > 1){
+      Array.prototype.slice.call(helpPanels,1).forEach(function(node){ node.remove(); });
+    }
     renderEnglishFeedback(card, true, '');
   }
 
@@ -474,7 +488,16 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
       b.addEventListener('click', function(ev){ev.preventDefault();if(b.classList.contains('done')) return;Array.prototype.forEach.call(left.children,function(x){x.classList.remove('selected');});b.classList.add('selected');selected=i;}, true);
       left.appendChild(b);
     });
-    var order = exo.right.map(function(_, i){return i;}).sort(function(){return Math.random() - 0.5;});
+    var baseOrder = exo.right.map(function(_, i){return i;});
+    var order = baseOrder.slice();
+    var tries = 0;
+    do {
+      order = baseOrder.slice().sort(function(){return Math.random() - 0.5;});
+      tries++;
+    } while(
+      tries < 40 &&
+      order.some(function(origIndex, rowIndex){ return exo.pairs[rowIndex] === origIndex; })
+    );
     if(order.length > 1 && order.every(function(v,i){return v === i;})) order.reverse();
     order.forEach(function(origIndex){
       var b = document.createElement('button');
