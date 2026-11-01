@@ -1,0 +1,6 @@
+
+/* Accueil Constellation PC seulement : Maths reste disponible via M’entraîner. */
+@media (min-width:1200px) and (pointer:fine) {
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects > button[data-subject="maths"] { display:none!important; }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects { grid-template-columns:repeat(7,minmax(0,1fr))!important; }
+}
