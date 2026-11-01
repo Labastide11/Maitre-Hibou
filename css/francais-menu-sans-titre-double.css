@@ -1,0 +1,9 @@
+
+/* Masquer uniquement l’en-tête redondant du menu principal Français.
+   Les titres des exercices et sous-menus restent inchangés. */
+#frenchTrainingOverlayV2348:has(.fr-v25720-domain-grid) .fr-v2348-header {
+  display: none !important;
+}
+#frenchTrainingOverlayV2348:has(.fr-v25720-domain-grid) .fr-v2348-content {
+  padding-top: 6px !important;
+}
