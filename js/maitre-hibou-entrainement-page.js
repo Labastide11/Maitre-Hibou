@@ -110,3 +110,35 @@
   window.openMHTrainingPage=open;
   window.closeMHTrainingPage=close;
 })();
+
+/* Arts & Créativité : remplacement visuel du bouton Français dans l'accueil, sans modifier index.html. */
+(function(){
+  'use strict';
+  if(window.__mhArtsCreativeNavBridge)return;
+  window.__mhArtsCreativeNavBridge=true;
+  var icon='images/arts-creativite/icone-arts.jpg';
+  function render(){
+    document.querySelectorAll('button.subject-btn[data-subject="francais"]').forEach(function(button){
+      button.setAttribute('aria-label','Ouvrir Arts et Créativité');
+      button.setAttribute('title','Arts & Créativité');
+      var label=button.querySelector('.subject-label');
+      if(label && label.textContent!=='Arts & Créativité')label.textContent='Arts & Créativité';
+      var picto=button.querySelector('.subject-icon');
+      if(picto && !picto.querySelector('img[data-mh-arts-icon]')){
+        picto.textContent='';
+        var image=document.createElement('img');image.src=icon;image.alt='';image.dataset.mhArtsIcon='1';
+        image.style.cssText='display:block;width:100%;height:100%;object-fit:contain;border-radius:12px';
+        picto.appendChild(image);
+      }
+    });
+  }
+  document.addEventListener('click',function(event){
+    var b=event.target.closest&&event.target.closest('button.subject-btn[data-subject="francais"]');
+    if(!b)return;
+    // Ne pas laisser les anciens gestionnaires Français ouvrir leur popup.
+    event.preventDefault();event.stopPropagation();event.stopImmediatePropagation();
+    window.location.assign('arts-creativite.html');
+  },true);
+  function start(){render();var queued=false;new MutationObserver(function(){if(queued)return;queued=true;requestAnimationFrame(function(){queued=false;render();});}).observe(document.body,{childList:true,subtree:true,characterData:true});}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
