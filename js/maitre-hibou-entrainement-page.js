@@ -3,6 +3,8 @@
   if(window.__mhTrainingPage20261101) return;
   window.__mhTrainingPage20261101=true;
   var page=null;
+  var beltReturnActive=false;
+  var savedTrainingScroll=0;
   var french=[
     ['blanche','Phrase affirmative / négative','#e3ddf7'],['jaune','Trouver le verbe','#ffd93d'],['orange','Trouver le sujet','#ff914c'],['verte','Reconnaître un nom','#4fd88c'],
     ['bleue','Reconnaître un déterminant','#69b4fb'],['marron','Trouver l’infinitif','#a8724c'],['noire','Reconnaître l’adjectif','#333333'],['rouge','Le groupe nominal','#f04c62']
@@ -51,11 +53,11 @@
     return page;
   }
   function open(){make();page.hidden=false;page.scrollTop=0;document.documentElement.classList.add('mh-training-route');}
-  function close(){if(page)page.hidden=true;document.documentElement.classList.remove('mh-training-route');}
+  function close(){beltReturnActive=false;if(page)page.hidden=true;document.documentElement.classList.remove('mh-training-route');}
   function run(fn){if(typeof window[fn]==='function'){closeIntoActivity();window[fn]();}else console.warn('Activité non chargée :',fn);}
-  function closeIntoActivity(){if(page)page.hidden=true;document.documentElement.classList.add('mh-training-route');}
-  function launchFrenchBelt(id){if(typeof window.openFrenchTrainingPopupV2348!=='function'||typeof window.startFrenchTrainingV2348!=='function')return;closeIntoActivity();window.openFrenchTrainingPopupV2348();window.startFrenchTrainingV2348(id);}
-  function launchMathBelt(id){if(typeof window.openMathsTrainingPopupV2343!=='function')return;closeIntoActivity();window.openMathsTrainingPopupV2343();var overlay=document.getElementById('mathsTrainingOverlayV2343');var buttons=overlay?overlay.querySelectorAll('.maths-v2343-train-btn'):[];var i=maths.findIndex(function(b){return b[0]===id;});if(i>=0&&buttons[i])buttons[i].click();else if(typeof window.startMathsTrainingV2343==='function')window.startMathsTrainingV2343(id);}
+  function closeIntoActivity(){if(page){savedTrainingScroll=page.scrollTop;page.hidden=true;}document.documentElement.classList.add('mh-training-route');}
+  function launchFrenchBelt(id){if(typeof window.openFrenchTrainingPopupV2348!=='function'||typeof window.startFrenchTrainingV2348!=='function')return;beltReturnActive=true;closeIntoActivity();window.openFrenchTrainingPopupV2348();window.startFrenchTrainingV2348(id);}
+  function launchMathBelt(id){if(typeof window.openMathsTrainingPopupV2343!=='function')return;beltReturnActive=true;closeIntoActivity();window.openMathsTrainingPopupV2343();var overlay=document.getElementById('mathsTrainingOverlayV2343');var buttons=overlay?overlay.querySelectorAll('.maths-v2343-train-btn'):[];var i=maths.findIndex(function(b){return b[0]===id;});if(i>=0&&buttons[i])buttons[i].click();else if(typeof window.startMathsTrainingV2343==='function')window.startMathsTrainingV2343(id);}
   function launchFrenchFree(type){
     if(typeof window.openFrenchTrainingPopupV2348!=='function')return;
     closeIntoActivity();window.openFrenchTrainingPopupV2348();
@@ -118,6 +120,32 @@
     loader.onerror=function(){alert('Fichier du Défi des tables introuvable : js/hibou-tables-game-v25881.js');};
     document.head.appendChild(loader);
   }
+  // Retour centralise pour toutes les ceintures (8 FR + 14 Maths) : l'ancien
+  // bouton renvoie vers le catalogue du moteur, et non vers la page M'entraîner.
+  // Capteur limité aux ceintures ouvertes depuis cette page ; aucune modification
+  // du code pédagogique, des scores ou de la validation.
+  function returnToTrainingPage(){
+    beltReturnActive=false;
+    if(typeof window.closeMathsTrainingPopupV2343==='function')try{window.closeMathsTrainingPopupV2343();}catch(e){console.warn(e);}
+    if(typeof window.closeFrenchTrainingPopupV2348==='function')try{window.closeFrenchTrainingPopupV2348();}catch(e){console.warn(e);}
+    make();page.hidden=false;
+    document.documentElement.classList.add('mh-training-route');
+    page.scrollTop=savedTrainingScroll;
+  }
+  document.addEventListener('click',function(ev){
+    if(!beltReturnActive)return;
+    var button=ev.target && ev.target.closest && ev.target.closest('button');
+    if(!button)return;
+    var root=button.closest('#mathsTrainingOverlayV2343, #frenchTrainingOverlayV2348');
+    if(!root)return;
+    var label=(button.textContent||'').replace(/\s+/g,' ').trim();
+    var back=/retour aux entra[iî]nements/i.test(label);
+    // Le bouton « Fermer » de la page de résultat doit lui aussi revenir au menu.
+    var doneClose=/^fermer$/i.test(label);
+    if(!back&&!doneClose)return;
+    ev.preventDefault();ev.stopPropagation();ev.stopImmediatePropagation();
+    returnToTrainingPage();
+  },true);
   document.addEventListener('click',function(ev){var target=ev.target&&ev.target.closest&&ev.target.closest('#v2574TrainBtn');if(target){ev.preventDefault();ev.stopImmediatePropagation();open();}},true);
   window.openMHTrainingPage=open;
   window.closeMHTrainingPage=close;
