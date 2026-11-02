@@ -189,3 +189,49 @@ html.mh-training-route #hsg-overlay:not([hidden]){
     grid-template-columns:minmax(0,1fr) !important;
   }
 }
+
+/* Progressions compactes : une ligne de rectangles par matière. */
+#mhTrainingPage .mht-belts-section {margin-bottom:20px;}
+#mhTrainingPage .mht-belts-section .mht-section-desc {margin-bottom:10px;}
+#mhTrainingPage .mht-belt-progressions {display:grid;gap:10px;min-width:0;}
+#mhTrainingPage .mht-belt-strip {min-width:0;display:grid;grid-template-columns:145px minmax(0,1fr);align-items:center;gap:10px;padding:9px 12px;border:2px solid #ebe4ff;border-radius:16px;background:#fff;}
+#mhTrainingPage .mht-belt-strip.math {border-color:#d6e6ff;}
+#mhTrainingPage .mht-belt-strip h3 {font-size:16px;line-height:1.2;margin:0;color:#7143be;font-weight:900;}
+#mhTrainingPage .mht-belt-strip.math h3 {color:#1478cc;}
+#mhTrainingPage .mht-belt-strip h3 small {display:block;font-size:11px;margin-top:3px;font-weight:700;color:#6b7192;}
+#mhTrainingPage .mht-belt-scroll {min-width:0;overflow-x:auto;overscroll-behavior-x:contain;padding:3px 2px 7px;scrollbar-width:thin;}
+#mhTrainingPage .mht-belt-strip .mht-belt-grid {display:flex!important;flex-wrap:nowrap!important;gap:7px!important;width:max-content;min-width:100%;}
+#mhTrainingPage .mht-belt-strip .mht-belt-tile {
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+  gap:3px!important;text-align:center!important;flex:0 0 125px!important;width:125px!important;
+  min-width:125px!important;max-width:125px!important;min-height:66px!important;
+  padding:7px 6px!important;margin:0!important;border-radius:10px!important;
+  border:1px solid rgba(15,24,67,.22)!important;border-top:7px solid var(--belt)!important;
+  background:color-mix(in srgb,var(--belt) 20%,#fff)!important;
+  color:#202744!important;box-shadow:0 2px 5px #23315d0b!important;
+  white-space:normal!important;cursor:pointer!important;
+}
+#mhTrainingPage .mht-belt-strip .mht-belt-tile:hover,
+#mhTrainingPage .mht-belt-strip .mht-belt-tile:focus-visible {outline:2px solid #6554d7!important;outline-offset:1px;transform:translateY(-1px);}
+#mhTrainingPage .mht-belt-tile .mht-belt-example {font-size:16px!important;line-height:1.05!important;font-weight:950!important;color:#171e39!important;}
+#mhTrainingPage .mht-belt-tile .mht-belt-label {font-size:11px!important;line-height:1.15!important;font-weight:750!important;color:#303b58!important;margin:0!important;}
+@media(max-width:700px){
+ #mhTrainingPage .mht-belt-strip {grid-template-columns:minmax(0,1fr);gap:6px;padding:9px;}
+ #mhTrainingPage .mht-belt-strip h3 small {display:inline;margin-left:8px;}
+ #mhTrainingPage .mht-belt-strip .mht-belt-tile {flex-basis:118px!important;min-width:118px!important;max-width:118px!important;width:118px!important;}
+}
+
+/* 2026-11-02 : en-tête compact, titre des ceintures à droite d’Accueil. */
+#mhTrainingPage .mht-head{justify-content:flex-start!important;gap:clamp(12px,2vw,36px)!important;min-height:104px!important;}
+#mhTrainingPage .mht-brand{flex:0 1 34%;min-width:200px;}
+#mhTrainingPage .mht-head .mht-home{flex:0 0 auto!important;min-width:155px!important;}
+#mhTrainingPage .mht-belts-head{flex:1;min-width:0;color:#1c2250;line-height:1.3;}
+#mhTrainingPage .mht-belts-head h2{font-weight:900;font-size:clamp(18px,1.8vw,26px);margin:0 0 3px;}
+#mhTrainingPage .mht-belts-head p{font-weight:650;font-size:clamp(11px,1vw,14px);color:#636e92;margin:0;}
+#mhTrainingPage .mht-main{padding-top:12px!important;}
+@media(max-width:760px){
+ #mhTrainingPage .mht-head{flex-wrap:wrap!important;gap:8px 12px!important;min-height:0!important;}
+ #mhTrainingPage .mht-brand{flex:1 1 auto;min-width:180px;}
+ #mhTrainingPage .mht-head .mht-home{min-width:115px!important;}
+ #mhTrainingPage .mht-belts-head{flex:1 0 100%;padding-top:3px;}
+}

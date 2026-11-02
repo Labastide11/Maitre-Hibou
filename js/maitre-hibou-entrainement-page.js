@@ -15,14 +15,26 @@
   ];
   var names={blanche:'blanche',jaune:'jaune',orange:'orange',verte:'verte',bleue:'bleue',marron:'marron',noire:'noire',rouge:'rouge',vert_clair:'vert clair',vert_fonce:'vert foncé',bleu_clair:'bleu clair',bleu_fonce:'bleu foncé',rose:'rose',beige:'beige',violet:'violette',gris:'grise',noir:'noire'};
   function esc(t){return String(t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-  function beltRows(list,domain){return list.map(function(b){return '<button type="button" class="mht-belt" data-mht="'+domain+'-belt" data-id="'+esc(b[0])+'"><i aria-hidden="true" class="mht-dot" style="--belt:'+esc(b[2])+'"></i><span><strong>'+esc(b[1])+'</strong><small>Ceinture '+esc(names[b[0]]||b[0])+' · 10 questions</small></span></button>';}).join('');}
+  // Exemples visuels uniquement : les identifiants et moteurs de ceintures restent inchangés.
+  var mathExamples={
+    blanche:'8 + 5',jaune:'30 + 20',orange:'120 + 40',
+    vert_clair:'45 − 12',vert_fonce:'70 + ? = 100',
+    bleu_clair:'46 + 9',bleu_fonce:'46 + 11',rose:'300 + 200',
+    beige:'250 + ? = 300',violet:'2 × 10',marron:'4 × 5',
+    rouge:'6 × 7',gris:'8 × 9',noir:'36 + 27'
+  };
+  function beltRows(list,domain){return list.map(function(b){
+    var colour=b[2], example=domain==='math'?mathExamples[b[0]]:null;
+    var text=example?'<strong class="mht-belt-example">'+esc(example)+'</strong><small class="mht-belt-label">'+esc(b[1])+'</small>':'<strong class="mht-belt-label">'+esc(b[1])+'</strong>';
+    return '<button type="button" class="mht-belt mht-belt-tile" data-mht="'+domain+'-belt" data-id="'+esc(b[0])+'" style="--belt:'+esc(colour)+'" title="Ceinture '+esc(names[b[0]]||b[0])+' — '+esc(b[1])+' — 10 questions" aria-label="Ceinture '+esc(names[b[0]]||b[0])+', '+esc(b[1])+', lancer 10 questions">'+text+'</button>';
+  }).join('');}
   function make(){
     if(page) return page;
     page=document.createElement('main');page.id='mhTrainingPage';page.hidden=true;page.setAttribute('aria-label','M’entraîner');
-    page.innerHTML='<header class="mht-head"><div class="mht-brand"><span aria-hidden="true" class="mht-owl">🦉</span><div><h1>M’entraîner</h1><p class="mht-subtitle">Je m’exerce à mon rythme, avant de passer une ceinture.</p></div></div><button type="button" class="mht-home" data-mht="home">← Accueil</button></header>'+
-    '<div class="mht-main"><section class="mht-section"><h2 class="mht-section-title">🏅 Je prépare mes ceintures</h2><p class="mht-section-desc">10 questions pour s’entraîner. La validation des ceintures se fait séparément.</p><div class="mht-columns">'+
-    '<div class="mht-panel"><h3>📖 Français · 8 ceintures</h3><div class="mht-belt-grid">'+beltRows(french,'fr')+'</div></div>'+
-    '<div class="mht-panel math"><h3>🧮 Maths · 14 ceintures</h3><div class="mht-belt-grid">'+beltRows(maths,'math')+'</div></div></div></section>'+
+    page.innerHTML='<header class="mht-head"><div class="mht-brand"><span aria-hidden="true" class="mht-owl">🦉</span><div><h1>M’entraîner</h1><p class="mht-subtitle">Je m’exerce à mon rythme, avant de passer une ceinture.</p></div></div><button type="button" class="mht-home" data-mht="home">← Accueil</button><div class="mht-belts-head"><h2>🏅 Je prépare mes ceintures</h2><p>10 questions pour s’entraîner. La validation des ceintures se fait séparément.</p></div></header>'+
+    '<div class="mht-main"><section class="mht-section mht-belts-section"><div class="mht-belt-progressions">'+
+    '<div class="mht-belt-strip"><h3>📖 Français <small>8 ceintures</small></h3><div class="mht-belt-scroll"><div class="mht-belt-grid">'+beltRows(french,'fr')+'</div></div></div>'+
+    '<div class="mht-belt-strip math"><h3>🧮 Maths <small>14 ceintures</small></h3><div class="mht-belt-scroll"><div class="mht-belt-grid">'+beltRows(maths,'math')+'</div></div></div></div></section>'+
     '<section class="mht-section"><h2 class="mht-section-title">🎮 Je m’entraîne librement</h2><p class="mht-section-desc">Je choisis une activité indépendante des ceintures.</p><div class="mht-columns">'+
     '<div class="mht-free-panel fr"><h3>📚 Français</h3><div class="mht-free-grid">'+
     '<button type="button" class="mht-banner" data-mht="writing" aria-label="Production d’écrits"><img src="images/francais-production-ecrit.jpg" alt="Production d’écrits" loading="eager" decoding="async"/><span>Production d’écrits</span></button>'+
