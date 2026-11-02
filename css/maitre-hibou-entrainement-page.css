@@ -170,3 +170,22 @@ html.mh-training-route #hsg-overlay:not([hidden]){
     grid-template-columns:minmax(0,1fr) !important;
   }
 }
+
+/* Correction : deux colonnes AU TOTAL. Une seule carte par ligne
+   dans chacune : Français à gauche, Maths à droite. */
+@media (min-width:901px) {
+  #mhTrainingPage .mht-section:last-child > .mht-columns {
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    align-items:start !important;
+  }
+}
+#mhTrainingPage .mht-section:last-child .mht-free-grid,
+#mhTrainingPage .mht-section:last-child .mht-free-maths,
+#mhTrainingPage .mht-section:last-child .mht-free-panel.math .mht-free-maths {
+  grid-template-columns:minmax(0,1fr) !important;
+}
+@media (max-width:900px) {
+  #mhTrainingPage .mht-section:last-child > .mht-columns {
+    grid-template-columns:minmax(0,1fr) !important;
+  }
+}
