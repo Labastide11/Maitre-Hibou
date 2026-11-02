@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Le marché de Maître Hibou — CE2</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#24304b;background:#f2f6fa}*{box-sizing:border-box}body{margin:0}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid #236bd2;outline-offset:3px}header{background:#123858;color:white;padding:12px max(18px,calc((100vw - 1200px)/2));display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}header h1{font-size:clamp(23px,3vw,34px);margin:0}header p{margin:2px 0;color:#dbf2ff;font-size:14px}.return{border:2px solid #a7d6ff;background:white;color:#13416e;padding:11px 16px;border-radius:14px;font-weight:800}main{max-width:1200px;margin:auto;padding:16px}.levelbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}.levelbar button{flex:1 1 300px;min-height:55px;padding:11px;background:white;border:2px solid #dce6f1;border-radius:15px;font-weight:800;color:#284468}.levelbar button[aria-pressed=true]{background:#dff4ec;border-color:#1f976c;color:#13583f}.board{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(330px,.9fr);gap:16px}.panel{background:white;border-radius:22px;border:2px solid #e0e9f0;padding:18px;box-shadow:0 6px 18px #1436530a}.heading{display:flex;align-items:center;justify-content:space-between;gap:8px}.heading h2{font-size:24px;margin:0}.progress{font-weight:800;color:#53728c}.intro{margin:8px 0 15px;color:#4c6379}.shop{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.item{border:2px solid #e3eaf2;background:#f8fbfe;border-radius:16px;text-align:center;padding:10px 5px;min-height:132px}.item .emoji{font-size:45px;display:block}.item strong{display:block;margin-top:4px;font-size:16px}.item span.price{display:block;color:#12694d;font-weight:900;font-size:20px}.item.chosen{border-color:#1a986b;background:#ebfff4}.item:disabled{opacity:.9;cursor:default}.receipt{margin-top:14px;border:2px dashed #b9cede;background:#f7fbff;border-radius:15px;padding:12px}.receipt strong{font-size:23px}.wallet h2{margin:0 0 8px;font-size:23px}.wallet p{margin:5px 0 14px;color:#4c6379}.money{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.coin{display:flex;align-items:center;justify-content:center;flex-direction:column;min-height:87px;border-radius:15px;background:#fdf5de;border:2px solid #e7c77d;font-weight:900;color:#6c4a13;font-size:20px}.coin small{font-size:12px;font-weight:600}.coin.cents{background:#fff4d9;border-color:#d5aa55;color:#65410b}.coin.note{background:#e4f3e8;border-color:#8ec9a3;color:#145934;border-radius:10px}.coin:hover{filter:brightness(.97)}.tray{margin:14px 0;padding:15px;border-radius:15px;background:#edf5ff;min-height:93px}.tray .sum{font-size:34px;font-weight:900;color:#1d5485}.chosenMoney{font-size:14px;color:#45617d;min-height:20px}.controls{display:flex;flex-wrap:wrap;gap:8px}.controls button{padding:12px 16px;font-weight:800;border-radius:12px;border:2px solid #d0dfed;background:white;color:#174365;min-height:49px}.controls .check{background:#147b57;color:white;border-color:#147b57;flex:1}.message{padding:13px;border-radius:13px;background:#fff7df;color:#604d16;min-height:50px;margin-top:11px;font-weight:700}.message.good{background:#e0f8e7;color:#145b32}.message.bad{background:#ffedeb;color:#862a21}.help{margin-top:13px;border-radius:12px;background:#f6f3ff;padding:10px;color:#4c3c80}.help button{border:0;background:transparent;color:#5136a2;font-weight:800;padding:6px 0}.help p{margin:4px 0 0}.hidden{display:none!important}.next{margin-top:12px;width:100%;background:#2256c6;color:white;border:0;border-radius:14px;padding:14px;font-weight:900}.completion{text-align:center;font-size:21px}.completion strong{display:block;font-size:42px;color:#196e54}.note{font-size:12px;color:#66798b;margin-top:14px}@media(max-width:800px){.board{grid-template-columns:1fr}.shop{grid-template-columns:repeat(3,minmax(0,1fr))}header{padding:12px 15px}}@media(max-width:430px){.shop{grid-template-columns:repeat(2,minmax(0,1fr))}.money{grid-template-columns:repeat(3,minmax(0,1fr))}.panel{padding:12px}.item{min-height:110px}.item .emoji{font-size:35px}}
+
+/* V4 : lots visibles, sans dévoiler le résultat. */
+.item-multi .objects{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:2px;min-height:48px}
+.item-multi .object{font-size:28px;line-height:1.1}
+.item-multi .price{font-size:16px}
+@media(min-width:801px){.item-multi{min-height:102px}.item-multi .objects{min-height:40px}.item-multi .object{font-size:25px}.item-multi .price{font-size:15px}}
+@media(max-width:430px){.item-multi .object{font-size:23px}}
+/* V3.1 : tout l'atelier visible sur un écran d'ordinateur portable */
+@media (min-width: 801px) {
+ header{padding-top:7px;padding-bottom:7px;min-height:54px}
+ header h1{font-size:clamp(20px,2vw,26px)}
+ header p{font-size:12px;margin:0}
+ .return{padding:7px 12px;border-radius:11px}
+ main{max-width:1480px;padding:9px 14px}
+ .levelbar{gap:6px;margin-bottom:9px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+ .levelbar button{min-width:0;min-height:38px;padding:6px 7px;border-radius:11px;font-size:clamp(12px,.85vw,15px);line-height:1.2}
+ .board{gap:12px;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)}
+ .panel{padding:12px 14px;border-radius:17px}
+ .heading h2,.wallet h2{font-size:clamp(19px,1.5vw,23px)}
+ .wallet h2{margin-bottom:3px}
+ .intro{margin:4px 0 9px;font-size:15px;line-height:1.3}
+ .wallet p{margin:3px 0 8px;font-size:14px;line-height:1.3}
+ .shop{gap:7px}
+ .item{min-height:94px;padding:5px 3px;border-radius:12px}
+ .item .emoji{font-size:31px;line-height:1.2}
+ .item strong{font-size:14px;margin-top:2px}
+ .item span.price{font-size:17px}
+ .receipt{margin-top:9px;padding:9px 11px;line-height:1.3;font-size:15px}
+ .receipt strong{font-size:18px}
+ .money{gap:7px}
+ .coin{min-height:58px;border-radius:11px;font-size:17px;line-height:1.1}
+ .coin small{font-size:11px}
+ .tray{margin:8px 0;padding:8px 11px;min-height:66px}
+ .tray .sum{font-size:27px;line-height:1.08}
+ .chosenMoney{font-size:12px;min-height:16px}
+ .controls{gap:6px}
+ .controls button{padding:7px 9px;min-height:38px;font-size:14px;border-radius:10px}
+ .message{padding:8px 10px;min-height:34px;margin-top:7px;font-size:14px;line-height:1.25}
+ .help{margin-top:7px;padding:4px 10px;font-size:13px}
+ .help button{padding:4px 0;font-size:13px}
+ .help p{margin:3px 0}
+ .next{margin-top:7px;padding:8px;border-radius:10px}
+ .note{margin-top:7px;font-size:11px;line-height:1.2}
+}
+@media (min-width:801px) and (max-height:780px){
+ header p{display:none}
+ header{min-height:46px}
+ main{padding-top:6px;padding-bottom:6px}
+ .levelbar{margin-bottom:6px;gap:5px}
+ .levelbar button{min-height:33px;padding:4px 6px}
+ .panel{padding:9px 12px}
+ .wallet p{margin-bottom:5px}
+ .intro{margin-bottom:6px}
+ .coin{min-height:49px}
+ .money{gap:5px}
+ .tray{margin:6px 0;padding:6px 10px;min-height:55px}
+ .tray .sum{font-size:24px}
+ .message{padding:6px 9px;margin-top:5px;min-height:30px}
+ .help{margin-top:5px;padding:3px 9px}
+ .note{margin-top:5px}
+}
+</style></head><body>
+<header><div><h1>🦉 Le marché de Maître Hibou</h1><p>Je choisis, je compte et je manipule la monnaie.</p></div><button class="return" id="back">← M'entraîner</button></header>
+<main><nav class="levelbar" aria-label="Choisis un niveau"><button data-level="0" aria-pressed="true">★ Je paie le juste prix</button><button data-level="1" aria-pressed="false">★★ Je fais mes courses</button><button data-level="2" aria-pressed="false">★★★ Je rends la monnaie</button><button data-level="3" aria-pressed="false">★★★★ Je découvre les centimes</button><button data-level="4" aria-pressed="false">★★★★★ Je fais mes courses en centimes</button><button data-level="5" aria-pressed="false">★★★★★★ Je rends les centimes</button><button data-level="6" aria-pressed="false">★★★★★★★ Je découvre la multiplication</button><button data-level="7" aria-pressed="false">★★★★★★★★ Je prépare une commande</button><button data-level="8" aria-pressed="false">★★★★★★★★★ Le marché des commandes</button></nav><div class="board"><section class="panel"><div class="heading"><h2 id="mission">Au marché</h2><div class="progress" id="progress">Mission 1 / 3</div></div><p class="intro" id="instruction"></p><div class="shop" id="shop"></div><div class="receipt" id="receipt" aria-live="polite"></div></section><section class="panel wallet"><h2>Mon porte-monnaie</h2><p>Clique sur les pièces et les billets pour préparer ta somme.</p><div class="money" id="money"></div><div class="tray"><div>J'ai préparé :</div><div class="sum" id="sum">0 €</div><div class="chosenMoney" id="chosenMoney">Aucune pièce sélectionnée</div></div><div class="controls"><button id="undo">↶ Retirer</button><button id="clear">Effacer</button><button class="check" id="check">✓ Vérifier</button></div><div class="message" id="message" role="status" aria-live="polite">À toi de jouer !</div><div class="help"><button id="hintBtn" aria-expanded="false">💡 Un petit indice</button><p id="hint" class="hidden"></p></div><button class="next hidden" id="next">Mission suivante →</button><p class="note">Chaque partie propose de nouveaux objets et de nouveaux prix. Euros entiers aux niveaux 1 à 3 et 7 à 9 ; centimes aux niveaux 4 à 6.</p></section></div></main>
+<script>
+(()=>{'use strict';const $=id=>document.getElementById(id);const items=[
+{name:'Baguette',icon:'🥖'}, {name:'Pommes',icon:'🍎'}, {name:'Cahier',icon:'📓'},
+{name:'Bouquet',icon:'💐'}, {name:'Jus de fruits',icon:'🧃'}, {name:'Crayons',icon:'✏️'},
+{name:'Livre',icon:'📚'}, {name:'Ballon',icon:'⚽'}, {name:'Gâteau',icon:'🧁'},
+{name:'Carottes',icon:'🥕'}, {name:'Fromage',icon:'🧀'}, {name:'Pain au chocolat',icon:'🥐'},
+{name:'Banane',icon:'🍌'}, {name:'Règle',icon:'📏'}, {name:'Gomme',icon:'🧽'},
+{name:'Puzzle',icon:'🧩'}, {name:'Trousse',icon:'👝'}, {name:'Fraise',icon:'🍓'},
+{name:'Poire',icon:'🍐'}, {name:'Yaourt',icon:'🥛'}
+];
+const levelNames=['Je paie le juste prix','Je fais mes courses','Je rends la monnaie','Je découvre les centimes','Je fais mes courses en centimes','Je rends les centimes','Je découvre la multiplication','Je prépare une commande','Le marché des commandes'];
+const rand=(min,max)=>Math.floor(Math.random()*(max-min+1))+min;
+const fmt=c=>{const e=Math.floor(c/100),cent=c%100;return cent ? e+','+String(cent).padStart(2,'0')+' €':e+' €'};
+function shuffle(list){const arr=list.slice();for(let i=arr.length-1;i>0;i--){const j=rand(0,i);[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+function buildMissions(difficulty){
+ const missions=[],used=new Set();
+ if(difficulty>=6){
+  for(let k=0;k<3;k++){
+   const count=difficulty===8?2:1;
+   const ids=shuffle(items.map((_,i)=>i).filter(i=>!used.has(i))).slice(0,count);
+   ids.forEach(i=>used.add(i));
+   const quantities=ids.map((_,i)=>difficulty===6?rand(2,4):difficulty===7?rand(2,5):rand(2,4));
+   const prices=ids.map((_,i)=>100*rand(1,difficulty===8?4:5));
+   const result=prices.reduce((sum,price,i)=>sum+price*quantities[i],0);
+   missions.push({ids,prices,quantities,given:null,target:result});
+  }
+  return missions;
+ }
+ for(let k=0;k<3;k++){
+  const count=difficulty===0||difficulty===3?1:(difficulty===1||difficulty===4?(k===2?3:2):(k===0?1:2));
+  const ids=shuffle(items.map((_,i)=>i).filter(i=>!used.has(i))).slice(0,count);
+  ids.forEach(i=>used.add(i));
+  let prices=[];
+  if(difficulty===0) prices=[100*rand(k===0?2:4,k===2?12:9)];
+  if(difficulty===1||difficulty===2) prices=ids.map(()=>100*rand(2,k===2?9:7));
+  if(difficulty===3) prices=[10*rand(3+k,18+4*k)];
+  if(difficulty===4) prices=ids.map(()=>10*rand(5,32));
+  if(difficulty===5) prices=ids.map(()=>10*rand(8,count===1?39:20));
+  const total=prices.reduce((a,b)=>a+b,0);
+  let given=null;
+  if(difficulty===2){const possible=[1000,2000,5000].filter(x=>x>total&&x-total<=2500);given=possible[rand(0,possible.length-1)]}
+  if(difficulty===5){given=500;}
+  missions.push({ids,prices,given,target:given!==null?given-total:total});
+ }
+ return missions;
+}
+const levels=Array.from({length:9},(_,i)=>buildMissions(i));
+let level=0,step=0,coins=[],complete=false,helpCount=0;
+const euros=[{value:100,label:'1 €',type:'pièce'},{value:200,label:'2 €',type:'pièce'},{value:500,label:'5 €',type:'billet'},{value:1000,label:'10 €',type:'billet'},{value:2000,label:'20 €',type:'billet'},{value:5000,label:'50 €',type:'billet'}];
+const cents=[{value:10,label:'10 c',type:'pièce'},{value:20,label:'20 c',type:'pièce'},{value:50,label:'50 c',type:'pièce'},...euros];
+const total=m=>m.prices.reduce((a,b)=>a+b,0);
+const value=()=>coins.reduce((a,b)=>a+b,0);
+function sentence(){const m=levels[level][step];if(level===2||level===5)return 'Le client donne '+fmt(m.given)+'. Prépare la monnaie à rendre.';if(level===1||level===4)return 'Additionne le prix des courses, puis prépare la somme exacte.';if(level===6)return 'Observe les objets identiques. Additionne leurs prix, puis prépare la somme.';if(level===7)return 'Calcule la commande avec une multiplication, puis prépare la somme.';if(level===8)return 'Calcule le prix des deux lots, puis prépare la somme totale.';return level===3?'Compose le prix exact avec des centimes et des euros.':'Prépare exactement le prix de cet article.'}
+function render(){
+ const m=levels[level][step];
+ $('mission').textContent=levelNames[level];$('progress').textContent='Mission '+(step+1)+' / 3';$('instruction').textContent=sentence();
+ $('shop').replaceChildren();m.ids.forEach((id,i)=>{const it=items[id],el=document.createElement('div');el.className='item chosen';
+ if(level>=6){const qty=m.quantities[i];el.classList.add('item-multi');el.innerHTML='<div class="objects" aria-label="'+qty+' objets">'+Array.from({length:qty},()=>'<span class="object" aria-hidden="true">'+it.icon+'</span>').join('')+'</div><strong>'+qty+' '+it.name.toLowerCase()+'</strong><span class="price">'+fmt(m.prices[i])+' chacun</span>';
+ }else{el.innerHTML='<span class="emoji" aria-hidden="true">'+it.icon+'</span><strong>'+it.name+'</strong><span class="price">'+fmt(m.prices[i])+'</span>';} $('shop').append(el)});
+ $('receipt').innerHTML=(level===2||level===5) ? 'Total des achats : <strong>'+fmt(total(m))+'</strong><br>Billet donné : <strong>'+fmt(m.given)+'</strong><br>Monnaie à rendre : <strong>?</strong>' : ((level===1||level===4||level>=6) ? 'À toi de calculer la somme !' : 'Prix à payer : <strong>'+fmt(total(m))+'</strong>');
+ $('money').replaceChildren();(level>=3&&level<=5?cents:euros).forEach(n=>{const b=document.createElement('button');b.type='button';b.className='coin'+(n.type==='billet'?' note':n.value<100?' cents':'');b.innerHTML=n.label+'<small>'+n.type+'</small>';b.setAttribute('aria-label','Ajouter '+n.label);b.disabled=complete;b.onclick=()=>{coins.push(n.value);update()};$('money').appendChild(b)});
+ document.querySelectorAll('[data-level]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.level)===level)));
+ $('next').classList.add('hidden');$('check').disabled=false;$('hint').classList.add('hidden');$('hintBtn').setAttribute('aria-expanded','false');$('message').className='message';$('message').textContent='À toi de jouer !';update();
+}
+function update(){ $('sum').textContent=fmt(value());$('chosenMoney').textContent=coins.length?coins.map(fmt).join(' + '):'Aucune pièce sélectionnée';$('undo').disabled=!coins.length||complete;$('clear').disabled=!coins.length||complete }
+function verify(){
+ const m=levels[level][step],expected=m.target,got=value();
+ if(got===expected){complete=true;$('message').className='message good';$('message').textContent='Bravo ! Tu as préparé exactement '+fmt(expected)+'. '+((level===2||level===5)?'Le client récupère la bonne monnaie.':'Le marchand peut accepter ton paiement.');$('check').disabled=true;$('money').querySelectorAll('button').forEach(b=>b.disabled=true);$('next').classList.remove('hidden');$('next').textContent=step===2?'Terminer le niveau →':'Mission suivante →';update()}
+ else{$('message').className='message bad';$('message').textContent=got<expected?'Il manque '+fmt(expected-got)+'. Essaie encore.':'Tu as '+fmt(got-expected)+' de trop. Retire une pièce ou un billet.'}
+}
+function next(){
+ if(step===2){$('shop').innerHTML='<div class="completion" style="grid-column:1/-1">🏆 <strong>Bravo !</strong>Tu as terminé les trois missions. Rejoue pour découvrir d’autres objets et d’autres prix !</div>';$('receipt').textContent='Tu peux choisir un autre niveau ou recommencer.';$('next').textContent='Nouvelles courses ↻';$('next').onclick=()=>reset(level);$('check').disabled=true;return}
+ step++;coins=[];complete=false;helpCount=0;render();
+}
+function reset(n){levels[n]=buildMissions(n);level=n;step=0;coins=[];complete=false;helpCount=0;$('next').onclick=next;render()}
+document.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>reset(Number(b.dataset.level)));
+$('undo').onclick=()=>{coins.pop();update()};$('clear').onclick=()=>{coins=[];update()};$('check').onclick=verify;$('next').onclick=next;
+$('hintBtn').onclick=()=>{helpCount++;const m=levels[level][step];$('hint').classList.remove('hidden');$('hintBtn').setAttribute('aria-expanded','true');$('hint').textContent=(level>=6)?(level===6?'Combien de fois vois-tu le même prix ? Tu peux faire une addition répétée.':level===7?'Nombre d’objets × prix d’un objet : calcule le total.':'Calcule chaque lot séparément, puis additionne les deux résultats.'):(level===2||level===5)?'Compte de '+fmt(total(m))+' jusqu’à '+fmt(m.given)+'. La différence est la monnaie à rendre.':(level===1||level===4)?'Additionne d’abord les prix des objets. Pense à compter les euros et les centimes séparément.':level===3?'Tu peux réunir 10 c et 20 c pour faire 30 c, ou deux pièces de 50 c pour faire 1 €.':'Commence par la plus grande pièce ou le plus grand billet utile.'};
+$('back').onclick=()=>{try{const u=new URL(document.referrer);if(u.origin===location.origin&&u.pathname!==location.pathname){history.back();return}}catch(e){}location.href='index.html'};
+reset(0);
+})();
+</script></body></html>

@@ -137,3 +137,6 @@ html.mh-training-route #hsg-overlay:not([hidden]){
   width:100%!important;height:100%!important;object-fit:contain!important;
   object-position:center!important;
 }
+
+/* Quatrième carte Maths : même emprise et même adaptation que Number Stick. */
+#mhTrainingPage .mht-free-panel.math .mht-free-maths > a.mht-game-banner[href="marche-maitre-hibou.html"]{aspect-ratio:3 / 1!important;}
