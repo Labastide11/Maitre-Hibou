@@ -30,11 +30,11 @@
     '<button type="button" class="mht-banner" data-mht="ortho" aria-label="Orthographe"><img src="images/francais-orthographe.jpg" alt="Orthographe" loading="eager" decoding="async"/><span>Orthographe</span></button>'+
     '<button type="button" class="mht-banner" data-mht="reading" aria-label="Lecture & compréhension"><img src="images/francais-lecture-comprehension.jpg" alt="Lecture & compréhension" loading="eager" decoding="async"/><span>Lecture & compréhension</span></button></div></div>'+
     '<div class="mht-free-panel math"><h3>🔢 Maths</h3><div class="mht-free-maths">'+
-    '<button type="button" class="mht-game" data-mht="stick"><strong>🧮 Number Stick</strong><small>Tables de multiplication · découvrir</small></button>'+
-    '<button type="button" class="mht-game" data-mht="tables"><strong>🎯 Défi des tables</strong><small>Jeu de calcul mental</small></button>'+
-    '<button type="button" class="mht-game" data-mht="suites"><strong>🔢 Défi des suites</strong><small>Nombres à compléter</small></button></div><p class="mht-note">Les jeux restent indépendants de la validation des ceintures.</p></div></div></section></div>';
+    '<a class="mht-game mht-game-banner" href="number-stick-ce2.html" aria-label="Ouvrir Number Stick CE2"><img style="display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;position:absolute!important;inset:0!important;" src="images/entrainement-number-stick.jpg" alt="Number Stick — tables de multiplication" loading="eager" decoding="async"/></a>'+
+    '<button type="button" class="mht-game mht-game-banner" data-mht="tables" aria-label="Jouer au Défi des tables"><img style="display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;position:absolute!important;inset:0!important;" src="images/entrainement-defi-tables.jpg" alt="Défi des tables — jeu de calcul mental" loading="eager" decoding="async"/></button>'+
+    '<button type="button" class="mht-game mht-game-banner" data-mht="suites" aria-label="Jouer au Défi des suites"><img style="display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;position:absolute!important;inset:0!important;" src="images/entrainement-defi-suites.jpg" alt="Défi des suites — nombres à compléter" loading="eager" decoding="async"/></button></div><p class="mht-note">Les jeux restent indépendants de la validation des ceintures.</p></div></div></section></div>';
     document.body.appendChild(page);
-    page.addEventListener('click',function(ev){var btn=ev.target.closest('[data-mht]');if(!btn)return;var a=btn.getAttribute('data-mht');var id=btn.getAttribute('data-id');if(a==='home'){close();return;}if(a==='fr-belt'){launchFrenchBelt(id);return;}if(a==='math-belt'){launchMathBelt(id);return;}if(a==='tables'){launchTablesGame();return;}if(a==='suites'){run('openHibouSuitesGame');return;}if(a==='stick'){launchNumberStick();return;}if(['writing','vocab','ortho','reading'].indexOf(a)>=0){launchFrenchFree(a);}});
+    page.addEventListener('click',function(ev){var btn=ev.target.closest('[data-mht]');if(!btn)return;var a=btn.getAttribute('data-mht');var id=btn.getAttribute('data-id');if(a==='home'){close();return;}if(a==='fr-belt'){launchFrenchBelt(id);return;}if(a==='math-belt'){launchMathBelt(id);return;}if(a==='tables'){launchTablesGame();return;}if(a==='suites'){launchSuitesGame();return;}if(['writing','vocab','ortho','reading'].indexOf(a)>=0){launchFrenchFree(a);}});
     return page;
   }
   function open(){make();page.hidden=false;page.scrollTop=0;document.documentElement.classList.add('mh-training-route');}
@@ -55,13 +55,39 @@
     for(var i=0;i<list.length;i++){if(typeof window[list[i]]==='function'){window[list[i]]();return;}}
     console.warn('Rubrique à vérifier :',type);
   }
+  function launchSuitesGame(){
+    // La page M'entraîner reste derrière la fenêtre du Défi des suites.
+    var fn=window.openHibouSuitesGame;
+    if(typeof fn==='function'){
+      open();
+      try{fn();}catch(err){console.error('Défi des suites : ouverture impossible',err);alert('Le Défi des suites ne peut pas démarrer.');}
+      return;
+    }
+    // Chargement de secours si le module n'a pas été chargé par index.html.
+    var existing=document.querySelector('script[src="js/hibou-suites-v25883.js"]');
+    if(existing && existing.dataset.mhtSuitesRetry==='1'){
+      alert('Défi des suites indisponible : vérifie js/hibou-suites-v25883.js.');
+      return;
+    }
+    if(existing)existing.dataset.mhtSuitesRetry='1';
+    var loader=document.createElement('script');
+    loader.src='js/hibou-suites-v25883.js';
+    loader.onload=function(){
+      if(typeof window.openHibouSuitesGame==='function')launchSuitesGame();
+      else alert('Le module Défi des suites est chargé, mais son ouverture est indisponible.');
+    };
+    loader.onerror=function(){alert('Fichier manquant : js/hibou-suites-v25883.js');};
+    document.head.appendChild(loader);
+  }
   function launchTablesGame(){
     // Le jeu existe dans js/hibou-tables-game-v25881.js.
     // Les clics doivent rester exploitables même si le fichier n'est pas encore chargé.
     var fn=window.openHibouTablesGame;
     if(typeof fn==='function'){
-      closeIntoActivity();
-      try{fn();}catch(err){console.error('Défi des tables : ouverture impossible',err);open();alert('Le Défi des tables ne peut pas démarrer.');}
+      // Conserver la page M'entraîner derrière la fenêtre du Défi des tables.
+      // À la fermeture du jeu, l'élève revient à cette page et non à l'accueil.
+      open();
+      try{fn();}catch(err){console.error('Défi des tables : ouverture impossible',err);alert('Le Défi des tables ne peut pas démarrer.');}
       return;
     }
     var script=document.querySelector('script[src="js/hibou-tables-game-v25881.js"]');
@@ -78,11 +104,6 @@
     };
     loader.onerror=function(){alert('Fichier du Défi des tables introuvable : js/hibou-tables-game-v25881.js');};
     document.head.appendChild(loader);
-  }
-  function launchNumberStick(){
-    // Page locale du dépôt, chemin relatif compatible localhost et GitHub Pages.
-    // Navigation dans le même onglet : le bouton précédent du navigateur permet le retour.
-    window.location.assign('number-stick-ce2.html');
   }
   document.addEventListener('click',function(ev){var target=ev.target&&ev.target.closest&&ev.target.closest('#v2574TrainBtn');if(target){ev.preventDefault();ev.stopImmediatePropagation();open();}},true);
   window.openMHTrainingPage=open;

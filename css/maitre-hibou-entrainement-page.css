@@ -78,3 +78,62 @@ html.mh-training-route #frenchTrainingOverlayV2348 .fr-v2348-popup,html.mh-train
 @media(max-width:650px){
   #mhTrainingPage button.mht-banner{aspect-ratio:auto!important;}
 }
+
+/* Trois bannières Maths : aucune déformation, image entière et carte cliquable. */
+#mhTrainingPage .mht-free-maths {align-items:start;}
+#mhTrainingPage .mht-free-maths .mht-game-banner {
+  display:block!important;box-sizing:border-box!important;min-width:0!important;
+  width:100%!important;height:auto!important;min-height:0!important;
+  padding:0!important;margin:0!important;line-height:0!important;
+  border:2px solid #cfe3ff!important;border-radius:18px!important;
+  overflow:hidden!important;background:#fff!important;cursor:pointer!important;
+  text-decoration:none!important;box-shadow:0 6px 18px rgba(40,83,144,.09);
+}
+#mhTrainingPage .mht-free-maths .mht-game-banner img {
+  position:static!important;display:block!important;width:100%!important;
+  height:auto!important;max-width:100%!important;max-height:none!important;
+  object-fit:contain!important;aspect-ratio:auto!important;
+  pointer-events:none!important;opacity:1!important;visibility:visible!important;
+}
+#mhTrainingPage .mht-free-maths .mht-game-banner:hover,
+#mhTrainingPage .mht-free-maths .mht-game-banner:focus-visible {
+  border-color:#65a7ff!important;box-shadow:0 7px 22px rgba(40,83,144,.2)!important;
+}
+
+/* Correctif 2026-11-02 : limiter strictement les bannières Maths aux cartes. */
+#mhTrainingPage .mht-free-panel.math {min-width:0!important;max-width:100%!important;overflow:hidden!important;}
+#mhTrainingPage .mht-free-panel.math .mht-free-maths {
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  min-width:0!important;max-width:100%!important;gap:12px!important;
+}
+#mhTrainingPage .mht-free-panel.math .mht-free-maths > .mht-game-banner {
+  display:block!important;position:relative!important;min-width:0!important;max-width:100%!important;
+  width:100%!important;height:auto!important;aspect-ratio:3 / 1!important;
+  overflow:hidden!important;padding:0!important;margin:0!important;box-sizing:border-box!important;
+}
+#mhTrainingPage .mht-free-panel.math .mht-free-maths > .mht-game-banner > img {
+  display:block!important;position:absolute!important;inset:0!important;
+  width:100%!important;height:100%!important;min-width:0!important;max-width:100%!important;
+  max-height:100%!important;object-fit:contain!important;object-position:center!important;
+  transform:none!important;box-sizing:border-box!important;
+}
+@media(max-width:650px){#mhTrainingPage .mht-free-panel.math .mht-free-maths{grid-template-columns:1fr!important}}
+
+/* Défi des tables : fenêtre au-dessus de la page M'entraîner, qui reste visible derrière. */
+html.mh-training-route #htg-overlay:not([hidden]){
+  z-index:320000!important;
+}
+
+/* Défi des suites : superposition à la page M'entraîner (comme le Défi des tables). */
+html.mh-training-route #hsg-overlay:not([hidden]){
+  z-index:320000!important;
+}
+/* La bannière Suites a un format moins panoramique (1893×831).
+   Adapter la carte au visuel évite les bandes vides et préserve tout le texte. */
+#mhTrainingPage .mht-free-panel.math .mht-free-maths > .mht-game-banner[data-mht="suites"]{
+  aspect-ratio:1893 / 831!important;
+}
+#mhTrainingPage .mht-free-panel.math .mht-free-maths > .mht-game-banner[data-mht="suites"] > img{
+  width:100%!important;height:100%!important;object-fit:contain!important;
+  object-position:center!important;
+}
