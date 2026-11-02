@@ -56,8 +56,8 @@
   function close(){beltReturnActive=false;if(page)page.hidden=true;document.documentElement.classList.remove('mh-training-route');}
   function run(fn){if(typeof window[fn]==='function'){closeIntoActivity();window[fn]();}else console.warn('Activité non chargée :',fn);}
   function closeIntoActivity(){if(page){savedTrainingScroll=page.scrollTop;page.hidden=true;}document.documentElement.classList.add('mh-training-route');}
-  function launchFrenchBelt(id){if(typeof window.openFrenchTrainingPopupV2348!=='function'||typeof window.startFrenchTrainingV2348!=='function')return;beltReturnActive=true;closeIntoActivity();window.openFrenchTrainingPopupV2348();window.startFrenchTrainingV2348(id);}
-  function launchMathBelt(id){if(typeof window.openMathsTrainingPopupV2343!=='function')return;beltReturnActive=true;closeIntoActivity();window.openMathsTrainingPopupV2343();var overlay=document.getElementById('mathsTrainingOverlayV2343');var buttons=overlay?overlay.querySelectorAll('.maths-v2343-train-btn'):[];var i=maths.findIndex(function(b){return b[0]===id;});if(i>=0&&buttons[i])buttons[i].click();else if(typeof window.startMathsTrainingV2343==='function')window.startMathsTrainingV2343(id);}
+  function launchFrenchBelt(id){if(typeof window.openFrenchTrainingPopupV2348!=='function'||typeof window.startFrenchTrainingV2348!=='function')return;beltReturnActive=true;closeIntoActivity();window.openFrenchTrainingPopupV2348();var frOverlay=document.getElementById('frenchTrainingOverlayV2348');if(frOverlay){frOverlay.style.removeProperty('display');frOverlay.removeAttribute('aria-hidden');}window.startFrenchTrainingV2348(id);}
+  function launchMathBelt(id){if(typeof window.openMathsTrainingPopupV2343!=='function')return;beltReturnActive=true;closeIntoActivity();window.openMathsTrainingPopupV2343();var mathOverlay=document.getElementById('mathsTrainingOverlayV2343');if(mathOverlay){mathOverlay.style.removeProperty('display');mathOverlay.removeAttribute('aria-hidden');}var overlay=document.getElementById('mathsTrainingOverlayV2343');var buttons=overlay?overlay.querySelectorAll('.maths-v2343-train-btn'):[];var i=maths.findIndex(function(b){return b[0]===id;});if(i>=0&&buttons[i])buttons[i].click();else if(typeof window.startMathsTrainingV2343==='function')window.startMathsTrainingV2343(id);}
   function launchFrenchFree(type){
     if(typeof window.openFrenchTrainingPopupV2348!=='function')return;
     closeIntoActivity();window.openFrenchTrainingPopupV2348();
@@ -128,6 +128,12 @@
     beltReturnActive=false;
     if(typeof window.closeMathsTrainingPopupV2343==='function')try{window.closeMathsTrainingPopupV2343();}catch(e){console.warn(e);}
     if(typeof window.closeFrenchTrainingPopupV2348==='function')try{window.closeFrenchTrainingPopupV2348();}catch(e){console.warn(e);}
+    // Les deux moteurs peuvent exposer des fermetures différentes selon la version.
+    // Masquer tout overlay résiduel pour rendre la page M'entraîner visible.
+    ['mathsTrainingOverlayV2343','frenchTrainingOverlayV2348'].forEach(function(id){
+      var overlay=document.getElementById(id);
+      if(overlay){overlay.style.display='none';overlay.setAttribute('aria-hidden','true');}
+    });
     make();page.hidden=false;
     document.documentElement.classList.add('mh-training-route');
     page.scrollTop=savedTrainingScroll;
@@ -139,7 +145,7 @@
     var root=button.closest('#mathsTrainingOverlayV2343, #frenchTrainingOverlayV2348');
     if(!root)return;
     var label=(button.textContent||'').replace(/\s+/g,' ').trim();
-    var back=/retour aux entra[iî]nements/i.test(label);
+    var back=/retour aux (?:entra[iî]nements|ceintures)/i.test(label);
     // Le bouton « Fermer » de la page de résultat doit lui aussi revenir au menu.
     var doneClose=/^fermer$/i.test(label);
     if(!back&&!doneClose)return;
