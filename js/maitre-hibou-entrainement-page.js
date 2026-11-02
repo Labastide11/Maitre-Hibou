@@ -111,14 +111,17 @@
   window.closeMHTrainingPage=close;
 })();
 
-/* Arts & Créativité : remplacement visuel du bouton Français dans l'accueil, sans modifier index.html. */
+/* Arts & Créativité : bouton indépendant du gestionnaire historique Français. */
 (function(){
   'use strict';
   if(window.__mhArtsCreativeNavBridge)return;
   window.__mhArtsCreativeNavBridge=true;
   var icon='images/arts-creativite/icone-arts.jpg';
   function render(){
-    document.querySelectorAll('button.subject-btn[data-subject="francais"]').forEach(function(button){
+    document.querySelectorAll('button.subject-btn[data-subject="francais"], button.subject-btn[data-subject="arts-creativite"]').forEach(function(button){
+      // Important : un script historique intercepte les clics sur data-subject="francais".
+      // Remplacer la valeur réelle empêche ce détournement ; ne pas seulement changer l'image.
+      button.dataset.subject='arts-creativite';
       button.setAttribute('aria-label','Ouvrir Arts et Créativité');
       button.setAttribute('title','Arts & Créativité');
       var label=button.querySelector('.subject-label');
@@ -133,12 +136,19 @@
     });
   }
   document.addEventListener('click',function(event){
-    var b=event.target.closest&&event.target.closest('button.subject-btn[data-subject="francais"]');
+    var b=event.target.closest&&event.target.closest('button.subject-btn[data-subject="arts-creativite"]');
     if(!b)return;
-    // Ne pas laisser les anciens gestionnaires Français ouvrir leur popup.
     event.preventDefault();event.stopPropagation();event.stopImmediatePropagation();
     window.location.assign('arts-creativite.html');
   },true);
-  function start(){render();var queued=false;new MutationObserver(function(){if(queued)return;queued=true;requestAnimationFrame(function(){queued=false;render();});}).observe(document.body,{childList:true,subtree:true,characterData:true});}
+  function start(){
+    render();
+    var queued=false;
+    new MutationObserver(function(){
+      if(queued)return;
+      queued=true;
+      requestAnimationFrame(function(){queued=false;render();});
+    }).observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['data-subject']});
+  }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
