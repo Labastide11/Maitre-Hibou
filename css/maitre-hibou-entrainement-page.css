@@ -140,3 +140,33 @@ html.mh-training-route #hsg-overlay:not([hidden]){
 
 /* Quatrième carte Maths : même emprise et même adaptation que Number Stick. */
 #mhTrainingPage .mht-free-panel.math .mht-free-maths > a.mht-game-banner[href="marche-maitre-hibou.html"]{aspect-ratio:3 / 1!important;}
+
+/* 2026-11-02 : activités libres, Français au-dessus de Maths.
+   Les colonnes des ceintures ne sont pas modifiées. */
+#mhTrainingPage .mht-section:last-child > .mht-columns {
+  grid-template-columns: minmax(0,1fr) !important;
+  gap: 20px !important;
+}
+#mhTrainingPage .mht-section:last-child > .mht-columns > .mht-free-panel {
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+}
+#mhTrainingPage .mht-section:last-child .mht-free-grid,
+#mhTrainingPage .mht-section:last-child .mht-free-maths {
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+  gap: 16px !important;
+}
+/* Images en grand, proportions et zones de clic conservées. */
+#mhTrainingPage .mht-section:last-child .mht-free-grid > button,
+#mhTrainingPage .mht-section:last-child .mht-free-maths > .mht-game-banner {
+  width:100% !important;
+  min-width:0 !important;
+  max-width:100% !important;
+}
+@media (max-width:650px) {
+  #mhTrainingPage .mht-section:last-child .mht-free-grid,
+  #mhTrainingPage .mht-section:last-child .mht-free-maths {
+    grid-template-columns:minmax(0,1fr) !important;
+  }
+}
