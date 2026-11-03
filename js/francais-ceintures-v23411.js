@@ -259,10 +259,18 @@
     const quick=byId('quickQuestions'); if(quick){ quick.innerHTML=''; quick.style.display='none'; }
     document.querySelectorAll('.subject-btn[data-subject="francais"]').forEach(function(b){ b.classList.add('active'); b.setAttribute('aria-expanded','true'); });
   }
-  function headerHTML(){
+  function headerHTML(belt){
+    // Titre unique et explicite pendant les 8 entraînements de grammaire.
+    // L'ancien en-tête reste disponible uniquement pour la liste historique.
+    if(belt){
+      return '<div class="fr-v2348-header fr-ce2-training-header">'
+        + '<div class="fr-v2348-owl" aria-hidden="true">🦉</div>'
+        + '<div class="fr-v2348-title"><h2>Grammaire — Ceinture '+esc(belt.ceinture || belt.id)+'</h2></div>'
+        + '</div>';
+    }
     return '<div class="fr-v2348-header">'
-      + '<div class="fr-v2348-owl">🦉</div>'
-      + '<div class="fr-v2348-title"><h2>📖 Entraînements de grammaire</h2><p>Choisis une ceinture pour t’entraîner.</p><div class="fr-v23411-grammar-note">Les questions viennent de Google Sheets « Maître Hibou - Banque de Questions », onglet « grammaire ».</div></div>'
+      + '<div class="fr-v2348-owl" aria-hidden="true">🦉</div>'
+      + '<div class="fr-v2348-title"><h2>Grammaire</h2></div>'
       + '</div>';
   }
   function rowHTML(belt){
@@ -297,12 +305,12 @@
     if(activityId === 'idees') return renderIdea();
     const belt = GRAMMAR_BELTS.find(function(b){ return b.id === activityId; }) || GRAMMAR_BELTS[0];
     state = {belt:belt, questions:[], index:0, score:0, answered:false, source:'banque locale'};
-    setInner(headerHTML() + '<div class="fr-v2348-content"><section class="fr-v2348-panel"><button type="button" class="fr-v2348-back" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderFrenchTrainingListV2348()">← Retour aux entraînements</button><div class="fr-v2348-feedback" style="padding:28px">🦉 Chargement des questions de '+esc(belt.label)+' depuis Google Sheets...</div></section></div>');
+    setInner(headerHTML(belt) + '<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v2348-feedback" style="padding:28px">🦉 Chargement des questions de '+esc(belt.label)+' depuis Google Sheets...</div></section></div>');
     const loaded = await questionsForBelt(belt);
     state.questions = shuffle(loaded.questions).slice(0,TRAINING_COUNT);
     state.source = loaded.source;
     if(!state.questions.length){
-      setInner(headerHTML() + '<div class="fr-v2348-content"><section class="fr-v2348-panel"><button type="button" class="fr-v2348-back" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderFrenchTrainingListV2348()">← Retour aux entraînements</button><div class="fr-v2348-feedback" style="padding:24px;color:#7A2222">Je n’ai trouvé aucune question pour <strong>'+esc(belt.label)+'</strong> dans le Sheet.<br>Vérifie les colonnes <strong>ceinture</strong> et <strong>competence</strong>.</div></section></div>');
+      setInner(headerHTML(belt) + '<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v2348-feedback" style="padding:24px;color:#7A2222">Je n’ai trouvé aucune question pour <strong>'+esc(belt.label)+'</strong> dans le Sheet.<br>Vérifie les colonnes <strong>ceinture</strong> et <strong>competence</strong>.</div></section></div>');
       return;
     }
     renderQuestion();
@@ -310,11 +318,8 @@
   function renderQuestion(){
     const q=state.questions[state.index]; if(!q){ return renderResult(); }
     const opts=q.options.map(function(opt,i){ return '<button type="button" class="fr-v2348-option" data-index="'+i+'" onclick="answerFrenchTrainingV2348('+i+')">'+esc(opt)+'</button>'; }).join('');
-    const meta = '<div class="fr-v23411-question-meta"><span class="fr-v23411-pill">'+esc(state.belt.label)+'</span><span class="fr-v23411-pill">Source : '+esc(state.source)+'</span>'+(q.mode?'<span class="fr-v23411-pill">Mode : '+esc(q.mode)+'</span>':'')+'</div>';
-    setInner(headerHTML() + '<div class="fr-v2348-content"><section class="fr-v2348-panel">'
-      + '<div class="fr-v2348-training-head"><button type="button" class="fr-v2348-back" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderFrenchTrainingListV2348()">← Retour aux entraînements</button><div class="fr-v2348-training-title">'+esc(state.belt.title)+'</div><div></div></div>'
-      + meta
-      + '<div class="fr-v2348-progress">Question '+(state.index+1)+' / '+state.questions.length+'</div>'
+    setInner(headerHTML(state.belt) + '<div class="fr-v2348-content fr-ce2-question-screen"><section class="fr-v2348-panel">'
+      + '<div class="fr-v2348-progress">Question '+(state.index+1)+' sur '+state.questions.length+'</div>'
       + '<div class="fr-v2348-question">'+esc(q.q)+'</div><div class="fr-v2348-options">'+opts+'</div><div id="frFeedbackV2348" class="fr-v2348-feedback"></div>'
       + '</section></div>');
     state.answered=false;
@@ -334,7 +339,7 @@
   function renderResult(){
     const total=state.questions.length || TRAINING_COUNT;
     const pct=Math.round((state.score/total)*100);
-    setInner(headerHTML() + '<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v2348-result"><h3>Bravo, entraînement terminé !</h3><div class="fr-v2348-score-grid"><div class="fr-v2348-score-card">Score<b>'+state.score+' / '+total+'</b></div><div class="fr-v2348-score-card">Réussite<b>'+pct+'%</b></div></div><div class="fr-v2348-feedback">'+esc(state.belt.label)+' · Source : '+esc(state.source)+'</div><div class="fr-v2348-actions"><button type="button" class="fr-v2348-action" onclick="startFrenchTrainingV2348(\''+esc(state.belt.id)+'\')">🔁 Refaire l’entraînement</button><button type="button" class="fr-v2348-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderFrenchGrammarListV25720()">← Retour aux ceintures</button><button type="button" class="fr-v2348-action secondary" onclick="renderFrenchDomainMenuV25720()">Menu Français</button><button type="button" class="fr-v2348-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())closeFrenchTrainingPopupV2348()">Fermer</button></div></div></section></div>');
+    setInner(headerHTML(state.belt) + '<div class="fr-v2348-content fr-ce2-result-screen"><section class="fr-v2348-panel"><div class="fr-v2348-result"><h3>Entraînement terminé !</h3><div class="fr-v2348-score-grid"><div class="fr-v2348-score-card">Score<b>'+state.score+' / '+total+'</b></div><div class="fr-v2348-score-card">Réussite<b>'+pct+'%</b></div></div><div class="fr-v2348-actions"><button type="button" class="fr-v2348-action" onclick="startFrenchTrainingV2348(\''+esc(state.belt.id)+'\')">Refaire l’entraînement</button><button type="button" class="fr-v2348-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())closeFrenchTrainingPopupV2348()">Terminer</button></div></div></section></div>');
     try{
       var mhLabel = (state.belt && (state.belt.title || state.belt.label || state.belt.id)) || 'grammaire';
       var mhScore = 'Score ' + state.score + ' / ' + total + ' — ' + pct + '%';
@@ -345,7 +350,7 @@
   }
   function renderIdea(){
     const item = shuffle(LOCAL_IDEAS)[0];
-    setInner(headerHTML() + '<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v2348-training-head"><button type="button" class="fr-v2348-back" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderFrenchTrainingListV2348()">← Retour aux entraînements</button><div class="fr-v2348-training-title">✏️ Idées pour écrire</div><div></div></div><div class="fr-v2348-idea-box"><div class="fr-v2348-progress">Idée d’écriture</div><div class="fr-v2348-idea-card">'+esc(item.prompt)+'</div><div class="fr-v2348-example"><strong>Pour t’aider :</strong><br>'+esc(item.example)+'</div><textarea class="fr-v2348-textarea" placeholder="Écris ici ta phrase ou ton début d’histoire..."></textarea><div class="fr-v2348-actions"><button type="button" class="fr-v2348-action" onclick="window.hibouFrenchWritingDoneV25717&&window.hibouFrenchWritingDoneV25717(this)">✅ J’ai terminé mon écrit</button><button type="button" class="fr-v2348-action" onclick="startFrenchTrainingV2348(\'idees\')">🎲 Nouvelle idée</button><button type="button" class="fr-v2348-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderFrenchTrainingListV2348()">← Retour aux entraînements</button></div></div></section></div>');
+    setInner(headerHTML() + '<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v2348-training-head"><div class="fr-v2348-training-title">✏️ Idées pour écrire</div><div></div></div><div class="fr-v2348-idea-box"><div class="fr-v2348-progress">Idée d’écriture</div><div class="fr-v2348-idea-card">'+esc(item.prompt)+'</div><div class="fr-v2348-example"><strong>Pour t’aider :</strong><br>'+esc(item.example)+'</div><textarea class="fr-v2348-textarea" placeholder="Écris ici ta phrase ou ton début d’histoire..."></textarea><div class="fr-v2348-actions"><button type="button" class="fr-v2348-action" onclick="window.hibouFrenchWritingDoneV25717&&window.hibouFrenchWritingDoneV25717(this)">✅ J’ai terminé mon écrit</button><button type="button" class="fr-v2348-action" onclick="startFrenchTrainingV2348(\'idees\')">🎲 Nouvelle idée</button><button type="button" class="fr-v2348-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderFrenchTrainingListV2348()">← Retour aux entraînements</button></div></div></section></div>');
   }
 
   function interceptFrenchClickV23411(ev){
