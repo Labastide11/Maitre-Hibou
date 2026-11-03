@@ -126,3 +126,34 @@
   #frenchTrainingOverlayV2348 .fr-v2348-panel {padding:12px!important;}
   #frenchTrainingOverlayV2348 .fr-ce2-question-screen .fr-v2348-question {padding:13px 11px!important;}
 }
+
+/* V2 — moteur actif V25.2.25 : questions CE2 compactes, sans ascenseur imbriqué. */
+#frenchTrainingOverlayV2348 .fr-ce2-training-header .fr-v2348-title > p,
+#frenchTrainingOverlayV2348 .fr-ce2-training-header .fr-v23411-grammar-note {display:none!important;}
+#frenchTrainingOverlayV2348 .fr-ce2-question-screen .fr-v2348-panel {display:block!important;}
+#frenchTrainingOverlayV2348 .fr-ce2-question-screen .fr-v2348-question {
+  width:100%!important; box-sizing:border-box!important;
+  display:block!important; height:auto!important; min-height:72px!important;
+  padding:14px 18px!important; margin:0 0 12px!important;
+  font-size:clamp(18px,1.4vw,23px)!important; line-height:1.35!important;
+}
+#frenchTrainingOverlayV2348 .fr-ce2-question-screen .fr-v2348-options {gap:9px!important;}
+#frenchTrainingOverlayV2348 .fr-ce2-question-screen .fr-v2348-option {
+  height:auto!important; min-height:54px!important; padding:11px 14px!important;
+  font-size:clamp(16px,1.2vw,19px)!important;
+}
+#frenchTrainingOverlayV2348 .fr-ce2-question-screen .fr-v2348-feedback:empty {display:none!important;}
+
+/* Contraste explicite du bouton Exercices actif dans le bandeau français.
+   La feuille générale colore tous les textes du bandeau en blanc ;
+   son bouton actif a pourtant lui aussi un fond blanc. */
+#frenchTrainingOverlayV2348 .mh-subject-nav button[aria-current="page"] {
+  background:#ffffff!important;
+  color:#c52e50!important;
+  border-color:#ffffff!important;
+}
+#frenchTrainingOverlayV2348 .mh-subject-nav button[aria-current="page"]:hover,
+#frenchTrainingOverlayV2348 .mh-subject-nav button[aria-current="page"]:focus-visible {
+  background:#fff0f4!important;
+  color:#9e1d42!important;
+}

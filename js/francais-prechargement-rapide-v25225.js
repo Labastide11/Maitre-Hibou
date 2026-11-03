@@ -268,6 +268,14 @@
     note = note || 'Choisis un domaine.';
     return '<div class="fr-v2348-header"><div class="fr-v2348-owl">🦉</div><div class="fr-v2348-title"><h2>'+esc(title)+'</h2><p>'+esc(subtitle)+'</p><div class="fr-v23411-grammar-note">'+esc(note)+'</div></div></div>';
   }
+  // Bandeau unique des entraînements des 8 ceintures (pas des menus historiques).
+  function trainingHeaderHTML(belt){
+    var color=(belt && belt.ceinture) || 'blanche';
+    return '<div class="fr-v2348-header fr-ce2-training-header">'
+      + '<div class="fr-v2348-owl" aria-hidden="true">🦉</div>'
+      + '<div class="fr-v2348-title"><h2>Grammaire — Ceinture '+esc(color)+'</h2></div>'
+      + '</div>';
+  }
   function rowHTML(belt){ var isIdeas=belt.id==='idees'; return '<div class="fr-v23411-row '+(isIdeas?'fr-v23411-ideas-row':'')+'"><div class="fr-v23411-dot" style="background:'+esc(belt.color)+'"></div><div class="fr-v23411-main"><strong>'+esc(belt.title)+'</strong><span>'+esc(belt.label)+'</span><div class="fr-v23411-mode">'+esc(belt.desc)+'</div></div><button type="button" class="fr-v23411-train-btn" onclick="startFrenchTrainingV2348(\''+esc(belt.id)+'\')">'+(isIdeas?'✏️ S’entraîner':'📖 S’entraîner — 10 questions')+'</button></div>'; }
   function domainCardHTML(cfg){
     var disabled = !!cfg.disabled;
@@ -303,14 +311,29 @@
     if(!q) return renderResult();
     state.answered=false;
     var opts=(q.options||[]).map(function(opt,i){ return '<button type="button" class="fr-v2348-option" data-index="'+i+'">'+esc(opt)+'</button>'; }).join('');
-    var meta='<div class="fr-v23411-question-meta"><span class="fr-v23411-pill">'+esc(state.belt.label)+'</span><span class="fr-v23411-pill">Source : '+esc(state.source)+'</span>'+(q.mode?'<span class="fr-v23411-pill">Mode : '+esc(q.mode)+'</span>':'')+'</div>';
-    setInner(headerHTML('📘 Grammaire','Réponds aux questions.','Entraînement de grammaire : correction après chaque réponse.')+'<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v2348-training-head"><button type="button" class="fr-v2348-back" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderFrenchGrammarListV25720()">← Retour aux ceintures</button><div class="fr-v2348-training-title">'+esc(state.belt.title)+'</div><div></div></div>'+meta+'<div class="fr-v2348-progress">Question '+(state.index+1)+' / '+state.questions.length+'</div><div class="fr-v2348-question">'+esc(q.q)+'</div><div class="fr-v2348-options">'+opts+'</div><div id="frFeedbackV2348" class="fr-v2348-feedback"></div></section></div>');
+    // L'élève doit voir seulement sa ceinture, sa progression, la question et les réponses.
+    // On conserve la classe des boutons et les data-index utilisés par la correction existante.
+    setInner(trainingHeaderHTML(state.belt)
+      + '<div class="fr-v2348-content fr-ce2-question-screen"><section class="fr-v2348-panel">'
+      + '<div class="fr-v2348-progress">Question '+(state.index+1)+' sur '+state.questions.length+'</div>'
+      + '<div class="fr-v2348-question">'+esc(q.q)+'</div>'
+      + '<div class="fr-v2348-options">'+opts+'</div>'
+      + '<div id="frFeedbackV2348" class="fr-v2348-feedback"></div>'
+      + '</section></div>');
   }
   function renderResult(){
     try{ clearTimeout(state.nextTimer); }catch(e){}
     var total=state.questions.length || TRAINING_COUNT;
     var pct=Math.round((state.score/total)*100);
-    setInner(headerHTML('📘 Grammaire','Entraînement terminé.','Tu peux refaire l’entraînement ou revenir au menu Français.')+'<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v2348-result"><h3>Bravo, entraînement terminé !</h3><div class="fr-v2348-score-grid"><div class="fr-v2348-score-card">Score<b>'+state.score+' / '+total+'</b></div><div class="fr-v2348-score-card">Réussite<b>'+pct+'%</b></div></div><div class="fr-v2348-feedback">'+esc(state.belt.label)+' · Source : '+esc(state.source)+'</div><div class="fr-v2348-actions"><button type="button" class="fr-v2348-action" onclick="startFrenchTrainingV2348(\''+esc(state.belt.id)+'\')">🔁 Refaire l’entraînement</button><button type="button" class="fr-v2348-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderFrenchGrammarListV25720()">← Retour aux ceintures</button><button type="button" class="fr-v2348-action secondary" onclick="renderFrenchDomainMenuV25720()">Menu Français</button><button type="button" class="fr-v2348-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())closeFrenchTrainingPopupV2348()">Fermer</button></div></div></section></div>');
+    setInner(trainingHeaderHTML(state.belt)
+      + '<div class="fr-v2348-content fr-ce2-result-screen"><section class="fr-v2348-panel">'
+      + '<div class="fr-v2348-result"><h3>Entraînement terminé !</h3>'
+      + '<div class="fr-v2348-score-grid"><div class="fr-v2348-score-card">Score<b>'+state.score+' / '+total+'</b></div>'
+      + '<div class="fr-v2348-score-card">Réussite<b>'+pct+'%</b></div></div>'
+      + '<div class="fr-v2348-actions">'
+      + '<button type="button" class="fr-v2348-action" onclick="startFrenchTrainingV2348(\''+esc(state.belt.id)+'\')">Refaire l’entraînement</button>'
+      + '<button type="button" class="fr-v2348-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())closeFrenchTrainingPopupV2348()">Terminer</button>'
+      + '</div></div></section></div>');
     try{ var label=(state.belt && (state.belt.title || state.belt.label || state.belt.id)) || 'grammaire'; var score='Score '+state.score+' / '+total+' — '+pct+'%'; if(window.hibouFrenchTrackV25717) window.hibouFrenchTrackV25717({type:'entrainement_grammaire_termine',domaine:'Grammaire',titre:'Entraînement grammaire terminé',detail:label+' — '+score,score:state.score,total:total,source:'entrainement_grammaire'}); else if(window.hibouRecordTrainingSuccessV25221) window.hibouRecordTrainingSuccessV25221('français', label, score); else if(window.hibouRecordTrainingSuccessV25220) window.hibouRecordTrainingSuccessV25220('français', label, score); }catch(e){}
   }
   function renderIdea(){ var item=shuffle(LOCAL_IDEAS)[0]; setInner(headerHTML('✍️ Production d’écrit','Trouve une idée et écris.','L’événement est ajouté au parcours seulement quand tu cliques sur J’ai terminé mon écrit.')+'<div class="fr-v2348-content"><section class="fr-v2348-panel"><div class="fr-v2348-training-head"><button type="button" class="fr-v2348-back" onclick="renderFrenchDomainMenuV25720()">← Retour au menu Français</button><div class="fr-v2348-training-title">✏️ Idées pour écrire</div><div></div></div><div class="fr-v2348-idea-box"><div class="fr-v2348-progress">Idée d’écriture</div><div class="fr-v2348-idea-card">'+esc(item.prompt)+'</div><div class="fr-v2348-example"><strong>Pour t’aider :</strong><br>'+esc(item.example)+'</div><textarea class="fr-v2348-textarea" placeholder="Écris ici ta phrase ou ton début d’histoire..."></textarea><div class="fr-v2348-actions"><button type="button" class="fr-v2348-action" onclick="window.hibouFrenchWritingDoneV25717&&window.hibouFrenchWritingDoneV25717(this)">✅ J’ai terminé mon écrit</button><button type="button" class="fr-v2348-action" onclick="startFrenchTrainingV2348(\'idees\')">🎲 Nouvelle idée</button><button type="button" class="fr-v2348-action secondary" onclick="renderFrenchDomainMenuV25720()">← Retour au menu Français</button></div></div></section></div>'); }
@@ -334,7 +357,7 @@
     state={belt:belt, questions:[], index:0, score:0, answered:false, source:'banque locale', nextTimer:null};
     var cached = readStoredRows();
     if(cached && cached.length){ return startWithRows(belt, cached, 'Google Sheets préchargé'); }
-    setInner(headerHTML('📘 Grammaire','Préparation des questions.','Maître Hibou lance une série locale si Google Sheets tarde.')+'<div class="fr-v2348-content"><section class="fr-v2348-panel"><button type="button" class="fr-v2348-back" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderFrenchGrammarListV25720()">← Retour aux ceintures</button><div class="fr-v2348-feedback" style="padding:22px">🦉 Préparation rapide des questions...</div><div class="fr-v23411-grammar-note">Si Google Sheets est lent, Maître Hibou lance une série locale pour ne pas bloquer l’élève.</div></section></div>');
+    setInner(trainingHeaderHTML(belt)+'<div class="fr-v2348-content fr-ce2-question-screen"><section class="fr-v2348-panel"><div class="fr-v2348-feedback" style="padding:18px">Préparation des questions...</div></section></div>');
     var done=false;
     var p = preloadGrammar(false);
     var timer=setTimeout(function(){ if(done) return; done=true; startWithRows(belt, null, 'banque locale immédiate'); }, MAX_WAIT_BEFORE_LOCAL);
@@ -365,6 +388,26 @@
       ev.preventDefault(); ev.stopPropagation(); if(ev.stopImmediatePropagation) ev.stopImmediatePropagation();
       window.answerFrenchTrainingV2348(Number(btn.getAttribute('data-index')));
     }, true);
+  }
+
+  // Navigation de la page M'entraîner : le bouton Accueil du bandeau
+  // est créé par le module de navigation générale de index.html.
+  // Pendant une ceinture ouverte depuis M'entraîner, son action historique
+  // doit être neutralisée AVANT sa fermeture vers l'accueil général.
+  if(!window.__mhFrenchBeltTopHomeBridge){
+    window.__mhFrenchBeltTopHomeBridge=true;
+    document.addEventListener('click',function(ev){
+      var button=ev.target && ev.target.closest && ev.target.closest('#frenchTrainingOverlayV2348 .mh-subject-nav button');
+      if(!button || (button.textContent||'').trim()!=='Accueil')return;
+      if(typeof window.returnMHTrainingFromBelt!=='function')return;
+      // Sans ceinture lancée depuis M'entraîner, laisser le bouton
+      // Accueil garder son action normale.
+      if(window.returnMHTrainingFromBelt()===true){
+        ev.preventDefault();
+        ev.stopPropagation();
+        ev.stopImmediatePropagation();
+      }
+    },true);
   }
 
   function boot(){
