@@ -157,3 +157,13 @@
   background:#fff0f4!important;
   color:#9e1d42!important;
 }
+
+/* Pendant les 8 entraînements de ceintures de grammaire seulement :
+   masquer l'entrée du catalogue "Exercices".
+   Les boutons Accueil, Leçons et Fermer restent accessibles. */
+#frenchTrainingOverlayV2348:has(.fr-ce2-training-header)
+  .mh-subject-nav button[aria-current="page"],
+#frenchTrainingOverlayV2348:has(.fr-ce2-training-header)
+  .mh-subject-nav button:nth-child(3) {
+  display: none !important;
+}
