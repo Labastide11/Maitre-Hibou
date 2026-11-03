@@ -69,7 +69,7 @@
     ov.innerHTML = '<div class="fr-v2348-popup">'
       + '<div class="fr-v2348-topbar">'
       + '<div class="fr-v2348-chip">📖 Français</div>'
-      + '<button class="fr-v2348-close" type="button" onclick="closeFrenchTrainingPopupV2348()" aria-label="Fermer la popup Français">×</button>'
+      + '<button class="fr-v2348-close" type="button" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())closeFrenchTrainingPopupV2348()" aria-label="Fermer la popup Français">×</button>'
       + '</div>'
       + '<div id="frenchPopupInnerV2348"></div>'
       + '</div>';
@@ -141,7 +141,7 @@
     const opts = q.options.map(function(opt,i){ return '<button type="button" class="fr-v2348-option" data-index="'+i+'" onclick="answerFrenchTrainingV2348('+i+')">'+esc(opt)+'</button>'; }).join('');
     setInner(headerHTML() + '<div class="fr-v2348-content"><section class="fr-v2348-panel">'
       + '<div class="fr-v2348-training-head">'
-      + '<button type="button" class="fr-v2348-back" onclick="renderFrenchTrainingListV2348()">← Retour aux entraînements</button>'
+      + '<button type="button" class="fr-v2348-back" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderFrenchTrainingListV2348()">← Retour aux entraînements</button>'
       + '<div class="fr-v2348-training-title">'+esc(frState.activity.icon)+' '+esc(frState.activity.title)+'</div>'
       + '<div></div>'
       + '</div>'
@@ -180,15 +180,15 @@
       + '<div class="fr-v2348-note">C’est un entraînement : les validations officielles restent dans « Valider une compétence ».</div>'
       + '<div class="fr-v2348-actions">'
       + '<button type="button" class="fr-v2348-action" onclick="startFrenchTrainingV2348(\''+esc(frState.activity.id)+'\')">🔁 Refaire l’entraînement</button>'
-      + '<button type="button" class="fr-v2348-action secondary" onclick="renderFrenchTrainingListV2348()">← Retour aux entraînements</button>'
-      + '<button type="button" class="fr-v2348-action secondary" onclick="closeFrenchTrainingPopupV2348()">Fermer</button>'
+      + '<button type="button" class="fr-v2348-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderFrenchTrainingListV2348()">← Retour aux entraînements</button>'
+      + '<button type="button" class="fr-v2348-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())closeFrenchTrainingPopupV2348()">Fermer</button>'
       + '</div></div></section></div>');
   }
   function renderIdea(){
     const item = IDEAS[Math.floor(Math.random()*IDEAS.length)];
     setInner(headerHTML() + '<div class="fr-v2348-content"><section class="fr-v2348-panel">'
       + '<div class="fr-v2348-training-head">'
-      + '<button type="button" class="fr-v2348-back" onclick="renderFrenchTrainingListV2348()">← Retour aux entraînements</button>'
+      + '<button type="button" class="fr-v2348-back" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderFrenchTrainingListV2348()">← Retour aux entraînements</button>'
       + '<div class="fr-v2348-training-title">✏️ Idées pour écrire</div>'
       + '<div></div>'
       + '</div>'
@@ -200,7 +200,7 @@
       + '<div class="fr-v2348-actions">'
       + '<button type="button" class="fr-v2348-action" onclick="window.hibouFrenchWritingDoneV25717&&window.hibouFrenchWritingDoneV25717(this)">✅ J’ai terminé mon écrit</button>'
       + '<button type="button" class="fr-v2348-action" onclick="startFrenchTrainingV2348(\'idees\')">🎲 Nouvelle idée</button>'
-      + '<button type="button" class="fr-v2348-action secondary" onclick="renderFrenchTrainingListV2348()">← Retour aux entraînements</button>'
+      + '<button type="button" class="fr-v2348-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderFrenchTrainingListV2348()">← Retour aux entraînements</button>'
       + '</div>'
       + '</div></section></div>');
   }

@@ -1,0 +1,95 @@
+/* Refonte visuelle du QCM de grammaire CE2 — aucun changement pédagogique. */
+#frenchTrainingOverlayV2348 .fr-v2348-popup{background:linear-gradient(180deg,#fff7f9 0%,#f7f4ff 100%)!important;color:#24234b!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-topbar{min-height:56px!important;padding:8px 18px!important;background:linear-gradient(105deg,#f94265,#ff7287)!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-chip{font-weight:900!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-header{padding:10px clamp(14px,2vw,30px) 8px!important;gap:12px!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-owl{width:60px!important;height:60px!important;min-width:60px!important;border-radius:19px!important;font-size:38px!important;background:#fff8ed!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-title h2{font-size:clamp(22px,2vw,30px)!important;color:#20234f!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-title p{font-size:14px!important;margin-top:2px!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-content{padding:6px clamp(12px,2vw,30px) 16px!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-panel{border:2px solid #f6dce8!important;border-radius:24px!important;padding:clamp(12px,1.8vw,24px)!important;box-shadow:0 12px 30px #7b54721a!important;background:linear-gradient(180deg,#fff,#fffafd)!important;overflow-y:auto!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-training-head{grid-template-columns:minmax(160px,1fr) minmax(240px,2.2fr) minmax(160px,1fr)!important;margin-bottom:12px!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-training-title{font-size:clamp(18px,1.6vw,23px)!important;font-weight:900!important;color:#29205d!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-back{justify-self:start!important;min-height:42px!important;padding:8px 14px!important;border-radius:16px!important;background:#fff3f7!important;color:#e52f59!important;border:2px solid #ffdbe5!important;box-shadow:none!important;}
+#frenchTrainingOverlayV2348 .fr-v23411-question-meta{display:flex!important;flex-wrap:wrap!important;gap:8px!important;margin:0 0 10px!important;}
+#frenchTrainingOverlayV2348 .fr-v23411-pill{background:#f3eafa!important;color:#6e3685!important;border-radius:999px!important;padding:6px 11px!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-progress{color:#8258a9!important;font-size:14px!important;margin:5px 0 9px!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-question{font-size:clamp(18px,1.45vw,23px)!important;line-height:1.3!important;background:linear-gradient(120deg,#fffdf0,#fff5d3)!important;border:3px solid #ffcf37!important;border-radius:22px!important;padding:clamp(12px,1.3vw,19px)!important;margin-bottom:14px!important;box-shadow:0 4px 9px #94691b12!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-options{gap:9px!important;margin-bottom:12px!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-option{display:flex!important;align-items:center!important;gap:15px!important;min-height:55px!important;padding:9px 16px!important;background:#fff!important;border:2px solid #e3d9f2!important;border-radius:19px!important;font-size:clamp(16px,1.2vw,19px)!important;box-shadow:0 3px 8px #2b25500d!important;line-height:1.25!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-option::before{content:'';width:19px;height:19px;flex:0 0 19px;border-radius:50%;border:3px solid #c7bee2;box-sizing:border-box;}
+#frenchTrainingOverlayV2348 .fr-v2348-option:not(:disabled):hover{background:#f8f4ff!important;border-color:#a18de5!important;transform:translateY(-1px);}
+#frenchTrainingOverlayV2348 .fr-v2348-option:focus-visible{outline:3px solid #7063f3!important;outline-offset:2px!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-option.correct{background:#e8f8ee!important;border-color:#46b96d!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-option.wrong{background:#fff0f0!important;border-color:#ff6970!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-feedback{font-size:16px!important;}
+@media(max-width:700px){
+#frenchTrainingOverlayV2348 .fr-v2348-training-head{grid-template-columns:1fr!important;gap:9px!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-training-title{text-align:left!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-header{padding:8px 12px!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-owl{width:44px!important;height:44px!important;min-width:44px!important;font-size:29px!important;}
+#frenchTrainingOverlayV2348 .fr-v2348-option{min-height:55px!important;}
+}
+@media(prefers-reduced-motion:reduce){#frenchTrainingOverlayV2348 .fr-v2348-option{transition:none!important;}}
+
+/* Mascotte Maître Hibou validée — remplace uniquement le pictogramme du bandeau. */
+#frenchTrainingOverlayV2348 .fr-v2348-owl{
+  background-color:#fff8ed!important;
+  background-image:url('../images/hibou-grammaire-mascotte.png')!important;
+  background-position:center!important;
+  background-repeat:no-repeat!important;
+  background-size:contain!important;
+  font-size:0!important;
+  color:transparent!important;
+  overflow:hidden!important;
+}
+
+/* Correction 02/11 : une seule zone de défilement et QCM compact PC portable. */
+#frenchTrainingOverlayV2348 .fr-v2348-panel {
+  overflow: visible !important;
+  overflow-y: visible !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  padding: 14px 20px !important;
+}
+#frenchTrainingOverlayV2348 .fr-v2348-content {
+  overflow: visible !important;
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
+  padding: 5px 16px 16px !important;
+}
+#frenchTrainingOverlayV2348 .fr-v2348-popup {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  max-height: 100dvh !important;
+  height: 100dvh !important;
+  overscroll-behavior-y: contain;
+}
+#frenchTrainingOverlayV2348 .fr-v2348-header {padding: 7px 16px 6px !important;}
+#frenchTrainingOverlayV2348 .fr-v2348-training-head {margin-bottom: 8px !important;}
+#frenchTrainingOverlayV2348 .fr-v2348-progress {margin: 3px 0 7px !important; font-size: 14px !important;}
+#frenchTrainingOverlayV2348 .fr-v2348-question {
+  font-size: clamp(18px, 1.25vw, 22px) !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+  padding: 12px 16px !important;
+  margin-bottom: 10px !important;
+  min-height: 0 !important;
+}
+#frenchTrainingOverlayV2348 .fr-v2348-options {gap: 7px !important; margin-bottom: 8px !important;}
+#frenchTrainingOverlayV2348 .fr-v2348-option {
+  font-size: clamp(16px, 1.05vw, 19px) !important;
+  font-weight: 800 !important;
+  min-height: 48px !important;
+  padding: 8px 14px !important;
+  line-height: 1.25 !important;
+}
+#frenchTrainingOverlayV2348 .fr-v2348-training-title {font-size: clamp(18px, 1.4vw, 22px) !important;}
+@media(max-width:700px){
+  #frenchTrainingOverlayV2348 .fr-v2348-panel {padding:12px !important;}
+  #frenchTrainingOverlayV2348 .fr-v2348-content {padding:5px 9px 12px !important;}
+  #frenchTrainingOverlayV2348 .fr-v2348-question {font-size:18px !important;}
+  #frenchTrainingOverlayV2348 .fr-v2348-option {font-size:17px !important; min-height:48px !important;}
+}

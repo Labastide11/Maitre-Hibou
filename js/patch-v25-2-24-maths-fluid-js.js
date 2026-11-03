@@ -114,7 +114,7 @@
     setInner(headerHTML()
       + '<div class="maths-v2343-content"><section class="maths-v2343-panel">'
       + '<div class="maths-v2343-training-head">'
-      + '<button type="button" class="maths-v2343-back" onclick="renderMathsTrainingListV2343()">← Retour aux entraînements</button>'
+      + '<button type="button" class="maths-v2343-back" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderMathsTrainingListV2343()">← Retour aux entraînements</button>'
       + '<div class="maths-v2343-training-title">'+esc(state.belt.label)+'<br><small>'+esc(state.belt.colorName)+'</small></div>'
       + '<div class="maths-v2343-timer">⏱ <span id="mathsTimerValueV2343">'+fmt(state.elapsed)+'</span></div>'
       + '</div>'
@@ -173,8 +173,8 @@
       + renderReview()
       + '<div class="maths-v2343-actions">'
       + '<button type="button" class="maths-v2343-action" onclick="startMathsTrainingV2343(\''+esc(state.belt.ceinture)+'\')">🧮 Refaire 10 calculs</button>'
-      + '<button type="button" class="maths-v2343-action secondary" onclick="renderMathsTrainingListV2343()">← Retour aux entraînements</button>'
-      + '<button type="button" class="maths-v2343-action secondary" onclick="closeMathsTrainingPopupV2343()">Fermer</button>'
+      + '<button type="button" class="maths-v2343-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderMathsTrainingListV2343()">← Retour aux entraînements</button>'
+      + '<button type="button" class="maths-v2343-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())closeMathsTrainingPopupV2343()">Fermer</button>'
       + '</div></div></section></div>');
     try{
       if(window.hibouRecordTrainingSuccessV25221) window.hibouRecordTrainingSuccessV25221('maths', state.belt.label, scoreText);

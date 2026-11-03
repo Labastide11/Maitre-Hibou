@@ -120,38 +120,29 @@
     loader.onerror=function(){alert('Fichier du Défi des tables introuvable : js/hibou-tables-game-v25881.js');};
     document.head.appendChild(loader);
   }
-  // Retour centralise pour toutes les ceintures (8 FR + 14 Maths) : l'ancien
-  // bouton renvoie vers le catalogue du moteur, et non vers la page M'entraîner.
-  // Capteur limité aux ceintures ouvertes depuis cette page ; aucune modification
-  // du code pédagogique, des scores ou de la validation.
+  // Point de retour unique depuis les moteurs historiques de ceintures.
+  // Appelé directement par leurs boutons ; ne s'applique pas aux autres menus.
   function returnToTrainingPage(){
+    if(!beltReturnActive)return false;
     beltReturnActive=false;
-    if(typeof window.closeMathsTrainingPopupV2343==='function')try{window.closeMathsTrainingPopupV2343();}catch(e){console.warn(e);}
-    if(typeof window.closeFrenchTrainingPopupV2348==='function')try{window.closeFrenchTrainingPopupV2348();}catch(e){console.warn(e);}
-    // Les deux moteurs peuvent exposer des fermetures différentes selon la version.
-    // Masquer tout overlay résiduel pour rendre la page M'entraîner visible.
     ['mathsTrainingOverlayV2343','frenchTrainingOverlayV2348'].forEach(function(id){
       var overlay=document.getElementById(id);
-      if(overlay){overlay.style.display='none';overlay.setAttribute('aria-hidden','true');}
+      if(overlay){
+        overlay.classList.add('hidden');
+        overlay.removeAttribute('aria-hidden');
+        overlay.style.removeProperty('display');
+      }
     });
-    make();page.hidden=false;
+    document.documentElement.style.overflow='';
+    document.body.style.overflow='';
+    make();
+    page.hidden=false;
     document.documentElement.classList.add('mh-training-route');
     page.scrollTop=savedTrainingScroll;
+    requestAnimationFrame(function(){if(page&&!beltReturnActive){page.hidden=false;page.scrollTop=savedTrainingScroll;}});
+    return true;
   }
-  document.addEventListener('click',function(ev){
-    if(!beltReturnActive)return;
-    var button=ev.target && ev.target.closest && ev.target.closest('button');
-    if(!button)return;
-    var root=button.closest('#mathsTrainingOverlayV2343, #frenchTrainingOverlayV2348');
-    if(!root)return;
-    var label=(button.textContent||'').replace(/\s+/g,' ').trim();
-    var back=/retour aux (?:entra[iî]nements|ceintures)/i.test(label);
-    // Le bouton « Fermer » de la page de résultat doit lui aussi revenir au menu.
-    var doneClose=/^fermer$/i.test(label);
-    if(!back&&!doneClose)return;
-    ev.preventDefault();ev.stopPropagation();ev.stopImmediatePropagation();
-    returnToTrainingPage();
-  },true);
+  window.returnMHTrainingFromBelt=returnToTrainingPage;
   document.addEventListener('click',function(ev){var target=ev.target&&ev.target.closest&&ev.target.closest('#v2574TrainBtn');if(target){ev.preventDefault();ev.stopImmediatePropagation();open();}},true);
   window.openMHTrainingPage=open;
   window.closeMHTrainingPage=close;

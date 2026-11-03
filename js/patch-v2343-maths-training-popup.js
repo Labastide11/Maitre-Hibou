@@ -138,7 +138,7 @@
       '<div class="maths-v2343-popup">'
       + '<div class="maths-v2343-topbar">'
       + '<div class="maths-v2343-chip">🧮 Maths</div>'
-      + '<button class="maths-v2343-close" type="button" onclick="closeMathsTrainingPopupV2343()" aria-label="Fermer la popup Maths">×</button>'
+      + '<button class="maths-v2343-close" type="button" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())closeMathsTrainingPopupV2343()" aria-label="Fermer la popup Maths">×</button>'
       + '</div>'
       + '<div id="mathsPopupInnerV2343"></div>'
       + '</div>';
@@ -462,7 +462,7 @@
     setInner(headerHTML()
       + '<div class="maths-v2343-content"><section class="maths-v2343-panel">'
       + '<div class="maths-v2343-training-head">'
-      + '<button type="button" class="maths-v2343-back" onclick="renderMathsTrainingListV2343()">← Retour aux entraînements</button>'
+      + '<button type="button" class="maths-v2343-back" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderMathsTrainingListV2343()">← Retour aux entraînements</button>'
       + '<div class="maths-v2343-training-title">'+esc(state.belt.label)+'<br><small>'+esc(state.belt.colorName)+'</small></div>'
       + '<div class="maths-v2343-timer">⏱ <span id="mathsTimerValueV2343">'+fmt(state.elapsed)+'</span></div>'
       + '</div>'
@@ -543,8 +543,8 @@
       + '<div class="maths-v2343-record">'+esc(recordText)+'</div>'
       + '<div class="maths-v2343-actions">'
       + '<button type="button" class="maths-v2343-action" onclick="startMathsTrainingV2343(\''+esc(state.belt.ceinture)+'\')">🧮 Refaire 10 calculs</button>'
-      + '<button type="button" class="maths-v2343-action secondary" onclick="renderMathsTrainingListV2343()">← Retour aux entraînements</button>'
-      + '<button type="button" class="maths-v2343-action secondary" onclick="closeMathsTrainingPopupV2343()">Fermer</button>'
+      + '<button type="button" class="maths-v2343-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderMathsTrainingListV2343()">← Retour aux entraînements</button>'
+      + '<button type="button" class="maths-v2343-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())closeMathsTrainingPopupV2343()">Fermer</button>'
       + '</div>'
       + '<div class="maths-v2343-note">Le temps sert à progresser, pas à te mettre la pression.</div>'
       + '</div>'
