@@ -217,6 +217,22 @@
 
   function setBeltInner(html){ var b=byId('skillValidationFullscreenBodyV1861'); if(b) b.innerHTML=html; }
   function ensureBeltOverlay(){ var ov=byId('skillValidationFullscreenV1861'); if(!ov){ ov=document.createElement('div'); ov.id='skillValidationFullscreenV1861'; ov.className='modal-overlay skill-validation-fullscreen-v1861 hidden'; ov.innerHTML='<div class="modal-box"><div id="skillValidationFullscreenBodyV1861"></div></div>'; document.body.appendChild(ov); } return ov; }
+  // Illustrations des ceintures de Maths : uniquement après l'épreuve de 20 questions validée.
+  var mathRewardImages = {
+    blanche:'blanche', jaune:'jaune', orange:'orange', vert_clair:'vert_clair',
+    vert_fonce:'vert_fonce', bleu_clair:'bleu_clair', bleu_fonce:'bleu_fonce',
+    rose:'rose', beige:'beige', violet:'violet', marron:'marron',
+    rouge:'rouge', gris:'gris', noir:'noir'
+  };
+  function mathRewardHTML(belt){
+    var key=norm(belt && belt.ceinture);
+    var imageKey=mathRewardImages[key];
+    if(!imageKey) return '';
+    var caption='Bravo ! Tu as obtenu ta ceinture '+clean(belt.colorName||belt.ceinture)+' de calcul !';
+    return '<figure class="mh-math-reward" style="text-align:center;margin:12px auto 18px;max-width:450px">'
+      +'<img src="images/ceinture_maths_'+imageKey+'.jpg" alt="'+esc(caption)+'" loading="eager" decoding="async" style="display:block;width:100%;max-height:45vh;object-fit:contain;border-radius:16px;margin:0 auto">'
+      +'</figure>';
+  }
   function medalFor(score){ if(score>=19) return '🥇 Or'; if(score>=17) return '🥈 Argent'; if(score>=15) return '🥉 Bronze'; return ''; }
   function loadProgress(){ try{return JSON.parse(localStorage.getItem(PROGRESS_PREFIX+studentKey())||'{"belts":[]}');}catch(e){return {belts:[]};} }
   function saveProgress(data){ try{localStorage.setItem(PROGRESS_PREFIX+studentKey(),JSON.stringify(data||{belts:[]}));}catch(e){} }
@@ -317,7 +333,7 @@
         },80);
       }catch(e){try{console.warn('Tentative ceinture Maths non ajoutée au parcours',e);}catch(ignore){}}
     }
-    setBeltInner('<div class="v190-belt-box"><h3>'+(medal?'🎉 Ceinture validée !':'🙂 Encore un peu d’entraînement')+'</h3><div class="v190-score">'+st.score+' / '+total+'</div><div class="v190-medal">'+(medal||'💪')+'</div><div class="v190-rules">'+(medal?'Bravo ! Tu as obtenu ta ceinture '+esc(st.belt.colorName||st.belt.ceinture)+' ! Ta meilleure médaille est conservée.':'Tu peux réessayer la ceinture sans refaire les deux défis. Regarde la correction pour progresser.')+'</div>'+reviewHTML(st.answers)+'<button class="belt-btn secondary" onclick="window.__hibouMathBeltTestActiveV2574=false;openCompetenceValidation()">Retour aux ceintures</button></div>');
+    setBeltInner('<div class="v190-belt-box"><h3>'+(medal?'🎉 Ceinture validée !':'🙂 Encore un peu d’entraînement')+'</h3>'+(medal?mathRewardHTML(st.belt):'')+'<div class="v190-score">'+st.score+' / '+total+'</div><div class="v190-medal">'+(medal||'💪')+'</div><div class="v190-rules">'+(medal?'Bravo ! Tu as obtenu ta ceinture '+esc(st.belt.colorName||st.belt.ceinture)+' ! Ta meilleure médaille est conservée.':'Tu peux réessayer la ceinture sans refaire les deux défis. Regarde la correction pour progresser.')+'</div>'+reviewHTML(st.answers)+'<button class="belt-btn secondary" onclick="window.__hibouMathBeltTestActiveV2574=false;openCompetenceValidation()">Retour aux ceintures</button></div>');
     if(typeof window.refreshV196MedalHeader==='function') setTimeout(window.refreshV196MedalHeader,100);
     if(typeof window.refreshV168BeltCounters==='function') setTimeout(window.refreshV168BeltCounters,120);
     if(typeof window.renderHibouProfile==='function') setTimeout(window.renderHibouProfile,150);
