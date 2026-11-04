@@ -10,6 +10,9 @@
   var OLD_CACHE_KEY = 'hibou_v25222_francais_grammaire_rows_cache';
   var CACHE_TTL = 24 * 60 * 60 * 1000;
   var TRAINING_COUNT = 10;
+  var BELT_COUNT = 20;
+  var frenchBeltState = null;
+  var FRENCH_PROGRESS_PREFIX = 'hibou_fr_ceintures_v1_';
   var MAX_WAIT_BEFORE_LOCAL = 450;
   var FETCH_TIMEOUT = 2600;
 
@@ -1690,7 +1693,83 @@
       + '<div class="fr-v2348-title"><h2>Grammaire — Ceinture '+esc(color)+'</h2></div>'
       + '</div>';
   }
-  function rowHTML(belt){ var isIdeas=belt.id==='idees'; return '<div class="fr-v23411-row '+(isIdeas?'fr-v23411-ideas-row':'')+'"><div class="fr-v23411-dot" style="background:'+esc(belt.color)+'"></div><div class="fr-v23411-main"><strong>'+esc(belt.title)+'</strong><span>'+esc(belt.label)+'</span><div class="fr-v23411-mode">'+esc(belt.desc)+'</div></div><button type="button" class="fr-v23411-train-btn" onclick="startFrenchTrainingV2348(\''+esc(belt.id)+'\')">'+(isIdeas?'✏️ S’entraîner':'📖 S’entraîner — 10 questions')+'</button></div>'; }
+  function frenchStudentKey(){
+    var name='';try{name=window.prenomActuel||localStorage.getItem('hibou_prenom')||localStorage.getItem('maitreHibouCurrentStudent')||localStorage.getItem('elevePrenom')||'';}catch(e){}
+    return norm(name||'invite');
+  }
+  function frenchKey(belt){return FRENCH_PROGRESS_PREFIX+frenchStudentKey()+'_'+norm(belt.id);}
+  function frenchProgress(belt){
+    try{var v=JSON.parse(localStorage.getItem(frenchKey(belt))||'null');return v&&Array.isArray(v.attempts)?v:{attempts:[],best:0};}catch(e){return {attempts:[],best:0};}
+  }
+  function frenchStep(belt){
+    var d=frenchProgress(belt);if(Number(d.best)>=15)return 2;
+    var a=d.attempts||[], first=-1;
+    for(var i=0;i<a.length;i++){if(a[i]&&a[i].score>=7&&a[i].total===10){first=i;break;}}
+    if(first===-1)return 0;
+    for(var j=first+1;j<a.length;j++){if(a[j]&&a[j].score>=8&&a[j].total===10)return 2;}
+    return 1;
+  }
+  function saveFrenchAttempt(belt,score,total){
+    var d=frenchProgress(belt);d.attempts.push({id:Date.now().toString(36)+'_'+Math.random().toString(36).slice(2),score:score,total:total,date:new Date().toISOString()});
+    // Conserver les réussites historiques et l'ordre des tentatives.
+    try{localStorage.setItem(frenchKey(belt),JSON.stringify(d));}catch(e){console.warn('Sauvegarde Français impossible',e);}
+    try{window.dispatchEvent(new CustomEvent('hibou:french-belt-progress',{detail:{ceinture:belt.id,step:frenchStep(belt)}}));}catch(e){}
+  }
+  function saveFrenchBelt(belt,score){var d=frenchProgress(belt);d.best=Math.max(Number(d.best||0),score);try{localStorage.setItem(frenchKey(belt),JSON.stringify(d));}catch(e){} }
+  function frenchMedal(score,denom){return score>=(denom===10?10:19)?'🥇 Or':score>=(denom===10?9:17)?'🥈 Argent':score>=(denom===10?8:15)?'🥉 Bronze':'';}
+  function frenchReward(belt){return 'images/maitre-hibou-ceinture-'+encodeURIComponent(belt.id)+'.jpg';}
+  function frenchRewardHTML(belt){return '<img alt="Maître Hibou avec sa ceinture '+esc(belt.id)+'" src="'+frenchReward(belt)+'" style="display:block;max-width:min(100%,320px);max-height:250px;object-fit:contain;margin:8px auto;border-radius:16px">';}
+  window.hibouFrenchBeltStep=function(id){return frenchStep(findBelt(id));};
+  window.hibouFrenchBeltBest=function(id){return frenchProgress(findBelt(id)).best||0;};
+  function startFrenchBeltValidation(id){
+    var belt=findBelt(id);if(frenchStep(belt)<2)return;
+    // Annuler tout changement d'écran différé d'un entraînement précédent.
+    try{if(state && state.nextTimer){clearTimeout(state.nextTimer);state.nextTimer=null;}}catch(e){}
+    var unique=uniqueQuestions(LOCAL_BANK[belt.id]||[]);
+    if(unique.length<20){console.warn('Ceinture : moins de 20 questions',belt.id);return;}
+    frenchBeltState={belt:belt,questions:mixTrainingQuestions(shuffle(unique).slice(0,BELT_COUNT)),index:0,score:0,answers:[],finished:false};
+    renderFrenchBeltQuestion();
+  }
+  window.startFrenchBeltValidationMH=startFrenchBeltValidation;
+  function renderFrenchBeltQuestion(){
+    var st=frenchBeltState;if(!st||st.finished)return;
+    if(st.index>=st.questions.length)return renderFrenchBeltResult();
+    var q=st.questions[st.index];
+    setInner(trainingHeaderHTML(st.belt)+'<div class="fr-v2348-content fr-ce2-question-screen"><section class="fr-v2348-panel">'
+      +'<div class="fr-v2348-progress">Passage de ceinture · Question '+(st.index+1)+' sur 20</div>'
+      +'<div class="fr-v2348-question">'+esc(q.q)+'</div><div class="fr-v2348-options">'
+      +(q.options||[]).map(function(o,i){return '<button class="fr-belt-validation-option" data-index="'+i+'" type="button">'+esc(o)+'</button>';}).join('')
+      +'</div><p style="font-size:.85rem;text-align:center">Tu découvriras tes corrections à la fin.</p></section></div>');
+  }
+  function frenchBeltAnswer(i){
+    var st=frenchBeltState;if(!st||st.finished)return;
+    var q=st.questions[st.index];if(!q)return;
+    var ok=i===Number(q.correct);if(ok)st.score++;
+    st.answers.push({q:q.q,chosen:q.options[i]||'—',correct:q.options[q.correct],ok:ok});
+    st.index++;renderFrenchBeltQuestion();
+  }
+  function renderFrenchBeltResult(){
+    var st=frenchBeltState;if(!st||st.finished)return;st.finished=true;
+    var pass=st.score>=15;
+    if(pass)saveFrenchBelt(st.belt,st.score);
+    var best=frenchProgress(st.belt).best||0;
+    var summary=pass?'Bravo ! Tu as obtenu ta ceinture '+st.belt.id+' !':'Tu n’as pas encore obtenu ta ceinture. Tu peux réessayer sans refaire les deux défis !';
+    var corrections=st.answers.map(function(a){return '<div style="padding:7px 0;border-bottom:1px solid #ddd"><strong>'+esc(a.q)+'</strong><div>'+(a.ok?'✅ ':'❌ ')+esc(a.chosen)+' · Réponse : '+esc(a.correct)+'</div></div>';}).join('');
+    setInner(trainingHeaderHTML(st.belt)+'<div class="fr-v2348-content fr-ce2-result-screen"><section class="fr-v2348-panel"><div class="fr-v2348-result">'
+      +'<h3>'+esc(summary)+'</h3>'+(pass?frenchRewardHTML(st.belt):'<div style="font-size:50px">🦉</div>')
+      +'<p><strong>Score : '+st.score+'/20</strong> · '+(frenchMedal(st.score,20)||'Continue tes efforts !')+'</p>'
+      +'<p>Meilleur résultat conservé : '+best+'/20 '+esc(frenchMedal(best,20))+'</p>'
+      +'<details><summary>Voir les corrections</summary>'+corrections+'</details>'
+      +'<div class="fr-v2348-actions"><button class="fr-v2348-action" onclick="startFrenchBeltValidationMH(\''+esc(st.belt.id)+'\')">Repasser ma ceinture</button>'
+      +'<button class="fr-v2348-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())closeFrenchTrainingPopupV2348()">Terminer</button></div></div></section></div>');
+  }
+  document.addEventListener('click',function(e){
+    var btn=e.target&&e.target.closest&&e.target.closest('#frenchTrainingOverlayV2348 .fr-belt-validation-option');
+    if(!btn)return;
+    e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+    frenchBeltAnswer(Number(btn.getAttribute('data-index')));
+  },true);
+  function rowHTML(belt){ var isIdeas=belt.id==='idees'; var step=isIdeas?0:frenchStep(belt); var marker=isIdeas?'':(step===2?'🔓 Prêt pour la ceinture':('🔒 Défi '+(step+1)+'/2 · '+(step===0?'7/10':'8/10')+' minimum'));  return '<div class="fr-v23411-row '+(isIdeas?'fr-v23411-ideas-row':'')+'"><div class="fr-v23411-dot" style="background:'+esc(belt.color)+'"></div><div class="fr-v23411-main"><strong>'+esc(belt.title)+'</strong><span>'+esc(belt.label)+'</span><div class="fr-v23411-mode">'+esc(belt.desc)+'</div><div style="font-size:.84rem;font-weight:700">'+marker+'</div></div><button type="button" class="fr-v23411-train-btn" onclick="startFrenchTrainingV2348(\''+esc(belt.id)+'\')">'+(isIdeas?'✏️ S’entraîner':'📖 S’entraîner — 10 questions')+'</button>'+(step===2?'<button type="button" class="fr-v23411-train-btn" onclick="startFrenchBeltValidationMH(\''+esc(belt.id)+'\')">🔓 Passer ma ceinture · 20 questions</button>':'')+'</div>'; }
   function domainCardHTML(cfg){
     var disabled = !!cfg.disabled;
     var action = disabled ? '' : ' onclick="'+cfg.onclick+'"';
@@ -1739,12 +1818,16 @@
     try{ clearTimeout(state.nextTimer); }catch(e){}
     var total=state.questions.length || TRAINING_COUNT;
     var pct=Math.round((state.score/total)*100);
+    if(!state.savedAttempt){saveFrenchAttempt(state.belt,state.score,total);state.savedAttempt=true;}
+    var step=frenchStep(state.belt), medals=frenchMedal(state.score,10);
+    var cheer=step===2?'Félicitations ! Tu es prêt à passer ta ceinture '+state.belt.id+' !':step===1?'Bravo ! Premier défi réussi. Réussis maintenant 8 questions sur 10 dans une nouvelle série.':'Maître Hibou t’encourage ! Ton premier objectif est de réussir 7 questions sur 10.';
+    var validationButton=step===2?'<button type="button" class="fr-v2348-action" onclick="startFrenchBeltValidationMH(\''+esc(state.belt.id)+'\')">🔓 Passer ma ceinture · 20 questions</button>':'<button type="button" class="fr-v2348-action secondary" disabled aria-disabled="true" style="opacity:.55">🔒 Passage de ceinture verrouillé · '+(step===0?'7/10':'8/10')+' à atteindre</button>';
     setInner(trainingHeaderHTML(state.belt)
       + '<div class="fr-v2348-content fr-ce2-result-screen"><section class="fr-v2348-panel">'
-      + '<div class="fr-v2348-result"><h3>Entraînement terminé !</h3>'
+      + '<div class="fr-v2348-result"><h3>🦉 '+esc(cheer)+'</h3><div style="font-size:1.5rem;margin:10px">'+(medals||'💪 En progrès')+'</div><div style="font-weight:700;margin:10px">Défi 1 : 7/10 minimum '+(step>=1?'✅':'🔒')+' · Défi 2 : 8/10 minimum '+(step===2?'✅':'🔒')+'</div>'
       + '<div class="fr-v2348-score-grid"><div class="fr-v2348-score-card">Score<b>'+state.score+' / '+total+'</b></div>'
       + '<div class="fr-v2348-score-card">Réussite<b>'+pct+'%</b></div></div>'
-      + '<div class="fr-v2348-actions">'
+      + '<div class="fr-v2348-actions">'+validationButton
       + '<button type="button" class="fr-v2348-action" onclick="startFrenchTrainingV2348(\''+esc(state.belt.id)+'\')">Refaire l’entraînement</button>'
       + '<button type="button" class="fr-v2348-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())closeFrenchTrainingPopupV2348()">Terminer</button>'
       + '</div></div></section></div>');
@@ -1798,7 +1881,7 @@
   if(!window.__maitreHibouV25225FrenchClickInstalled){
     window.__maitreHibouV25225FrenchClickInstalled = true;
     document.addEventListener('click', function(ev){
-      var btn = ev.target && ev.target.closest ? ev.target.closest('#frenchTrainingOverlayV2348 .fr-v2348-option') : null;
+      var btn = ev.target && ev.target.closest ? ev.target.closest('#frenchTrainingOverlayV2348 .fr-v2348-option:not(.fr-belt-validation-option)') : null;
       if(!btn) return;
       ev.preventDefault(); ev.stopPropagation(); if(ev.stopImmediatePropagation) ev.stopImmediatePropagation();
       window.answerFrenchTrainingV2348(Number(btn.getAttribute('data-index')));

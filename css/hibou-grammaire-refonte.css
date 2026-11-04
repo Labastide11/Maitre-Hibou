@@ -76,12 +76,12 @@
   margin:0 0 12px!important;
   text-align:center!important;
 }
-#frenchTrainingOverlayV2348 .fr-ce2-question-screen .fr-v2348-options {
+#frenchTrainingOverlayV2348 .fr-ce2-question-screen :is(.fr-v2348-option, .fr-belt-validation-option)s {
   display:grid!important;
   gap:9px!important;
   margin:0!important;
 }
-#frenchTrainingOverlayV2348 .fr-ce2-question-screen .fr-v2348-option {
+#frenchTrainingOverlayV2348 .fr-ce2-question-screen :is(.fr-v2348-option, .fr-belt-validation-option) {
   display:flex!important;
   align-items:center!important;
   gap:11px!important;
@@ -97,7 +97,7 @@
   line-height:1.25!important;
   text-align:left!important;
 }
-#frenchTrainingOverlayV2348 .fr-ce2-question-screen .fr-v2348-option::before {
+#frenchTrainingOverlayV2348 .fr-ce2-question-screen :is(.fr-v2348-option, .fr-belt-validation-option)::before {
   content:'';
   display:block;
   width:17px;
@@ -107,16 +107,16 @@
   border-radius:50%;
   box-sizing:border-box;
 }
-#frenchTrainingOverlayV2348 .fr-ce2-question-screen .fr-v2348-option:not(:disabled):hover {
+#frenchTrainingOverlayV2348 .fr-ce2-question-screen :is(.fr-v2348-option, .fr-belt-validation-option):not(:disabled):hover {
   border-color:#8370d1!important;
   background:#f8f6ff!important;
 }
-#frenchTrainingOverlayV2348 .fr-ce2-question-screen .fr-v2348-option:focus-visible {
+#frenchTrainingOverlayV2348 .fr-ce2-question-screen :is(.fr-v2348-option, .fr-belt-validation-option):focus-visible {
   outline:3px solid #6858e0!important;
   outline-offset:2px!important;
 }
-#frenchTrainingOverlayV2348 .fr-ce2-question-screen .fr-v2348-option.correct {background:#eaf8ed!important;border-color:#45b56e!important;}
-#frenchTrainingOverlayV2348 .fr-ce2-question-screen .fr-v2348-option.wrong {background:#fff0f1!important;border-color:#ef6976!important;}
+#frenchTrainingOverlayV2348 .fr-ce2-question-screen :is(.fr-v2348-option, .fr-belt-validation-option).correct {background:#eaf8ed!important;border-color:#45b56e!important;}
+#frenchTrainingOverlayV2348 .fr-ce2-question-screen :is(.fr-v2348-option, .fr-belt-validation-option).wrong {background:#fff0f1!important;border-color:#ef6976!important;}
 #frenchTrainingOverlayV2348 .fr-ce2-question-screen .fr-v2348-feedback {font-size:15px!important;min-height:0!important;}
 #frenchTrainingOverlayV2348 .fr-ce2-result-screen .fr-v2348-result h3 {font-size:clamp(22px,2vw,29px)!important;}
 @media(max-width:700px){
@@ -137,8 +137,8 @@
   padding:14px 18px!important; margin:0 0 12px!important;
   font-size:clamp(18px,1.4vw,23px)!important; line-height:1.35!important;
 }
-#frenchTrainingOverlayV2348 .fr-ce2-question-screen .fr-v2348-options {gap:9px!important;}
-#frenchTrainingOverlayV2348 .fr-ce2-question-screen .fr-v2348-option {
+#frenchTrainingOverlayV2348 .fr-ce2-question-screen :is(.fr-v2348-option, .fr-belt-validation-option)s {gap:9px!important;}
+#frenchTrainingOverlayV2348 .fr-ce2-question-screen :is(.fr-v2348-option, .fr-belt-validation-option) {
   height:auto!important; min-height:54px!important; padding:11px 14px!important;
   font-size:clamp(16px,1.2vw,19px)!important;
 }

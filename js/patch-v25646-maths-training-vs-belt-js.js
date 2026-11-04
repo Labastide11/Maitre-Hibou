@@ -7,6 +7,10 @@
   var BELT_COUNT = 20;
   var RECORD_PREFIX = 'hibou_v2343_maths_training_record_';
   var PROGRESS_PREFIX = 'hibou_v222_maths_progress_';
+  var PRACTICE_PREFIX = 'hibou_math_practice_2_successes_v1_';
+  var TWO_PRACTICES_REQUIRED = 2;
+  var baseMathUnlock = null;
+  var baseMathStateHTML = null;
   var trainingState = null;
   var beltState = null;
   var beltAdvanceTimer = null;
@@ -60,7 +64,88 @@
     if(key.indexOf('multiplier_10_100_1000')!==-1){ var mult=[10,100,1000][rnd(0,2)], base=rnd(2,50); return q('Combien font '+base+' × '+mult+' ?',base*mult); }
     return q('Combien font 8 + 7 ?',15);
   }
-  function makeQuestions(belt, count){ var arr=[]; for(var i=0;i<count;i++) arr.push(makeOneQuestion(belt)); return arr; }
+  // Tirage sans doublon, également pour les 20 questions de la validation.
+  function makeQuestions(belt, count){
+    var arr=[], seen=Object.create(null), attempts=0;
+    while(arr.length<count && attempts<5000){
+      attempts++;
+      var question=makeOneQuestion(belt);
+      var key=norm(question.q);
+      if(seen[key]) continue;
+      seen[key]=true;
+      arr.push(question);
+    }
+    if(arr.length<count) throw new Error('Banque Maths insuffisante : '+(belt.ceinture||'')+' ('+arr.length+'/'+count+')');
+    return arr;
+  }
+  function practiceKey(belt){ return PRACTICE_PREFIX+studentKey()+'_'+norm(belt.ceinture); }
+  function practiceData(belt){
+    try {
+      var data=JSON.parse(localStorage.getItem(practiceKey(belt))||'null');
+      return data && Array.isArray(data.attempts) ? data : {attempts:[]};
+    }catch(e){ return {attempts:[]}; }
+  }
+  function practiceCount(belt){
+    // Les acquis antérieurs (ceinture déjà validée) ne sont jamais révoqués.
+    if(isAlreadyValidated(belt)) return TWO_PRACTICES_REQUIRED;
+    var successes=practiceData(belt).attempts.filter(function(a){return a && a.total===10;});
+    // 1er défi : 7/10 ; 2e défi, distinct : 8/10.
+    var first=-1; for(var i=0;i<successes.length;i++) if(successes[i].score>=7){first=i;break;}
+    if(first<0) return 0; for(var j=first+1;j<successes.length;j++) if(successes[j].score>=8) return 2;
+    return 1;
+  }
+  function isAlreadyValidated(belt){
+    var data=loadProgress();
+    return !!((data.belts||[]).some(function(x){
+      return x && (x.skillId===belt.skillId || norm(x.ceinture)===norm(belt.ceinture)) && Number(x.score)>=15;
+    }));
+  }
+  function savePracticeAttempt(st,total){
+    if(st.practiceSaved) return practiceCount(st.belt);
+    st.practiceSaved=true;
+    try{
+      var data=practiceData(st.belt);
+      data.attempts.push({id:'math-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2),score:st.score,total:total,date:new Date().toISOString()});
+      // Ne jamais perdre les deux réussites acquises, même après de nombreux essais.
+      if(data.attempts.length>100){
+        // Préserver l'ordre des réussites pour ne jamais révoquer un déblocage.
+        var firstSuccess=data.attempts.filter(function(a){return a.score>=7 && a.total===10;})[0];
+        var secondSuccess=data.attempts.filter(function(a){return a.score>=8 && a.total===10 && firstSuccess && a.id!==firstSuccess.id;})[0];
+        var retained=data.attempts.slice(-60);
+        [firstSuccess,secondSuccess].filter(Boolean).forEach(function(a){if(!retained.some(function(x){return x.id===a.id;})) retained.unshift(a);});
+        data.attempts=retained;
+      }
+      localStorage.setItem(practiceKey(st.belt),JSON.stringify(data));
+    }catch(e){ console.warn('Suivi des entraînements Maths non enregistré',e); }
+    try{window.dispatchEvent(new CustomEvent('hibou:math-practice-updated',{detail:{belt:st.belt.ceinture,count:practiceCount(st.belt)}}));}catch(e){}
+    return practiceCount(st.belt);
+  }
+  function trainingMedal(score){return score===10?'🥇 Or':score===9?'🥈 Argent':score===8?'🥉 Bronze':'';}
+  function isMathBeltReady(belt){
+    var oldAllowed=typeof baseMathUnlock==='function' ? baseMathUnlock(belt) : belt.niveau===1;
+    return !!(oldAllowed && (practiceCount(belt)>=TWO_PRACTICES_REQUIRED || isAlreadyValidated(belt)));
+  }
+  window.hibouMathPracticeCount=function(id){return practiceCount(findBelt(id));};
+  window.hibouMathPracticeReady=function(id){return isMathBeltReady(findBelt(id));};
+  // Ne pas supprimer la progression séquentielle existante : on AJOUTE la condition des 2 réussites.
+  function installMathPracticeGate(){
+    if(window.isMathUnlockedV222 && window.isMathUnlockedV222.__mhTwoPractices) return;
+    if(typeof window.isMathUnlockedV222==='function') baseMathUnlock=window.isMathUnlockedV222;
+    if(typeof window.mathStateHTMLV222==='function') baseMathStateHTML=window.mathStateHTMLV222;
+    var wrapped=function(belt){return isMathBeltReady(belt);};
+    wrapped.__mhTwoPractices=true;
+    window.isMathUnlockedV222=wrapped;
+    window.mathStateHTMLV222=function(belt){
+      if(isAlreadyValidated(belt)) return baseMathStateHTML?baseMathStateHTML(belt):'✅ Ceinture validée';
+      var progress=practiceCount(belt);
+      if(progress<2) return '<div class="v22-state locked">🔒 '+progress+'/2 entraînements réussis<br><span>8/10 minimum à chaque fois</span></div>';
+      return baseMathStateHTML?baseMathStateHTML(belt):'<div class="v22-state ready">🔓 Tu peux passer la ceinture !</div>';
+    };
+  }
+  installMathPracticeGate();
+  // Les scripts du catalogue peuvent charger dans un autre ordre.
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',installMathPracticeGate,{once:true});
+
   function setMathsInner(html){ var inner=byId('mathsPopupInnerV2343'); if(inner) inner.innerHTML=html; }
   function mathsHeader(){ return '<div class="maths-v2343-header"><div class="maths-v2343-owl">🦉</div><div class="maths-v2343-title"><h2>🧮 Entraînements de calcul</h2><p>Entraînement = correction après chaque calcul.</p><div class="maths-v2343-note">La ceinture, elle, garde les corrections pour la fin du test.</div></div></div>'; }
   function startTimer(){ clearInterval(timerId); trainingState.started=Date.now(); trainingState.elapsed=0; timerId=setInterval(function(){ trainingState.elapsed=Date.now()-trainingState.started; var el=byId('mathsTimerValueV2343'); if(el) el.textContent=fmt(trainingState.elapsed); },250); }
@@ -74,7 +159,7 @@
       +'<div class="maths-v2343-question">'+esc(qu.q)+'</div><div class="maths-v2343-options">'+opts+'</div><div id="mathsFeedbackV25645"></div>'
       +'</section></div>');
   }
-  window.startMathsTrainingV2343 = function(beltId){ var belt=findBelt(beltId); trainingState={belt:belt,questions:makeQuestions(belt,TRAINING_COUNT),index:0,score:0,answers:[],answered:false,started:0,elapsed:0}; startTimer(); renderTrainingQuestion(); };
+  window.startMathsTrainingV2343 = function(beltId){ var belt=findBelt(beltId); trainingState={belt:belt,questions:makeQuestions(belt,TRAINING_COUNT),index:0,score:0,answers:[],answered:false,started:0,elapsed:0,practiceSaved:false}; startTimer(); renderTrainingQuestion(); };
   window.answerMathsTrainingV2343 = function(choice){
     var st=trainingState; if(!st || st.answered) return; st.answered=true; choice=Number(choice);
     var qu=st.questions[st.index], correct=Number(qu.correct), ok=choice===correct; if(ok) st.score++;
@@ -91,8 +176,17 @@
   }
   function saveTrainingRecord(st,total){ try{ var key=RECORD_PREFIX+studentKey()+'_'+norm(st.belt.ceinture||st.belt.label); var old=JSON.parse(localStorage.getItem(key)||'null'); if(!old || st.score>Number(old.score||0) || (st.score===Number(old.score||0) && st.elapsed<Number(old.time||Infinity))) localStorage.setItem(key,JSON.stringify({score:st.score,total:total,time:st.elapsed,date:new Date().toISOString()})); }catch(e){} }
   function renderTrainingResult(){
-    var st=trainingState; if(!st) return; stopTimer(); var total=st.questions.length||TRAINING_COUNT; saveTrainingRecord(st,total);
-    setMathsInner(mathsHeader()+'<div class="maths-v2343-content"><section class="maths-v2343-panel"><div class="maths-v2343-result"><h3>Bravo, entraînement terminé !</h3><div class="maths-v2343-score-grid"><div class="maths-v2343-score-card">Score<b>'+st.score+' / '+total+'</b></div><div class="maths-v2343-score-card">Temps total<b>'+fmt(st.elapsed)+'</b></div><div class="maths-v2343-score-card">Moyenne<b>'+avg(st.elapsed,total)+'</b></div></div><div class="maths-v2343-record">🦉 Correction de l’entraînement</div>'+reviewHTML(st.answers)+'<div class="maths-v2343-actions"><button type="button" class="maths-v2343-action" onclick="startMathsTrainingV2343(\''+esc(st.belt.ceinture)+'\')">🧮 Refaire 10 calculs</button><button type="button" class="maths-v2343-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderMathsTrainingListV2343()">← Retour aux entraînements</button><button type="button" class="maths-v2343-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())closeMathsTrainingPopupV2343()">Fermer</button></div></div></section></div>');
+    var st=trainingState; if(!st) return; stopTimer();
+    var total=st.questions.length||TRAINING_COUNT;
+    saveTrainingRecord(st,total);
+    var count=savePracticeAttempt(st,total), medal=trainingMedal(st.score);
+    var ready=isMathBeltReady(st.belt);
+    var message=count>=2 ? 'Magnifique ! Tes deux défis sont réussis. Tu es prêt à passer ta ceinture !' : count===1 ? 'Bravo ! Premier défi réussi. À présent, réussis 8 calculs sur 10 dans une nouvelle série !' : 'Courage ! Pour commencer, réussis au moins 7 calculs sur 10. Tu peux réessayer !';
+    var beltBtn=ready
+      ? '<button type="button" class="maths-v2343-action" onclick="closeMathsTrainingPopupV2343();startMathSkillValidationV222(\''+esc(st.belt.skillId)+'\')">🔓 Passer ma ceinture — 20 questions</button>'
+      : '<button type="button" class="maths-v2343-action secondary" disabled aria-disabled="true" style="opacity:.55;cursor:not-allowed">🔒 Validation verrouillée · '+count+'/2 réussites</button>';
+    setMathsInner(mathsHeader()+'<div class="maths-v2343-content"><section class="maths-v2343-panel"><div class="maths-v2343-result"><h3>'+(count>=2?'🦉 Tu es prêt pour ta ceinture !':count===1?'🦉 Bravo, premier défi réussi !':'🦉 Continue, tu vas y arriver !')+'</h3><p style="font-size:1.08rem;font-weight:650;margin:8px 0">'+esc(message)+'</p><div style="font-size:1.35rem;font-weight:bold;margin:8px 0">'+(medal||'💪 En progrès')+'</div><div class="maths-v2343-score-grid"><div class="maths-v2343-score-card">Score<b>'+st.score+' / '+total+'</b></div><div class="maths-v2343-score-card">Temps total<b>'+fmt(st.elapsed)+'</b></div><div class="maths-v2343-score-card">Moyenne<b>'+avg(st.elapsed,total)+'</b></div></div><div class="maths-v2343-record">🦉 Correction de l’entraînement</div>'+reviewHTML(st.answers)+'<div class="maths-v2343-actions">'+beltBtn+'<button type="button" class="maths-v2343-action" onclick="startMathsTrainingV2343(\''+esc(st.belt.ceinture)+'\')">🧮 Refaire 10 calculs</button><button type="button" class="maths-v2343-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())renderMathsTrainingListV2343()">← Retour aux entraînements</button><button type="button" class="maths-v2343-action secondary" onclick="if(!window.returnMHTrainingFromBelt||!window.returnMHTrainingFromBelt())closeMathsTrainingPopupV2343()">Fermer</button></div></div></section></div>');
+
     try{
       var scoreText='Score '+st.score+' / '+total+' en '+fmt(st.elapsed);
       var mentalPayload={
@@ -126,9 +220,10 @@
   function medalFor(score){ if(score>=19) return '🥇 Or'; if(score>=17) return '🥈 Argent'; if(score>=15) return '🥉 Bronze'; return ''; }
   function loadProgress(){ try{return JSON.parse(localStorage.getItem(PROGRESS_PREFIX+studentKey())||'{"belts":[]}');}catch(e){return {belts:[]};} }
   function saveProgress(data){ try{localStorage.setItem(PROGRESS_PREFIX+studentKey(),JSON.stringify(data||{belts:[]}));}catch(e){} }
-  function saveBeltSuccess(st,medal){ var data=loadProgress(); data.belts=data.belts||[]; data.belts.push({skillId:st.belt.skillId,ceinture:st.belt.ceinture,label:st.belt.label,score:st.score,medal:medal,date:new Date().toISOString()}); saveProgress(data); }
+  function saveBeltSuccess(st,medal){ var data=loadProgress(); data.belts=data.belts||[]; var current=data.belts.filter(function(x){return x.skillId===st.belt.skillId;}).reduce(function(best,x){return Math.max(best,Number(x.score||0));},0); if(st.score>current){ data.belts.push({skillId:st.belt.skillId,ceinture:st.belt.ceinture,label:st.belt.label,score:st.score,medal:medal,date:new Date().toISOString()}); saveProgress(data); } }
   window.startMathSkillValidationV222 = function(skillId){
-    var belt=findBelt(skillId); if(typeof window.isMathUnlockedV222==='function' && !window.isMathUnlockedV222(belt)) return;
+    installMathPracticeGate();
+    var belt=findBelt(skillId); if(!isMathBeltReady(belt)) return;
     ensureBeltOverlay().classList.remove('hidden');
     window.__hibouMathBeltTestActiveV2574 = true;
     if(beltAdvanceTimer){ clearTimeout(beltAdvanceTimer); beltAdvanceTimer=null; }
@@ -154,7 +249,7 @@
   };
   window.nextMathSkillQuestionV222 = function(){ var st=beltState; if(!st) return; st.index++; if(st.index>=st.questions.length) renderBeltResult(); else renderBeltQuestion(); };
   function renderBeltResult(){
-    var st=beltState; if(!st) return; var total=st.questions.length||BELT_COUNT, medal=medalFor(st.score); if(medal){
+    var st=beltState; if(!st || st.resultShown) return; st.resultShown=true; var total=st.questions.length||BELT_COUNT, medal=medalFor(st.score); if(medal){
       saveBeltSuccess(st,medal);
       try{
         var beltColor = st.belt.colorName || st.belt.ceinture || '';
@@ -222,7 +317,7 @@
         },80);
       }catch(e){try{console.warn('Tentative ceinture Maths non ajoutée au parcours',e);}catch(ignore){}}
     }
-    setBeltInner('<div class="v190-belt-box"><h3>'+(medal?'🎉 Ceinture validée !':'🙂 Encore un peu d’entraînement')+'</h3><div class="v190-score">'+st.score+' / '+total+'</div><div class="v190-medal">'+(medal||'💪')+'</div><div class="v190-rules">'+(medal?'Bravo ! Voici la correction du test.':'Il faut au moins 15 bonnes réponses. Regarde la correction puis entraîne-toi.')+'</div>'+reviewHTML(st.answers)+'<button class="belt-btn secondary" onclick="window.__hibouMathBeltTestActiveV2574=false;openCompetenceValidation()">Retour aux ceintures</button></div>');
+    setBeltInner('<div class="v190-belt-box"><h3>'+(medal?'🎉 Ceinture validée !':'🙂 Encore un peu d’entraînement')+'</h3><div class="v190-score">'+st.score+' / '+total+'</div><div class="v190-medal">'+(medal||'💪')+'</div><div class="v190-rules">'+(medal?'Bravo ! Tu as obtenu ta ceinture '+esc(st.belt.colorName||st.belt.ceinture)+' ! Ta meilleure médaille est conservée.':'Tu peux réessayer la ceinture sans refaire les deux défis. Regarde la correction pour progresser.')+'</div>'+reviewHTML(st.answers)+'<button class="belt-btn secondary" onclick="window.__hibouMathBeltTestActiveV2574=false;openCompetenceValidation()">Retour aux ceintures</button></div>');
     if(typeof window.refreshV196MedalHeader==='function') setTimeout(window.refreshV196MedalHeader,100);
     if(typeof window.refreshV168BeltCounters==='function') setTimeout(window.refreshV168BeltCounters,120);
     if(typeof window.renderHibouProfile==='function') setTimeout(window.renderHibouProfile,150);

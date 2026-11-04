@@ -195,9 +195,13 @@
     clearAutoAdvance();
     stopTimer();
     const rows = allBelts().map(function(b){
+      var achieved=typeof window.hibouMathPracticeCount==='function' ? window.hibouMathPracticeCount(b.ceinture) : 0;
+      var ready=typeof window.hibouMathPracticeReady==='function' && window.hibouMathPracticeReady(b.ceinture);
+      var status='<div style="font-size:.84rem;font-weight:700;margin-top:4px;opacity:.82">'+
+        (ready?'🔓 Validation débloquée': '🔒 Défi '+(achieved+1)+'/2 · '+(achieved===0?'7/10':'8/10')+' minimum')+'</div>';
       return '<article class="maths-v2343-belt-card">'
         + '<div class="maths-v2343-dot" style="--belt-color:'+esc(b.color)+';border-color:'+esc(b.border)+'"></div>'
-        + '<div class="maths-v2343-belt-main"><strong>'+esc(b.label)+'</strong><span>'+esc(b.colorName)+'</span></div>'
+        + '<div class="maths-v2343-belt-main"><strong>'+esc(b.label)+'</strong><span>'+esc(b.colorName)+'</span>'+status+'</div>'
         + '<button type="button" class="maths-v2343-train-btn" onclick="startMathsTrainingV2343(\''+esc(b.ceinture)+'\')">🧮 S’entraîner — 10 calculs</button>'
         + '</article>';
     }).join("");
