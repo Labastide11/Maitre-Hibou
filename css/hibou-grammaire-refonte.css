@@ -167,3 +167,44 @@
   .mh-subject-nav button:nth-child(3) {
   display: none !important;
 }
+
+/* Correctif 2026-11-04 : écran de récompense et corrections accessibles.
+   Le défilement se fait sur la fenêtre de Français, sans ascenseur imbriqué.
+   Conserve les boutons sous l'image de ceinture, y compris sur portable. */
+#frenchTrainingOverlayV2348:not(.hidden) {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+  scrollbar-width: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#frenchTrainingOverlayV2348 .fr-v2348-popup {
+  height: auto !important;
+  min-height: 100dvh !important;
+  max-height: none !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+}
+#frenchTrainingOverlayV2348 #frenchPopupInnerV2348 {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  flex: 0 0 auto !important;
+}
+#frenchTrainingOverlayV2348 .fr-ce2-result-screen,
+#frenchTrainingOverlayV2348 .fr-ce2-result-screen .fr-v2348-panel,
+#frenchTrainingOverlayV2348 .fr-ce2-result-screen .fr-v2348-result {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+#frenchTrainingOverlayV2348 .fr-ce2-result-screen {
+  padding-bottom: max(96px, env(safe-area-inset-bottom)) !important;
+}
+#frenchTrainingOverlayV2348 .fr-ce2-result-screen .fr-v2348-actions {
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  padding-bottom: 18px !important;
+}
