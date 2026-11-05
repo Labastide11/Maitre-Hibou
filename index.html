@@ -21078,7 +21078,7 @@ body.v21-final .birthday-top-card-v2414{
   // window.HIBOU_BIRTHDAYS = [{prenom:"Léa", day:12, month:7, age:8}, {prenom:"Tim", date:"03/11/2016"}];
   window.HIBOU_BIRTHDAYS = window.HIBOU_BIRTHDAYS || [];
 
-  // V25.8.85 : cache distinct, exclusivement issu du roster officiel actif.
+  // V25.8.86 : cache distinct, exclusivement issu du roster officiel actif.
   // Ne jamais réimporter les anciens anniversaires locaux.
   var CACHE_KEY = "hibou_birthdays_verified_v25885";
   var CACHE_STAMP_KEY = "hibou_birthdays_verified_v25885_ts";
@@ -21173,16 +21173,45 @@ body.v21-final .birthday-top-card-v2414{
       new Promise(function(_, reject){ timer = setTimeout(function(){ reject(new Error("timeout anniversaires")); }, ms); })
     ]).finally(function(){ clearTimeout(timer); });
   }
+  // V25.8.86 : lecture authentifiée de l'onglet eleves ACTUEL.
+  // L'ancien fetchSheetsStudentsV167 utilisait une URL d'API vide.
+  function fetchActiveRosterForBirthdays(){
+    return new Promise(function(resolve,reject){
+      var url='',deviceKey='';
+      try{
+        url = String(localStorage.getItem('hibou_sync_api_url_v25754') || '').trim();
+        deviceKey = String(localStorage.getItem('hibou_sync_device_key_v25754') || '').trim();
+      }catch(err){}
+      if(!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/i.test(url) || !deviceKey){
+        reject(new Error('Connexion Google Sheets non configurée')); return;
+      }
+      var cb='__hibouBirthdaysActive_'+Date.now()+'_'+Math.floor(Math.random()*1000000);
+      var script=document.createElement('script'),finished=false;
+      var timeout=setTimeout(function(){finish(new Error('Délai dépassé : liste des élèves'));},BIRTHDAY_TIMEOUT_MS);
+      function finish(err,result){
+        if(finished)return; finished=true;clearTimeout(timeout);
+        try{delete window[cb];}catch(e){}
+        if(script.parentNode)script.parentNode.removeChild(script);
+        if(err)reject(err);else resolve(result);
+      }
+      window[cb]=function(data){
+        if(!data || data.ok===false){finish(new Error(String(data && (data.error || data.code) || 'Liste indisponible')));return;}
+        var rows=Array.isArray(data)?data:(Array.isArray(data.eleves)?data.eleves:(Array.isArray(data.students)?data.students:(Array.isArray(data.data)?data.data:null)));
+        if(!rows){finish(new Error('Format de la liste Google Sheets invalide'));return;}
+        finish(null,rows);
+      };
+      script.onerror=function(){finish(new Error('Impossible de contacter Google Sheets'));};
+      var params=new URLSearchParams({action:'get_eleves',device_key:deviceKey,tablet_key:deviceKey,callback:cb,_:String(Date.now())});
+      script.src=url+'?'+params.toString();
+      document.head.appendChild(script);
+    });
+  }
   function loadBirthdays(force){
     var cached = localBirthdays();
     if(!force && cached.length){birthdayStatus = "ready";return Promise.resolve(cached);}
     if(birthdayRequest) return birthdayRequest;
-    if(typeof window.fetchSheetsStudentsV167 !== "function"){
-      birthdayStatus = "error";
-      return Promise.resolve(cached);
-    }
     birthdayStatus = "loading";
-    birthdayRequest = withTimeout(window.fetchSheetsStudentsV167(true), BIRTHDAY_TIMEOUT_MS)
+    birthdayRequest = fetchActiveRosterForBirthdays()
       .then(function(rows){
         if(!Array.isArray(rows)) throw new Error("Liste des élèves invalide");
         var active = rows.filter(function(s){
@@ -21191,6 +21220,7 @@ body.v21-final .birthday-top-card-v2414{
         // La réponse officielle REMPLACE intégralement l'ancienne liste.
         // Aucune fusion avec les anniversaires des années précédentes.
         var result = mergeBirthdays([active]);
+        if(active.length && !result.length) throw new Error('Aucune date de naissance exploitable dans la liste reçue');
         localStorage.setItem(CACHE_KEY, JSON.stringify(result));
         localStorage.setItem(CACHE_STAMP_KEY, String(Date.now()));
         birthdayStatus = "ready";
