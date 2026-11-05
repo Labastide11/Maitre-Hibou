@@ -1710,9 +1710,11 @@
     return 1;
   }
   function saveFrenchAttempt(belt,score,total){
-    var d=frenchProgress(belt);d.attempts.push({id:Date.now().toString(36)+'_'+Math.random().toString(36).slice(2),score:score,total:total,date:new Date().toISOString()});
+    var d=frenchProgress(belt);var attempt={id:'fr-'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2),score:score,total:total,date:new Date().toISOString()};d.attempts.push(attempt);
     // Conserver les réussites historiques et l'ordre des tentatives.
     try{localStorage.setItem(frenchKey(belt),JSON.stringify(d));}catch(e){console.warn('Sauvegarde Français impossible',e);}
+    // Une trace distincte par tentative : persistée par le journal vers parcours_eleves.
+    try{if(typeof window.hibouTrackEvent==='function')window.hibouTrackEvent({type:'entrainement_termine',matiere:'Français',domaine:'Grammaire',titre:'Défi de grammaire · ceinture '+belt.id,score:score,total:total,source:'ceintures_grammaire',resultat:score>=7?'reussite':'a_renforcer',exercise_types:'french_belt_practice_'+belt.id,learning_session_id:attempt.id,competence_label:belt.title||belt.label||'',date_iso:attempt.date});}catch(e){console.warn('Journal défi de grammaire indisponible',e);}
     try{window.dispatchEvent(new CustomEvent('hibou:french-belt-progress',{detail:{ceinture:belt.id,step:frenchStep(belt)}}));}catch(e){}
   }
   function saveFrenchBelt(belt,score){var d=frenchProgress(belt);d.best=Math.max(Number(d.best||0),score);try{localStorage.setItem(frenchKey(belt),JSON.stringify(d));}catch(e){} }
@@ -1722,6 +1724,7 @@
   window.hibouFrenchBeltStep=function(id){return frenchStep(findBelt(id));};
   window.hibouFrenchBeltBest=function(id){return frenchProgress(findBelt(id)).best||0;};
   function startFrenchBeltValidation(id){
+    if(typeof window.hibouLoadBeltProgress==='function') window.hibouLoadBeltProgress();
     var belt=findBelt(id);if(frenchStep(belt)<2)return;
     // Annuler tout changement d'écran différé d'un entraînement précédent.
     try{if(state && state.nextTimer){clearTimeout(state.nextTimer);state.nextTimer=null;}}catch(e){}
@@ -1752,6 +1755,8 @@
     var st=frenchBeltState;if(!st||st.finished)return;st.finished=true;
     var pass=st.score>=15;
     if(pass)saveFrenchBelt(st.belt,st.score);
+    // Toutes les tentatives de validation sont traçables, même sous 15/20.
+    try{if(typeof window.hibouTrackEvent==='function')window.hibouTrackEvent({type:pass?'ceinture_validee':'ceinture_tentee',matiere:'Français',domaine:'Grammaire',titre:'Ceinture '+st.belt.id+' de grammaire '+(pass?'validée':'à reprendre'),score:st.score,total:total,source:'ceinture_grammaire',resultat:pass?'reussite':'a_reprendre',medaille:pass?frenchMedal(st.score,20):'',exercise_types:'french_belt_validation_'+st.belt.id,learning_session_id:'fr-belt-'+st.belt.id+'-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2),competence_label:st.belt.title||''});}catch(e){console.warn('Journal validation de grammaire indisponible',e);}
     var best=frenchProgress(st.belt).best||0;
     var summary=pass?'Bravo ! Tu as obtenu ta ceinture '+st.belt.id+' !':'Tu n’as pas encore obtenu ta ceinture. Tu peux réessayer sans refaire les deux défis !';
     var corrections=st.answers.map(function(a){return '<div style="padding:7px 0;border-bottom:1px solid #ddd"><strong>'+esc(a.q)+'</strong><div>'+(a.ok?'✅ ':'❌ ')+esc(a.chosen)+' · Réponse : '+esc(a.correct)+'</div></div>';}).join('');
@@ -1849,6 +1854,7 @@
     renderQuestion();
   }
   window.startFrenchTrainingV2348 = function(activityId){
+    if(typeof window.hibouLoadBeltProgress==='function') window.hibouLoadBeltProgress();
     if(activityId==='idees') return renderIdea();
     var belt=findBelt(activityId);
     try{ clearTimeout(state.nextTimer); }catch(e){}

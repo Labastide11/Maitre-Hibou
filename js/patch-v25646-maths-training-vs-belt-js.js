@@ -105,7 +105,8 @@
     st.practiceSaved=true;
     try{
       var data=practiceData(st.belt);
-      data.attempts.push({id:'math-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2),score:st.score,total:total,date:new Date().toISOString()});
+      var attempt={id:'math-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2),score:st.score,total:total,date:new Date().toISOString()};
+      data.attempts.push(attempt);
       // Ne jamais perdre les deux réussites acquises, même après de nombreux essais.
       if(data.attempts.length>100){
         // Préserver l'ordre des réussites pour ne jamais révoquer un déblocage.
@@ -117,6 +118,8 @@
       }
       localStorage.setItem(practiceKey(st.belt),JSON.stringify(data));
     }catch(e){ console.warn('Suivi des entraînements Maths non enregistré',e); }
+    // Le stockage local doit réussir indépendamment de l'écriture du journal.
+    try{if(attempt&&typeof window.hibouTrackEvent==='function')window.hibouTrackEvent({type:'entrainement_termine',matiere:'Maths',domaine:'Calcul mental',titre:'Défi de calcul · ceinture '+st.belt.ceinture,score:st.score,total:total,source:'ceintures_calcul',resultat:st.score>=7?'reussite':'a_renforcer',exercise_types:'math_belt_practice_'+st.belt.ceinture,learning_session_id:attempt.id,competence_label:st.belt.label||'',date_iso:attempt.date});}catch(e){console.warn('Journal calcul indisponible',e);}
     try{window.dispatchEvent(new CustomEvent('hibou:math-practice-updated',{detail:{belt:st.belt.ceinture,count:practiceCount(st.belt)}}));}catch(e){}
     return practiceCount(st.belt);
   }
@@ -159,7 +162,7 @@
       +'<div class="maths-v2343-question">'+esc(qu.q)+'</div><div class="maths-v2343-options">'+opts+'</div><div id="mathsFeedbackV25645"></div>'
       +'</section></div>');
   }
-  window.startMathsTrainingV2343 = function(beltId){ var belt=findBelt(beltId); trainingState={belt:belt,questions:makeQuestions(belt,TRAINING_COUNT),index:0,score:0,answers:[],answered:false,started:0,elapsed:0,practiceSaved:false}; startTimer(); renderTrainingQuestion(); };
+  window.startMathsTrainingV2343 = function(beltId){ if(typeof window.hibouLoadBeltProgress==='function')window.hibouLoadBeltProgress(); var belt=findBelt(beltId); trainingState={belt:belt,questions:makeQuestions(belt,TRAINING_COUNT),index:0,score:0,answers:[],answered:false,started:0,elapsed:0,practiceSaved:false}; startTimer(); renderTrainingQuestion(); };
   window.answerMathsTrainingV2343 = function(choice){
     var st=trainingState; if(!st || st.answered) return; st.answered=true; choice=Number(choice);
     var qu=st.questions[st.index], correct=Number(qu.correct), ok=choice===correct; if(ok) st.score++;
@@ -238,6 +241,7 @@
   function saveProgress(data){ try{localStorage.setItem(PROGRESS_PREFIX+studentKey(),JSON.stringify(data||{belts:[]}));}catch(e){} }
   function saveBeltSuccess(st,medal){ var data=loadProgress(); data.belts=data.belts||[]; var current=data.belts.filter(function(x){return x.skillId===st.belt.skillId;}).reduce(function(best,x){return Math.max(best,Number(x.score||0));},0); if(st.score>current){ data.belts.push({skillId:st.belt.skillId,ceinture:st.belt.ceinture,label:st.belt.label,score:st.score,medal:medal,date:new Date().toISOString()}); saveProgress(data); } }
   window.startMathSkillValidationV222 = function(skillId){
+    if(typeof window.hibouLoadBeltProgress==='function')window.hibouLoadBeltProgress();
     installMathPracticeGate();
     var belt=findBelt(skillId); if(!isMathBeltReady(belt)) return;
     ensureBeltOverlay().classList.remove('hidden');
@@ -281,6 +285,8 @@
           niveau:medal,
           medaille:medal,
           source:'ceinture_maths',
+          exercise_types:'math_belt_validation_'+st.belt.ceinture,
+          learning_session_id:'math-belt-'+st.belt.ceinture+'-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2),
           ceinture:beltColor,
           skill_id:st.belt.skillId || ''
         };
@@ -313,7 +319,7 @@
           skillId:st.belt.skillId||'',
           skill_id:st.belt.skillId||'',
           belt:{colorName:attemptColor,ceinture:st.belt.ceinture||'',label:attemptLabel,skillId:st.belt.skillId||''},
-          exercise_types:'ceinture_20_items',
+          exercise_types:'math_belt_validation_'+st.belt.ceinture,
           help_used:0,
           challenge_score:st.score,
           challenge_total:total,
