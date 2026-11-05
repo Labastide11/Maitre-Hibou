@@ -264,3 +264,60 @@ body[data-matiere="sciences"] #v24ScienceExercises .v25742-science-finish {
     grid-template-columns: 1fr;
   }
 }
+
+/* Ajustement validable — Séance 1, exercice 1 : photos plus compactes.
+   Les deux zones de tri remontent sans réduire la lisibilité des images. */
+@media (min-width: 1051px) {
+  body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="1"]
+  > .mh-science-type-sort:first-child .v24-science-sort-bank {
+    gap: 8px !important;
+    margin: 7px 0 10px !important;
+  }
+  body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="1"]
+  > .mh-science-type-sort:first-child .v24-science-sort-item.mh-photo-card {
+    padding: 6px 7px !important;
+    gap: 5px !important;
+    min-height: 0 !important;
+  }
+  body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="1"]
+  > .mh-science-type-sort:first-child .v24-science-sort-item.mh-photo-card img {
+    height: clamp(105px, 9vw, 135px) !important;
+    max-width: 190px !important;
+    object-fit: contain !important;
+  }
+  body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="1"]
+  > .mh-science-type-sort:first-child .v24-science-sort-item.mh-photo-card .mh-photo-label {
+    font-size: 15px !important;
+    line-height: 1.15 !important;
+  }
+}
+
+
+/* Séance 4 — exercice 1 : cadres de tri plus compacts.
+   Les six objets restent répartis sur 3 colonnes ; les zones de tri remontent. */
+@media (min-width: 1051px) {
+  body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="4"]
+  > .mh-science-type-sort:first-child .v24-science-sort-bank {
+    gap: 8px !important;
+    margin: 6px 0 9px !important;
+  }
+  body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="4"]
+  > .mh-science-type-sort:first-child .v24-science-sort-item.mh-photo-card {
+    min-height: 0 !important;
+    padding: 6px 8px !important;
+    gap: 4px !important;
+    justify-content: flex-start !important;
+  }
+  body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="4"]
+  > .mh-science-type-sort:first-child .v24-science-sort-item.mh-photo-card img {
+    width: 100% !important;
+    height: clamp(100px, 8vw, 130px) !important;
+    max-width: 210px !important;
+    object-fit: contain !important;
+  }
+  body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="4"]
+  > .mh-science-type-sort:first-child .v24-science-sort-item.mh-photo-card .mh-photo-label {
+    font-size: 15px !important;
+    line-height: 1.15 !important;
+  }
+}
