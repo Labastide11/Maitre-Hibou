@@ -60,7 +60,46 @@ function history(){
   });
   return out;
 }
-function bestCompetences(){var rows=(latestSnapshot&&Array.isArray(latestSnapshot.competences))?latestSnapshot.competences:[],best={};rows.forEach(function(r){var key=norm(r.skill_id||r.skillId||r.competence||r.texte||r.activite);if(!key)return;var rr=rank(r.medaille||r.medal||r.rank),score=parseInt(String(r.validations||'').split('/')[0],10)||Number(r.score)||0;if(!best[key]||rr>best[key].rank||(rr===best[key].rank&&score>best[key].score))best[key]={rank:rr,score:score,row:r}});return Object.keys(best).map(function(k){return best[k].row}).sort(function(a,b){return eventTime(b&&b.date)-eventTime(a&&a.date)})}
+/* Ceintures V25.8.63 — fusion des validations historiques et du journal Google Sheets.
+   La feuille parcours_eleves est la source des nouvelles ceintures validées.
+   Ne pas transformer les entraînements en ceintures, ni compter deux fois une médaille. */
+function beltFromEvent(e){
+  if(!e||!/^ceinture(?:_.*)?validee$/.test(norm(e.type)))return null;
+  var sc=Number(e.score),tot=Number(e.total),med=clean(e.medaille||e.medal);
+  if(!(rank(med)>0||(tot>0&&sc/tot>=0.75)))return null;
+  var text=clean([e.ceinture,e.couleur,e.belt_color,e.titre,e.texte,e.affichage,e.activite,e.competence_label].join(' '));
+  var match=text.match(/(?:ceinture\s+(?:de\s+)?(?:grammaire|maths|calcul|fran[cç]ais)\s*[·:—-]?\s*|ceinture\s+)(blanche|jaune|orange|vert(?:e)?\s*clair(?:e)?|vert(?:e)?\s*fonc[ée]e?|bleu(?:e)?\s*clair(?:e)?|bleu(?:e)?\s*fonc[ée]e?|rose|beige|violette?|marron|rouge|grise?|noire?)(?=\b|\s|$)/i);
+  var color=match?match[1]:'';
+  if(!color){
+    var id=clean([e.skill_id,e.skillId,e.ceinture,e.titre,e.texte].join(' '));
+    match=id.match(/(?:^|[_\s-])(blanche|jaune|orange|vert_clair|vert_fonce|bleu_clair|bleu_fonce|rose|beige|violet|marron|rouge|gris|noir)(?:$|[_\s-])/i);
+    if(match)color=match[1];
+  }
+  if(!color)return null; // ne jamais attribuer arbitrairement la blanche
+  var category=beltCategory(e), key=beltColorKey({couleur:color,matiere:e.matiere,activite:e.activite});
+  return {matiere:category==='maths'?'Maths':'Français',domaine:category==='maths'?'Calcul':'Grammaire',
+    competence:(category==='maths'?'Calcul':'Grammaire')+' — ceinture '+beltColorLabel(key).toLowerCase(),
+    couleur:key,medaille:med||(sc>=19?'Or':sc>=17?'Argent':'Bronze'),
+    score:sc,total:tot,validations:sc+'/'+tot,date:e.date_iso||e.date,
+    skill_id:category+'_'+key};
+}
+function bestCompetences(){
+  var rows=(latestSnapshot&&Array.isArray(latestSnapshot.competences))?latestSnapshot.competences:[],best={};
+  function add(r){
+    if(!r)return;
+    var color=beltColorKey(r),cat=beltCategory(r);
+    var raw=norm([r.couleur,r.color,r.belt_color,r.ceinture,r.competence,r.texte,r.activite,r.skill_id,r.skillId].join(' '));
+    var hasColor=/(blanch|jaun|orang|vert|bleu|rose|beige|violet|marron|roug|gris|noir)/.test(raw);
+    var key=hasColor?cat+':'+color:cat+':legacy:'+norm(r.skill_id||r.skillId||r.competence||r.texte||r.activite);
+    if(!key||key===cat+':legacy:')return;
+    var rr=rank(r.medaille||r.medal||r.rank),score=Number(r.score)||parseInt(String(r.validations||'').split('/')[0],10)||0;
+    if(!rr)return;
+    if(!best[key]||rr>best[key].rank||(rr===best[key].rank&&score>best[key].score))best[key]={rank:rr,score:score,row:r};
+  }
+  rows.forEach(add);
+  history().forEach(function(e){add(beltFromEvent(e));});
+  return Object.keys(best).map(function(k){return best[k].row}).sort(function(a,b){return eventTime(b&&b.date)-eventTime(a&&a.date)});
+}
 function medalCounts(){var c={or:0,argent:0,bronze:0};bestCompetences().forEach(function(r){var x=rank(r.medaille||r.medal||r.rank);if(x===3)c.or++;else if(x===2)c.argent++;else if(x===1)c.bronze++});return c}
 function formatDate(v){var t=eventTime(v),d=t?new Date(t):null;if(!d||isNaN(d))return clean(v);return d.toLocaleDateString('fr-FR')+' à '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}
 function eventTitle(e){var raw=clean(e&&(e.titre||e.texte||e.affichage||e.activite)||'Activité');raw=raw.replace(/^[✅❌🧭⭐🏅📖🧮💬\s]+/,'').replace(/\s+[—-]\s+(?:LEC|COM|LIT)-?P\d-?\d{1,2}\b/gi,'').replace(/\s+[—-]\s+Je sais\b.*$/i,'').replace(/\s+[—-]\s+(?:🥇|🥈|🥉)?\s*(?:Or|Argent|Bronze)\b.*$/i,'').replace(/\s+[—-]\s+\d+\/\d+\b.*$/i,'');return studentLabel(raw)}

@@ -25,7 +25,7 @@ function beltNorm(v){return clean(v).toLowerCase().normalize('NFD').replace(/[\u
 function beltStudent(){
   var names=[window.prenomActuel,window.__hibouCurrentStudent,typeof window.currentStudentName==='function'?window.currentStudentName():window.currentStudentName,get('hibou_prenom'),get('elevePrenom')];
   try{var o=JSON.parse(get('hibou_current_student')||'{}');names.push(o.prenom||o.name);}catch(e){}
-  for(var i=0;i<names.length;i++){var n=clean(names[i]);if(n&&!/^(eleve|élève|invite|invité|test|null|undefined)$/i.test(n))return n;}
+  for(var i=0;i<names.length;i++){var n=clean(names[i]);if(n&&!/^(eleve|élève|invite|invité|null|undefined)$/i.test(n))return n;}
   return '';
 }
 function beltJson(k,f){return read(k,f);}
@@ -103,7 +103,7 @@ function mergeBeltRows(name,rows){
 function migrateLegacyBelts(name){
   if(typeof window.hibouTrackEvent!=='function')return;
   var student=beltNorm(name),flag='hibou_belt_legacy_export_v1_'+student;
-  if(get(flag)==='ok')return;
+  // Recontrôler les acquis après chaque connexion : une ceinture peut avoir été gagnée depuis le dernier export.
   var existing=read('hibou_journal_history_'+student,[]),queued=read(QE,[]),known={};
   existing.concat(queued).forEach(function(e){if(e&&e.learning_session_id)known[e.learning_session_id]=true;});
   function send(domain,b,kind,score,total,id,date,label){

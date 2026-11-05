@@ -21078,10 +21078,14 @@ body.v21-final .birthday-top-card-v2414{
   // window.HIBOU_BIRTHDAYS = [{prenom:"Léa", day:12, month:7, age:8}, {prenom:"Tim", date:"03/11/2016"}];
   window.HIBOU_BIRTHDAYS = window.HIBOU_BIRTHDAYS || [];
 
-  var CACHE_KEY = "hibou_birthdays_cache_v2418";
-  var CACHE_STAMP_KEY = "hibou_birthdays_cache_v2418_ts";
-  var BIRTHDAY_CACHE_MS = 6 * 60 * 60 * 1000;
-  var BIRTHDAY_TIMEOUT_MS = 1800;
+  // V25.8.85 : cache distinct, exclusivement issu du roster officiel actif.
+  // Ne jamais réimporter les anciens anniversaires locaux.
+  var CACHE_KEY = "hibou_birthdays_verified_v25885";
+  var CACHE_STAMP_KEY = "hibou_birthdays_verified_v25885_ts";
+  var BIRTHDAY_CACHE_MS = 5 * 60 * 1000;
+  var BIRTHDAY_TIMEOUT_MS = 22000;
+  var birthdayRequest = null;
+  var birthdayStatus = "loading";
   var MONTHS = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
 
   function byId(id){ return document.getElementById(id); }
@@ -21155,11 +21159,12 @@ body.v21-final .birthday-top-card-v2414{
     });
   }
   function localBirthdays(){
-    var fromStorage = [];
-    try{ fromStorage = JSON.parse(localStorage.getItem("hibou_birthdays_v2414") || "[]") || []; }catch(e){}
-    var fromCache = [];
-    try{ fromCache = JSON.parse(localStorage.getItem(CACHE_KEY) || "[]") || []; }catch(e){}
-    return mergeBirthdays([fromCache, window.HIBOU_BIRTHDAYS, fromStorage]);
+    try{
+      var stamp = Number(localStorage.getItem(CACHE_STAMP_KEY) || 0);
+      if(!stamp || Date.now() - stamp > BIRTHDAY_CACHE_MS) return [];
+      var fromCache = JSON.parse(localStorage.getItem(CACHE_KEY) || "[]");
+      return Array.isArray(fromCache) ? mergeBirthdays([fromCache]) : [];
+    }catch(e){return [];}
   }
   function withTimeout(promise, ms){
     var timer;
@@ -21168,26 +21173,34 @@ body.v21-final .birthday-top-card-v2414{
       new Promise(function(_, reject){ timer = setTimeout(function(){ reject(new Error("timeout anniversaires")); }, ms); })
     ]).finally(function(){ clearTimeout(timer); });
   }
-  async function loadBirthdays(force){
-    var local = localBirthdays();
-    var stamp = 0;
-    try{ stamp = Number(localStorage.getItem(CACHE_STAMP_KEY) || 0); }catch(e){}
-    if(!force && local.length && stamp && (Date.now() - stamp) < BIRTHDAY_CACHE_MS) return local;
-    if(typeof window.fetchSheetsStudentsV167 !== "function") return local;
-    try{
-      var rows = await withTimeout(window.fetchSheetsStudentsV167(false), BIRTHDAY_TIMEOUT_MS);
-      var active = (Array.isArray(rows) ? rows : []).filter(function(s){
-        return s && s.prenom && !["test","dev"].includes(norm(s.prenom)) && (isActive(s) || (s.active === false && !s.actif));
-      });
-      var merged = mergeBirthdays([local, active]);
-      try{
-        localStorage.setItem(CACHE_KEY, JSON.stringify(merged));
-        localStorage.setItem(CACHE_STAMP_KEY, String(Date.now()));
-      }catch(e){}
-      return merged;
-    }catch(e){
-      return local;
+  function loadBirthdays(force){
+    var cached = localBirthdays();
+    if(!force && cached.length){birthdayStatus = "ready";return Promise.resolve(cached);}
+    if(birthdayRequest) return birthdayRequest;
+    if(typeof window.fetchSheetsStudentsV167 !== "function"){
+      birthdayStatus = "error";
+      return Promise.resolve(cached);
     }
+    birthdayStatus = "loading";
+    birthdayRequest = withTimeout(window.fetchSheetsStudentsV167(true), BIRTHDAY_TIMEOUT_MS)
+      .then(function(rows){
+        if(!Array.isArray(rows)) throw new Error("Liste des élèves invalide");
+        var active = rows.filter(function(s){
+          return s && s.prenom && !["test","dev"].includes(norm(s.prenom)) && isActive(s);
+        });
+        // La réponse officielle REMPLACE intégralement l'ancienne liste.
+        // Aucune fusion avec les anniversaires des années précédentes.
+        var result = mergeBirthdays([active]);
+        localStorage.setItem(CACHE_KEY, JSON.stringify(result));
+        localStorage.setItem(CACHE_STAMP_KEY, String(Date.now()));
+        birthdayStatus = "ready";
+        return result;
+      }).catch(function(err){
+        birthdayStatus = "error";
+        console.warn("Anniversaires : liste actuelle indisponible", err);
+        return cached; // seulement si une liste récente et vérifiée existe
+      }).finally(function(){birthdayRequest = null;});
+    return birthdayRequest;
   }
   function todayParts(){
     var d = new Date();
@@ -21282,6 +21295,10 @@ body.v21-final .birthday-top-card-v2414{
       }).join("") : '<div class="birthday-empty-v2414">Aucun anniversaire</div>';
       return '<section class="birthday-month-v2414 '+(month === t.month ? 'current' : '')+'"><div class="birthday-month-title-v2414"><span>'+esc(name)+'</span><span class="birthday-count-v2414">'+items.length+'</span></div><div class="birthday-list-v2414">'+rows+'</div></section>';
     }).join("");
+    if(birthdayStatus === "error" && !(list || []).length){
+      body.innerHTML = '<div class="birthday-empty-v2414">Impossible de charger la liste actuelle des élèves. Réessaie dans quelques instants.</div>';
+      return;
+    }
     body.innerHTML = todayHTML + '<div class="birthday-month-grid-v2414">' + monthsHTML + '</div>';
   }
   function openBirthdaysPopup(){
@@ -21291,7 +21308,7 @@ body.v21-final .birthday-top-card-v2414{
     renderPopup(local);
     ov.classList.remove("hidden");
     // Mise à jour discrète : la popup est utilisable immédiatement, sans attendre Google Sheets.
-    loadBirthdays(false).then(function(list){
+    loadBirthdays(true).then(function(list){
       updateCard(list);
       renderPopup(list);
     });
@@ -24901,7 +24918,7 @@ body.v21-final .birthday-top-card-v2414 .birthday-summary-v2414{
     renderStart();
     window.savePrenom = loginStudent;
     window.savePrenomWithSheetsV167 = loginStudent;
-    window.fetchSheetsStudentsV167 = function(){ return loadRoster(false); };
+    window.fetchSheetsStudentsV167 = function(force){ return loadRoster(!!force); };
     window.__fetchHibouStudentsSecureV2567 = function(){ return loadRoster(false); };
     window.startGuestModeV2567 = loginGuest;
     window.showHibouStartV2567 = showStart;
