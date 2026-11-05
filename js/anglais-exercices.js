@@ -121,6 +121,7 @@ function saveBilanResult(subject,result){
 
   function renderEnglishHome(grid){
     grid.className = 'v24-english-shell';
+    delete grid.dataset.englishSession;
     grid.innerHTML =
       '<div class="v24-english-intro">'
       + '<div class="v24-english-panel"><h3>English Time CE2</h3><p>Choisis une séance. Tout reste dans cette popup : écouter, répondre, vérifier, puis revenir aux séances.</p></div>'
@@ -145,6 +146,7 @@ function saveBilanResult(subject,result){
   function renderEnglishSession(grid, id){
     var s = ENGLISH_SESSIONS.filter(function(x){return x.id === id;})[0] || ENGLISH_SESSIONS[0];
     grid.className = 'v24-english-shell';
+    grid.dataset.englishSession = String(s.id);
     grid.innerHTML =
       '<div class="v24-english-toolbar">'
       + '<button type="button" class="v24-english-back" id="v24EnglishBack">← Séances</button>'

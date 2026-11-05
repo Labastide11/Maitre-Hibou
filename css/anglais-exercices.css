@@ -951,3 +951,212 @@ button{font-family:inherit}button:focus-visible,a:focus-visible{outline:3px soli
     grid-template-columns:minmax(0,1fr) !important;
   }
 }
+
+/* Séance 6 — bilan anglais : fiche pleine largeur et cinq groupes de
+   compétences en deux colonnes. Les 15 questions restent inchangées. */
+#anglais-app #v24EnglishExercises[data-english-session="6"] {
+  display:block !important;
+  width:100%;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] > .v24-history-assessment-card {
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  min-width:0;
+  box-sizing:border-box;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-skills {
+  display:grid !important;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:10px;
+  margin:12px 0 20px;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-skill {
+  min-width:0;
+  padding:12px;
+  background:#f7f2ff;
+  border:2px solid #e5d8fc;
+  border-radius:14px;
+  font-weight:850;
+  line-height:1.3;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-skill small,
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-skill-group h4 small {
+  display:block !important;
+  font-size:0.85em;
+  font-weight:650;
+  line-height:1.35;
+  color:#696080;
+  margin-top:5px;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-assessment-list {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+  align-items:start;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-skill-group {
+  min-width:0;
+  margin:0;
+  padding:16px;
+  border:2px solid #e8dfff;
+  border-radius:18px;
+  background:#fdfcff;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-skill-group h4 {
+  margin:0 0 14px;
+  font-size:clamp(17px,1.3vw,22px);
+  line-height:1.25;
+  color:#37226d;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-question {
+  min-width:0;
+  margin:0 0 14px;
+  padding:11px 12px;
+  border:1px solid #ece5f8;
+  border-radius:12px;
+  background:#fff;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-question:last-child {margin-bottom:0;}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-question p {
+  line-height:1.4;
+  margin:5px 0 10px;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-options {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-option {
+  white-space:normal;
+  min-height:40px;
+  padding:8px 12px;
+  border-radius:10px;
+  border:2px solid #e5dcf4;
+  background:#faf8ff;
+  color:#2b2457;
+  font-weight:750;
+  cursor:pointer;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-option.selected {
+  background:#ede5ff;
+  border-color:#8054cc;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-result-btn {
+  display:block;
+  margin:22px 0 12px;
+  min-height:46px;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-results {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:10px;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-result small {
+  display:block;
+  margin-top:4px;
+}
+@media(max-width:1150px) {
+  #anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-skills {
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+@media(max-width:760px) {
+  #anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-assessment-list {
+    grid-template-columns:minmax(0,1fr);
+  }
+  #anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-skills {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+@media(max-width:420px) {
+  #anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-skills {
+    grid-template-columns:minmax(0,1fr);
+  }
+}
+
+/* Bilan séance 6 — code couleur stable par compétence (carte + questions).
+   1 Saluer=bleu, 2 Se présenter=vert, 3 Consignes=orange,
+   4 Nombres=violet, 5 Parler de soi=rose. */
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-skills > :nth-child(1),
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-assessment-list > :nth-child(1){--bilan-fond:#eaf5ff;--bilan-bord:#8cc5fa;--bilan-titre:#155b99;--bilan-accent:#2778bf}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-skills > :nth-child(2),
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-assessment-list > :nth-child(2){--bilan-fond:#ebf9f0;--bilan-bord:#95d6a9;--bilan-titre:#1d7540;--bilan-accent:#27834b}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-skills > :nth-child(3),
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-assessment-list > :nth-child(3){--bilan-fond:#fff4e6;--bilan-bord:#f3c38a;--bilan-titre:#995018;--bilan-accent:#ad631f}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-skills > :nth-child(4),
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-assessment-list > :nth-child(4){--bilan-fond:#f2edff;--bilan-bord:#c3a7f5;--bilan-titre:#6436a2;--bilan-accent:#7846bd}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-skills > :nth-child(5),
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-assessment-list > :nth-child(5){--bilan-fond:#fff0f3;--bilan-bord:#f2afc1;--bilan-titre:#a1325e;--bilan-accent:#b74773}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-skills > :nth-child(-n+5),
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-assessment-list > :nth-child(-n+5){
+  background:var(--bilan-fond,#f7f2ff) !important;
+  border-color:var(--bilan-bord,#e5d8fc) !important;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-skills > :nth-child(-n+5) strong,
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-assessment-list > :nth-child(-n+5) h4{
+  color:var(--bilan-titre,#37226d) !important;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-assessment-list > :nth-child(-n+5) .v24-history-question{
+  border-color:var(--bilan-bord,#e5d8fc);
+  background:#fff;
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-assessment-list > :nth-child(-n+5) .v24-history-option{
+  border-color:var(--bilan-bord,#e5d8fc);
+}
+#anglais-app #v24EnglishExercises[data-english-session="6"] .v24-history-assessment-list > :nth-child(-n+5) .v24-history-option.selected{
+  border-color:var(--bilan-accent,#8054cc);
+  background:var(--bilan-fond,#ede5ff);
+}
+
+
+/* Anglais : une couleur par séance, identique aux compétences du bilan.
+   Le coloriage est purement visuel ; les états correct/incorrect restent prioritaires. */
+#anglais-app .v24-english-shell[data-english-session="1"]{--en-bg:#eaf5ff;--en-border:#8cc5fa;--en-accent:#155b99;--en-soft:#f5faff;}
+#anglais-app .v24-english-shell[data-english-session="2"]{--en-bg:#ebf9f0;--en-border:#95d6a9;--en-accent:#1d7540;--en-soft:#f5fdf7;}
+#anglais-app .v24-english-shell[data-english-session="3"]{--en-bg:#fff4e6;--en-border:#f3c38a;--en-accent:#995018;--en-soft:#fffaf2;}
+#anglais-app .v24-english-shell[data-english-session="4"]{--en-bg:#f2edff;--en-border:#c3a7f5;--en-accent:#6436a2;--en-soft:#f9f6ff;}
+#anglais-app .v24-english-shell[data-english-session="5"]{--en-bg:#fff0f3;--en-border:#f2afc1;--en-accent:#a1325e;--en-soft:#fff8fa;}
+#anglais-app .v24-english-shell[data-english-session="1"] .v24-english-toolbar,
+#anglais-app .v24-english-shell[data-english-session="2"] .v24-english-toolbar,
+#anglais-app .v24-english-shell[data-english-session="3"] .v24-english-toolbar,
+#anglais-app .v24-english-shell[data-english-session="4"] .v24-english-toolbar,
+#anglais-app .v24-english-shell[data-english-session="5"] .v24-english-toolbar{
+  border-color:var(--en-border) !important;
+  background:var(--en-bg) !important;
+}
+#anglais-app .v24-english-shell[data-english-session] .v24-english-objective{color:var(--en-accent,#201c50);}
+#anglais-app .v24-english-shell[data-english-session] .v24-english-criteria span{
+  border-color:var(--en-border,#e8deff);
+  background:#fff;
+  color:var(--en-accent,#5b5680);
+}
+#anglais-app .v24-english-shell[data-english-session] .v24-english-back{
+  color:var(--en-accent,#5d35c9);
+  background:var(--en-soft,#f3e9ff);
+  border-color:var(--en-border,#dfc7ff);
+}
+#anglais-app .v24-english-shell[data-english-session] .v24-english-exo{
+  border-color:var(--en-border,#e8deff) !important;
+  background:linear-gradient(180deg,#fff 0%,var(--en-soft,#fff) 100%) !important;
+}
+#anglais-app .v24-english-shell[data-english-session] .v24-english-exo > h3,
+#anglais-app .v24-english-shell[data-english-session] .v25743-english-finish > h3{
+  color:var(--en-accent,#44228f) !important;
+}
+#anglais-app .v24-english-shell[data-english-session] .v24-english-check:not(:disabled){
+  background:var(--en-accent,#6c63ff);
+  color:#fff;
+}
+/* Les aides sont repérables, mais masquées au départ comme précédemment. */
+#anglais-app .v24-english-shell[data-english-session] details[class*="discovery"] > summary{
+  border-color:var(--en-border,#dfc7ff) !important;
+  color:var(--en-accent,#44228f) !important;
+  background:var(--en-bg,#f3e9ff) !important;
+}
+#anglais-app .v24-english-shell[data-english-session] details[class*="discovery"][open]{
+  border-color:var(--en-border,#dfc7ff);
+}
+/* États de réponse à ne jamais neutraliser avec la couleur de la séance. */
+#anglais-app .v24-english-shell[data-english-session] .v24-english-option.correct{background:#e8f8ee !important;border-color:#6bcb77 !important;color:#205a2a !important;}
+#anglais-app .v24-english-shell[data-english-session] .v24-english-option.wrong{background:#ffecec !important;border-color:#ff6b6b !important;color:#7a2222 !important;}
