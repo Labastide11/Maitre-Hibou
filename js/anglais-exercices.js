@@ -255,6 +255,23 @@ function saveBilanResult(subject,result){
         wrap.classList.add('mh-english-s4-balanced');
       }
 
+      /* Séance 5 : même principe de colonnes indépendantes que la séance 4.
+         On déplace les cartes déjà initialisées : images, audio, réponses et suivi restent actifs. */
+      if(s.id === 5){
+        var ageLeft = document.createElement('div');
+        var ageRight = document.createElement('div');
+        ageLeft.className = 'mh-english-s5-column';
+        ageRight.className = 'mh-english-s5-column';
+        // À gauche : écoute (courte), phrase à construire, entraînement oral.
+        [0,2,4].forEach(function(i){ if(exerciseCards[i]) ageLeft.appendChild(exerciseCards[i]); });
+        // À droite : lecture des cartes d'âge, dialogue illustré, bilan.
+        [1,3].forEach(function(i){ if(exerciseCards[i]) ageRight.appendChild(exerciseCards[i]); });
+        ageRight.appendChild(finishBox);
+        wrap.appendChild(ageLeft);
+        wrap.appendChild(ageRight);
+        wrap.classList.add('mh-english-s5-balanced');
+      }
+
       function englishExerciseFinished(card){
         if(s.id >= 1 && s.id <= 5) return card.dataset.englishDone === '1';
         var type = card.getAttribute('data-english-exercise-type') || '';

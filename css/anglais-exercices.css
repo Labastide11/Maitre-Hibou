@@ -899,3 +899,55 @@ button{font-family:inherit}button:focus-visible,a:focus-visible{outline:3px soli
     grid-template-columns:minmax(0,1fr) !important;
   }
 }
+
+
+/* 05/11/2026 — Séance 5 : cartes d'âge et gâteaux à taille pédagogique.
+   Image entière visible : ne pas couper le nombre ni les bougies. */
+#anglais-app .en5-activity .en5-picture {
+  display:block !important;
+  width:auto !important;
+  max-width:min(100%,340px) !important;
+  height:auto !important;
+  max-height:240px !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  margin:10px auto !important;
+  border-radius:12px;
+}
+#anglais-app .en5-activity .en5-round {min-width:0;}
+#anglais-app .en5-activity .en5-options {display:flex;flex-wrap:wrap;gap:7px;}
+@media(max-width:600px){
+  #anglais-app .en5-activity .en5-picture {max-width:min(100%,290px) !important;max-height:205px !important;}
+}
+
+/* Séance 5 : deux colonnes autonomes, sans grands espaces sous les exercices courts.
+   Les cartes d'âge gardent leur taille réduite et leurs contenus entiers. */
+#anglais-app #v24EnglishExercises[data-english-session="5"].mh-english-s5-balanced {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  align-items:start !important;
+  gap:clamp(12px,1.2vw,18px) !important;
+}
+#anglais-app #v24EnglishExercises[data-english-session="5"] > .en5-discovery {
+  grid-column:1 / -1 !important;
+  min-width:0;
+}
+#anglais-app #v24EnglishExercises[data-english-session="5"] > .mh-english-s5-column {
+  display:flex !important;
+  flex-direction:column !important;
+  gap:clamp(12px,1.2vw,18px);
+  align-items:stretch;
+  min-width:0;
+}
+#anglais-app #v24EnglishExercises[data-english-session="5"] .mh-english-s5-column > .v24-english-exo {
+  width:100%; min-width:0; min-height:0;
+  align-self:stretch; margin:0;
+}
+#anglais-app #v24EnglishExercises[data-english-session="5"] .mh-english-s5-column > .v25743-english-finish {
+  grid-column:auto !important;
+}
+@media(max-width:900px){
+  #anglais-app #v24EnglishExercises[data-english-session="5"].mh-english-s5-balanced {
+    grid-template-columns:minmax(0,1fr) !important;
+  }
+}
