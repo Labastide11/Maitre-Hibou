@@ -9,3 +9,45 @@
 .cards .card{display:block;min-height:0;padding:0;overflow:hidden;line-height:0;background:#fff}
 .cards .card img{display:block;width:100%;height:auto;aspect-ratio:1850/850;object-fit:contain}
 @media(max-width:700px){.cards .card{min-height:0}}
+
+/* Atelier musical — trois touches illustrées, sans changer la logique audio. */
+#notes.choices {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,160px));
+  gap:clamp(8px,1.4vw,15px);
+  align-items:start;
+  justify-content:start;
+  margin:14px 0;
+}
+#notes .music-note-card {
+  display:block;
+  width:100%;
+  min-width:0;
+  padding:5px;
+  border:2px solid #c4a5f4;
+  border-radius:18px;
+  background:white;
+  line-height:0;
+  overflow:hidden;
+  transition:transform .12s,border-color .12s,box-shadow .12s;
+}
+#notes .music-note-card img {
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1;
+  object-fit:contain;
+  border-radius:12px;
+}
+#notes .music-note-card:hover {
+  transform:translateY(-2px);
+  border-color:#7450c2;
+  box-shadow:0 6px 14px #6750a529;
+}
+#notes .music-note-card:active {transform:scale(.97)}
+#notes .music-note-card:focus-visible {outline:3px solid #5848cd;outline-offset:3px}
+@media(max-width:580px) {
+  #notes.choices {grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+  #notes .music-note-card {padding:3px;border-radius:12px}
+}
+@media(prefers-reduced-motion:reduce){#notes .music-note-card{transition:none}}
