@@ -584,3 +584,285 @@ button{font-family:inherit}button:focus-visible,a:focus-visible{outline:3px soli
   #v24EnglishSessions .v24-english-session-card .v24-subject-card-body strong {font-size:17px !important;}
   #v24EnglishSessions .v24-english-session-card .v24-subject-card-body small {font-size:12px !important;}
 }
+
+/* ================================================================
+   ANGLAIS CE2 — Organisation des séances et aide repliée, 05-11-2026
+   Les éléments <details> sont des aides et NON des exercices.
+   Le moteur d'exercices et l'audio ne sont pas modifiés.
+   ================================================================ */
+#anglais-app #v24EnglishExercises[data-english-session] {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  align-items:start;
+  gap:clamp(10px,1.2vw,16px) !important;
+}
+#anglais-app #v24EnglishExercises[data-english-session] > details[class$="-discovery"] {
+  grid-column:1 / -1 !important;
+  display:block;
+  box-sizing:border-box;
+  width:100%;
+  min-width:0;
+  max-width:100%;
+  padding:0;
+  margin:0;
+  border:2px solid #d5c0fa;
+  border-radius:14px;
+  background:#f4eeff;
+  color:#35266d;
+  overflow:hidden;
+}
+#anglais-app #v24EnglishExercises[data-english-session] > details[class$="-discovery"] > summary {
+  display:list-item;
+  list-style-position:inside;
+  cursor:pointer;
+  font-size:clamp(15px,1.2vw,19px);
+  font-weight:900;
+  line-height:1.35;
+  padding:10px 14px;
+  color:#462684;
+}
+#anglais-app #v24EnglishExercises[data-english-session] > details[class$="-discovery"][open] {
+  background:#fff;
+}
+#anglais-app #v24EnglishExercises[data-english-session] > details[class$="-discovery"] > p {
+  margin:6px 14px;
+  font-size:clamp(14px,1vw,16px);
+  line-height:1.45;
+}
+#anglais-app #v24EnglishExercises[data-english-session] > details[class$="-discovery"] > :last-child:not(summary) {
+  margin-bottom:12px;
+}
+#anglais-app #v24EnglishExercises[data-english-session] > .v24-english-exo {
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  margin:0;
+  padding:clamp(12px,1.4vw,20px);
+  position:static;
+  overflow-wrap:anywhere;
+}
+#anglais-app #v24EnglishExercises[data-english-session] .v24-english-exo h3 {
+  font-size:clamp(19px,1.5vw,23px);
+  line-height:1.2;
+  margin:0 0 5px;
+}
+#anglais-app #v24EnglishExercises[data-english-session] .v24-english-exo > p {
+  line-height:1.35;
+  margin-bottom:10px;
+}
+/* Portraits : trois personnages visibles simultanément, sans image géante. */
+#anglais-app #v24EnglishExercises[data-english-session="2"] .en2-portraits {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  align-items:stretch;
+  gap:10px;
+  margin-top:12px;
+}
+#anglais-app #v24EnglishExercises[data-english-session="2"] .en2-portrait {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  width:100%;
+  min-width:0;
+  padding:8px;
+  gap:6px;
+  min-height:0;
+  white-space:normal;
+  overflow:hidden;
+}
+#anglais-app #v24EnglishExercises[data-english-session="2"] .en2-portrait-img {
+  display:block;
+  width:100%;
+  height:clamp(120px,12vw,190px);
+  max-width:100%;
+  max-height:190px;
+  object-fit:cover;
+  object-position:center 25%;
+  border-radius:11px;
+}
+#anglais-app #v24EnglishExercises[data-english-session="2"] .en2-btn,
+#anglais-app #v24EnglishExercises[data-english-session="2"] .v24-english-option {
+  min-height:40px;
+}
+/* Les images d'autres exercices ne doivent pas dépasser leur carte. */
+#anglais-app #v24EnglishExercises[data-english-session] .v24-english-exo img {
+  max-width:100%;
+  box-sizing:border-box;
+}
+#anglais-app #v24EnglishExercises[data-english-session] .v24-english-exo button {
+  white-space:normal;
+}
+/* Image de la séance 1 retirée du JavaScript ; garde-fou si cache navigateur. */
+#anglais-app #v24EnglishExercises[data-english-session="1"] .en1-intro-photo {display:none!important;}
+@media (max-width:850px) {
+  #anglais-app #v24EnglishExercises[data-english-session] {
+    grid-template-columns:minmax(0,1fr) !important;
+  }
+}
+@media (max-width:520px) {
+  #anglais-app #v24EnglishExercises[data-english-session="2"] .en2-portraits {
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:5px;
+  }
+  #anglais-app #v24EnglishExercises[data-english-session="2"] .en2-portrait {padding:5px;font-size:13px;}
+  #anglais-app #v24EnglishExercises[data-english-session="2"] .en2-portrait-img {height:clamp(75px,22vw,120px);}
+}
+
+
+/* 05/11/2026 — Anglais séances 1 et 3 : colonnes remplies, images maîtrisées */
+#anglais-app #v24EnglishExercises.mh-english-two-columns {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  align-items:start;
+  gap:clamp(12px,1.25vw,18px) !important;
+}
+#anglais-app #v24EnglishExercises.mh-english-two-columns > details[class$="-discovery"],
+#anglais-app #v24EnglishExercises.mh-english-two-columns > .v25743-english-finish {
+  grid-column:1 / -1 !important;
+}
+#anglais-app #v24EnglishExercises.mh-english-two-columns > .mh-english-activity-column {
+  display:flex;
+  flex-direction:column;
+  gap:clamp(12px,1.25vw,18px);
+  min-width:0;
+  align-self:start;
+}
+#anglais-app #v24EnglishExercises.mh-english-two-columns .mh-english-activity-column > .v24-english-exo {
+  width:100%; min-width:0; min-height:0;
+  margin:0; padding:clamp(12px,1.25vw,18px);
+  overflow:hidden;
+}
+/* Quatre scènes de la séance 1 : 2 photos par rangée, jamais une photo géante. */
+#anglais-app #v24EnglishExercises[data-english-session="1"] .en1-photo-grid {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  align-items:start;
+  gap:10px;
+}
+#anglais-app #v24EnglishExercises[data-english-session="1"] .en1-photo-scene {
+  display:flex;flex-direction:column; gap:6px;
+  min-width:0; width:100%; padding:7px; margin:0;
+  border:1px solid #e8deff; border-radius:12px; background:#faf8ff;
+}
+#anglais-app #v24EnglishExercises[data-english-session="1"] .en1-scene-img {
+  display:block;width:100% !important;height:clamp(115px,12vw,165px) !important;
+  max-height:165px !important;object-fit:cover;object-position:center;
+  border-radius:9px;
+}
+#anglais-app #v24EnglishExercises[data-english-session="1"] .en1-caption {
+  font-size:clamp(13px,1vw,15px);line-height:1.25;margin:0;
+}
+#anglais-app #v24EnglishExercises[data-english-session="1"] .en1-photo-options {
+  display:flex;flex-wrap:wrap;gap:5px;
+}
+/* Séance 3 : quatre choix visuels sur 2 colonnes, sans cartes verticales énormes. */
+#anglais-app #v24EnglishExercises[data-english-session="3"] .en3-photo-options {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:8px;
+}
+#anglais-app #v24EnglishExercises[data-english-session="3"] .en3-photo-btn {
+  display:flex; flex-direction:column; align-items:stretch;justify-content:flex-start;
+  width:100%;min-width:0;height:auto;gap:5px;
+  padding:7px;white-space:normal;text-align:center;
+}
+#anglais-app #v24EnglishExercises[data-english-session="3"] .en3-photo-btn > .en3-photo {
+  width:100% !important;height:clamp(100px,11vw,155px) !important;
+  max-height:155px !important;object-fit:cover;object-position:center 25%;
+  display:block;border-radius:8px;
+}
+#anglais-app #v24EnglishExercises[data-english-session="3"] .en3-observe > .en3-photo,
+#anglais-app #v24EnglishExercises[data-english-session="3"] .en3-dialogue > .en3-photo {
+  display:block;width:min(100%,360px) !important;height:clamp(150px,18vw,235px) !important;
+  max-height:235px !important;object-fit:cover;object-position:center 25%;
+  margin:8px auto;border-radius:12px;
+}
+#anglais-app #v24EnglishExercises[data-english-session="3"] .en3-match {
+  display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;
+}
+#anglais-app #v24EnglishExercises[data-english-session="3"] .en3-match-col {min-width:0;}
+#anglais-app #v24EnglishExercises[data-english-session="3"] .en3-match-col .en3-photo-btn > .en3-photo {
+  height:clamp(90px,9vw,120px) !important; max-height:120px !important;
+}
+@media(max-width:900px) {
+  #anglais-app #v24EnglishExercises.mh-english-two-columns {
+    grid-template-columns:minmax(0,1fr) !important;
+  }
+  #anglais-app #v24EnglishExercises.mh-english-two-columns > .mh-english-activity-column {
+    grid-column:1 / -1;
+  }
+}
+@media(max-width:460px) {
+  #anglais-app #v24EnglishExercises[data-english-session="1"] .en1-photo-grid,
+  #anglais-app #v24EnglishExercises[data-english-session="3"] .en3-photo-options {
+    grid-template-columns:minmax(0,1fr) !important;
+  }
+}
+
+/* 05/11/2026 — séance 3, exercice J'associe les mots : photos en ligne. */
+#anglais-app #v24EnglishExercises[data-english-session="3"] > .en3-full-width-match {
+  grid-column:1 / -1 !important;
+  width:100%; min-width:0; align-self:start;
+}
+#anglais-app #v24EnglishExercises[data-english-session="3"] .en3-match-horizontal {
+  display:flex !important;
+  flex-direction:column !important;
+  gap:14px;
+  width:100%;
+}
+#anglais-app #v24EnglishExercises[data-english-session="3"] .en3-match-photos {
+  display:grid !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  align-items:stretch;
+  gap:12px;
+  width:100%;
+}
+#anglais-app #v24EnglishExercises[data-english-session="3"] .en3-match-photos .en3-photo-btn {
+  min-width:0; width:100%; padding:8px;
+  align-items:stretch; text-align:center;
+  font-size:clamp(12px,1vw,15px);line-height:1.25;
+}
+#anglais-app #v24EnglishExercises[data-english-session="3"] .en3-match-photos .en3-photo-btn > .en3-photo {
+  width:100% !important;
+  height:clamp(130px,14vw,205px) !important;
+  max-height:205px !important;
+  object-fit:cover;
+  object-position:center 32%;
+}
+#anglais-app #v24EnglishExercises[data-english-session="3"] .en3-match-words {
+  display:flex !important;
+  flex-direction:row !important;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+}
+#anglais-app #v24EnglishExercises[data-english-session="3"] .en3-match-words > button {
+  flex:0 1 auto;
+  min-width:95px;
+  min-height:45px;
+  font-size:clamp(15px,1.1vw,18px);
+  font-weight:850;
+  padding:9px 15px;
+}
+@media(max-width:900px){
+  #anglais-app #v24EnglishExercises[data-english-session="3"] .en3-match-photos {
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+@media(max-width:430px){
+  #anglais-app #v24EnglishExercises[data-english-session="3"] .en3-match-photos {
+    gap:6px;
+  }
+  #anglais-app #v24EnglishExercises[data-english-session="3"] .en3-match-photos .en3-photo-btn {
+    padding:4px;font-size:12px;
+  }
+  #anglais-app #v24EnglishExercises[data-english-session="3"] .en3-match-photos .en3-photo-btn > .en3-photo {
+    height:115px !important;
+  }
+  #anglais-app #v24EnglishExercises[data-english-session="3"] .en3-match-words > button {
+    min-width:75px;
+  }
+}

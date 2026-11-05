@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Arts &amp; Créativité — Maître Hibou</title><link href="css/arts-creativite.css" rel="stylesheet"/></head><body>
-<header class="bar"><div class="brand"><span>🦉</span><div><h1>Arts &amp; Créativité</h1><p>J’observe, j’écoute, j’imagine et je crée !</p></div></div><a class="back" href="index.html">← Retour à l’accueil</a></header>
+<header class="bar"><div class="brand"><span>🦉</span><div><h1>Arts &amp; Créativité</h1><p>J’observe, j’écoute, j’imagine et je crée !</p></div></div><a class="back" href="index.html" id="mhArtsRetourAccueil">← Retour à l’accueil</a></header>
 <main><section class="menu" id="menu"><h2>Choisis ton atelier</h2><div class="cards"><a class="card rose" href="arts-creativite.html#dessin"><img alt="Mon atelier d’artiste — Je dessine et j’explore les couleurs. Commencer" decoding="async" loading="eager" src="images/arts-creativite/atelier-artiste.jpg"/></a><a class="card blue" href="arts-creativite.html#musique"><img alt="Mon atelier musical — J’écoute et je reproduis des rythmes. Commencer" decoding="async" loading="eager" src="images/arts-creativite/atelier-musical.jpg"/></a><a class="card orange" href="arts-creativite.html#theatre"><img alt="À toi de jouer ! — J’invente un personnage et je joue une scène. Commencer" decoding="async" loading="eager" src="images/arts-creativite/atelier-theatre.jpg"/></a><a class="card green" href="arts-creativite.html#musee"><img alt="Le musée de Maître Hibou — J’observe des œuvres et leurs détails. Commencer" decoding="async" loading="eager" src="images/arts-creativite/atelier-musee.jpg"/></a></div></section>
 <section class="activity" hidden="" id="activity"><div class="act-head"><button class="secondary" id="return">← Les quatre ateliers</button><h2 id="actTitle"></h2></div><div id="actBody"></div></section></main>
-<footer>Maître Hibou • Arts &amp; Créativité • CE2</footer><script defer="" src="js/arts-creativite.js"></script></body></html>
+<footer>Maître Hibou • Arts &amp; Créativité • CE2</footer><script defer="" src="js/arts-creativite.js"></script>
+<script>
+/* Réutilise le mécanisme de retour de l'index V25.8.84, sans changer d'identité. */
+(function () {
+  var retour = document.getElementById('mhArtsRetourAccueil');
+  if (!retour) return;
+  retour.addEventListener('click', function () {
+    try { sessionStorage.setItem('mh_return_home', '1'); } catch (e) {}
+  });
+})();
+</script>
+</body></html>

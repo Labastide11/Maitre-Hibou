@@ -158,6 +158,7 @@ function saveBilanResult(subject,result){
       renderEnglishHome(grid);
     }, true);
     var wrap = grid.querySelector('#v24EnglishExercises');
+    wrap.dataset.englishSession = String(s.id);
     if(s.id === 1) renderEnglishS1Intro(wrap);
     if(s.id === 2) renderEnglishS2Intro(wrap);
     if(s.id === 3) renderEnglishS3Intro(wrap);
@@ -185,6 +186,42 @@ function saveBilanResult(subject,result){
       if(exo.type === 'englishAssessment') renderEnglishAssessment(card, exo);
       wrap.appendChild(card);
     });
+
+    /* Séances photo : deux colonnes de cartes indépendantes, sans trous de grille.
+       Les mêmes nœuds et leurs événements sont déplacés ; aucune réponse n'est recréée. */
+    if(s.id === 1 || s.id === 3){
+      var photoCards = Array.prototype.slice.call(wrap.querySelectorAll(':scope > .v24-english-exo'));
+      var columnLeft = document.createElement('div');
+      var columnRight = document.createElement('div');
+      columnLeft.className = 'mh-english-activity-column';
+      columnRight.className = 'mh-english-activity-column';
+      if(s.id === 3){
+        // L'association de quatre photos a besoin de la largeur entière de la page.
+        // Placement en deux rangées d'exercices courts autour de la carte panoramique.
+        columnLeft.appendChild(photoCards[0]);
+        columnRight.appendChild(photoCards[1]);
+        wrap.appendChild(columnLeft);
+        wrap.appendChild(columnRight);
+        photoCards[2].classList.add('en3-full-width-match');
+        wrap.appendChild(photoCards[2]);
+        var lowerLeft=document.createElement('div');
+        var lowerRight=document.createElement('div');
+        lowerLeft.className='mh-english-activity-column';
+        lowerRight.className='mh-english-activity-column';
+        lowerLeft.appendChild(photoCards[3]);
+        lowerRight.appendChild(photoCards[4]);
+        wrap.appendChild(lowerLeft);
+        wrap.appendChild(lowerRight);
+      }else{
+        var positions=[0,1,0,1,0];
+        photoCards.forEach(function(card,i){
+          (positions[i] ? columnRight : columnLeft).appendChild(card);
+        });
+        wrap.appendChild(columnLeft);
+        wrap.appendChild(columnRight);
+      }
+      wrap.classList.add('mh-english-two-columns');
+    }
 
     /* V25.7.57 — Anglais : logique validée des Sciences pour les séances 1 à 5. */
     if(s.id >= 1 && s.id <= 5){
@@ -291,7 +328,7 @@ function saveBilanResult(subject,result){
   /* Séance 3 : comprendre et utiliser How are you? avec des situations illustrées. */
   /* Séance 4 : nombres de 1 à 10, collections exactes et illustrations locales. */
   function renderEnglishS5Intro(wrap){
-    var box=document.createElement('details');box.className='en5-discovery';box.innerHTML='<summary>🦉 Je découvre comment demander et dire un âge</summary><p>How old are you? = Quel âge as-tu ?</p><p>I am eight years old. = J’ai huit ans.</p><p>On peut aussi dire I’m eight years old. Lis toujours la carte : le visage ne donne pas l’âge.</p>';['How old are you?','I am seven years old.','I am eight years old.','I am nine years old.'].forEach(function(text){var b=document.createElement('button');b.type='button';b.className='en5-btn';b.textContent='🔊 '+text;b.addEventListener('click',function(){speakEnglish(text);});box.appendChild(b);});wrap.appendChild(box);
+    var box=document.createElement('details');box.className='en5-discovery';box.innerHTML='<summary>🦉 Aide (masquée) — Demander et dire un âge</summary><p>How old are you? = Quel âge as-tu ?</p><p>I am eight years old. = J’ai huit ans.</p><p>On peut aussi dire I’m eight years old. Lis toujours la carte : le visage ne donne pas l’âge.</p>';['How old are you?','I am seven years old.','I am eight years old.','I am nine years old.'].forEach(function(text){var b=document.createElement('button');b.type='button';b.className='en5-btn';b.textContent='🔊 '+text;b.addEventListener('click',function(){speakEnglish(text);});box.appendChild(b);});wrap.appendChild(box);
   }
   function renderEnglishS5(card,idx){
     card.classList.add('en5-activity');var words=['one','two','three','four','five','six','seven','eight','nine','ten'],ticket=0;
@@ -324,7 +361,7 @@ function saveBilanResult(subject,result){
 
   function renderEnglishS4Intro(wrap){
     var words=['one','two','three','four','five','six','seven','eight','nine','ten'];
-    var box=document.createElement('details');box.className='en4-discovery';var title=document.createElement('summary');title.textContent='🦉 Je découvre les nombres de 1 à 10';box.appendChild(title);var p=document.createElement('p');p.textContent='Clique sur une carte pour écouter le nombre en anglais.';box.appendChild(p);var list=document.createElement('div');list.className='en4-number-grid';words.forEach(function(word,i){var b=document.createElement('button');b.type='button';b.className='en4-btn';var number=document.createElement('strong');number.textContent=i+1;var label=document.createElement('span');label.textContent=word;b.appendChild(number);b.appendChild(label);b.setAttribute('aria-label','Écouter '+word);b.addEventListener('click',function(){speakEnglish(word);});list.appendChild(b);});box.appendChild(list);wrap.appendChild(box);
+    var box=document.createElement('details');box.className='en4-discovery';var title=document.createElement('summary');title.textContent='🦉 Aide (masquée) — Les nombres de 1 à 10';box.appendChild(title);var p=document.createElement('p');p.textContent='Clique sur une carte pour écouter le nombre en anglais.';box.appendChild(p);var list=document.createElement('div');list.className='en4-number-grid';words.forEach(function(word,i){var b=document.createElement('button');b.type='button';b.className='en4-btn';var number=document.createElement('strong');number.textContent=i+1;var label=document.createElement('span');label.textContent=word;b.appendChild(number);b.appendChild(label);b.setAttribute('aria-label','Écouter '+word);b.addEventListener('click',function(){speakEnglish(word);});list.appendChild(b);});box.appendChild(list);wrap.appendChild(box);
   }
   function renderEnglishS4(card,idx){
     card.classList.add('en4-activity');var words=['one','two','three','four','five','six','seven','eight','nine','ten'],ticket=0;
@@ -360,7 +397,7 @@ function saveBilanResult(subject,result){
 
   function renderEnglishS3Intro(wrap){
     var box=document.createElement('details');box.className='en3-discovery';
-    var title=document.createElement('summary');title.textContent='🦉 Comment je me sens : les mots à connaître';box.appendChild(title);
+    var title=document.createElement('summary');title.textContent='🦉 Aide (masquée) — Les mots pour dire comment je me sens';box.appendChild(title);
     var p=document.createElement('p');p.textContent='How are you? = Comment vas-tu ? I’m… = Je suis…';box.appendChild(p);
     var words=document.createElement('p');words.textContent='happy = content ; sad = triste ; tired = fatigué ; hungry = qui a faim. I’m hungry = J’ai faim.';box.appendChild(words);
     var note=document.createElement('p');note.textContent='Les photos et leurs légendes illustrent des situations pour apprendre ces mots.';box.appendChild(note);wrap.appendChild(box);
@@ -401,7 +438,9 @@ function saveBilanResult(subject,result){
         mix(states).forEach(function(choice){btn(choice.phrase,options,function(){if(solved)return;if(choice.key!==state.key){say(false,'Relis la légende, puis choisis la phrase anglaise qui correspond.');return;}solved=true;options.querySelectorAll('button').forEach(function(b){b.disabled=true;});step++;if(step===rounds.length){progress.textContent='4 situations réussies sur 4';say(true,'Bravo ! Tu sais décrire les quatre situations en anglais.',true);}else{say(true,'Bonne réponse !');btn('Situation suivante',area,drawObserve);}});});
       }drawObserve();
     }else if(idx===2){
-      var row=el('div','en3-match',''),left=el('div','en3-match-col','',row),right=el('div','en3-match-col','',row),selected=null,count=0;
+      var row=el('div','en3-match en3-match-horizontal',''),left=el('div','en3-match-col en3-match-photos','',row),right=el('div','en3-match-col en3-match-words','',row),selected=null,count=0;
+      left.setAttribute('role','group');left.setAttribute('aria-label','Choisis une photographie');
+      right.setAttribute('role','group');right.setAttribute('aria-label','Choisis le mot anglais correspondant');
       states.forEach(function(state){var b=btn(state.label,left,function(){left.querySelectorAll('button').forEach(function(x){x.classList.remove('selected');x.setAttribute('aria-pressed','false');});b.classList.add('selected');b.setAttribute('aria-pressed','true');selected={state:state,button:b};});b.classList.add('en3-photo-btn');b.setAttribute('aria-pressed','false');photo(b,state);});
       // Permutation sans réponse correcte directement en face de son image.
       [2,3,1,0].forEach(function(i){var state=states[i],b=btn(state.key,right,function(){if(!selected){say(false,'Choisis d’abord une photo.');return;}if(selected.state.key!==state.key){say(false,'Relis la légende de la photo et essaie un autre mot.');return;}selected.button.disabled=true;selected.button.classList.remove('selected');selected.button.setAttribute('aria-pressed','false');selected.button.classList.add('matched');b.disabled=true;b.classList.add('matched');selected=null;count++;say(true,count===4?'Bravo ! Les quatre associations sont correctes.':'Bonne association ! '+count+' sur 4.',count===4);});});
@@ -417,7 +456,7 @@ function saveBilanResult(subject,result){
 
   function renderEnglishS2Intro(wrap){
     var box=document.createElement('details');box.className='en2-discovery';
-    var summary=document.createElement('summary');summary.textContent='🦉 Les phrases à connaître';box.appendChild(summary);
+    var summary=document.createElement('summary');summary.textContent='🦉 Aide (masquée) — Les phrases à connaître';box.appendChild(summary);
     var p=document.createElement('p');p.textContent='What is your name? = Comment t’appelles-tu ? My name is… = Je m’appelle…';box.appendChild(p);
     var example=document.createElement('p');example.textContent='Exemple : My name is Emma. Les trois personnages des photos portent des prénoms fictifs.';box.appendChild(example);wrap.appendChild(box);
   }
@@ -466,8 +505,7 @@ function saveBilanResult(subject,result){
 
   function renderEnglishS1Intro(wrap){
     var box=document.createElement('details');box.className='en1-discovery';
-    var summary=document.createElement('summary');summary.textContent='🦉 Je découvre les trois mots';box.appendChild(summary);
-    var img=document.createElement('img');img.src='images/anglais-seance-1.jpg';img.alt='Deux enfants se saluent : Hello et Hi.';img.className='en1-intro-photo';box.appendChild(img);
+    var summary=document.createElement('summary');summary.textContent='🦉 Aide (masquée) — Les trois mots à connaître';box.appendChild(summary);
     var p=document.createElement('p');p.textContent='Hello = Bonjour. Hi = Salut. Goodbye = Au revoir. Hello et Hi servent tous les deux à saluer.';box.appendChild(p);
     var notice=document.createElement('p');notice.textContent='Pour les écoutes, active le son de ton appareil.';box.appendChild(notice);wrap.appendChild(box);
   }
