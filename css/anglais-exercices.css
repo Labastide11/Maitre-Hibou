@@ -866,3 +866,36 @@ button{font-family:inherit}button:focus-visible,a:focus-visible{outline:3px soli
     min-width:75px;
   }
 }
+
+
+/* 05/11/2026 — Séance 4 : colonnes réellement indépendantes.
+   Les cartes courtes ne s'étirent plus à la hauteur des illustrations voisines. */
+#anglais-app #v24EnglishExercises[data-english-session="4"].mh-english-s4-balanced {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  align-items:start !important;
+  gap:clamp(12px,1.2vw,18px) !important;
+}
+#anglais-app #v24EnglishExercises[data-english-session="4"] > .en4-discovery {
+  grid-column:1 / -1 !important;
+  min-width:0;
+}
+#anglais-app #v24EnglishExercises[data-english-session="4"] > .mh-english-s4-column {
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:stretch;
+  gap:clamp(12px,1.2vw,18px);
+  min-width:0;
+}
+#anglais-app #v24EnglishExercises[data-english-session="4"] .mh-english-s4-column > .v24-english-exo {
+  width:100%;min-width:0; min-height:0;
+  margin:0; align-self:stretch;
+}
+#anglais-app #v24EnglishExercises[data-english-session="4"] .mh-english-s4-column .v25743-english-finish {
+  grid-column:auto !important;
+}
+@media(max-width:900px){
+  #anglais-app #v24EnglishExercises[data-english-session="4"].mh-english-s4-balanced {
+    grid-template-columns:minmax(0,1fr) !important;
+  }
+}

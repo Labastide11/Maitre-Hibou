@@ -238,6 +238,23 @@ function saveBilanResult(subject,result){
       finishBox.appendChild(finishButton);
       wrap.appendChild(finishBox);
 
+      /* Séance 4 : deux colonnes indépendantes pour éviter les grandes cases vides.
+         On déplace les éléments existants, sans recréer les exercices ou leurs écouteurs. */
+      if(s.id === 4){
+        var leftColumn = document.createElement('div');
+        var rightColumn = document.createElement('div');
+        leftColumn.className = 'mh-english-s4-column';
+        rightColumn.className = 'mh-english-s4-column';
+        // Colonne gauche : écoute, association des nombres, oral.
+        [0,2,4].forEach(function(i){ if(exerciseCards[i]) leftColumn.appendChild(exerciseCards[i]); });
+        // Colonne droite : objets illustrés, train, validation.
+        [1,3].forEach(function(i){ if(exerciseCards[i]) rightColumn.appendChild(exerciseCards[i]); });
+        rightColumn.appendChild(finishBox);
+        wrap.appendChild(leftColumn);
+        wrap.appendChild(rightColumn);
+        wrap.classList.add('mh-english-s4-balanced');
+      }
+
       function englishExerciseFinished(card){
         if(s.id >= 1 && s.id <= 5) return card.dataset.englishDone === '1';
         var type = card.getAttribute('data-english-exercise-type') || '';
