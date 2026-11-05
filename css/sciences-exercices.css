@@ -1,26 +1,266 @@
-/* Maître Hibou — correctif visuel Sciences séance 2 : styles isolés */
-#exercices #v24ScienceExercises[data-science-session="2"]{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:start;gap:14px!important}
-#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo{min-width:0;padding:clamp(12px,1.4vw,20px)}
-#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo:first-child,
-#exercices #v24ScienceExercises[data-science-session="2"]>.v25742-science-finish{grid-column:1/-1!important}
-#exercices #v24ScienceExercises[data-science-session="2"] .v24-english-exo h3{font-size:clamp(19px,1.5vw,24px);line-height:1.2;margin:0 0 6px}
-#exercices #v24ScienceExercises[data-science-session="2"] .v24-english-exo>p{line-height:1.35;margin-bottom:10px}
-#exercices #v24ScienceExercises[data-science-session="2"] .v24-science-help-btn{margin-bottom:10px}
-/* Exercice 1 : les 5 photos en grille horizontale, ordre aléatoire et clics inchangés */
-#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo:first-child .mh-science-photo-list{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:12px!important;align-items:stretch}
-#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo:first-child .mh-science-photo-step{width:100%!important;min-width:0!important;min-height:0!important;padding:8px!important;align-items:stretch;text-align:center;justify-content:start}
-#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo:first-child .mh-science-photo-step img{display:block;width:100%;height:clamp(125px,12vw,190px);object-fit:contain}
-#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo:first-child .mh-science-photo-step span{font-size:clamp(13px,1.1vw,16px);line-height:1.3;overflow-wrap:anywhere}
-#exercices #v24ScienceExercises[data-science-session="2"] .mh-science-photo-sequence{min-height:48px;gap:8px}
-/* Ex 2–5 : cadres image et réponses lisibles */
-#exercices #v24ScienceExercises[data-science-session="2"] .mh-science-photos{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr));gap:10px}
-#exercices #v24ScienceExercises[data-science-session="2"] .mh-science-photos figure{width:100%;max-width:none;min-width:0}
-#exercices #v24ScienceExercises[data-science-session="2"] .mh-science-photos img{width:100%;height:clamp(165px,17vw,235px);object-fit:contain}
-#exercices #v24ScienceExercises[data-science-session="2"] .mh-science-photos figcaption{line-height:1.25}
-#exercices #v24ScienceExercises[data-science-session="2"] .v24-english-match{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-#exercices #v24ScienceExercises[data-science-session="2"] .v24-english-match-col{min-width:0}
-#exercices #v24ScienceExercises[data-science-session="2"] .v24-english-match-item,
-#exercices #v24ScienceExercises[data-science-session="2"] .v24-english-option{min-height:44px;white-space:normal;overflow-wrap:anywhere}
-/* Tablette et mobile */
-@media(max-width:1050px){#exercices #v24ScienceExercises[data-science-session="2"]{grid-template-columns:minmax(0,1fr)!important}#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo{grid-column:1/-1!important}#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo:first-child .mh-science-photo-list{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
-@media(max-width:600px){#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo:first-child .mh-science-photo-list{grid-template-columns:repeat(2,minmax(0,1fr))!important}#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo:first-child .mh-science-photo-step img{height:120px}#exercices #v24ScienceExercises[data-science-session="2"] .mh-science-photos img{height:180px}}
+/* MAÎTRE HIBOU — SCIENCES CE2 — GRILLES RESPONSIVES (séances 1 à 6)
+   Styles isolés dans la page Sciences : aucun effet sur Français, Anglais ou Géo.
+   Activités / aides / correction / scores restent pilotés par le JavaScript existant.
+*/
+
+/* Panneau général : plus de place pour regarder et répondre. */
+body[data-matiere="sciences"] main {
+  max-width: 1650px;
+  width: 100%;
+  margin-inline: auto;
+  padding: clamp(8px, 1.25vw, 18px);
+}
+body[data-matiere="sciences"] #exercices .v24-english-toolbar {
+  padding: 9px 13px;
+  gap: 14px;
+  align-items: center;
+}
+body[data-matiere="sciences"] #exercices .v24-english-objective {
+  font-size: clamp(15px, 1.3vw, 19px);
+  line-height: 1.25;
+}
+body[data-matiere="sciences"] #exercices .v24-english-criteria {
+  margin-top: 4px;
+}
+
+/* Chaque séance est composée de cartes adaptées à l'activité. */
+body[data-matiere="sciences"] #v24ScienceExercises[data-science-session] {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  align-items: start;
+  gap: clamp(10px, 1.1vw, 16px) !important;
+}
+body[data-matiere="sciences"] #v24ScienceExercises[data-science-session] > .v24-english-exo {
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(12px, 1.25vw, 18px);
+  overflow-wrap: anywhere;
+}
+body[data-matiere="sciences"] #v24ScienceExercises[data-science-session] > .mh-science-type-order,
+body[data-matiere="sciences"] #v24ScienceExercises[data-science-session] > .mh-science-type-sort,
+body[data-matiere="sciences"] #v24ScienceExercises[data-science-session] > .mh-science-type-match,
+body[data-matiere="sciences"] #v24ScienceExercises[data-science-session] > .mh-science-type-circuitPredictions,
+body[data-matiere="sciences"] #v24ScienceExercises[data-science-session] > .mh-science-type-scienceAssessment,
+body[data-matiere="sciences"] #v24ScienceExercises[data-science-session] > .v25742-science-finish {
+  grid-column: 1 / -1 !important;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .v24-english-exo h3 {
+  font-size: clamp(19px, 1.5vw, 23px);
+  line-height: 1.2;
+  margin: 0 0 6px;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .v24-english-exo > p {
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .v24-science-help-btn {
+  margin: 0 0 8px;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .v24-english-feedback {
+  min-height: 0;
+  margin-top: 8px;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .v24-english-option,
+body[data-matiere="sciences"] #v24ScienceExercises .v24-english-match-item {
+  min-height: 44px;
+  white-space: normal;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+/* Tri : une banque de photos de bonne taille puis les catégories visibles. */
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-sort .v24-science-sort-bank {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0 14px;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-sort .v24-science-sort-item.mh-photo-card {
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  display: flex;
+  justify-content: flex-start;
+  padding: 9px !important;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-sort .v24-science-sort-item.mh-photo-card img {
+  width: 100% !important;
+  max-width: 215px;
+  height: clamp(115px, 12vw, 175px) !important;
+  object-fit: contain;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-sort .v24-science-sort-item.mh-photo-card .mh-photo-label {
+  font-size: clamp(13px, 1vw, 16px) !important;
+  line-height: 1.25;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-sort .v24-science-sort-zones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(235px, 100%), 1fr));
+  gap: 12px;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-sort .v24-science-sort-zone {
+  min-width: 0;
+  min-height: 95px;
+}
+
+/* Séance 3 et 4 : six photos = trois colonnes, deux lignes. */
+body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="3"] .mh-science-type-sort .v24-science-sort-bank,
+body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="4"] .mh-science-type-sort .v24-science-sort-bank,
+body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="5"] .mh-science-type-sort .v24-science-sort-bank {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Remettre des images dans l'ordre : de grandes images sur une seule rangée. */
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-order .mh-science-photo-list {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  align-items: stretch;
+  gap: 12px !important;
+  margin: 12px 0;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-order .mh-science-photo-step {
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 8px !important;
+  align-items: stretch;
+  text-align: center;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-order .mh-science-photo-step img {
+  display: block;
+  width: 100%;
+  height: clamp(125px, 13vw, 195px);
+  object-fit: contain;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-order .mh-science-photo-step span {
+  font-size: clamp(13px, 1.05vw, 16px);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-order .mh-science-photo-sequence {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 48px;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-order .mh-science-photo-sequence button {
+  min-height: 44px;
+}
+body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="3"] .mh-science-type-order .mh-science-photo-list,
+body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="5"] .mh-science-type-order .mh-science-photo-list {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+/* Observation / choix : photo à sa juste taille, options immédiatement visibles. */
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-photos {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  gap: 10px;
+  margin: 10px 0;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-photos figure {
+  width: 100%;
+  max-width: none !important;
+  min-width: 0;
+  margin: 0;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-photos img {
+  width: 100%;
+  height: clamp(155px, 17vw, 235px);
+  object-fit: contain;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-photos figcaption {
+  padding: 7px;
+  line-height: 1.25;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-choice .v24-english-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 7px;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-choice .v24-english-option {
+  text-align: left;
+  margin: 0;
+}
+/* Une comparaison à deux photos reste sur toute la largeur. */
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-choice:has(.mh-science-photos figure:nth-child(2)) {
+  grid-column: 1 / -1 !important;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-choice:has(.mh-science-photos figure:nth-child(2)) .mh-science-photos {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Associations : observer les photos au-dessus des paires, avec deux colonnes lisibles. */
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-match .v24-english-match {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 24px);
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-match .v24-english-match-col {
+  min-width: 0;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-match .v24-english-match-item {
+  min-height: 50px;
+}
+
+/* Circuit électrique : situations alignées et choix sous chaque situation. */
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-circuit-predictions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .mh-science-circuit-situation {
+  min-width: 0;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #cfe9d5;
+  background: #fff;
+}
+
+/* Le dernier exercice isolé occupe la largeur plutôt que de laisser un trou.
+   Séance 2 : 3 questions après les deux activités longues ; séance 3 : défi final. */
+body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="2"] > .mh-science-exercise:nth-child(5),
+body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="3"] > .mh-science-exercise:nth-child(5) {
+  grid-column: 1 / -1 !important;
+}
+body[data-matiere="sciences"] #v24ScienceExercises .v25742-science-finish {
+  padding: 12px 16px;
+}
+
+/* Tablettes : éviter les colonnes d'exercice trop étroites. */
+@media (max-width: 1050px) {
+  body[data-matiere="sciences"] #v24ScienceExercises[data-science-session] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  body[data-matiere="sciences"] #v24ScienceExercises[data-science-session] > .v24-english-exo {
+    grid-column: 1 / -1 !important;
+  }
+  body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-order .mh-science-photo-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+  body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-order .mh-science-photo-step img {
+    height: 155px;
+  }
+}
+@media (max-width: 650px) {
+  body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-sort .v24-science-sort-bank,
+  body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="3"] .mh-science-type-sort .v24-science-sort-bank,
+  body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="4"] .mh-science-type-sort .v24-science-sort-bank,
+  body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="5"] .mh-science-type-sort .v24-science-sort-bank,
+  body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-order .mh-science-photo-list,
+  body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="3"] .mh-science-type-order .mh-science-photo-list,
+  body[data-matiere="sciences"] #v24ScienceExercises[data-science-session="5"] .mh-science-type-order .mh-science-photo-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-sort .v24-science-sort-item.mh-photo-card img,
+  body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-order .mh-science-photo-step img {
+    height: 115px !important;
+  }
+  body[data-matiere="sciences"] #v24ScienceExercises .mh-science-type-match .v24-english-match {
+    gap: 8px;
+  }
+  body[data-matiere="sciences"] #v24ScienceExercises .mh-science-circuit-predictions,
+  body[data-matiere="sciences"] #v24ScienceExercises .mh-science-photos {
+    grid-template-columns: 1fr;
+  }
+}

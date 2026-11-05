@@ -45,7 +45,7 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
     wrap.dataset.scienceSession = String(s.id);
     s.exos.forEach(function(exo, exoIndex){
       var card = document.createElement('section');
-      card.className = 'v24-english-exo';
+      card.className = 'v24-english-exo mh-science-exercise mh-science-type-' + exo.type;
       if(s.id === 4 && exo.photos && exo.photos.length === 1){
         card.classList.add('mh-science-s4-wide-photo');
       }
