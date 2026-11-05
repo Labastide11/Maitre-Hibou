@@ -1,0 +1,227 @@
+
+  body.v25-1-6-ready.v21-final .v21-center{
+    grid-template-columns:minmax(300px,1fr) minmax(390px,1.22fr) minmax(230px,.78fr) !important;
+  }
+
+  body.v25-1-6-ready .v24-shortcuts-card.mh-grow-split-card{
+    padding:9px !important;
+    gap:8px !important;
+    justify-content:stretch !important;
+    align-items:stretch !important;
+    cursor:default !important;
+    text-align:left !important;
+    overflow:hidden !important;
+  }
+
+  body.v25-1-6-ready .v24-shortcuts-card.mh-grow-split-card:hover,
+  body.v25-1-6-ready .v24-shortcuts-card.mh-grow-split-card:focus{
+    transform:none !important;
+    border-color:#B7D8FF !important;
+    box-shadow:0 12px 34px rgba(22,131,247,.13), inset 0 1px 0 rgba(255,255,255,.75) !important;
+  }
+
+  .mh-split-zone{
+    width:100%;
+    flex:1 1 0;
+    min-height:0;
+    border:2px solid rgba(183,216,255,.95);
+    border-radius:19px;
+    background:rgba(255,255,255,.88);
+    box-shadow:0 8px 18px rgba(22,131,247,.08), inset 0 1px 0 rgba(255,255,255,.88);
+    padding:9px 9px;
+    display:grid;
+    grid-template-columns:42px 1fr;
+    gap:7px 8px;
+    align-items:center;
+    color:#123A70;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    cursor:pointer;
+    text-align:left;
+  }
+
+  .mh-split-zone:hover,
+  .mh-split-zone:focus{
+    outline:none;
+    border-color:#6FB4FF;
+    transform:translateY(-1px);
+    background:#FFFFFF;
+  }
+
+  .mh-split-zone.grow{
+    border-color:#D7C7FF;
+    background:linear-gradient(135deg,#FFFFFF 0%,#F8F4FF 100%);
+    color:#3B2678;
+  }
+
+  .mh-split-icon{
+    width:42px;
+    height:42px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    background:#EFF8FF;
+    border:2px solid #D8ECFF;
+    line-height:1;
+  }
+
+  .mh-split-zone.grow .mh-split-icon{
+    background:#F2EDFF;
+    border-color:#D7C7FF;
+  }
+
+  .mh-split-text h3{
+    margin:0;
+    font-family:"Trebuchet MS", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-size:clamp(17px,1.45vw,21px);
+    line-height:.98;
+    font-weight:1000;
+    color:inherit;
+  }
+
+  .mh-split-text p{
+    margin:2px 0 0;
+    font-size:12px;
+    line-height:1.12;
+    font-weight:900;
+    color:rgba(18,58,112,.78);
+  }
+
+  .mh-split-zone.grow .mh-split-text p{color:rgba(59,38,120,.76);}
+
+  .mh-split-pill{
+    grid-column:1 / -1;
+    justify-self:start;
+    border-radius:999px;
+    padding:4px 9px;
+    background:#FFFFFF;
+    border:2px solid rgba(183,216,255,.9);
+    color:#17407A;
+    font-size:12px;
+    line-height:1;
+    font-weight:1000;
+  }
+
+  .mh-split-zone.grow .mh-split-pill{
+    border-color:#D7C7FF;
+    color:#3B2678;
+  }
+
+  .mh-grow-overlay{
+    position:fixed;
+    inset:0;
+    z-index:5200;
+    background:rgba(35,31,70,.58);
+    backdrop-filter:blur(8px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:22px;
+  }
+  .mh-grow-overlay.hidden{display:none !important;}
+
+  .mh-grow-box{
+    width:min(980px,calc(100vw - 44px));
+    max-height:90vh;
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+    background:linear-gradient(180deg,#FFFFFF 0%,#FBFAFF 100%);
+    border:4px solid #D7C7FF;
+    border-radius:30px;
+    box-shadow:0 28px 66px rgba(43,32,96,.30);
+    padding:24px 26px 28px;
+    position:relative;
+    color:#2D2B55;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  }
+
+  .mh-grow-close{
+    position:absolute;
+    top:14px;
+    right:16px;
+    width:48px;
+    height:48px;
+    border:none;
+    border-radius:16px;
+    background:#F1ECFF;
+    color:#3B2678;
+    font-size:28px;
+    font-weight:1000;
+    cursor:pointer;
+  }
+
+  .mh-grow-head{padding-right:58px;margin-bottom:18px;}
+  .mh-grow-head h2{
+    margin:0;
+    font-family:"Trebuchet MS", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-size:34px;
+    line-height:1;
+    font-weight:1000;
+    color:#3B2678;
+  }
+  .mh-grow-head p{
+    margin:6px 0 0;
+    font-size:15px;
+    font-weight:900;
+    color:#6F6697;
+  }
+
+  .mh-grow-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:14px;
+  }
+
+  .mh-grow-card{
+    border:none;
+    border-radius:22px;
+    padding:18px;
+    background:#FFFFFF;
+    box-shadow:0 10px 24px rgba(65,47,129,.10);
+    border:3px solid #EEE8FF;
+    text-align:left;
+    cursor:pointer;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  }
+  .mh-grow-card:hover,.mh-grow-card:focus{outline:none;transform:translateY(-2px);border-color:#D7C7FF;}
+  .mh-grow-card .ico{font-size:34px;display:block;margin-bottom:8px;}
+  .mh-grow-card h3{
+    margin:0;
+    font-family:"Trebuchet MS", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-size:24px;
+    line-height:1;
+    color:#3B2678;
+  }
+  .mh-grow-card p{margin:6px 0 0;font-size:14px;line-height:1.25;font-weight:800;color:#655C86;}
+
+  .mh-grow-detail{
+    margin-top:16px;
+    border-radius:20px;
+    border:2px dashed #D7C7FF;
+    background:#FAF8FF;
+    padding:14px 16px;
+    font-size:15px;
+    font-weight:900;
+    color:#4B3B7A;
+  }
+
+  @media (orientation:landscape) and (max-height:760px){
+    body.v25-1-6-ready .v24-shortcuts-card.mh-grow-split-card{padding:7px !important;gap:6px !important;}
+    .mh-split-zone{padding:7px 8px;grid-template-columns:36px 1fr;gap:5px 7px;border-radius:16px;}
+    .mh-split-icon{width:36px;height:36px;font-size:24px;border-radius:12px;}
+    .mh-split-text h3{font-size:17px;}
+    .mh-split-text p{font-size:11px;}
+    .mh-split-pill{font-size:11px;padding:3px 8px;}
+  }
+
+  @media (max-width:1000px){
+    body.v25-1-6-ready.v21-final .v21-center{grid-template-columns:1fr 1fr !important;}
+    body.v25-1-6-ready.v21-final .v24-shortcuts-card.mh-grow-split-card{
+      grid-column:1 / -1;
+      min-height:150px !important;
+      flex-direction:row !important;
+    }
+    .mh-split-zone{height:100%;}
+    .mh-grow-grid{grid-template-columns:1fr;}
+  }

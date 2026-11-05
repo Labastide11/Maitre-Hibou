@@ -1,0 +1,252 @@
+
+  .mh-emi-open-pill{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:12px;
+    padding:8px 12px;
+    border-radius:999px;
+    background:#F2EDFF;
+    border:2px solid #D7C7FF;
+    color:#3B2678;
+    font-size:13px;
+    font-weight:1000;
+  }
+
+  .mh-emi-toolbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin:6px 0 16px;
+  }
+
+  .mh-emi-back,
+  .mh-emi-reset{
+    border:2px solid #D7C7FF;
+    background:#FFFFFF;
+    color:#3B2678;
+    border-radius:999px;
+    padding:10px 14px;
+    font-weight:1000;
+    cursor:pointer;
+    box-shadow:0 8px 16px rgba(65,47,129,.08);
+  }
+
+  .mh-emi-progress{
+    padding:9px 14px;
+    border-radius:999px;
+    background:#F2EDFF;
+    border:2px solid #D7C7FF;
+    color:#3B2678;
+    font-weight:1000;
+  }
+
+  .mh-emi-home-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+  }
+
+  .mh-emi-session-card{
+    border:3px solid #EEE8FF;
+    border-radius:24px;
+    padding:18px;
+    background:#FFFFFF;
+    box-shadow:0 10px 24px rgba(65,47,129,.10);
+    text-align:left;
+    cursor:pointer;
+    min-height:146px;
+    color:#2D2B55;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  }
+
+  .mh-emi-session-card:hover,
+  .mh-emi-session-card:focus{
+    outline:none;
+    transform:translateY(-2px);
+    border-color:#D7C7FF;
+  }
+
+  .mh-emi-session-card strong{
+    display:block;
+    font-family:"Trebuchet MS", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    color:#3B2678;
+    font-size:25px;
+    line-height:1.05;
+    margin-bottom:8px;
+  }
+
+  .mh-emi-session-card p{
+    margin:0;
+    color:#655C86;
+    font-weight:900;
+    line-height:1.28;
+  }
+
+  .mh-emi-session-card span{
+    display:inline-block;
+    margin-top:12px;
+    color:#3B2678;
+    font-weight:1000;
+  }
+
+  .mh-emi-question-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+  }
+
+  .mh-emi-question{
+    border:2px solid #EEE8FF;
+    border-radius:20px;
+    padding:14px;
+    background:#FFFFFF;
+    box-shadow:0 8px 18px rgba(65,47,129,.07);
+  }
+
+  .mh-emi-num{
+    display:inline-flex;
+    align-items:center;
+    padding:5px 10px;
+    border-radius:999px;
+    background:#FFF5CC;
+    color:#7B5A00;
+    font-weight:1000;
+    font-size:13px;
+    margin-bottom:8px;
+  }
+
+  .mh-emi-tag{
+    display:inline-flex;
+    margin-left:6px;
+    padding:5px 10px;
+    border-radius:999px;
+    background:#F2EDFF;
+    color:#3B2678;
+    font-weight:1000;
+    font-size:13px;
+  }
+
+  .mh-emi-statement{
+    color:#1C174C;
+    font-weight:1000;
+    font-size:16px;
+    line-height:1.25;
+    margin:0 0 10px;
+  }
+
+  .mh-emi-choices{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  .mh-emi-choice{
+    border:2px solid #E5DDFB;
+    background:#F9F7FF;
+    color:#1C174C;
+    border-radius:14px;
+    padding:9px 11px;
+    font-weight:1000;
+    cursor:pointer;
+  }
+
+  .mh-emi-choice.correct{
+    border-color:#7CD994;
+    background:#EFFFF3;
+    color:#17672F;
+  }
+
+  .mh-emi-choice.wrong{
+    border-color:#FFB3B3;
+    background:#FFF0F0;
+    color:#A12B2B;
+  }
+
+  .mh-emi-choice:disabled{
+    cursor:default;
+    opacity:.95;
+  }
+
+  .mh-emi-feedback{
+    display:none;
+    margin-top:10px;
+    padding:10px 12px;
+    border-radius:16px;
+    font-weight:900;
+    line-height:1.25;
+  }
+
+  .mh-emi-feedback.visible{display:block;}
+  .mh-emi-feedback.ok{background:#EFFFF3;color:#17672F;border:2px solid #BCEBC7;}
+  .mh-emi-feedback.ko{background:#FFF4D6;color:#745000;border:2px solid #FFE28A;}
+
+  .mh-emi-final{
+    display:none;
+    margin-top:14px;
+    padding:14px 16px;
+    border-radius:20px;
+    background:#FAF8FF;
+    border:3px solid #D7C7FF;
+    color:#3B2678;
+    font-weight:1000;
+    text-align:center;
+  }
+  .mh-emi-final.visible{display:block;}
+
+  @media (orientation:landscape){
+    .mh-grow-box{width:min(1180px,calc(100vw - 44px));}
+  }
+
+  @media (max-width:900px){
+    .mh-emi-home-grid,
+    .mh-emi-question-grid{grid-template-columns:1fr;}
+    .mh-emi-toolbar{align-items:flex-start;flex-direction:column;}
+  }
+
+/* Présentation autonome EMI — hors popup. */
+#mhGrowTogetherOverlay[hidden]{display:none!important}
+#mhGrowTogetherOverlay{width:100%;min-width:0;margin-top:22px}
+#mhGrowTogetherOverlay .mh-grow-box{position:relative;width:100%;max-width:none;min-width:0;height:auto;max-height:none;overflow:visible;background:#fff;border:2px solid #e7ddfb;border-radius:22px;padding:clamp(14px,2vw,26px)}
+#mhGrowTogetherOverlay .mh-grow-close{position:absolute;right:14px;top:12px;background:#f1ebff;border:none;border-radius:14px;color:#4a2989;font-size:25px;font-weight:900;width:44px;height:44px;cursor:pointer}
+#mhGrowTogetherOverlay .mh-grow-head h2{margin:0 52px 6px 0;font-size:clamp(23px,2vw,31px)}
+#mhGrowTogetherOverlay .mh-grow-head p{margin:0 0 14px;color:#695d89;font-weight:750}
+#mhGrowTogetherOverlay .mh-emi-question-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+#mhGrowTogetherOverlay .mh-emi-question{min-width:0;padding:16px}
+#mhGrowTogetherOverlay .mh-emi-home-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media(max-width:760px){#mhGrowTogetherOverlay .mh-emi-question-grid,#mhGrowTogetherOverlay .mh-emi-home-grid{grid-template-columns:1fr}}
+
+/* Miniatures des 4 enquêtes EMI, harmonisées avec les cartes EMC.
+   Le texte et le mot « Commencer » sont intégrés aux illustrations. */
+#mhGrowTogetherOverlay .mh-emi-home-grid {
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(12px,1.2vw,18px);
+}
+#mhGrowTogetherOverlay .mh-emi-session-card-image {
+  display:block;
+  min-height:0;
+  min-width:0;
+  padding:8px;
+  margin:0;
+  overflow:hidden;
+  line-height:0;
+  border:3px solid #e5d6ff;
+  border-radius:22px;
+  background:#fff;
+}
+#mhGrowTogetherOverlay .mh-emi-session-card-image img {
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:3 / 1;
+  object-fit:contain;
+  border-radius:14px;
+}
+#mhGrowTogetherOverlay .mh-emi-session-card-image:hover,
+#mhGrowTogetherOverlay .mh-emi-session-card-image:focus-visible {
+  border-color:#bca2fa;
+}
+@media(max-width:760px) {
+  #mhGrowTogetherOverlay .mh-emi-home-grid {grid-template-columns:minmax(0,1fr);}
+}
