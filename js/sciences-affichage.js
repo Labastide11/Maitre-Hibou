@@ -42,6 +42,7 @@ var SCIENCE_SESSIONS=window.MHScienceSessions;
     grid.innerHTML = '<div class="v24-english-toolbar"><button type="button" class="v24-english-back" id="v24ScienceBack">← Séances</button><div><div class="v24-english-objective">'+esc(s.emoji+' '+s.title+' — '+s.objective)+'</div><div class="v24-english-criteria">'+s.criteria.map(function(c){return '<span>✓ '+esc(c)+'</span>';}).join('')+'</div></div></div><div class="v24-english-exercises" id="v24ScienceExercises"></div>';
     grid.querySelector('#v24ScienceBack').addEventListener('click', function(ev){ev.preventDefault();ev.stopPropagation();renderScienceHome(grid);}, true);
     var wrap = grid.querySelector('#v24ScienceExercises');
+    wrap.dataset.scienceSession = String(s.id);
     s.exos.forEach(function(exo, exoIndex){
       var card = document.createElement('section');
       card.className = 'v24-english-exo';

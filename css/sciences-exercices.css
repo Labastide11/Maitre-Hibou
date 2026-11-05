@@ -1,0 +1,26 @@
+/* Maître Hibou — correctif visuel Sciences séance 2 : styles isolés */
+#exercices #v24ScienceExercises[data-science-session="2"]{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:start;gap:14px!important}
+#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo{min-width:0;padding:clamp(12px,1.4vw,20px)}
+#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo:first-child,
+#exercices #v24ScienceExercises[data-science-session="2"]>.v25742-science-finish{grid-column:1/-1!important}
+#exercices #v24ScienceExercises[data-science-session="2"] .v24-english-exo h3{font-size:clamp(19px,1.5vw,24px);line-height:1.2;margin:0 0 6px}
+#exercices #v24ScienceExercises[data-science-session="2"] .v24-english-exo>p{line-height:1.35;margin-bottom:10px}
+#exercices #v24ScienceExercises[data-science-session="2"] .v24-science-help-btn{margin-bottom:10px}
+/* Exercice 1 : les 5 photos en grille horizontale, ordre aléatoire et clics inchangés */
+#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo:first-child .mh-science-photo-list{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:12px!important;align-items:stretch}
+#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo:first-child .mh-science-photo-step{width:100%!important;min-width:0!important;min-height:0!important;padding:8px!important;align-items:stretch;text-align:center;justify-content:start}
+#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo:first-child .mh-science-photo-step img{display:block;width:100%;height:clamp(125px,12vw,190px);object-fit:contain}
+#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo:first-child .mh-science-photo-step span{font-size:clamp(13px,1.1vw,16px);line-height:1.3;overflow-wrap:anywhere}
+#exercices #v24ScienceExercises[data-science-session="2"] .mh-science-photo-sequence{min-height:48px;gap:8px}
+/* Ex 2–5 : cadres image et réponses lisibles */
+#exercices #v24ScienceExercises[data-science-session="2"] .mh-science-photos{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr));gap:10px}
+#exercices #v24ScienceExercises[data-science-session="2"] .mh-science-photos figure{width:100%;max-width:none;min-width:0}
+#exercices #v24ScienceExercises[data-science-session="2"] .mh-science-photos img{width:100%;height:clamp(165px,17vw,235px);object-fit:contain}
+#exercices #v24ScienceExercises[data-science-session="2"] .mh-science-photos figcaption{line-height:1.25}
+#exercices #v24ScienceExercises[data-science-session="2"] .v24-english-match{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#exercices #v24ScienceExercises[data-science-session="2"] .v24-english-match-col{min-width:0}
+#exercices #v24ScienceExercises[data-science-session="2"] .v24-english-match-item,
+#exercices #v24ScienceExercises[data-science-session="2"] .v24-english-option{min-height:44px;white-space:normal;overflow-wrap:anywhere}
+/* Tablette et mobile */
+@media(max-width:1050px){#exercices #v24ScienceExercises[data-science-session="2"]{grid-template-columns:minmax(0,1fr)!important}#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo{grid-column:1/-1!important}#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo:first-child .mh-science-photo-list{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:600px){#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo:first-child .mh-science-photo-list{grid-template-columns:repeat(2,minmax(0,1fr))!important}#exercices #v24ScienceExercises[data-science-session="2"]>.v24-english-exo:first-child .mh-science-photo-step img{height:120px}#exercices #v24ScienceExercises[data-science-session="2"] .mh-science-photos img{height:180px}}
