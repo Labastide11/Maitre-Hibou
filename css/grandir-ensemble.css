@@ -80,3 +80,58 @@ h1{font-size:clamp(26px,3vw,38px);margin:0 0 5px}.lead{font-size:clamp(15px,1.4v
   #grandirEmc .emc-lesson-list {grid-template-columns: 1fr !important;}
   #grandirEmc .emc-lesson-card {max-width: 900px; margin-inline: auto;}
 }
+
+
+/* EVAR : identique à la grille principale Grandir ensemble. */
+#grandirEvar .evar-lesson-list {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: clamp(12px, 1.1vw, 18px);
+  align-items: stretch;
+  width: 100%;
+}
+#grandirEvar .evar-lesson-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 0;
+  width: 100%;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+  text-decoration: none;
+  color: #35266d;
+  border: 3px solid #e7dbff;
+  border-radius: 22px;
+  background: white;
+  box-shadow: 0 7px 19px #37215d0c;
+}
+#grandirEvar .evar-lesson-card:hover,
+#grandirEvar .evar-lesson-card:focus-visible {border-color: #b79cff;}
+#grandirEvar .evar-lesson-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2.2 / 1;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 19px 19px 0 0;
+}
+#grandirEvar .evar-open-pill {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  margin: auto 0 12px 15px;
+  padding: 8px 13px;
+  border: 2px solid #d9c8ff;
+  border-radius: 40px;
+  background: #f0eaff;
+  color: #47288c;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 900;
+}
+@media(max-width:850px) {
+  #grandirEvar .evar-lesson-list {grid-template-columns: 1fr !important;}
+  #grandirEvar .evar-lesson-card {max-width: 900px; margin-inline: auto;}
+}
