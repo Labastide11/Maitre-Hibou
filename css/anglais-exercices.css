@@ -1160,3 +1160,84 @@ button{font-family:inherit}button:focus-visible,a:focus-visible{outline:3px soli
 /* États de réponse à ne jamais neutraliser avec la couleur de la séance. */
 #anglais-app .v24-english-shell[data-english-session] .v24-english-option.correct{background:#e8f8ee !important;border-color:#6bcb77 !important;color:#205a2a !important;}
 #anglais-app .v24-english-shell[data-english-session] .v24-english-option.wrong{background:#ffecec !important;border-color:#ff6b6b !important;color:#7a2222 !important;}
+
+/* Correctif : palette appliquée au vrai conteneur et à toutes les cartes. */
+
+#anglais-app .v24-english-shell.mh-anglais-session-1, #anglais-app #v24EnglishExercises[data-english-session="1"] {--en-bg:#eaf5ff;--en-border:#8cc5fa;--en-accent:#155b99;--en-soft:#f5faff;}
+#anglais-app .v24-english-shell.mh-anglais-session-1 > .v24-english-toolbar{background:#eaf5ff !important;border-color:#8cc5fa !important;}
+#anglais-app .v24-english-shell.mh-anglais-session-1 .v24-english-objective, #anglais-app .v24-english-shell.mh-anglais-session-1 .v24-english-exo > h3{color:#155b99 !important;}
+#anglais-app .v24-english-shell.mh-anglais-session-1 .v24-english-criteria > span{color:#155b99 !important;border-color:#8cc5fa !important;background:#fff !important;}
+#anglais-app .v24-english-shell.mh-anglais-session-1 .v24-english-back{color:#155b99 !important;border-color:#8cc5fa !important;background:#eaf5ff !important;}
+#anglais-app #v24EnglishExercises[data-english-session="1"] .v24-english-exo{border-color:#8cc5fa !important;background:#f5faff !important;}
+#anglais-app #v24EnglishExercises[data-english-session="1"] .v24-english-exo > h3{color:#155b99 !important;}
+#anglais-app #v24EnglishExercises[data-english-session="1"] details[class*="discovery"] > summary{background:#eaf5ff !important;border-color:#8cc5fa !important;color:#155b99 !important;}
+#anglais-app #v24EnglishExercises[data-english-session="1"] .v24-english-option:not(.correct):not(.wrong):not(.selected),
+#anglais-app #v24EnglishExercises[data-english-session="1"] .v24-english-token:not(.placed),
+#anglais-app #v24EnglishExercises[data-english-session="1"] .v24-english-match-item:not(.done):not(.selected){border-color:#8cc5fa;background:#fff;}
+
+#anglais-app .v24-english-shell.mh-anglais-session-2, #anglais-app #v24EnglishExercises[data-english-session="2"] {--en-bg:#ebf9f0;--en-border:#95d6a9;--en-accent:#1d7540;--en-soft:#f5fdf7;}
+#anglais-app .v24-english-shell.mh-anglais-session-2 > .v24-english-toolbar{background:#ebf9f0 !important;border-color:#95d6a9 !important;}
+#anglais-app .v24-english-shell.mh-anglais-session-2 .v24-english-objective, #anglais-app .v24-english-shell.mh-anglais-session-2 .v24-english-exo > h3{color:#1d7540 !important;}
+#anglais-app .v24-english-shell.mh-anglais-session-2 .v24-english-criteria > span{color:#1d7540 !important;border-color:#95d6a9 !important;background:#fff !important;}
+#anglais-app .v24-english-shell.mh-anglais-session-2 .v24-english-back{color:#1d7540 !important;border-color:#95d6a9 !important;background:#ebf9f0 !important;}
+#anglais-app #v24EnglishExercises[data-english-session="2"] .v24-english-exo{border-color:#95d6a9 !important;background:#f5fdf7 !important;}
+#anglais-app #v24EnglishExercises[data-english-session="2"] .v24-english-exo > h3{color:#1d7540 !important;}
+#anglais-app #v24EnglishExercises[data-english-session="2"] details[class*="discovery"] > summary{background:#ebf9f0 !important;border-color:#95d6a9 !important;color:#1d7540 !important;}
+#anglais-app #v24EnglishExercises[data-english-session="2"] .v24-english-option:not(.correct):not(.wrong):not(.selected),
+#anglais-app #v24EnglishExercises[data-english-session="2"] .v24-english-token:not(.placed),
+#anglais-app #v24EnglishExercises[data-english-session="2"] .v24-english-match-item:not(.done):not(.selected){border-color:#95d6a9;background:#fff;}
+
+#anglais-app .v24-english-shell.mh-anglais-session-3, #anglais-app #v24EnglishExercises[data-english-session="3"] {--en-bg:#fff4e6;--en-border:#f3c38a;--en-accent:#995018;--en-soft:#fffaf2;}
+#anglais-app .v24-english-shell.mh-anglais-session-3 > .v24-english-toolbar{background:#fff4e6 !important;border-color:#f3c38a !important;}
+#anglais-app .v24-english-shell.mh-anglais-session-3 .v24-english-objective, #anglais-app .v24-english-shell.mh-anglais-session-3 .v24-english-exo > h3{color:#995018 !important;}
+#anglais-app .v24-english-shell.mh-anglais-session-3 .v24-english-criteria > span{color:#995018 !important;border-color:#f3c38a !important;background:#fff !important;}
+#anglais-app .v24-english-shell.mh-anglais-session-3 .v24-english-back{color:#995018 !important;border-color:#f3c38a !important;background:#fff4e6 !important;}
+#anglais-app #v24EnglishExercises[data-english-session="3"] .v24-english-exo{border-color:#f3c38a !important;background:#fffaf2 !important;}
+#anglais-app #v24EnglishExercises[data-english-session="3"] .v24-english-exo > h3{color:#995018 !important;}
+#anglais-app #v24EnglishExercises[data-english-session="3"] details[class*="discovery"] > summary{background:#fff4e6 !important;border-color:#f3c38a !important;color:#995018 !important;}
+#anglais-app #v24EnglishExercises[data-english-session="3"] .v24-english-option:not(.correct):not(.wrong):not(.selected),
+#anglais-app #v24EnglishExercises[data-english-session="3"] .v24-english-token:not(.placed),
+#anglais-app #v24EnglishExercises[data-english-session="3"] .v24-english-match-item:not(.done):not(.selected){border-color:#f3c38a;background:#fff;}
+
+#anglais-app .v24-english-shell.mh-anglais-session-4, #anglais-app #v24EnglishExercises[data-english-session="4"] {--en-bg:#f2edff;--en-border:#c3a7f5;--en-accent:#6436a2;--en-soft:#f9f6ff;}
+#anglais-app .v24-english-shell.mh-anglais-session-4 > .v24-english-toolbar{background:#f2edff !important;border-color:#c3a7f5 !important;}
+#anglais-app .v24-english-shell.mh-anglais-session-4 .v24-english-objective, #anglais-app .v24-english-shell.mh-anglais-session-4 .v24-english-exo > h3{color:#6436a2 !important;}
+#anglais-app .v24-english-shell.mh-anglais-session-4 .v24-english-criteria > span{color:#6436a2 !important;border-color:#c3a7f5 !important;background:#fff !important;}
+#anglais-app .v24-english-shell.mh-anglais-session-4 .v24-english-back{color:#6436a2 !important;border-color:#c3a7f5 !important;background:#f2edff !important;}
+#anglais-app #v24EnglishExercises[data-english-session="4"] .v24-english-exo{border-color:#c3a7f5 !important;background:#f9f6ff !important;}
+#anglais-app #v24EnglishExercises[data-english-session="4"] .v24-english-exo > h3{color:#6436a2 !important;}
+#anglais-app #v24EnglishExercises[data-english-session="4"] details[class*="discovery"] > summary{background:#f2edff !important;border-color:#c3a7f5 !important;color:#6436a2 !important;}
+#anglais-app #v24EnglishExercises[data-english-session="4"] .v24-english-option:not(.correct):not(.wrong):not(.selected),
+#anglais-app #v24EnglishExercises[data-english-session="4"] .v24-english-token:not(.placed),
+#anglais-app #v24EnglishExercises[data-english-session="4"] .v24-english-match-item:not(.done):not(.selected){border-color:#c3a7f5;background:#fff;}
+
+#anglais-app .v24-english-shell.mh-anglais-session-5, #anglais-app #v24EnglishExercises[data-english-session="5"] {--en-bg:#fff0f3;--en-border:#f2afc1;--en-accent:#a1325e;--en-soft:#fff8fa;}
+#anglais-app .v24-english-shell.mh-anglais-session-5 > .v24-english-toolbar{background:#fff0f3 !important;border-color:#f2afc1 !important;}
+#anglais-app .v24-english-shell.mh-anglais-session-5 .v24-english-objective, #anglais-app .v24-english-shell.mh-anglais-session-5 .v24-english-exo > h3{color:#a1325e !important;}
+#anglais-app .v24-english-shell.mh-anglais-session-5 .v24-english-criteria > span{color:#a1325e !important;border-color:#f2afc1 !important;background:#fff !important;}
+#anglais-app .v24-english-shell.mh-anglais-session-5 .v24-english-back{color:#a1325e !important;border-color:#f2afc1 !important;background:#fff0f3 !important;}
+#anglais-app #v24EnglishExercises[data-english-session="5"] .v24-english-exo{border-color:#f2afc1 !important;background:#fff8fa !important;}
+#anglais-app #v24EnglishExercises[data-english-session="5"] .v24-english-exo > h3{color:#a1325e !important;}
+#anglais-app #v24EnglishExercises[data-english-session="5"] details[class*="discovery"] > summary{background:#fff0f3 !important;border-color:#f2afc1 !important;color:#a1325e !important;}
+#anglais-app #v24EnglishExercises[data-english-session="5"] .v24-english-option:not(.correct):not(.wrong):not(.selected),
+#anglais-app #v24EnglishExercises[data-english-session="5"] .v24-english-token:not(.placed),
+#anglais-app #v24EnglishExercises[data-english-session="5"] .v24-english-match-item:not(.done):not(.selected){border-color:#f2afc1;background:#fff;}
+
+#anglais-app .v24-english-shell:has(> #v24EnglishExercises[data-english-session="1"]) > .v24-english-toolbar{background:#eaf5ff !important;border-color:#8cc5fa !important;}
+#anglais-app .v24-english-shell:has(> #v24EnglishExercises[data-english-session="1"]) .v24-english-objective{color:#155b99 !important;}
+
+#anglais-app .v24-english-shell:has(> #v24EnglishExercises[data-english-session="2"]) > .v24-english-toolbar{background:#ebf9f0 !important;border-color:#95d6a9 !important;}
+#anglais-app .v24-english-shell:has(> #v24EnglishExercises[data-english-session="2"]) .v24-english-objective{color:#1d7540 !important;}
+
+#anglais-app .v24-english-shell:has(> #v24EnglishExercises[data-english-session="3"]) > .v24-english-toolbar{background:#fff4e6 !important;border-color:#f3c38a !important;}
+#anglais-app .v24-english-shell:has(> #v24EnglishExercises[data-english-session="3"]) .v24-english-objective{color:#995018 !important;}
+
+#anglais-app .v24-english-shell:has(> #v24EnglishExercises[data-english-session="4"]) > .v24-english-toolbar{background:#f2edff !important;border-color:#c3a7f5 !important;}
+#anglais-app .v24-english-shell:has(> #v24EnglishExercises[data-english-session="4"]) .v24-english-objective{color:#6436a2 !important;}
+
+#anglais-app .v24-english-shell:has(> #v24EnglishExercises[data-english-session="5"]) > .v24-english-toolbar{background:#fff0f3 !important;border-color:#f2afc1 !important;}
+#anglais-app .v24-english-shell:has(> #v24EnglishExercises[data-english-session="5"]) .v24-english-objective{color:#a1325e !important;}
+
+/* États pédagogiques conservés */
+#anglais-app .v24-english-option.correct { background:#e8f8ee !important; border-color:#6bcb77 !important; color:#205a2a !important; }
+#anglais-app .v24-english-option.wrong { background:#ffecec !important; border-color:#ff6b6b !important; color:#7a2222 !important; }

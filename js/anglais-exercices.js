@@ -147,6 +147,7 @@ function saveBilanResult(subject,result){
     var s = ENGLISH_SESSIONS.filter(function(x){return x.id === id;})[0] || ENGLISH_SESSIONS[0];
     grid.className = 'v24-english-shell';
     grid.dataset.englishSession = String(s.id);
+    grid.classList.add('mh-anglais-session-'+s.id);
     grid.innerHTML =
       '<div class="v24-english-toolbar">'
       + '<button type="button" class="v24-english-back" id="v24EnglishBack">← Séances</button>'
