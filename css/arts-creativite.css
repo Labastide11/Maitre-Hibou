@@ -51,3 +51,34 @@
   #notes .music-note-card {padding:3px;border-radius:12px}
 }
 @media(prefers-reduced-motion:reduce){#notes .music-note-card{transition:none}}
+
+/* Atelier Théâtre — illustrations locales associées au personnage tiré. */
+.theatre-scene-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,45%);gap:clamp(16px,2.5vw,30px);align-items:center}
+.theatre-scene-instructions{min-width:0}
+.theatre-scene-instructions p{line-height:1.5}
+.theatre-scene-figure{min-width:0;margin:0;padding:10px;background:#fff;border:2px solid #ded5fc;border-radius:20px;text-align:center}
+.theatre-scene-figure img{display:block;width:100%;max-height:380px;aspect-ratio:3/2;object-fit:contain;border-radius:14px;background:#f7f4ff}
+.theatre-scene-figure figcaption{font-size:clamp(13px,1vw,16px);line-height:1.4;color:#5d567f;padding:10px 4px 2px}
+.theatre-challenge{margin-top:20px}
+@media(max-width:800px){.theatre-scene-layout{grid-template-columns:minmax(0,1fr)}.theatre-scene-figure img{max-height:280px}}
+
+/* Théâtre CE2 : personnage à gauche, affiche émotion complète à droite, conseils en ligne. */
+.theatre-panel{padding:clamp(12px,2vw,24px);}
+.theatre-gallery{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(12px,2vw,24px);align-items:start;}
+.theatre-picture{min-width:0;margin:0;padding:10px;border:2px solid #dcd0fc;border-radius:20px;background:#fff;text-align:center;}
+.theatre-picture-title{font-weight:850;font-size:clamp(16px,1.55vw,22px);color:#35236d;margin:2px 0 9px;}
+.theatre-picture img{display:block;width:100%;height:clamp(250px,28vw,380px);object-fit:contain;border-radius:14px;background:#f5f1ff;}
+.theatre-picture--emotion img{height:clamp(320px,36vw,500px);}
+.theatre-picture figcaption{padding:8px 3px 2px;font-weight:750;color:#45377f;font-size:clamp(14px,1.25vw,18px);}
+.theatre-action-area{margin-top:16px;display:block;}
+.theatre-role-text,.theatre-emotion-text{font-size:clamp(17px,1.5vw,22px);font-weight:750;margin:8px 0;}
+.theatre-situation-text{font-size:clamp(18px,1.7vw,24px);font-weight:800;color:#142b54;margin:14px 0;}
+.theatre-help{border:2px solid #cfbdfa;background:#f4edff;border-radius:15px;margin:14px 0;overflow:hidden;}
+.theatre-help summary{cursor:pointer;font-size:clamp(16px,1.3vw,20px);font-weight:800;color:#432b95;padding:12px 15px;}
+.theatre-help-content{padding:0 17px 13px;}
+.theatre-help-inline{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:flex-start;}
+.theatre-help-inline span{display:inline-flex;gap:6px;align-items:baseline;background:#fff;border:1px solid #ded2ff;border-radius:999px;padding:8px 12px;color:#433a71;}
+.theatre-help-content small{display:block;color:#5d567f;margin-top:12px;}
+.theatre-challenge{margin:13px 0 0;font-weight:750;color:#2e4873;}
+@media(max-width:850px){.theatre-gallery{grid-template-columns:minmax(0,1fr);}.theatre-picture--emotion img{height:clamp(260px,55vw,420px);}}
+@media(max-width:650px){.theatre-picture{padding:6px;border-radius:12px;}.theatre-picture img{height:clamp(220px,48vw,300px)}.theatre-picture--emotion img{height:clamp(260px,62vw,360px)}.theatre-picture figcaption{font-size:13px}.theatre-picture-title{font-size:14px}.theatre-panel{padding:9px}.theatre-help-inline{gap:8px}.theatre-help-inline span{border-radius:14px;padding:8px 10px;width:100%;}}
