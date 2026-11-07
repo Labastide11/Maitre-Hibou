@@ -198,3 +198,14 @@
   }
   body.v25-7-73-simplified-home #v2574MainDashboard .v2574-actions {gap:8px !important;margin-bottom:9px !important;}
 }
+
+/* iPhone / téléphones : ne pas afficher le bouton plein écran flottant.
+   Conservation totale du bouton pour tablette, PC et TBI. */
+@media screen and (max-width: 680px) {
+  .fullscreen-floating-btn,
+  .fullscreen-hint {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
