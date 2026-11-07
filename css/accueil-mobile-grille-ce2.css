@@ -430,9 +430,9 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
    Ciblage STRICT grands écrans ; les clics JS d'origine restent inchangés. */
 @media screen and (min-width: 1600px) and (min-height: 820px) {
   body:not(.prenom-mode) header.v21-header {
-    height: 78px !important;
-    min-height: 78px !important;
-    max-height: 78px !important;
+    height: 97px !important;
+    min-height: 97px !important;
+    max-height: 97px !important;
     padding: 0 14px !important;
   }
   body:not(.prenom-mode) header.v21-header > .mh-compact-v15 {
@@ -441,9 +441,9 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
     align-items: center !important;
     position: relative !important;
     gap: 18px !important;
-    height: 78px !important;
-    min-height: 78px !important;
-    max-height: 78px !important;
+    height: 97px !important;
+    min-height: 97px !important;
+    max-height: 97px !important;
   }
   body:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-brand {
     position: absolute !important;
@@ -455,13 +455,13 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
   body:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-button.mh-parcours,
   body:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-button.mh-anniversaires {
     display: block !important;
-    flex: 0 0 240px !important;
-    width: 240px !important;
-    min-width: 240px !important;
-    max-width: 240px !important;
-    height: 70px !important;
-    min-height: 70px !important;
-    max-height: 70px !important;
+    flex: 0 0 300px !important;
+    width: 300px !important;
+    min-width: 300px !important;
+    max-width: 300px !important;
+    height: 85px !important;
+    min-height: 85px !important;
+    max-height: 85px !important;
     padding: 0 !important;
     margin: 0 !important;
     border: 0 !important;
@@ -469,7 +469,7 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
     background-color: transparent !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
-    background-size: 100% 100% !important;
+    background-size: contain !important;
     box-shadow: none !important;
     color: transparent !important;
     font-size: 0 !important;
