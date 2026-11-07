@@ -162,3 +162,39 @@
   body.v25-7-73-simplified-home #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid .subject-icon {width:31px !important;height:31px !important;max-height:31px !important;}
   body.v25-7-73-simplified-home #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid .subject-label {font-size:9px !important;}
 }
+
+/* Correctif iPhone — les fonds des 4 actions étaient supprimés par background-image:none. */
+@media (max-width:680px){
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-action-btn.v2574-action-train {
+    background:#078ef0 !important;background-image:linear-gradient(135deg,#08b4ff,#0676e7) !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-action-btn.v2574-action-belt {
+    background:#f5ab0c !important;background-image:linear-gradient(135deg,#ffcc27,#ef9a00) !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-action-btn.v2574-action-lesson {
+    background:#04bcb1 !important;background-image:linear-gradient(135deg,#08d5c8,#008caa) !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-action-btn.v2574-action-question {
+    background:#1bcb52 !important;background-image:linear-gradient(135deg,#38d956,#06ae48) !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-action-btn {
+    color:#fff !important;
+    min-height:94px !important; height:94px !important; max-height:94px !important;
+    padding:8px 5px !important; gap:3px !important;
+    border:2px solid #ffffff88 !important;
+    box-shadow:0 4px 10px #1229661c !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-action-text strong {
+    color:#fff !important;text-shadow:0 1px 2px #14275a55 !important;
+    font-size:clamp(12px,3.4vw,16px) !important;line-height:1.12 !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-action-ico {
+    width:40px !important;height:40px !important;font-size:27px !important;
+    background:#ffffff36 !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-title {
+    font-size:clamp(20px,5.1vw,25px) !important;line-height:1.13 !important;
+    margin-bottom:9px !important;padding-inline:8px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-actions {gap:8px !important;margin-bottom:9px !important;}
+}
