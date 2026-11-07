@@ -146,3 +146,150 @@
   .activity.theatre-mode .theatre-picture img,
   .activity.theatre-mode .theatre-picture--emotion img{width:96%;}
 }
+
+
+/* Bandeau UNIQUE du théâtre : plus de deuxième en-tête dans la carte. */
+.bar .theatre-top{display:none;}
+body.theatre-page .bar{
+  display:flex; align-items:center; gap:clamp(10px,1.5vw,24px);
+  padding:10px clamp(14px,2vw,32px);
+  flex-wrap:nowrap;
+}
+body.theatre-page .bar .brand{flex:0 0 auto;gap:8px;}
+body.theatre-page .bar .brand>span{font-size:29px;}
+body.theatre-page .bar .brand h1{font-size:clamp(20px,1.7vw,29px);white-space:nowrap;}
+body.theatre-page .bar .brand p{font-size:clamp(12px,.85vw,15px);margin:1px 0 0;}
+body.theatre-page .bar .theatre-top{
+  display:flex;align-items:center;gap:clamp(10px,1.15vw,22px);
+  min-width:0; flex:1 1 auto;
+}
+body.theatre-page .theatre-top #return{white-space:nowrap;flex-shrink:0;font-size:clamp(12px,1vw,16px);padding:9px 12px;}
+body.theatre-page .theatre-top #actTitle{
+  color:#132d55;white-space:nowrap;margin:0;
+  font-size:clamp(21px,1.7vw,32px);line-height:1.15;
+  flex:0 0 auto;
+}
+body.theatre-page .theatre-top-instruction{
+  flex:1 1 auto;min-width:0;margin:0;
+  font-size:clamp(13px,1vw,17px);line-height:1.25;
+}
+body.theatre-page .bar .back{flex:0 0 auto;font-size:clamp(12px,.98vw,16px);padding:9px 12px;}
+body.theatre-page main{padding-top:10px;}
+body.theatre-page .activity.theatre-mode{padding:10px;}
+body.theatre-page .activity.theatre-mode .act-head{display:none!important;}
+body.theatre-page .activity.theatre-mode .theatre-panel{margin-top:0;}
+@media(max-width:1500px){
+  body.theatre-page .bar{flex-wrap:wrap;gap:8px 15px;}
+  body.theatre-page .bar .theatre-top{order:3;flex:1 1 100%;}
+  body.theatre-page .bar .back{margin-left:auto;}
+}
+@media(max-width:720px){
+  body.theatre-page .bar{position:relative;}
+  body.theatre-page .bar .theatre-top{flex-wrap:wrap;gap:8px 12px;}
+  body.theatre-page .theatre-top-instruction{flex:1 1 100%;white-space:normal;}
+  body.theatre-page .bar .brand h1{font-size:21px;}
+  body.theatre-page .bar .brand p{font-size:12px;}
+}
+
+/* Théâtre — réduction des espaces inutiles, sans recadrage des affiches. */
+body.theatre-page main {
+  padding-top: 5px;
+}
+body.theatre-page .activity.theatre-mode {
+  padding: 6px;
+  border-radius: 18px;
+}
+body.theatre-page .activity.theatre-mode .theatre-panel {
+  padding: 7px;
+  border-radius: 15px;
+}
+body.theatre-page .activity.theatre-mode .theatre-gallery {
+  gap: clamp(8px, 1.1vw, 16px);
+  align-items: start;
+}
+body.theatre-page .activity.theatre-mode .theatre-picture {
+  padding: 7px;
+  border-radius: 16px;
+}
+body.theatre-page .activity.theatre-mode .theatre-picture-title {
+  margin: 0 0 5px;
+  line-height: 1.2;
+}
+body.theatre-page .activity.theatre-mode .theatre-picture img,
+body.theatre-page .activity.theatre-mode .theatre-picture--emotion img {
+  display: block;
+  width: 96%;
+  height: auto;
+  max-height: none;
+  margin: 0 auto;
+  object-fit: contain;
+  object-position: center top;
+}
+body.theatre-page .activity.theatre-mode .theatre-picture figcaption {
+  padding: 4px 2px 0;
+  line-height: 1.25;
+}
+body.theatre-page .activity.theatre-mode .theatre-action-area {
+  margin-top: 10px;
+}
+@media (max-width: 850px) {
+  body.theatre-page .activity.theatre-mode .theatre-gallery {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 650px) {
+  body.theatre-page .activity.theatre-mode .theatre-picture img,
+  body.theatre-page .activity.theatre-mode .theatre-picture--emotion img {
+    width: 100%;
+  }
+}
+
+/* Théâtre : un seul bandeau horizontal. Le titre général, le hibou et son
+   sous-titre sont masqués UNIQUEMENT dans cet atelier. */
+body.theatre-page .bar .brand { display:none !important; }
+body.theatre-page .bar {
+  display:flex;
+  flex-direction:row;
+  flex-wrap:nowrap;
+  align-items:center;
+  gap:clamp(10px,1.25vw,22px);
+  padding:10px clamp(12px,2vw,34px);
+  min-height:72px;
+}
+body.theatre-page .bar .theatre-top {
+  display:flex;
+  flex:1 1 auto;
+  flex-wrap:nowrap;
+  align-items:center;
+  min-width:0;
+  gap:clamp(10px,1.1vw,20px);
+  order:0;
+}
+body.theatre-page .theatre-top #return {flex:0 0 auto;white-space:nowrap;}
+body.theatre-page .theatre-top #actTitle {flex:0 0 auto;white-space:nowrap;}
+body.theatre-page .theatre-top-instruction {
+  flex:1 1 auto;
+  min-width:0;
+  margin:0;
+  white-space:normal;
+  line-height:1.25;
+}
+body.theatre-page .bar .back {
+  order:1;
+  flex:0 0 auto;
+  margin-left:auto;
+  white-space:nowrap;
+}
+/* Sur écrans plus étroits, garder les deux boutons accessibles sans débordement.
+   Le TBI et le PC conservent une seule ligne. */
+@media(max-width:980px){
+  body.theatre-page .bar{flex-wrap:wrap;gap:7px 12px;}
+  body.theatre-page .bar .theatre-top{flex:1 1 100%;flex-wrap:wrap;order:1;}
+  body.theatre-page .bar .back{order:0;margin-left:auto;}
+  body.theatre-page .theatre-top-instruction{flex:1 1 260px;}
+}
+@media(max-width:520px){
+  body.theatre-page .bar{padding:8px 12px;}
+  body.theatre-page .theatre-top #actTitle{font-size:23px;}
+  body.theatre-page .theatre-top-instruction{flex:1 1 100%;}
+}

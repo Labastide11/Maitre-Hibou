@@ -1,0 +1,164 @@
+/* Maître Hibou — accueil mobile en grilles — PC/TBI inchangés */
+@media (max-width: 680px) {
+  html, body {overflow-x:clip !important;}
+  body.v25-7-73-simplified-home #v21Home,
+  body.v25-7-73-simplified-home .v21-home {
+    height:auto !important;min-height:0 !important;
+    overflow:visible !important;padding:10px 0 22px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard {
+    width:calc(100% - 20px) !important;max-width:100% !important;
+    height:auto !important;min-height:0 !important; margin:0 auto 16px !important;
+    padding:12px 10px !important;display:flex !important;flex-direction:column !important;
+    border-radius:22px !important;overflow:visible !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-title {
+    display:block !important;text-align:center !important;
+    font-size:clamp(23px,6.2vw,31px) !important;line-height:1.12 !important;
+    margin:0 0 14px !important;padding:0 4px !important;
+    overflow-wrap:normal !important;word-break:normal !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-title .spark{font-size:.65em !important;}
+  /* Quatre grandes actions : 2 × 2, sans cartes géantes empilées */
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-actions {
+    display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    position:static !important;inset:auto !important;transform:none !important;
+    width:100% !important;height:auto !important;min-height:0 !important;
+    margin:0 0 14px !important;padding:0 !important;gap:10px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-action-btn {
+    position:relative !important;inset:auto !important;transform:none !important;
+    width:100% !important;height:auto !important;min-height:122px !important;
+    max-height:none !important;min-width:0 !important;
+    display:flex !important;flex-direction:column !important;justify-content:center !important;
+    align-items:center !important;gap:7px !important;padding:11px 6px !important;
+    border-radius:19px !important;background-image:none !important;
+    text-align:center !important;white-space:normal !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-action-ico {
+    flex:none !important;width:48px !important;height:48px !important;
+    font-size:32px !important;border-radius:13px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-action-ico img {
+    max-width:100% !important;max-height:100% !important;object-fit:contain !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-action-text {
+    min-width:0 !important;max-width:100% !important;display:block !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-action-text strong {
+    font-size:clamp(13px,3.6vw,17px) !important;line-height:1.12 !important;
+    display:block !important;margin:0 !important;white-space:normal !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-action-text small,
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-action-arrow {display:none !important;}
+  /* Huit matières : 2 colonnes, 4 lignes, intégrées au flux de la page */
+  body.v25-7-73-simplified-home #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid {
+    display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    grid-auto-flow:row !important;position:static !important;
+    inset:auto !important;left:auto !important;right:auto !important;bottom:auto !important;
+    transform:none !important;z-index:auto !important;
+    width:100% !important;max-width:100% !important;height:auto !important;
+    min-height:0 !important;max-height:none !important;overflow:visible !important;
+    margin:0 0 10px !important;padding:0 !important;gap:9px !important;
+    background:transparent !important;border:0 !important;box-shadow:none !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button {
+    display:flex !important;position:static !important;transform:none !important;
+    flex-direction:column !important;justify-content:center !important;align-items:center !important;
+    width:100% !important;min-width:0 !important;min-height:100px !important;
+    height:auto !important;max-height:none !important;margin:0 !important;
+    padding:9px 5px !important;border-radius:19px !important;
+    overflow:visible !important;white-space:normal !important;
+    box-sizing:border-box !important;gap:5px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid .subject-icon {
+    display:flex !important;align-items:center !important;justify-content:center !important;
+    font-size:32px !important;line-height:1 !important;flex:none !important;
+    width:48px !important;height:48px !important;max-height:48px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid .subject-icon img {
+    width:auto !important;height:auto !important;max-width:100% !important;max-height:100% !important;object-fit:contain !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid .subject-label {
+    display:block !important;font-size:clamp(12px,3.25vw,15px) !important;
+    line-height:1.18 !important;font-weight:850 !important;
+    overflow-wrap:break-word !important;white-space:normal !important;
+    width:100% !important;max-width:100% !important;text-align:center !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid .v2574-mini {display:none !important;}
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-advice-strip {
+    position:static !important;transform:none !important;order:4 !important;
+    font-size:12px !important;margin:4px 0 0 !important;padding:8px !important;
+  }
+  /* Les blocs anciennement flottants ne doivent plus couvrir les cartes. */
+  body.v25-7-73-simplified-home .v21-center {position:relative !important;z-index:auto !important;}
+  body.v25-7-73-simplified-home #v2574MainDashboard .mh-subject-heading {display:none !important;}
+}
+@media (max-width:380px){
+ body.v25-7-73-simplified-home #v2574MainDashboard .v2574-actions{gap:7px !important;}
+ body.v25-7-73-simplified-home #v2574MainDashboard .v2574-action-btn{min-height:110px !important;}
+ body.v25-7-73-simplified-home #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button{min-height:92px !important;}
+}
+
+/* Maquette mobile validée : 4 activités = 2 × 2, 8 matières = 4 × 2.
+   Les styles PC/TBI restent hors de cette media query. */
+@media (max-width:680px) {
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-actions {
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:9px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-action-btn {
+    min-height:112px !important;
+    padding:9px 5px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid {
+    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+    grid-auto-flow:row !important;
+    gap:6px !important;
+    order:3 !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button {
+    min-height:88px !important;
+    padding:6px 2px !important;
+    gap:5px !important;
+    border-radius:13px !important;
+    min-width:0 !important;
+    width:100% !important;
+    overflow:hidden !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid .subject-icon {
+    width:38px !important;
+    height:38px !important;
+    max-height:38px !important;
+    font-size:27px !important;
+    flex-shrink:0 !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid .subject-label {
+    display:block !important;
+    font-size:clamp(9px,2.55vw,12px) !important;
+    line-height:1.14 !important;
+    letter-spacing:-.2px !important;
+    overflow-wrap:anywhere !important;
+    word-break:normal !important;
+    text-overflow:clip !important;
+    padding:0 1px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-title {
+    font-size:clamp(20px,5.8vw,28px) !important;
+    line-height:1.17 !important;
+    margin-bottom:12px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .v2574-advice-strip {
+    order:4 !important;
+  }
+  /* Sécurisation : cacher le décor Constellation, pas les boutons interactifs. */
+  body.v25-7-73-simplified-home #v2574MainDashboard .mh-universe,
+  body.v25-7-73-simplified-home #v2574MainDashboard .mh-core,
+  body.v25-7-73-simplified-home #v2574MainDashboard .mh-subtitle {display:none !important;}
+  body.v25-7-73-simplified-home #v2574MainDashboard .mh-subject-heading {display:block !important;order:2 !important;font-size:16px !important;margin:1px 0 6px !important;}
+}
+@media (max-width:370px){
+  body.v25-7-73-simplified-home #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button {min-height:78px !important;}
+  body.v25-7-73-simplified-home #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid .subject-icon {width:31px !important;height:31px !important;max-height:31px !important;}
+  body.v25-7-73-simplified-home #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid .subject-label {font-size:9px !important;}
+}

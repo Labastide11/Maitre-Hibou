@@ -1,5 +1,29 @@
-(()=>{'use strict';const $=id=>document.getElementById(id),menu=$('menu'),activity=$('activity'),body=$('actBody');let cleanup=()=>{};const activities={dessin,musique,theatre,musee};const titles={dessin:'Mon atelier d’artiste',musique:'Mon atelier musical',theatre:'À toi de jouer !',musee:'Le musée de Maître Hibou'};
-function route(){const k=decodeURIComponent(location.hash.slice(1));cleanup();cleanup=()=>{};body.replaceChildren();activity.classList.toggle('theatre-mode',k==='theatre');const oldInstruction=activity.querySelector('.theatre-inline-instruction');if(oldInstruction)oldInstruction.remove();if(!Object.prototype.hasOwnProperty.call(activities,k)){menu.hidden=false;activity.hidden=true;return}menu.hidden=true;activity.hidden=false;$('actTitle').textContent=titles[k];activities[k]();window.scrollTo({top:0,behavior:'instant'});}
+(()=>{'use strict';const $=id=>document.getElementById(id),menu=$('menu'),activity=$('activity'),body=$('actBody');let cleanup=()=>{};const activities={dessin,musique,theatre,musee};const topbar=$('theatreTop'),originalHead=activity.querySelector('.act-head'),returnBtn=$('return'),actTitle=$('actTitle');const titles={dessin:'Mon atelier d’artiste',musique:'Mon atelier musical',theatre:'À toi de jouer !',musee:'Le musée de Maître Hibou'};
+function route(){
+  const k=decodeURIComponent(location.hash.slice(1));
+  cleanup();cleanup=()=>{};body.replaceChildren();
+  // Un seul bandeau : déplacer les VRAIS éléments de l'atelier dans l'en-tête.
+  // Les remettre en place pour les trois autres ateliers et le catalogue.
+  originalHead.append(returnBtn,actTitle);
+  topbar.replaceChildren();
+  const isTheatre=k==='theatre';
+  document.body.classList.toggle('theatre-page',isTheatre);
+  activity.classList.toggle('theatre-mode',isTheatre);
+  if(!Object.prototype.hasOwnProperty.call(activities,k)){
+    menu.hidden=false;activity.hidden=true;return;
+  }
+  menu.hidden=true;activity.hidden=false;
+  actTitle.textContent=titles[k];
+  if(isTheatre){
+    topbar.append(returnBtn,actTitle);
+    const instruction=document.createElement('p');
+    instruction.className='theatre-top-instruction';
+    instruction.textContent='Tire une situation, puis joue-la avec ta voix, ton visage et tes gestes.';
+    topbar.append(instruction);
+  }
+  activities[k]();
+  window.scrollTo({top:0,behavior:'instant'});
+}
 $('return').addEventListener('click',()=>{if(location.hash){location.hash='';}else{route();}});
 window.addEventListener('hashchange',route);
 route();
@@ -26,7 +50,7 @@ function theatre(){
     'fier':{file:'fier.png',alt:'Une fille sourit, la tête haute et les mains sur les hanches.',visage:'Je souris et je garde la tête haute.',voix:'Je parle avec assurance.',gestes:'Je me tiens droit, les épaules en arrière.'},
     'impatient':{file:'impatient.png',alt:'Un garçon regarde sa montre avec impatience.',visage:'Je fronce les sourcils et je regarde l’heure.',voix:'Je parle vite, avec insistance.',gestes:'Je peux tapoter du pied ou des doigts.'}
   };
-  const intro=document.createElement('p');intro.className='theatre-inline-instruction';intro.textContent='Tire une situation, puis joue-la avec ta voix, ton visage et tes gestes.';activity.querySelector('.act-head').appendChild(intro);
+
   body.innerHTML='<div class="panel theatre-panel">'+
       '<div class="theatre-gallery">'+
         '<figure class="theatre-picture theatre-picture--character"><div class="theatre-picture-title">Mon personnage</div><img id="theatre-role-image" alt="" loading="eager" decoding="async"><figcaption id="theatre-role-caption"></figcaption></figure>'+
