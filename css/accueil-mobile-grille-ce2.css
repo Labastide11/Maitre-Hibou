@@ -491,3 +491,47 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
     outline-offset: 2px !important;
   }
 }
+
+
+/* iPhone / téléphones — restaurer le défilement vertical de la page.
+   Le vieux patch « navigation fixe / zone scrollable » imposait
+   height:100dvh + overflow:hidden sur html et body.
+   Ici, le document retrouve un défilement naturel, sans ascenseur imbriqué.
+   Le contenu et les clics des matières restent inchangés. */
+@media screen and (max-width: 680px) {
+  html:has(body.v25-7-73-simplified-home) {
+    height: auto !important;
+    min-height: 100% !important;
+    overflow-x: clip !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) {
+    height: auto !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    overflow-x: clip !important;
+    overflow-y: visible !important;
+    display: block !important;
+    position: relative !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #hibouFixedZone {
+    position: relative !important;
+    height: auto !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #hibouScrollZone {
+    display: block !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    flex: none !important;
+    overflow: visible !important;
+    padding-bottom: max(44px, env(safe-area-inset-bottom, 0px)) !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v21Home,
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
