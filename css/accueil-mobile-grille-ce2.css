@@ -376,3 +376,51 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
     line-height: 1.18 !important;
   }
 }
+
+/* Accueil grand écran : uniquement fenêtres larges et hautes (ex. 1920 × 1080).
+   Préserve les dispositions du PC portable compact, des tablettes et des téléphones. */
+@media screen and (min-width: 1600px) and (min-height: 820px) {
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation {
+    width: min(1690px, calc(100% - 76px)) !important;
+    margin-top: 12px !important;
+    padding: 24px 30px 24px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subtitle {
+    display: none !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-universe {
+    height: 405px !important;
+    min-height: 405px !important;
+    max-height: 405px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn {
+    width: clamp(390px, 32%, 515px) !important;
+    height: 132px !important;
+    min-height: 132px !important;
+    max-height: 132px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core {
+    height: 225px !important;
+    max-height: 225px !important;
+    aspect-ratio: 1;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core img {
+    width: min(92%, 203px) !important;
+    height: 82% !important;
+    max-height: none !important;
+    object-fit: contain !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subject-heading {
+    margin-top: 10px !important;
+    padding-top: 13px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button {
+    height: 94px !important;
+    min-height: 94px !important;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-advice-strip {
+    margin-top: 12px !important;
+    padding: 11px 16px !important;
+    font-size: 15px !important;
+  }
+}
