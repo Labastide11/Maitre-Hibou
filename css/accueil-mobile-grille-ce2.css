@@ -425,60 +425,69 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
   }
 }
 
-/* Bandeau grand écran : boutons illustrés, sans changer leur comportement.
-   Appliqué uniquement aux écrans larges et hauts (ex. 1920 x 1080).
-   Les textes restent dans le DOM pour l'accessibilité et les clics JS existants restent intacts. */
+
+/* V25.8 : boutons illustrés côte à côte et centrés dans le bandeau.
+   Ciblage STRICT grands écrans ; les clics JS d'origine restent inchangés. */
 @media screen and (min-width: 1600px) and (min-height: 820px) {
   body:not(.prenom-mode) header.v21-header {
-    height: 76px !important;
-    min-height: 76px !important;
-    max-height: 76px !important;
-    padding: 0 20px !important;
+    height: 78px !important;
+    min-height: 78px !important;
+    max-height: 78px !important;
+    padding: 0 14px !important;
   }
   body:not(.prenom-mode) header.v21-header > .mh-compact-v15 {
-    height: 76px !important;
-    min-height: 76px !important;
-    grid-template-columns: minmax(0, 1fr) 180px minmax(0, 1fr) !important;
-    column-gap: 16px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    position: relative !important;
+    gap: 18px !important;
+    height: 78px !important;
+    min-height: 78px !important;
+    max-height: 78px !important;
   }
-  body:not(.prenom-mode) header.v21-header > .mh-compact-v15 .mh-button.mh-parcours,
-  body:not(.prenom-mode) header.v21-header > .mh-compact-v15 .mh-button.mh-anniversaires {
-    box-sizing: border-box !important;
-    display: inline-block !important;
-    width: 180px !important;
-    min-width: 180px !important;
-    max-width: 180px !important;
-    height: 60px !important;
-    min-height: 60px !important;
-    max-height: 60px !important;
+  body:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-brand {
+    position: absolute !important;
+    left: 0 !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin: 0 !important;
+  }
+  body:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-button.mh-parcours,
+  body:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-button.mh-anniversaires {
+    display: block !important;
+    flex: 0 0 240px !important;
+    width: 240px !important;
+    min-width: 240px !important;
+    max-width: 240px !important;
+    height: 70px !important;
+    min-height: 70px !important;
+    max-height: 70px !important;
     padding: 0 !important;
+    margin: 0 !important;
     border: 0 !important;
-    border-radius: 18px !important;
+    border-radius: 24px !important;
     background-color: transparent !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-size: 100% 100% !important;
+    box-shadow: none !important;
     color: transparent !important;
     font-size: 0 !important;
     line-height: 0 !important;
-    text-shadow: none !important;
-    box-shadow: 0 3px 9px rgba(0,0,0,.20) !important;
     cursor: pointer !important;
-    overflow: hidden !important;
+    transition: filter .15s ease, transform .15s ease !important;
   }
-  body:not(.prenom-mode) header.v21-header > .mh-compact-v15 .mh-button.mh-parcours {
-    background-image: url('../images/bouton-mon-parcours-grand-ecran.webp') !important;
+  body:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-button.mh-parcours {
+    background-image: url('../images/mon_parcours_240x70.png') !important;
   }
-  body:not(.prenom-mode) header.v21-header > .mh-compact-v15 .mh-button.mh-anniversaires {
-    background-image: url('../images/bouton-anniversaires-grand-ecran.webp') !important;
+  body:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-button.mh-anniversaires {
+    background-image: url('../images/anniversaires_240x70.png') !important;
   }
-  body:not(.prenom-mode) header.v21-header > .mh-compact-v15 .mh-button.mh-parcours:hover,
-  body:not(.prenom-mode) header.v21-header > .mh-compact-v15 .mh-button.mh-anniversaires:hover {
-    filter: brightness(1.10) !important;
-    transform: translateY(-1px) !important;
+  body:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-button:hover {
+    filter: brightness(1.08) !important;
   }
-  body:not(.prenom-mode) header.v21-header > .mh-compact-v15 .mh-button:focus-visible {
-    outline: 3px solid #ffd93d !important;
-    outline-offset: 3px !important;
+  body:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-button:focus-visible {
+    outline: 3px solid #ffdc4e !important;
+    outline-offset: 2px !important;
   }
 }
