@@ -209,3 +209,170 @@
     pointer-events: none !important;
   }
 }
+
+
+/* PC portable à hauteur réduite : garder le Conseil de Maître Hibou visible.
+   Ne s'applique ni au téléphone ni au TBI/écran haut. */
+@media screen and (min-width: 1000px) and (max-height: 850px) {
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation {
+    margin-top: 4px !important;
+    margin-bottom: 8px !important;
+    padding: 10px 20px 10px !important;
+  }
+
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-title {
+    font-size: clamp(25px, 2.2vw, 34px) !important;
+    margin-bottom: 1px !important;
+    line-height: 1.08 !important;
+  }
+
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subtitle {
+    margin: 0 0 2px !important;
+    line-height: 1.2 !important;
+  }
+
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-universe {
+    height: 228px !important;
+    min-height: 228px !important;
+    max-height: 228px !important;
+  }
+
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action-btn {
+    height: 84px !important;
+    min-height: 84px !important;
+    max-height: 84px !important;
+  }
+
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-core {
+    height: 105px !important;
+  }
+
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subject-heading {
+    margin: 3px 0 5px !important;
+    padding-top: 7px !important;
+  }
+
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .subjects-bar.mh-subjects > button {
+    height: 68px !important;
+    min-height: 68px !important;
+    max-height: 68px !important;
+    padding: 2px 4px !important;
+    gap: 1px !important;
+  }
+
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects .subject-icon,
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-subjects img {
+    max-height: 48px !important;
+  }
+
+  body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-advice-strip {
+    display: flex !important;
+    margin: 7px 0 0 !important;
+    padding: 6px 10px !important;
+    min-height: 0 !important;
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+  }
+}
+
+
+/* Bandeau de bienvenue — bouton d'identité unique et typographie équilibrée.
+   N'agit que sur le tableau d'accueil; les quatre activités restent intactes. */
+#v2574MainDashboard .mh-welcome-row-ce2 {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: clamp(8px,1.4vw,20px);
+  width: 100%;
+  min-width: 0;
+  margin: 0 0 2px;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .mh-welcome-row-ce2 .v2574-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: clamp(22px,2vw,28px) !important;
+  line-height: 1.16 !important;
+  margin: 0 !important;
+}
+#v2574MainDashboard .mh-change-student-ce2 {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #453192;
+  background: #f4efff;
+  border: 2px solid #d4c3fb;
+  border-radius: 14px;
+  padding: 9px 12px;
+  font: 750 14px/1.2 system-ui, sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  min-height: 42px;
+}
+#v2574MainDashboard .mh-change-student-ce2:focus-visible { outline: 3px solid #6247d8; outline-offset: 3px; }
+#v2574MainDashboard .mh-change-student-ce2:hover { background: #e9e0ff; }
+/* Protection anti-flash avant l'identification. */
+html:not(.hibou-authenticated) #v2574MainDashboard .mh-change-student-ce2,
+body.prenom-mode #v2574MainDashboard .mh-change-student-ce2,
+#v2574MainDashboard .mh-change-student-ce2[hidden] { display: none !important; }
+/* Évite un second bouton flottant quand celui du bandeau est disponible. */
+html.hibou-authenticated body.v25-7-73-simplified-home:has(#v2574MainDashboard .mh-change-student-ce2) .logout-area { display: none !important; }
+@media (min-width: 681px) and (max-width: 1100px) {
+  body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .v2574-title { font-size: clamp(20px,2.2vw,26px) !important; }
+}
+@media (max-width: 680px) {
+  #v2574MainDashboard .mh-welcome-row-ce2 { gap: 6px; align-items: flex-start; }
+  body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .v2574-title {
+    font-size: clamp(18px,4.1vw,23px) !important;
+    line-height: 1.2 !important;
+  }
+  #v2574MainDashboard .mh-change-student-ce2 {
+    font-size: 11px;
+    padding: 6px 7px;
+    border-radius: 11px;
+    min-height: 36px;
+    max-width: 108px;
+    white-space: normal;
+    text-align: center;
+  }
+  #v2574MainDashboard .mh-change-student-ce2 .mh-change-icon-ce2 { display:none; }
+}
+
+
+/* Accueil CE2 — sous-titre supprimé, titre équilibré, bouton à droite. */
+body.v25-7-73-simplified-home #v2574MainDashboard .mh-subtitle {
+  display: none !important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 {
+  position: relative;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: clamp(10px, 1.3vw, 18px);
+  margin: 0 0 12px !important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .v2574-title {
+  width: 100%;
+  min-width: 0;
+  text-align: center !important;
+  justify-content: center !important;
+  font-size: clamp(22px, 1.9vw, 28px) !important;
+  line-height: 1.14 !important;
+  margin: 0 !important;
+}
+body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change-student-ce2 {
+  justify-self: end;
+}
+@media (max-width: 680px) {
+  body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 {
+    column-gap: 7px;
+    margin-bottom: 9px !important;
+    align-items: center;
+  }
+  body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .v2574-title {
+    font-size: clamp(18px, 4vw, 22px) !important;
+    line-height: 1.18 !important;
+  }
+}
