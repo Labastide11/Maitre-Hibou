@@ -82,3 +82,67 @@
 .theatre-challenge{margin:13px 0 0;font-weight:750;color:#2e4873;}
 @media(max-width:850px){.theatre-gallery{grid-template-columns:minmax(0,1fr);}.theatre-picture--emotion img{height:clamp(260px,55vw,420px);}}
 @media(max-width:650px){.theatre-picture{padding:6px;border-radius:12px;}.theatre-picture img{height:clamp(220px,48vw,300px)}.theatre-picture--emotion img{height:clamp(260px,62vw,360px)}.theatre-picture figcaption{font-size:13px}.theatre-picture-title{font-size:14px}.theatre-panel{padding:9px}.theatre-help-inline{gap:8px}.theatre-help-inline span{border-radius:14px;padding:8px 10px;width:100%;}}
+
+/* Théâtre uniquement : bandeau de titre/consigne sur une ligne et cartes remontées. */
+.activity.theatre-mode{padding:clamp(12px,1.6vw,20px)}
+.activity.theatre-mode .act-head{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px clamp(12px,1.3vw,22px);
+  margin-bottom:10px;
+}
+.activity.theatre-mode .act-head h2{
+  margin:0;
+  font-size:clamp(24px,2.2vw,36px);
+  line-height:1.15;
+  white-space:nowrap;
+}
+.activity.theatre-mode .theatre-inline-instruction{
+  margin:0;
+  min-width:0;
+  flex:1 1 410px;
+  font-size:clamp(15px,1.15vw,20px);
+  line-height:1.3;
+  color:#193052;
+}
+.activity.theatre-mode .theatre-panel{padding:clamp(10px,1.5vw,16px)}
+@media(min-width:1100px){
+  .activity.theatre-mode .theatre-inline-instruction{white-space:nowrap;flex:1 1 auto}
+}
+@media(max-width:720px){
+  .activity.theatre-mode .act-head{gap:8px 12px}
+  .activity.theatre-mode .theatre-inline-instruction{flex:1 1 100%;white-space:normal}
+}
+
+/* Alignement des deux illustrations : pas de hauteur artificielle ni de bande vide.
+   L'image suit ses proportions naturelles, y compris les affiches complètes. */
+.activity.theatre-mode .theatre-gallery{align-items:start;}
+.activity.theatre-mode .theatre-picture img,
+.activity.theatre-mode .theatre-picture--emotion img{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:none;
+  aspect-ratio:auto;
+  object-fit:contain;
+  object-position:top center;
+  background:transparent;
+}
+
+/* Théâtre : images réduites de 12 %, centrées sans recadrage.
+   Les affiches complètes restent visibles et alignées en haut. */
+.activity.theatre-mode .theatre-picture img,
+.activity.theatre-mode .theatre-picture--emotion img{
+  width:88%;
+  height:auto;
+  max-height:none;
+  margin-left:auto;
+  margin-right:auto;
+  object-fit:contain;
+  object-position:top center;
+}
+@media(max-width:650px){
+  .activity.theatre-mode .theatre-picture img,
+  .activity.theatre-mode .theatre-picture--emotion img{width:96%;}
+}
