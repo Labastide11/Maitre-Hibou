@@ -84,3 +84,77 @@
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
   else init();
 })();
+
+
+/* iPhone : compléter les deux accès existants dans la grille sans déplacer les
+   boutons de matières ni modifier leurs événements. Aucune action sur PC. */
+(function(){
+  'use strict';
+  var mq=window.matchMedia('(max-width: 680px)');
+  var pending=false;
+  function clickFirst(selectors, excluded){
+    for(var i=0;i<selectors.length;i++){
+      var el=document.querySelector(selectors[i]);
+      if(el && !el.closest('.mh-mobile-subject-grid') && el !== excluded && typeof el.click==='function'){
+        el.click(); return true;
+      }
+    }
+    return false;
+  }
+  function openGrow(){
+    if(typeof window.openGrandirEnsemble==='function'){window.openGrandirEnsemble();return;}
+    clickFirst(['#greatTogetherBtn','#btnGrandirEnsemble','.mh-split-zone.grow','[data-open="grandir-ensemble"]']);
+  }
+  function openTools(){
+    if(typeof window.openClassShortcutsPopup==='function'){window.openClassShortcutsPopup();return;}
+    clickFirst(['#usefulLinksBtn','#btnLiensUtiles','.mh-split-zone.shortcuts','[data-open="outils"]']);
+  }
+  function ensureOne(nav, kind, name, open){
+    var existing=Array.from(nav.querySelectorAll(':scope > button')).some(function(btn){
+      var id=(btn.dataset.subject||'').toLowerCase();
+      var label=(btn.getAttribute('aria-label')||'')+' '+(btn.textContent||'');
+      return kind==='grow' ? (id==='grandir'||/grandir ensemble/i.test(label)) :
+             (id==='outils'||/outils|liens externes|liens utiles/i.test(label));
+    });
+    if(existing)return;
+    var b=document.createElement('button');
+    b.type='button';
+    b.dataset.subject=kind==='grow'?'grandir':'outils';
+    b.className='subject-btn mh-mobile-extra-ce2 mh-mobile-extra-'+kind+'-ce2';
+    b.setAttribute('aria-label',kind==='grow'?'Ouvrir Grandir ensemble':'Ouvrir les liens externes');
+    b.innerHTML='<span class="subject-icon" aria-hidden="true"></span><span class="subject-label">'+name+'</span>';
+    b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();open();});
+    nav.appendChild(b);
+  }
+  function apply(){
+    if(!mq.matches||!document.body.classList.contains('v25-7-73-simplified-home')||document.body.classList.contains('prenom-mode'))return;
+    var panel=document.getElementById('v2574MainDashboard');
+    var nav=panel&&panel.querySelector('.subjects-bar.mh-mobile-subject-grid');
+    if(!nav)return;
+    ensureOne(nav,'grow','Grandir ensemble',openGrow);
+    ensureOne(nav,'tools','Liens externes',openTools);
+    var strip=panel.querySelector('.v2574-advice-strip');
+    if(strip)strip.setAttribute('aria-label','Le conseil de Maître Hibou : Une question, c’est déjà le début d’une découverte !');
+  }
+  function schedule(){
+    if(pending)return;
+    pending=true;
+    requestAnimationFrame(function(){pending=false;apply();});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){apply();setTimeout(apply,300);setTimeout(apply,1000);},{once:true});
+  else {apply();setTimeout(apply,300);setTimeout(apply,1000);}
+  window.addEventListener('pageshow',schedule);
+  if(mq.addEventListener)mq.addEventListener('change',schedule);
+  new MutationObserver(function(records){
+    if(!mq.matches)return;
+    for(var i=0;i<records.length;i++){
+      var r=records[i];
+      if(r.type==='childList'){
+        for(var j=0;j<r.addedNodes.length;j++){
+          var n=r.addedNodes[j];
+          if(n.nodeType===1 && (n.id==='v2574MainDashboard'||n.classList.contains('mh-mobile-subject-grid'))){schedule();return;}
+        }
+      }
+    }
+  }).observe(document.body,{childList:true,subtree:true});
+})();

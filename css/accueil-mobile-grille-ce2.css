@@ -630,3 +630,96 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
     padding-bottom: max(20px, env(safe-area-inset-bottom, 0px)) !important;
   }
 }
+
+
+/* === Correctif iPhone : 7 matières / conseil / changer élève / safe area ===
+   Mobile uniquement. Aucun impact sur PC, TBI, tablette > 680px. */
+@media screen and (max-width: 680px) {
+  /* 1. Grille : 4 + 3 ; accès ajoutés par le script mobile sans modifier les originaux. */
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard
+  .subjects-bar.mh-mobile-subject-grid > button.mh-mobile-extra-ce2 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    position: static !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+    grid-row: 2 !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard
+  .subjects-bar.mh-mobile-subject-grid > button.mh-mobile-extra-grow-ce2 {
+    grid-column: 4 / span 2 !important;
+    background-image: url('../images/accueil-mobile/grandir.webp') !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard
+  .subjects-bar.mh-mobile-subject-grid > button.mh-mobile-extra-tools-ce2 {
+    grid-column: 6 / span 2 !important;
+    background-image: url('../images/accueil-mobile/liens.webp') !important;
+  }
+  /* 2. Le conseil : message court et lisible, sans ancien contenu en double. */
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .v2574-advice-strip {
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-flow: row nowrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 12px 0 0 !important;
+    padding: 10px 12px !important;
+    gap: 0 !important;
+    border-radius: 16px !important;
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    text-align: center !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+    white-space: normal !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .v2574-advice-strip > * {
+    display: none !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .v2574-advice-strip::before {
+    display: block !important;
+    position: static !important;
+    content: '💡 Le conseil de Maître Hibou : Une question, c’est déjà le début d’une découverte !' !important;
+    color: #14376c !important;
+    font-size: clamp(12px, 3.25vw, 14px) !important;
+    line-height: 1.35 !important;
+    font-weight: 750 !important;
+    letter-spacing: normal !important;
+    white-space: normal !important;
+  }
+  /* 3. Le bouton de changement d’élève est déjà dans l’entête de bienvenue. */
+  body.v25-7-73-simplified-home:not(.prenom-mode):has(#v2574MainDashboard .mh-change-student-ce2) .logout-area {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  /* 4. Respect du haut de Safari iOS et défilement complet. */
+  html:has(body.v25-7-73-simplified-home) {
+    scroll-padding-top: max(12px, env(safe-area-inset-top, 0px)) !important;
+    scroll-padding-bottom: max(36px, env(safe-area-inset-bottom, 0px)) !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #hibouFixedZone,
+  body.v25-7-73-simplified-home:not(.prenom-mode) header.v21-header {
+    top: auto !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v21Home {
+    padding-top: max(14px, env(safe-area-inset-top, 0px)) !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard {
+    padding-bottom: 18px !important;
+    margin-bottom: max(44px, env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
