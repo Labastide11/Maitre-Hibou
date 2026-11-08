@@ -241,12 +241,15 @@
       var expected = name ? 'Bienvenue ' + name + ' !' : 'Bienvenue !';
       if(label && label.textContent !== expected) label.textContent = expected;
       var nav = panel.querySelector('.subjects-bar.mh-mobile-subject-grid');
-      if(nav && advice && (advice.previousElementSibling !== nav || advice.parentNode !== panel)){
+      // Le conseil appartient à la même grille que les matières sur iPhone.
+      // Safari modifie la hauteur visible pendant le défilement : deux blocs
+      // séparés pouvaient alors s'écarter. Cette relation reste stable.
+      if(nav && advice && advice.parentNode !== nav){
         if(!originalAdviceParent){
           originalAdviceParent = advice.parentNode;
           originalAdviceNext = advice.nextSibling;
         }
-        nav.insertAdjacentElement('afterend',advice);
+        nav.appendChild(advice);
       }
     } else {
       if(label && typeof window.hibouUpdateWelcomeTitle === 'function'){

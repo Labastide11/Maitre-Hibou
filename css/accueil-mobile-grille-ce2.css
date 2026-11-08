@@ -947,3 +947,41 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
   body.v25-7-73-simplified-home:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-mobile-header-change-ce2 .mh-change-icon-ce2 { display:none !important; }
   body.v25-7-73-simplified-home:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-mobile-header-change-ce2[hidden] {display:none !important;}
 }
+
+
+/* iPhone — CONSEIL SOLIDAIRE DE LA GRILLE (08/11/2026)
+   Le JavaScript place le conseil DANS la barre des matières uniquement sur
+   l'accueil téléphone. En tant qu'élément de grille, il reste immédiatement
+   après les icônes même lorsque Safari réduit ou agrandit son viewport.
+   Aucune modification des dimensions ou de la Constellation PC/tablette. */
+@media screen and (max-width:680px) {
+  body.v25-7-73-simplified-home:not(.prenom-mode)
+  #v2574MainDashboard > .subjects-bar.mh-mobile-subject-grid {
+    align-content: start !important;
+    justify-content: center !important;
+    grid-auto-rows: max-content !important;
+    row-gap: 8px !important;
+    height: max-content !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode)
+  #v2574MainDashboard > .subjects-bar.mh-mobile-subject-grid > .v2574-advice-strip {
+    grid-column: 1 / -1 !important;
+    grid-row: 3 !important;
+    align-self: start !important;
+    justify-self: stretch !important;
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    display: flex !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 4px 0 0 !important;
+    padding: 10px 12px !important;
+  }
+}
