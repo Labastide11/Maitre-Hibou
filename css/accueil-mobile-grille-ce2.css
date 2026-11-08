@@ -985,3 +985,45 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
     padding: 10px 12px !important;
   }
 }
+
+
+/* ACCUEIL TELEPHONE : suppression des espacements artificiels en fin de page.
+   Le code historique cumulait 44 px de padding dans #hibouScrollZone,
+   44 px de marge sous #v2574MainDashboard et des marges du bloc #v21Home.
+   Conserver le scrolling naturel si le contenu dépasse l'écran.
+   Ne modifier ni les sous-pages ni l'affichage PC/tablette. */
+@media screen and (max-width: 680px) {
+  body.v25-7-73-simplified-home:not(.prenom-mode) #hibouScrollZone {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    padding-bottom: 0 !important;
+    overflow: visible !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v21Home.v21-home {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    flex: 0 0 auto !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    justify-content: flex-start !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v21Home #v2574MainDashboard {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 8px !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard > .subjects-bar.mh-mobile-subject-grid {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    align-content: start !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .v2574-advice-strip {
+    margin-bottom: 0 !important;
+  }
+}
