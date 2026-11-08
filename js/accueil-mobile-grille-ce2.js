@@ -147,3 +147,57 @@
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
+
+
+/* Accueil iPhone : retire DU DOM les vestiges de l'ancien accueil.
+   Ne masque rien avec CSS ; ne touche pas aux boutons de la Constellation.
+   Sur PC/tablette, ne supprime aucun noeud. */
+(function(){
+  'use strict';
+  var mq=window.matchMedia('(max-width: 680px)');
+  var queued=false, observer=null;
+  function cleanup(){
+    if(!mq.matches || !document.body.classList.contains('v25-7-73-simplified-home') ||
+       document.body.classList.contains('prenom-mode'))return;
+    var dashboard=document.getElementById('v2574MainDashboard');
+    if(!dashboard)return;
+    // L'accès actuel « Changer d'élève » est dans le bandeau du dashboard.
+    if(!dashboard.querySelector('.mh-change-student-ce2'))return;
+    // Suppression effective des anciens grands boutons rouges, jamais celui du bandeau.
+    document.querySelectorAll(
+      '#v21Home .v21-change-student-btn, '+
+      '.v21-center > .v21-change-student-btn.hibou-change-student-outside, '+
+      '.logout-area'
+    ).forEach(function(el){
+      if(!dashboard.contains(el))el.remove();
+    });
+    // Ancien menu de matières : seulement s'il existe DEJA une barre active dans le dashboard.
+    // Ne jamais retirer la barre de matières actuelle ni ses événements de clic.
+    if(dashboard.querySelector('.subjects-bar.mh-mobile-subject-grid')){
+      document.querySelectorAll('.subjects-bar').forEach(function(el){
+        if(!dashboard.contains(el))el.remove();
+      });
+    }
+  }
+  function schedule(){
+    if(queued)return;
+    queued=true;
+    requestAnimationFrame(function(){queued=false;cleanup();});
+  }
+  function init(){
+    cleanup();
+    observer=new MutationObserver(function(mutations){
+      if(!mq.matches)return;
+      for(var i=0;i<mutations.length;i++){
+        if(mutations[i].addedNodes.length){schedule();return;}
+      }
+    });
+    observer.observe(document.body,{childList:true,subtree:true});
+    window.addEventListener('pageshow',schedule);
+    window.addEventListener('resize',schedule,{passive:true});
+    if(mq.addEventListener)mq.addEventListener('change',schedule);
+    [100,500,1300,2600].forEach(function(ms){setTimeout(schedule,ms);});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})();
