@@ -162,7 +162,8 @@
     var dashboard=document.getElementById('v2574MainDashboard');
     if(!dashboard)return;
     // L'accès actuel « Changer d'élève » est dans le bandeau du dashboard.
-    if(!dashboard.querySelector('.mh-change-student-ce2'))return;
+    // Nettoyage idempotent : seuls les doublons historiques sont supprimés.
+    // Ne pas dépendre de l'emplacement actuel du bouton d'en-tête.
     // Suppression effective des anciens grands boutons rouges, jamais celui du bandeau.
     document.querySelectorAll(
       '#v21Home .v21-change-student-btn, '+
@@ -170,6 +171,12 @@
       '.logout-area'
     ).forEach(function(el){
       if(!dashboard.contains(el))el.remove();
+    });
+    // Supprimer les anciens éléments de Constellation qui créent un espace vide
+    // entre la grille et le conseil (ils ne sont pas utilisés sur téléphone).
+    dashboard.querySelectorAll(':scope > .mh-universe, :scope > .mh-subject-heading, :scope > .mh-subtitle').forEach(function(el){
+      // Les quatre vrais boutons sont conservés : ne retirer que le décor vide.
+      if(!el.querySelector('.v2574-actions')) el.remove();
     });
     // Ancien menu de matières : seulement s'il existe DEJA une barre active dans le dashboard.
     // Ne jamais retirer la barre de matières actuelle ni ses événements de clic.
@@ -234,7 +241,7 @@
       var expected = name ? 'Bienvenue ' + name + ' !' : 'Bienvenue !';
       if(label && label.textContent !== expected) label.textContent = expected;
       var nav = panel.querySelector('.subjects-bar.mh-mobile-subject-grid');
-      if(nav && advice && advice.previousElementSibling !== nav){
+      if(nav && advice && (advice.previousElementSibling !== nav || advice.parentNode !== panel)){
         if(!originalAdviceParent){
           originalAdviceParent = advice.parentNode;
           originalAdviceNext = advice.nextSibling;

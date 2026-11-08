@@ -11855,6 +11855,9 @@ header{
 <script id="patch-v182-logout-sticky-visible-js">
 (function(){
   function ensureLogoutButtonVisibleV182(){
+    // Accueil téléphone : le bouton unique se trouve dans le bandeau supérieur.
+    // Ne pas créer l'ancien bouton « Donner la tablette » dans le DOM.
+    if (window.matchMedia('(max-width: 680px)').matches) return;
     try{
       var area = document.querySelector('.logout-area');
       if(!area){
@@ -15092,6 +15095,12 @@ body.v21-final .quick-btn{
         </aside>
       </div>
     `;
+    // Sur téléphone, supprimer physiquement le bouton historique avant
+    // d'insérer l'accueil : pas de doublon rouge, même au premier rendu.
+    if (window.matchMedia('(max-width: 680px)').matches) {
+      var ancientChange = home.querySelector('.v21-change-student-btn');
+      if (ancientChange) ancientChange.remove();
+    }
     header.insertAdjacentElement("afterend", home);
 
     const treasure = document.getElementById("v21TreasureCard");
@@ -26660,6 +26669,8 @@ body.v25-7-73-simplified-home #v2574MainDashboard.mh-constellation .v2574-action
   var busy = false;
 
   function moveButtonOutside(){
+    // Script ancien réservé aux mises en page ordinateur et tablette.
+    if (window.matchMedia('(max-width: 680px)').matches) return;
     if(busy) return;
     var center = document.querySelector('.v21-center');
     var profile = center && center.querySelector('.v21-profile-card');
