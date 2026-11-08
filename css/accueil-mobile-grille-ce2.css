@@ -723,3 +723,28 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
     margin-bottom: max(44px, env(safe-area-inset-bottom, 0px)) !important;
   }
 }
+
+/* iPhone : 7 boutons visibles, y compris les deux raccourcis créés par le script.
+   Les boutons originaux (cachés ou ailleurs) ne sont pas modifiés. */
+@media screen and (max-width: 680px) {
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard
+  .subjects-bar.mh-mobile-subject-grid > button.mh-mobile-extra-grow-ce2 {
+    display: block !important;
+    grid-column: 4 / span 2 !important;
+    grid-row: 2 !important;
+    background-image: url('../images/accueil-mobile/grandir.webp') !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard
+  .subjects-bar.mh-mobile-subject-grid > button.mh-mobile-extra-tools-ce2 {
+    display: block !important;
+    grid-column: 6 / span 2 !important;
+    grid-row: 2 !important;
+    background-image: url('../images/accueil-mobile/liens.webp') !important;
+  }
+  /* Le bouton rouge historique est un doublon de celui dans l'en-tête. */
+  body.v25-7-73-simplified-home:not(.prenom-mode) .logout-area {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
