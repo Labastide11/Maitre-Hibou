@@ -762,3 +762,52 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
     pointer-events: none !important;
   }
 }
+
+
+/* === Accueil TELEPHONE uniquement : 4 grandes activites illustrees ===
+   Association par fonction (classe), jamais par ordre de bouton.
+   Les boutons HTML, leurs evenements clic et leurs textes restent intacts.
+   Les images contiennent deja les titres et sous-titres. */
+@media screen and (max-width: 680px) {
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .v2574-actions > .v2574-action-btn:is(
+    .v2574-action-train,.v2574-action-belt,.v2574-action-lesson,.v2574-action-question
+  ) {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: 1813 / 867 !important;
+    border: 0 !important;
+    border-radius: 15px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: 100% 100% !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* Textes conserves dans le DOM pour l'accessibilite / les clics,
+     mais non peints puisque presents dans l'image. */
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .v2574-actions > .v2574-action-btn:is(
+    .v2574-action-train,.v2574-action-belt,.v2574-action-lesson,.v2574-action-question
+  ) > * {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .v2574-actions > .v2574-action-btn.v2574-action-train {
+    background-image: url('../images/accueil-mobile/activite-entrainer.webp') !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .v2574-actions > .v2574-action-btn.v2574-action-belt {
+    background-image: url('../images/accueil-mobile/activite-ceinture.webp') !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .v2574-actions > .v2574-action-btn.v2574-action-lesson {
+    background-image: url('../images/accueil-mobile/activite-lecon.webp') !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .v2574-actions > .v2574-action-btn.v2574-action-question {
+    background-image: url('../images/accueil-mobile/activite-question.webp') !important;
+  }
+}
