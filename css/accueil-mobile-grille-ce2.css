@@ -536,9 +536,11 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
   }
 }
 
-/* V25.8 — accueil téléphone, sept illustrations fournies par l'enseignant.
-   Mathématiques se trouve dans « M'entraîner » et ne doit pas être ajouté.
-   Aucun effet sur PC et tablette. Les vrais <button> gardent leurs écouteurs. */
+/* V25.8.85 — CORRECTION : associer une image à l'identité réelle du bouton.
+   Ne plus utiliser nth-child/nth-of-type : les anciens boutons Maths/Français
+   peuvent exister dans le DOM et décaler tous les visuels.
+   Les événements de clic existants ne sont pas modifiés.
+   Strictement téléphones. */
 @media screen and (max-width: 680px) {
   body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid {
     display: grid !important;
@@ -562,6 +564,7 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
     border: 0 !important;
     border-radius: 17% !important;
     background-color: transparent !important;
+    background-image: none !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
     background-size: contain !important;
@@ -571,32 +574,55 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
     font-size: 0 !important;
     line-height: 0 !important;
     cursor: pointer !important;
-    transition: filter .15s ease !important;
   }
   body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button > * {
-    visibility: hidden !important; /* contenu accessible, pas de double texte sur l'image */
+    visibility: hidden !important;
   }
   body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:focus-visible {
     outline: 3px solid #ffca23 !important;
     outline-offset: 2px !important;
   }
-  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:active {
-    filter: brightness(1.1) !important;
+  /* Les Maths et le Français sont désormais dans M'entraîner, pas dans cette grille. */
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:is([data-subject="maths"],[data-subject="francais"]) {
+    display: none !important;
   }
-  /* La deuxième ligne de trois boutons est centrée. */
-  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(5) { grid-column: 2 / span 2; }
-  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(6) { grid-column: 4 / span 2; }
-  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(7) { grid-column: 6 / span 2; }
-  /* Les visuels sont ordonnés comme les sept matières existantes. */
-  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(1) { background-image: url('../images/accueil-mobile/arts.webp') !important; }
-  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(2) { background-image: url('../images/accueil-mobile/anglais.webp') !important; }
-  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(3) { background-image: url('../images/accueil-mobile/sciences.webp') !important; }
-  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(4) { background-image: url('../images/accueil-mobile/geographie.webp') !important; }
-  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(5) { background-image: url('../images/accueil-mobile/histoire.webp') !important; }
-  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(6) { background-image: url('../images/accueil-mobile/grandir.webp') !important; }
-  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(7) { background-image: url('../images/accueil-mobile/liens.webp') !important; }
 
-  /* Maintenir le défilement du DOCUMENT jusqu'à la dernière matière. */
+  /* Boutons reconnus par leurs data-subject, classes et aria-label, jamais par leur rang. */
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:is([data-subject="arts"],[data-subject="arts-creativite"],[data-subject="arts_creativite"],.v2574-arts-btn,.mh-arts-btn,[aria-label*="Arts"],[aria-label*="arts"]) {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+    background-image: url('../images/accueil-mobile/arts.webp') !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:is([data-subject="anglais"],[aria-label*="Anglais"],[aria-label*="anglais"]) {
+    grid-column: 3 / span 2;
+    grid-row: 1;
+    background-image: url('../images/accueil-mobile/anglais.webp') !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:is([data-subject="sciences"],[aria-label*="Sciences"],[aria-label*="sciences"]) {
+    grid-column: 5 / span 2;
+    grid-row: 1;
+    background-image: url('../images/accueil-mobile/sciences.webp') !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:is([data-subject="geographie"],[aria-label*="Géographie"],[aria-label*="géographie"]) {
+    grid-column: 7 / span 2;
+    grid-row: 1;
+    background-image: url('../images/accueil-mobile/geographie.webp') !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:is([data-subject="histoire"],[aria-label*="Histoire"],[aria-label*="histoire"]) {
+    grid-column: 2 / span 2;
+    grid-row: 2;
+    background-image: url('../images/accueil-mobile/histoire.webp') !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:is(.v2574-grow-btn,[data-subject="grandir"],[data-open="grandir-ensemble"],[aria-label*="Grandir"],[aria-label*="grandir"]) {
+    grid-column: 4 / span 2;
+    grid-row: 2;
+    background-image: url('../images/accueil-mobile/grandir.webp') !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:is(.v2574-tools-btn,[data-subject="outils"],[data-open="outils"],[aria-label*="outils"],[aria-label*="Outils"],[aria-label*="Liens"],[aria-label*="liens"]) {
+    grid-column: 6 / span 2;
+    grid-row: 2;
+    background-image: url('../images/accueil-mobile/liens.webp') !important;
+  }
   body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard {
     overflow: visible !important;
     height: auto !important;
