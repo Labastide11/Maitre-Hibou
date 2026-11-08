@@ -863,3 +863,47 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
     row-gap: 0 !important;
   }
 }
+
+
+/* Correctif iPhone 2026-11-08 : supprime la réserve verticale sous la grille.
+   Le conseil a déjà été déplacé juste après .mh-mobile-subject-grid par le JS.
+   Le conteneur doit disposer les enfants à partir du haut, sans répartir
+   l'espace restant (space-between / space-around / stretch). */
+@media screen and (max-width: 680px) {
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-content: flex-start !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    row-gap: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid {
+    flex: 0 0 auto !important;
+    align-self: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    grid-auto-rows: max-content !important;
+    align-content: start !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .v2574-advice-strip {
+    flex: 0 0 auto !important;
+    align-self: stretch !important;
+    order: 3 !important;
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    margin: 12px 0 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+}
