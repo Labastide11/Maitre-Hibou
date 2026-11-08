@@ -907,3 +907,110 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
     max-height: none !important;
   }
 }
+
+
+/* Bandeau compact de l'accueil : téléphone seulement.
+   Hibou | Changer d'eleve | Mon parcours | Anniversaires.
+   Le tableau et les sept matieres restent dans leur flux naturel. */
+@media screen and (max-width: 680px) {
+  body.v25-7-73-simplified-home:not(.prenom-mode) header.v21-header {
+    padding-left: max(5px, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(5px, env(safe-area-inset-right, 0px)) !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    max-height: 52px !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) header.v21-header > .mh-compact-v15 {
+    display: grid !important;
+    grid-template-columns: 34px minmax(0,1fr) minmax(0,1fr) !important;
+    align-items: center !important;
+    column-gap: 4px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 52px !important;
+  }
+  body.v25-7-73-simplified-home.mh-mobile-header-has-change:not(.prenom-mode) header.v21-header > .mh-compact-v15 {
+    grid-template-columns: 30px minmax(0,1.02fr) minmax(0,1.10fr) minmax(0,1.10fr) !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-brand {
+    grid-column: 1 !important;
+    justify-self: center !important;
+    width: 30px !important;
+    overflow: hidden !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-brand .logo-text {
+    font-size: 0 !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-brand .logo-text::before {
+    font-size: 23px !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-button.mh-parcours {
+    grid-column: 2 !important;
+    justify-self: stretch !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-button.mh-anniversaires {
+    grid-column: 3 !important;
+    justify-self: stretch !important;
+  }
+  body.v25-7-73-simplified-home.mh-mobile-header-has-change:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-button.mh-parcours {
+    grid-column: 3 !important;
+  }
+  body.v25-7-73-simplified-home.mh-mobile-header-has-change:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-button.mh-anniversaires {
+    grid-column: 4 !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-button,
+  body.v25-7-73-simplified-home:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-mobile-header-change-ce2 {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 37px !important;
+    min-height: 37px !important;
+    max-height: 37px !important;
+    padding: 3px 2px !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+    font: 700 clamp(9px, 2.45vw, 12px)/1.06 system-ui,sans-serif !important;
+    white-space: normal !important;
+    text-align: center !important;
+    margin: 0 !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-mobile-header-change-ce2 {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #fff !important;
+    background: rgba(255,255,255,.13) !important;
+    border: 1px solid rgba(255,255,255,.27) !important;
+    box-shadow: none !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-mobile-header-change-ce2 .mh-change-icon-ce2 {
+    display: none !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) header.v21-header .mh-compact-v15 .mh-mobile-header-change-ce2[hidden] {
+    display: none !important;
+  }
+  /* Le bouton a été déplacé au bandeau : titre seul dans le tableau. */
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .mh-welcome-row-ce2 {
+    display: block !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    margin: 0 0 9px !important;
+    padding: 0 !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .mh-welcome-row-ce2 .v2574-title {
+    display: block !important;
+    width: 100% !important;
+    font-size: clamp(16px, 4.7vw, 22px) !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard {
+    padding-top: 10px !important;
+  }
+}

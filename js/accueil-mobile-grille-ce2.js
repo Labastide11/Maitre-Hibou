@@ -47,7 +47,7 @@
       heading.parentNode.insertBefore(row, heading);
       row.appendChild(heading);
     }
-    var button=row.querySelector('.mh-change-student-ce2');
+    var button=panel.querySelector('.mh-change-student-ce2') || document.querySelector('header.v21-header .mh-mobile-header-change-ce2');
     if(!button){
       button=document.createElement('button');
       button.type='button';
@@ -231,7 +231,7 @@
     var advice = panel.querySelector('.v2574-advice-strip');
     if(isMobileHome()){
       var name = nameForStudent();
-      var expected = name ? 'Bienvenue ' + name + ' !' : 'Bienvenue chez Maître Hibou !';
+      var expected = name ? 'Bienvenue ' + name + ' !' : 'Bienvenue !';
       if(label && label.textContent !== expected) label.textContent = expected;
       var nav = panel.querySelector('.subjects-bar.mh-mobile-subject-grid');
       if(nav && advice && advice.previousElementSibling !== nav){
@@ -280,4 +280,59 @@
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});
   else init();
+})();
+
+
+/* Accueil iPhone : REUTILISER le bouton existant dans le bandeau compact.
+   Son gestionnaire de clic reste attaché au même noeud ; aucun doublon.
+   La restauration sur ordinateur le replace à son emplacement d'origine. */
+(function(){
+  'use strict';
+  var mq=window.matchMedia('(max-width: 680px)');
+  var scheduled=false, originalRow=null, originalNext=null;
+  function sync(){
+    var header=document.querySelector('header.v21-header > .mh-compact-v15');
+    var panel=document.getElementById('v2574MainDashboard');
+    var active=mq.matches && document.body.classList.contains('v25-7-73-simplified-home') && !document.body.classList.contains('prenom-mode');
+    var button=document.querySelector('.mh-change-student-ce2');
+    if(!button || !panel)return;
+    if(active && header){
+      if(!originalRow && button.parentNode && !header.contains(button)){
+        originalRow=button.parentNode;
+        originalNext=button.nextSibling;
+      }
+      if(button.parentNode!==header){
+        var progress=header.querySelector('.mh-parcours');
+        if(progress)header.insertBefore(button,progress);
+        else header.appendChild(button);
+      }
+      button.classList.add('mh-mobile-header-change-ce2');
+      document.body.classList.toggle('mh-mobile-header-has-change',!button.hidden);
+    }else{
+      document.body.classList.remove('mh-mobile-header-has-change');
+      button.classList.remove('mh-mobile-header-change-ce2');
+      if(originalRow && button.parentNode!==originalRow){
+        if(originalNext && originalNext.parentNode===originalRow)originalRow.insertBefore(button,originalNext);
+        else originalRow.appendChild(button);
+      }
+    }
+  }
+  function schedule(){
+    if(scheduled)return;
+    scheduled=true;
+    requestAnimationFrame(function(){scheduled=false;sync();});
+  }
+  function init(){
+    sync();
+    window.addEventListener('pageshow',schedule);
+    window.addEventListener('resize',schedule,{passive:true});
+    if(mq.addEventListener)mq.addEventListener('change',schedule);
+    new MutationObserver(schedule).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+    new MutationObserver(schedule).observe(document.body,{attributes:true,attributeFilter:['class']});
+    // L'en-tête et le tableau sont créés au cours du chargement.
+    var header=document.querySelector('header.v21-header');
+    if(header)new MutationObserver(schedule).observe(header,{childList:true,subtree:false});
+    [120,420,1000].forEach(function(ms){setTimeout(schedule,ms);});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
