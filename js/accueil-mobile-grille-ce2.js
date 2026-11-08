@@ -201,3 +201,83 @@
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
   else init();
 })();
+
+
+/* Accueil téléphone : titre de bienvenue compact et conseil immédiatement
+   après les matières. Restauration du titre original dès retour sur PC. */
+(function(){
+  'use strict';
+  var mq = window.matchMedia('(max-width: 680px)');
+  var queued = false;
+  var originalAdviceParent = null;
+  var originalAdviceNext = null;
+  function isMobileHome(){
+    return mq.matches && document.body.classList.contains('v25-7-73-simplified-home') &&
+      !document.body.classList.contains('prenom-mode');
+  }
+  function nameForStudent(){
+    if(!document.documentElement.classList.contains('hibou-authenticated')) return '';
+    var mode='', name='';
+    try {
+      mode = localStorage.getItem('hibou_mode') || '';
+      name = String(window.prenomActuel || localStorage.getItem('hibou_prenom') || '').trim();
+    } catch(e) { name = String(window.prenomActuel || '').trim(); }
+    return mode === 'eleve' ? name : '';
+  }
+  function update(){
+    var panel = document.getElementById('v2574MainDashboard');
+    if(!panel) return;
+    var label = panel.querySelector('#hibouWelcomeTitle');
+    var advice = panel.querySelector('.v2574-advice-strip');
+    if(isMobileHome()){
+      var name = nameForStudent();
+      var expected = name ? 'Bienvenue ' + name + ' !' : 'Bienvenue chez Maître Hibou !';
+      if(label && label.textContent !== expected) label.textContent = expected;
+      var nav = panel.querySelector('.subjects-bar.mh-mobile-subject-grid');
+      if(nav && advice && advice.previousElementSibling !== nav){
+        if(!originalAdviceParent){
+          originalAdviceParent = advice.parentNode;
+          originalAdviceNext = advice.nextSibling;
+        }
+        nav.insertAdjacentElement('afterend',advice);
+      }
+    } else {
+      if(label && typeof window.hibouUpdateWelcomeTitle === 'function'){
+        // Restaurer seulement si le titre porte encore notre version courte.
+        if(/^(Bienvenue (chez Maître Hibou|.+) !)$/.test(label.textContent.trim())){
+          window.hibouUpdateWelcomeTitle();
+        }
+      }
+      if(advice && originalAdviceParent && advice.parentNode !== originalAdviceParent){
+        if(originalAdviceNext && originalAdviceNext.parentNode === originalAdviceParent)
+          originalAdviceParent.insertBefore(advice,originalAdviceNext);
+        else originalAdviceParent.appendChild(advice);
+      }
+    }
+  }
+  function schedule(){
+    if(queued) return;
+    queued = true;
+    requestAnimationFrame(function(){queued=false;update();});
+  }
+  function init(){
+    schedule();
+    window.addEventListener('pageshow',schedule);
+    window.addEventListener('resize',schedule,{passive:true});
+    if(mq.addEventListener) mq.addEventListener('change',schedule);
+    var panel = document.getElementById('v2574MainDashboard');
+    if(panel){
+      var label=panel.querySelector('#hibouWelcomeTitle');
+      if(label) new MutationObserver(schedule).observe(label,{childList:true,characterData:true,subtree:true});
+    }
+    new MutationObserver(function(mutations){
+      for(var i=0;i<mutations.length;i++){
+        if(mutations[i].type==='attributes') {schedule();return;}
+      }
+    }).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+    new MutationObserver(schedule).observe(document.body,{attributes:true,attributeFilter:['class']});
+    [250,750].forEach(function(ms){setTimeout(schedule,ms);});
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})();

@@ -811,3 +811,55 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
     background-image: url('../images/accueil-mobile/activite-question.webp') !important;
   }
 }
+
+
+/* Accueil téléphone : titre court et conseil directement sous les 7 matières.
+   Uniquement <= 680 px ; aucune modification PC/TBI/tablette. */
+@media screen and (max-width: 680px) {
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .mh-welcome-row-ce2 {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    column-gap: 8px !important;
+    margin: 0 0 10px !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .v2574-title {
+    text-align: left !important;
+    justify-content: flex-start !important;
+    font-size: clamp(18px, 4.9vw, 23px) !important;
+    line-height: 1.18 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    white-space: normal !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .v2574-title .spark {
+    display: none !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .mh-change-student-ce2 {
+    max-width: 128px !important;
+    min-width: 0 !important;
+    padding: 7px 9px !important;
+    font-size: 12px !important;
+    line-height: 1.15 !important;
+    white-space: normal !important;
+    justify-self: end !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid {
+    margin: 0 !important;
+    padding-bottom: 0 !important;
+    align-content: start !important;
+    align-self: stretch !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .v2574-advice-strip {
+    position: static !important;
+    order: 4 !important;
+    margin: 10px 0 0 !important;
+    padding: 10px 12px !important;
+    align-self: stretch !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard {
+    row-gap: 0 !important;
+  }
+}
