@@ -535,3 +535,72 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
     overflow: visible !important;
   }
 }
+
+/* V25.8 — accueil téléphone, sept illustrations fournies par l'enseignant.
+   Mathématiques se trouve dans « M'entraîner » et ne doit pas être ajouté.
+   Aucun effet sur PC et tablette. Les vrais <button> gardent leurs écouteurs. */
+@media screen and (max-width: 680px) {
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid {
+    display: grid !important;
+    grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+    grid-auto-flow: row !important;
+    gap: clamp(4px, 1.2vw, 8px) !important;
+    width: 100% !important;
+    overflow: visible !important;
+    padding-bottom: 5px !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button {
+    grid-column: span 2;
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 17% !important;
+    background-color: transparent !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    color: transparent !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    cursor: pointer !important;
+    transition: filter .15s ease !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button > * {
+    visibility: hidden !important; /* contenu accessible, pas de double texte sur l'image */
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:focus-visible {
+    outline: 3px solid #ffca23 !important;
+    outline-offset: 2px !important;
+  }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:active {
+    filter: brightness(1.1) !important;
+  }
+  /* La deuxième ligne de trois boutons est centrée. */
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(5) { grid-column: 2 / span 2; }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(6) { grid-column: 4 / span 2; }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(7) { grid-column: 6 / span 2; }
+  /* Les visuels sont ordonnés comme les sept matières existantes. */
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(1) { background-image: url('../images/accueil-mobile/arts.webp') !important; }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(2) { background-image: url('../images/accueil-mobile/anglais.webp') !important; }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(3) { background-image: url('../images/accueil-mobile/sciences.webp') !important; }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(4) { background-image: url('../images/accueil-mobile/geographie.webp') !important; }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(5) { background-image: url('../images/accueil-mobile/histoire.webp') !important; }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(6) { background-image: url('../images/accueil-mobile/grandir.webp') !important; }
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard .subjects-bar.mh-mobile-subject-grid > button:nth-of-type(7) { background-image: url('../images/accueil-mobile/liens.webp') !important; }
+
+  /* Maintenir le défilement du DOCUMENT jusqu'à la dernière matière. */
+  body.v25-7-73-simplified-home:not(.prenom-mode) #v2574MainDashboard {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    padding-bottom: max(20px, env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
