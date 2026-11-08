@@ -748,3 +748,17 @@ body.v25-7-73-simplified-home #v2574MainDashboard .mh-welcome-row-ce2 .mh-change
     pointer-events: none !important;
   }
 }
+
+
+/* iPhone : suppression du grand bouton rouge historique redondant.
+   Le bouton compact « Changer d'élève » dans l'entête reste actif.
+   Ne touche ni aux PC, ni aux tablettes, ni aux écrans de progression. */
+@media screen and (max-width: 680px) {
+  body.v25-7-73-simplified-home:not(.prenom-mode) .v21-change-student-btn,
+  body.v25-7-73-simplified-home:not(.prenom-mode) .logout-area,
+  body.v25-7-73-simplified-home:not(.prenom-mode) .logout-area .logout-btn {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
