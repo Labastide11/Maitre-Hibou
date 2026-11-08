@@ -105,6 +105,19 @@
       var el=document.querySelector(selectors[j]);
       if(el&&typeof el.click==='function'){el.click();return;}
     }
+    // Sur mobile, l'ancien centre est détaché du document pour supprimer
+    // sa hauteur. Ses boutons historiques restent utilisables ici.
+    var legacy=window.__hibouLegacyCenterMobile;
+    if(legacy){
+      for(var k=0;k<ids.length;k++){
+        var old=legacy.querySelector('#'+ids[k]);
+        if(old&&typeof old.click==='function'){old.click();return;}
+      }
+      for(var n=0;n<selectors.length;n++){
+        var match=legacy.querySelector(selectors[n]);
+        if(match&&typeof match.click==='function'){match.click();return;}
+      }
+    }
     if(kind==='grow'&&typeof window.openGrandirEnsemble==='function')window.openGrandirEnsemble();
     if(kind==='tools'&&typeof window.openClassShortcutsPopup==='function')window.openClassShortcutsPopup();
   }
@@ -156,8 +169,20 @@
   'use strict';
   var mq=window.matchMedia('(max-width: 680px)');
   var queued=false, observer=null;
+  var legacyCenter=null, legacyParent=null, legacyNext=null;
+  function restoreLegacyCenter(){
+    if(!legacyCenter || !legacyParent || legacyCenter.parentNode)return;
+    if(originalPositionValid()) legacyParent.insertBefore(legacyCenter,legacyNext);
+    else legacyParent.appendChild(legacyCenter);
+    window.__hibouLegacyCenterMobile=null;
+  }
+  function originalPositionValid(){
+    return legacyNext && legacyNext.parentNode===legacyParent;
+  }
   function cleanup(){
-    if(!mq.matches || !document.body.classList.contains('v25-7-73-simplified-home') ||
+    // Firefox responsive : réinsérer l'accueil historique seulement sur PC.
+    if(!mq.matches){restoreLegacyCenter();return;}
+    if(!document.body.classList.contains('v25-7-73-simplified-home') ||
        document.body.classList.contains('prenom-mode'))return;
     var dashboard=document.getElementById('v2574MainDashboard');
     if(!dashboard)return;
@@ -184,6 +209,19 @@
       document.querySelectorAll('.subjects-bar').forEach(function(el){
         if(!dashboard.contains(el))el.remove();
       });
+    }
+    // Diagnostic Firefox 390px : #v21Home = 887px, dashboard = 479px,
+    // .v21-center = 386px. Cet ANCIEN bloc suit le dashboard dans #v21Home
+    // et constitue l'espace de défilement superflu sous le conseil.
+    // On le DETACHE du DOM (pas de display:none), sans toucher au dashboard.
+    var home=document.getElementById('v21Home');
+    var center=home && home.querySelector(':scope > .v21-center');
+    if(center && !center.contains(dashboard)){
+      legacyCenter=center;
+      legacyParent=center.parentNode;
+      legacyNext=center.nextSibling;
+      window.__hibouLegacyCenterMobile=center;
+      center.remove();
     }
   }
   function schedule(){
